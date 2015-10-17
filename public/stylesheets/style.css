@@ -1,0 +1,49 @@
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.mapa{
+    height: 300px;
+}
+
+.crearMapa{
+    height: 200px;
+}
+
+@media (min-width:768px) {
+    .mapa{
+        height: 600px;
+    }    
+}
+
+
+.mapa:-moz-full-screen {
+    height: 100%;
+    width: 100%;
+     padding: inherit;
+}
+
+.mapa:-webkit-full-screen {
+    height: 100%;
+    width: 100%;
+    padding: inherit;
+}
+
+.mapa:fullscreen {
+    height: 100%;
+    width: 100%;
+     padding: inherit;
+}

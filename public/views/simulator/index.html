@@ -1,0 +1,76 @@
+    <div>    
+        <div id="wrapper">
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#/">Simulator</a>
+                </div>
+
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav side-nav">
+                        <li><a href="#/map"><i class="fa fa-plus-circle"></i> Maps</a></li>
+                        <li class="active"><a href="#/simulator"><i class="fa fa-globe"></i> Simulation</a></li>
+                        <li><a href="#/configurations"><i class="fa fa-edit"></i> Configurations</a></li>
+                    </ul>
+                </div>		
+            </nav>
+            
+            <div id="page-wrapper">		                
+                <div class="row">    
+                    <div id="mapa" class="mapa col-sm-8">
+                    </div>
+                        <script type="text/javascript">
+                            var map = new ol.Map({
+                                target: 'mapa',
+                                layers: [
+                                    new ol.layer.Tile({
+                                        source: new ol.source.MapQuest({layer: 'osm'})
+                                    })
+                                ],
+                                view: new ol.View({
+                                    center: ol.proj.transform([-0.88824, 41.66991], 'EPSG:4326', 'EPSG:3857'),
+                                    zoom: 15
+                                }),
+                                controls: ol.control.defaults().extend([
+                                    new ol.control.FullScreen()
+                                ])
+                            });
+
+                            map.on('singleclick', function(evt) {
+                                alert("coordinate: "+evt.coordinate);
+                            });
+                
+                            var exportPNGElement = document.getElementById('export-png');
+
+                            if ('download' in exportPNGElement) {
+                                exportPNGElement.addEventListener('click', function(e) {
+                                    map.once('postcompose', function(event) {
+                                        var canvas = event.context.canvas;
+                                        //exportPNGElement.href = canvas.toDataURL('image/png');
+                                        document.getElementById('captura').src=canvas.toDataURL('image/png');
+                                    });
+                                    map.renderSync();
+                                }, false);
+                            } else {
+                                var info = document.getElementById('no-download');
+                                info.style.display = '';
+                            }                             
+                        </script>                    
+                    
+                    <div class="col-sm-4">
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+                          <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
+                        </ul>
+                        <a id="export-png" class="btn" download="map.png"><i class="icon-download"></i> Export PNG</a> <br/>
+                         <img id="captura" style="height: 50%;width: 50%;">
+                    </div>
+                </div>							
+            </div>            
+        </div>
+    </div>

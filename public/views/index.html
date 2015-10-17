@@ -1,0 +1,44 @@
+<div id="wrapper">
+    <div id="page-wrapper">
+        <div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true" style="background-color: #ccc">
+            <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="text-center">Login</h4>
+                        </div>
+
+                        <div class="modal-body  center-block">
+                            <form enctype='multipart/form-data'>
+                                <div class="form-group">
+                                    <input ng-model="loginForm.userName" type="text" class="form-control input-lg" name="user" placeholder="User name">
+                                    <br/>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <input ng-model="loginForm.pass" type="password" class="form-control input-lg" name="pass" placeholder="Password">
+                                    <br/>
+                                </div>        
+                                    
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="login()">Login</button>
+                                    <span class="pull-right"><a href="#/register">Register</a></span><br/>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <div class="alert alert-dismissable alert-danger" ng-repeat="errorMsg in errorMsgList">
+                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true" 
+                                                 ng-click="errorMsgHide(errorMsg)">&times;</button> {{errorMsg}}    
+                                    </div>
+                                                    
+                                    <div class="alert alert-success" ng-repeat="msg in successMsgList" >
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true" 
+                                                 ng-click="successMsgHide(msg)">&times;</button> {{msg}} 
+                                    </div>
+                                </div>                              
+                            </form>
+                        </div>
+                    </div>
+            </div>               
+        </div>
+    </div>
+</div>
