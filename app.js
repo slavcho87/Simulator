@@ -13,9 +13,11 @@ var simulation = require('./routes/simulation');
 var user = require('./routes/user');
 
 var port = process.env.PORT || 81;
+var locationDB = 'localhost';
+var nameDB = 'simulator';
 
 //MongoDB connection
-mongoose.connect('mongodb://localhost/simulator', function(error){
+mongoose.connect('mongodb://'+locationDB+'/'+nameDB, function(error){
     if(!error){
         console.log("mongodb connected ...");
     }else{

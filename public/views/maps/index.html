@@ -149,9 +149,9 @@
                                 <br/>
                                 
                                 <!-- Campos ocultos -->
-                                <img id="captura" style="visibility:hidden">
-                                <input ng-model="map.mapCenterLong" class="form-control">
-                                <input ng-model="map.mapCenterLat" class="form-control">
+                                <img id="captura" style="height: 50%;width: 50%;">
+                                <input ng-model="map.mapCenterLong" class="form-control" type="hidden">
+                                <input ng-model="map.mapCenterLat" class="form-control" type="hidden">
                             
                                 <div id="crearMapa" class="crearMapa">
                                 </div>
@@ -203,7 +203,7 @@
                                           var zoom = view.getZoom();
                                           view.setZoom(zoom - 1);
                                         };                                    
-                                        
+                                        <a id="export-png" class="btn" download="map.png"><i class="icon-download"></i> Export PNG</a> <br/>
                                         //funcion para cambiar el nivel de zoom teniendo en cuenta el select elegido
 
                                         //funcion para realizar busqueda del mapa y mostrarlo
@@ -217,7 +217,7 @@
                         
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <button name="createMap" type="button" class="btn btn-primary">Create</button>
+                            <button name="createMap" type="button" class="btn btn-primary"> Create</button>
                         </div>
                     </div>
                 </div>
