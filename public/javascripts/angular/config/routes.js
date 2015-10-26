@@ -10,7 +10,12 @@ app.config(['$routeProvider', '$httpProvider' ,function($routeProvider, $httpPro
 	}).when('/map', {
 		templateUrl: 'views/maps/index.html',
 		controller: 'MapController'
-	}).when('/simulator', {
+	}).when('/map/newMap', {
+		templateUrl: 'views/maps/newMap.html',
+		controller: 'MapController'
+	})
+    
+    .when('/simulator', {
 		templateUrl: 'views/simulator/index.html',
 		controller: 'SimulatorController'
 	}).when('/configurations', {

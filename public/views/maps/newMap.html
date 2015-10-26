@@ -1,0 +1,223 @@
+ <div>    
+    <div id="wrapper">
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#/">Simulator</a>
+            </div>
+
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li class="active"><a href="#/map"><i class="fa fa-plus-circle"></i> Maps</a></li>
+                    <li><a href="#/simulator"><i class="fa fa-globe"></i> Simulation</a></li>
+                    <li><a href="#/configurations"><i class="fa fa-edit"></i> Configurations</a></li>
+                </ul>
+            </div>
+        </nav>            
+
+        <div id="page-wrapper">		
+            <ul class="nav nav-tabs">
+                <li><a data-toggle="tab" href="#map">Map search</a></li>
+                <li class="active"><a data-toggle="tab" href="#newMap">New map</a></li>
+                <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
+            </ul>
+                
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-plus-circle"></i> Basic data</h3>
+                            </div>
+
+                            <div class="panel-body">
+                                <label>Name</label>
+                                <input class="form-control" ng-model="map.name" />
+
+                                <br/>
+
+                                <label>Type</label>
+                                <select ng-model="map.type" class="form-control">
+                                    <option value=""></option> 
+                                    <option value="public">Public</option>
+                                    <option value="private">Private</option>
+                                </select>
+
+                                <br/>
+
+                                <label>Zoom level</label>
+                                <select id="createMapZoomLevel" ng-model="map.zoomLevel" class="form-control">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                </select>
+
+                                <br/>
+                                <label>City</label>
+                                <input ng-model="map.city" class="form-control">
+
+                                <br/>
+
+                                <!-- Campos ocultos -->
+                                <img id="captura" style="height: 50%;width: 50%;">
+                                <input ng-model="map.mapCenterLong" class="form-control" type="hidden">
+                                <input ng-model="map.mapCenterLat" class="form-control" type="hidden">
+
+                                <div id="crearMapa" class="crearMapa">
+                                </div>
+
+                                <script type="text/javascript">
+                                    var map = new ol.Map({
+                                        target: 'crearMapa',
+                                        layers: [
+                                            new ol.layer.Tile({
+                                                source: new ol.source.MapQuest({layer: 'osm'})
+                                            })
+                                        ],
+
+                                        view: new ol.View({
+                                            center: ol.proj.transform([-0.88824, 41.66991], 'EPSG:4326', 'EPSG:3857'),
+                                            zoom: 15
+                                        }),
+
+                                        controls: ol.control.defaults().extend([
+                                            new ol.control.FullScreen()
+                                        ])
+                                    });  
+
+                                    map.on('moveend', function(evt) {
+                                        var map = evt.map;
+                                        alert(map.getView().getCenter()); 
+                                        //map.getView().getCenter() es un array de numeros [16, 48]
+                                    });
+
+                                    var exportPNGElement = document.getElementById('export-png');
+
+                                    if ('download' in exportPNGElement) {
+                                        exportPNGElement.addEventListener('click', function(e) {
+                                            map.once('postcompose', function(event) {
+                                                var canvas = event.context.canvas;
+                                                //exportPNGElement.href = canvas.toDataURL('image/png');
+                                                document.getElementById('captura').src=canvas.toDataURL('image/png');
+                                            });
+                                            map.renderSync();
+                                        }, false);
+                                    } else {
+                                        var info = document.getElementById('no-download');
+                                        info.style.display = '';  
+                                    }     
+                                </script>
+                                
+                                <!--<script>
+                                   document.getElementById('zoom-out').onclick = function() {
+                                       var view = map.getView();
+                                       var zoom = view.getZoom();
+                                        view.setZoom(zoom - 1);
+                                        };                                    
+                                        <a id="export-png" class="btn" download="map.png"><i class="icon-download"></i> Export PNG</a> <br/>
+                                        //funcion para cambiar el nivel de zoom teniendo en cuenta el select elegido
+
+                                         //funcion para realizar busqueda del mapa y mostrarlo
+
+
+                                          //crear un evento sobre createMapZoomLevel y asignar el nivel de zoom al mapa cuando este cambio
+                               </script>-->
+
+                            </div>
+                        </div>                    
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-cogs"></i> Configuration of static objects</h3>
+                            </div>
+
+                            <div class="panel-body">
+                                <label>Name</label>
+                                <input class="form-control" ng-model="map.name" />
+
+                                <br/>
+
+                                <label>Type</label>
+                                <select ng-model="map.type" class="form-control">
+                                    <option value=""></option> 
+                                    <option value="public">Public</option>
+                                    <option value="private">Private</option>
+                                </select>
+                            </div>
+                        </div>                          
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-cogs"></i> Configuration of dynamic objects</h3>
+                            </div>
+
+                            <div class="panel-body">
+                                <label>Name</label>
+                                <input class="form-control" ng-model="map.name" />
+
+                                <br/>
+
+                                <label>Type</label>
+                                <select ng-model="map.type" class="form-control">
+                                    <option value=""></option> 
+                                    <option value="public">Public</option>
+                                    <option value="private">Private</option>
+                                </select>
+                            </div>
+                        </div>                        
+                    </div>   
+                                        
+                    <div class="col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-cogs"></i> More configurations</h3>
+                            </div>
+
+                            <div class="panel-body">
+                                <label>Name</label>
+                                <input class="form-control" ng-model="map.name" />
+
+                                <br/>
+
+                                <label>Type</label>
+                                <select ng-model="map.type" class="form-control">
+                                    <option value=""></option> 
+                                    <option value="public">Public</option>
+                                    <option value="private">Private</option>
+                                </select>
+                            </div>
+                        </div>                    
+                    </div>
+                </div>		
+            </div>
+        </div>   
+    </div>
+</div>
