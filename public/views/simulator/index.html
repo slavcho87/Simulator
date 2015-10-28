@@ -64,11 +64,25 @@
                     
                     <div class="col-sm-4">
                         <ul class="nav nav-tabs">
-                          <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-                          <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" 
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Action <span class="caret"></span>
+                                </button>
+ 
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
                         </ul>
-                        <a id="export-png" class="btn" download="map.png"><i class="icon-download"></i> Export PNG</a> <br/>
-                         <img id="captura" style="height: 50%;width: 50%;">
+                        
+                        <a id="export-png" class="btn" download="map.png"><i class="icon-download"></i> Export PNG</a> 
+                        <br/>
+                        <img id="captura" style="height: 50%;width: 50%;">
                     </div>
                 </div>							
             </div>            
