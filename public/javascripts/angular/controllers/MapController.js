@@ -18,6 +18,14 @@ app.controller("MapController", ['$scope', '$http', function ($scope, $http) {
     $scope.addMap = function() {
         //insertar codigo para la creacion del nuevo mapa    
     }
+    
+    /*
+    * Insert new map
+    */
+    $scope.searchMap = function() {
+            
+    }
+    
 
    /*
     * Hide error message

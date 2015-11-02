@@ -42,14 +42,37 @@
                             <div class="col-sm-4">
                                 <label>Type</label>
                                 <select ng-model="map.type" class="form-control">
+                                    <option value="all">All</option>
                                     <option value="private">Private</option>
                                     <option value="public">Public</option>
                                 </select>
                             </div>
                             
                             <div class="col-sm-4">
+                                <label>State</label>
+                                <select ng-model="map.state" class="form-control">
+                                    <option value="All">All</option>
+                                    <option value="draft">Draft</option>
+                                    <option value="active">Active</option>
+                                </select>
+                            </div>
+                                   
+                            <div class="col-sm-4">
+                                </br>
                                 <label>City</label>
                                 <input class="form-control" />
+                            </div>
+                            
+                            <div class="col-sm-4">
+                                </br>
+                                <label>Start date</label>
+                                <input class="form-control" type="date"/>
+                            </div>
+                            
+                            <div class="col-sm-4">
+                                </br>
+                                <label>End date</label>
+                                <input class="form-control" type="date"/>
                             </div>
                             
                             <div class="col-sm-4">
@@ -67,41 +90,88 @@
                         <h3 class="panel-title"><i class="fa fa-list-alt"></i> Search Results</h3>
                     </div>
                     
-                    <div class="panel-body">  
-                        <div class="row">    
-                            <div class="col-lg-4">
-                                <div class="well">
-                                    Esto es una prueba
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4">      
-                                <div class="well">
-                                    Esto es una prueba
-                                </div> 
-                            </div>
-                                  
-                            <div class="col-lg-4">
-                                <div class="well">
-                                    Esto es una prueba
-                                </div>
-                            </div>
-                                   
-                            <div class="col-lg-4">
-                                <div class="well">
-                                    Esto es una prueba
-                                </div>
-                            </div>
-                                  
-                            <div class="col-lg-4">
-                                <div class="well">
-                                    Esto es una prueba
-                                </div>
-                            </div>
-                        </div>    
-                    </div>
-                </div>			
-            </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>State</th>
+                                <th>City</th>
+                                <th>Creation date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Actur simulation</td>
+                                <td>Private</td>
+                                <td>Draft</td>
+                                <td>Zaragoza</td>
+                                <td>01/10/2015</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary">
+                                          View options
+                                        </button>
+                                        
+                                        <button type="button" class="btn btn-primary dropdown-toggle" 
+                                              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        
+                                      <ul class="dropdown-menu">
+                                        <li><a href="#">Start simulation</a></li>
+                                        <li><a href="#">Configurations</a></li>
+                                        <li><a href="#">Change state</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#">Delete map</a></li>
+                                      </ul>
+                                    </div>
+                                </td> 
+                            </tr>
+                              
+                            <tr>
+                                <td>Madrid simulation center</td>
+                                <td>Public</td>
+                                <td>Active</td>
+                                <td>Madrid</td>
+                                <td>01/05/2014</td>
+                                <td>
+                                    <button type="button" class="btn btn-success">Start simulation</button>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Manhattan simulation</td>
+                                <td>Public</td>
+                                <td>Draft</td>
+                                <td>New York</td>
+                                <td>01/04/2014</td>
+                                <td>
+                                    <button type="button" class="btn btn-success disabled">Start simulation</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <nav align="center">
+                        <ul class="pagination">
+                            <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                            <li class="active"><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li>
+                              <a href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                              </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>    
         </div>    
-    </div>    
+    </div>
 </div>
