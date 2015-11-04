@@ -55,14 +55,17 @@
                                 </select>
                             </div>
                             
-                            <div class="col-xs-12">
-                                                                  
-                                <b>
-                                    <i>* Click on the map to indicate its initial position to start the simulation 
-                                    or enter the coordinates manually
-                                    </i>
-                                </b>    
-                            </div>  
+                            <div class="col-sm-6">
+                                <br/>
+                                <label>Start date</label>
+                                <input class="form-control" type="date"/>
+                            </div>
+                            
+                            <div class="col-sm-6">
+                                <br/>
+                                <label>End date</label>
+                                <input class="form-control" type="date"/>
+                            </div>                            
                             
                             <div class="col-xs-12">
                                 </br>                              
@@ -96,7 +99,14 @@
                                 </br>
                                 <label>Initial position: longitude</label>
                                  <input id="initPosLong" class="form-control" ng-model="map.name" disabled/>
-                            </div>                    
+                            </div>            
+            
+                            <div class="col-xs-12">                                      
+                                <b>
+                                    <i>* Click on the map to indicate its initial position to start the simulation 
+                                    </i>
+                                </b>    
+                            </div>
                       
                             <div class="col-xs-12">       
                                 </br>         

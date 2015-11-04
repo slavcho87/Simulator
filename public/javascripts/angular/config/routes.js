@@ -13,13 +13,14 @@ app.config(['$routeProvider', '$httpProvider' ,function($routeProvider, $httpPro
 	}).when('/map/newMap', {
 		templateUrl: 'views/maps/newMap.html',
 		controller: 'MapController'
-	})
-    
-    .when('/simulator', {
+	}).when('/simulator', {
 		templateUrl: 'views/simulator/index.html',
 		controller: 'SimulatorController'
 	}).when('/configurations', {
 		templateUrl: 'views/configurations/index.html',
+		controller: 'ConfigurationController'
+	}).when('/configurations/mapConfigurations', {
+		templateUrl: 'views/configurations/mapConfigurations.html',
 		controller: 'ConfigurationController'
 	}); 
     
