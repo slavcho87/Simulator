@@ -1,4 +1,4 @@
-    <div>    
+<div>    
         <div id="wrapper">
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
                 <div class="navbar-header">
@@ -24,6 +24,7 @@
                 <div class="row">    
                     <div id="mapa" class="mapa col-sm-8">
                     </div>
+
                         <script type="text/javascript">
                             var map = new ol.Map({
                                 target: 'mapa',
@@ -40,12 +41,17 @@
                                     new ol.control.FullScreen()
                                 ])
                             });
-
+                    
                             map.on('singleclick', function(evt) {
-                                alert("coordinate: "+evt.coordinate);
-                            });
-                
-                            var exportPNGElement = document.getElementById('export-png');
+                                map.addOverlay(new ol.Overlay({
+                                    position: evt.coordinate,
+                                    element: $('<img src="images/yo.jpg" class="img-circle">')
+                                    .css({marginTop: '-50%', marginLeft: '-50%', width: '40px', height: '40px', cursor: 'pointer'})
+                                    .tooltip({title: 'Hello, world!', trigger: 'click'})
+                                }));    
+                            });        
+
+                            /*var exportPNGElement = document.getElementById('export-png');
 
                             if ('download' in exportPNGElement) {
                                 exportPNGElement.addEventListener('click', function(e) {
@@ -59,8 +65,8 @@
                             } else {
                                 var info = document.getElementById('no-download');
                                 info.style.display = '';
-                            }                             
-                        </script>                    
+                            }           */                  
+                        </script>
                     
                     <div class="col-sm-4">
                         <ul class="nav nav-tabs">
@@ -95,6 +101,16 @@
                                         <div class="fa fa-star"></div>
                                         <div class="fa fa-star"></div>
                                     </td>
+                                    <td>
+                                        <select>
+                                            <option value="0"></option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </td>
                                 </tr>
 
                                 <tr>
@@ -106,6 +122,16 @@
                                         <div class="fa fa-star"></div>
                                         <div class="fa fa-star"></div>
                                         <div class="fa fa-star"></div>
+                                    </td>
+                                    <td>
+                                        <select>
+                                            <option value="0"></option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
                                     </td>
                                 </tr>
                                 
@@ -119,6 +145,16 @@
                                         <div class="fa fa-star"></div>
                                         <div class="fa fa-star-half"></div>
                                     </td>
+                                    <td>
+                                        <select>
+                                            <option value="0"></option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </td>
                                 </tr> 
                                 
                                 <tr>
@@ -130,6 +166,16 @@
                                         <div class="fa fa-star"></div>
                                         <div class="fa fa-star"></div>
                                         <div class="fa fa-star-half"></div>
+                                    </td>
+                                    <td>
+                                        <select>
+                                            <option value="0"></option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
                                     </td>
                                 </tr>
 
@@ -143,6 +189,16 @@
                                         <div class="fa fa-star"></div>
                                         <div class="fa fa-star-o"></div>
                                     </td>
+                                    <td>
+                                        <select>
+                                            <option value="0"></option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </td>
                                 </tr>
                                 
                                 <tr>
@@ -154,6 +210,16 @@
                                         <div class="fa fa-star"></div>
                                         <div class="fa fa-star"></div>
                                         <div class="fa fa-star-o"></div>
+                                    </td>
+                                    <td>
+                                        <select>
+                                            <option value="0"></option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
                                     </td>
                                 </tr> 
                                 
@@ -168,6 +234,16 @@
                                         <div class="fa fa-star-o"></div>
                                         <div class="fa fa-star-o"></div>
                                     </td>
+                                    <td>
+                                        <select>
+                                            <option value="0"></option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </td>
                                 </tr>
 
                                 <tr>
@@ -179,6 +255,16 @@
                                         <div class="fa fa-star-o"></div>
                                         <div class="fa fa-star-o"></div>
                                         <div class="fa fa-star-o"></div>
+                                    </td>
+                                    <td>
+                                        <select>
+                                            <option value="0"></option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
                                     </td>
                                 </tr>
                                 
@@ -192,6 +278,16 @@
                                         <div class="fa fa-star-o"></div>
                                         <div class="fa fa-star-o"></div>
                                     </td>
+                                    <td>
+                                        <select>
+                                            <option value="0"></option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </td>
                                 </tr>
                                 
                                 <tr>
@@ -203,6 +299,16 @@
                                         <div class="fa fa-star-o"></div>
                                         <div class="fa fa-star-o"></div>
                                         <div class="fa fa-star-o"></div>
+                                    </td>
+                                    <td>
+                                        <select>
+                                            <option value="0"></option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
                                     </td>
                                 </tr>
         

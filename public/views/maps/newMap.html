@@ -24,12 +24,13 @@
             <ul class="nav nav-tabs">
                 <li><a data-toggle="tab" href="#map">Map search</a></li>
                 <li class="active"><a data-toggle="tab" href="#newMap">New map</a></li>
+                <li><a data-toggle="tab" href="#map/simulationParameters">Simulation parameters</a></li>
             </ul>
 
             <div class="panel-body">  
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-plus-circle"></i> Create new map for a simulation </h3>
+                        <h3 class="panel-title"><i class="fa fa-plus-circle"></i> Basic data </h3>
                     </div>
 
                     <div class="panel-body">
@@ -55,17 +56,35 @@
                                 </select>
                             </div>
                             
-                            <div class="col-sm-6">
-                                <br/>
-                                <label>Start date</label>
-                                <input class="form-control" type="date"/>
+                            <div class="col-xs-12">
+                                </br>
+                                <input type="submit" class="btn btn-primary" value="Create map">
                             </div>
-                            
-                            <div class="col-sm-6">
-                                <br/>
-                                <label>End date</label>
-                                <input class="form-control" type="date"/>
-                            </div>                            
+                    </div>     
+                </div>   
+
+            </div>
+ 
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-plus-circle"></i> Create scene </h3>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <label>Scene name</label>
+                                <input class="form-control" ng-model="map.name" />
+                            </div>
+                                    
+                            <div class="col-xs-6">
+                                <label>Simulation parameters</label>
+                                <select ng-model="map.state" class="form-control">
+                                    <option value="1">simulation parameter 1</option>
+                                    <option value="2">simulation parameter 2</option>
+                                    <option value="3">simulation parameter 3</option>
+                                </select>
+                            </div>
                             
                             <div class="col-xs-12">
                                 </br>                              
@@ -87,27 +106,37 @@
                                     geographic position during the simulation such as automobiles
                                     </i>
                                 </b>   
-                            </div>   
+                            </div>  
+                    
+                            <div class="col-xs-12">
+                                <br/>
+                                <h3>Limitations of the scene</h3>
+                            </div>    
                     
                             <div class="col-xs-6">
                                 </br>
-                                <label>Initial position: latitude</label>
-                                <input id="initPosLat" class="form-control" ng-model="map.name" disabled/>
+                                <label>Upper left corner: latitude</label>
+                                <input id="initPosLat" class="form-control" disabled/>
                             </div>
                             
                             <div class="col-xs-6">
                                 </br>
-                                <label>Initial position: longitude</label>
-                                 <input id="initPosLong" class="form-control" ng-model="map.name" disabled/>
-                            </div>            
-            
-                            <div class="col-xs-12">                                      
-                                <b>
-                                    <i>* Click on the map to indicate its initial position to start the simulation 
-                                    </i>
-                                </b>    
+                                <label>Upper left corner: longitude</label>
+                                 <input id="initPosLong" class="form-control" disabled/>
+                            </div>        
+                    
+                            <div class="col-xs-6">
+                                </br>
+                                <label>Lower right corner: latitude</label>
+                                <input id="initPosLat" class="form-control"  disabled/>
                             </div>
-                      
+                            
+                            <div class="col-xs-6">
+                                </br>
+                                <label>Lower right corner: longitude</label>
+                                 <input id="initPosLong" class="form-control" disabled/>
+                            </div>                
+
                             <div class="col-xs-12">       
                                 </br>         
                                 <label>City</label>  
@@ -117,57 +146,105 @@
                                         <button class="btn btn-default" type="button">Go!</button>
                                     </span>
                                 </div>
-                            </div>   
-                        </div>
-                            
-                        <br/>
-                               
-                        <div id="crearMapa" >
-                        </div>
+                            </div>
+        
+                            <div class="col-xs-12"> 
+                                <br/>
+                                <div id="crearMapa" >
+                                </div>
+                                        
+                                <script type="text/javascript">               
+                                    var map = new ol.Map({
+                                        target: 'crearMapa',
+                                        layers: [
+                                            new ol.layer.Tile({
+                                                source: new ol.source.MapQuest({layer: 'osm'})
+                                            })   
+                                        ],      
+                                        view: new ol.View({            
+                                            center: ol.proj.transform([-0.88824, 41.66991], 'EPSG:4326', 'EPSG:3857'),        
+                                            zoom: 15           
+                                        }),       
+                                        controls: ol.control.defaults().extend([      
+                                            new ol.control.FullScreen() 
+                                        ])        
+                                    });          
 
-                        <script type="text/javascript">               
-                            var map = new ol.Map({
-                                target: 'crearMapa',
-                                layers: [
-                                    new ol.layer.Tile({
-                                        source: new ol.source.MapQuest({layer: 'osm'})
-                                    })   
-                                ],      
-                                view: new ol.View({            
-                                    center: ol.proj.transform([-0.88824, 41.66991], 'EPSG:4326', 'EPSG:3857'),        
-                                    zoom: 15           
-                                }),       
-                                controls: ol.control.defaults().extend([      
-                                    new ol.control.FullScreen() 
-                                ])        
-                            });          
-                            
-                            map.on('singleclick', function(evt) {
-                                $('#initPosLat').val(evt.coordinate[0]);
-                                $('#initPosLong').val(evt.coordinate[1]);
-                            });
-                        </script>
-                                
-                                <!--<script>
-                                   document.getElementById('zoom-out').onclick = function() {
-                                       var view = map.getView();
-                                       var zoom = view.getZoom();
-                                        view.setZoom(zoom - 1);
-                                        };                                    
-                                        <a id="export-png" class="btn" download="map.png"><i class="icon-download"></i> Export PNG</a> <br/>
-                                        //funcion para cambiar el nivel de zoom teniendo en cuenta el select elegido
-
-                                         //funcion para realizar busqueda del mapa y mostrarlo
-
-
-                                          //crear un evento sobre createMapZoomLevel y asignar el nivel de zoom al mapa cuando este cambio
-                               </script>-->
-                           
+                                    map.on('singleclick', function(evt) {
+                                        $('#initPosLat').val(evt.coordinate[0]);
+                                        $('#initPosLong').val(evt.coordinate[1]);
+                                    });
+                                </script>                                
+                            </div>    
+            
+                            <div class="col-sm-12">
+                                <br/>
+                                <input type="submit" class="btn btn-primary" value="Create scene">
+                            </div>
                     </div>     
-            </div>                      
-              
-                <button type="button" class="btn btn-primary btn-lg btn-block">Create map</button>
-            </div>
+                </div>                         
         </div>   
+
+                <div class="panel panel-primary table-responsive">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-list-alt"></i> List of scenes for this city</h3>
+                    </div>
+                    
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Scene name</th>
+                                    <th>Creation date</th>
+                                    <th>Simulation parameters</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Actur</td>
+                                    <td>01/10/2015</td>
+                                    <td>parameters 1</td>
+                                    <td>
+                                        <button class="btn btn-primary" type="button">Edit</button>
+                                    </td> 
+                                </tr>
+
+                                <tr>
+                                    <td>Casco historico</td>
+                                    <td>02/10/2015</td>
+                                    <td>parameters 2</td>
+                                    <td>
+                                        <button class="btn btn-primary" type="button">Edit</button>
+                                    </td> 
+                                </tr>
+                                
+                                <tr>
+                                    <td>Casablanca</td>
+                                    <td>04/10/2015</td>
+                                    <td>parameters 1</td>
+                                    <td>
+                                        <button class="btn btn-primary" type="button">Edit</button>
+                                    </td> 
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    
+                        
+                    <nav align="center">
+                        <ul class="pagination">
+                            <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                            <li class="active"><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li>
+                              <a href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                              </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
     </div>
 </div>
