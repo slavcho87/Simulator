@@ -16,11 +16,14 @@ app.config(['$routeProvider', '$httpProvider' ,function($routeProvider, $httpPro
 	}).when('/simulator', {
 		templateUrl: 'views/simulator/index.html',
 		controller: 'SimulatorController'
-	}).when('/configurations', {
-		templateUrl: 'views/configurations/index.html',
+	}).when('/parameters', {
+		templateUrl: 'views/parameters/index.html',
 		controller: 'ConfigurationController'
-	}).when('/configurations/mapConfigurations', {
-		templateUrl: 'views/configurations/mapConfigurations.html',
+    }).when('/parameters/newParameter', {
+		templateUrl: 'views/parameters/newParameter.html',
+		controller: 'ConfigurationController'
+    }).when('/profile', {
+		templateUrl: 'views/configurations/index.html',
 		controller: 'ConfigurationController'
 	}); 
     
