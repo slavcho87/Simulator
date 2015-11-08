@@ -23,7 +23,7 @@
         
         <div id="page-wrapper">		
             <ul class="nav nav-tabs">
-                <li><a data-toggle="tab" href="#parameters">Parameter search</a></li>
+                <li><a data-toggle="tab" href="#parameters">Parameters</a></li>
                 <li class="active"><a data-toggle="tab" href="#parameters/newParameter">New parameter</a></li>
             </ul>
             
@@ -35,9 +35,43 @@
 
                     <div class="panel-body">      
                         <div class="row">      
-                            Formulario con los datos de alta de parametros
+                            <div class="col-sm-4">
+                                <label>Parameter name</label>
+                                <input class="form-control" />
+                            </div>
                             
+                            <div class="col-sm-4">
+                                <label>Recommended maximum number of items</label>
+                                <input class="form-control" type="text">
+                            </div>
                             
+                            <div class="col-sm-4">
+                                <label>Maximum number of users supported</label>
+                                <input class="form-control" type="text">
+                            </div>
+                            
+                            <div class="col-sm-4">
+                                <br>
+                                <label>Vision radius (in meters)</label>
+                                <input class="form-control" type="text">
+                            </div>
+                            
+                            <div class="col-sm-4">
+                                <br>
+                                <label>Speed of moving items (km/h)</label>
+                                <input class="form-control" type="text">
+                            </div>
+                            
+                            <div class="col-sm-4">
+                                <br>
+                                <label>Maximum speed of users (km/h)</label>
+                                <input class="form-control" type="text">
+                            </div>
+                            
+                            <div class="col-sm-12">
+                                <br>
+                                <input type="submit" class="btn btn-primary" value="Save">
+                            </div>
                             
                         </div>
                     </div>

@@ -23,33 +23,46 @@
         
         <div id="page-wrapper">		
             <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#map">Parameter search</a></li>
+                <li class="active"><a data-toggle="tab" href="#map">Parameters</a></li>
                 <li><a data-toggle="tab" href="#parameters/newParameter">New parameter</a></li>
             </ul>
             
             <div class="panel-body">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-search"></i> Search parameters</h3>                        
-                    </div>
-
-                    <div class="panel-body">      
-                        <div class="row">      
-                            Formulario busqueda de parametross
-                            
-                            
-                        </div>
-                    </div>
-                </div>
-
                 <div class="panel panel-primary table-responsive">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-list-alt"></i> Search Results</h3>
+                        <h3 class="panel-title"><i class="fa fa-list-alt"></i> Parameter list</h3>
                     </div>
-                    
-                    Tabla con el resultado de la busqueda de parametros
-                    
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>  
+                                <th>Parameter name</th>
+                                <th>Recommended maximum number of items</th>
+                                <th>Maximum number of users supported</th>
+                                <th>Vision radius (in meters)</th>
+                                <th>Speed of moving items (km/h)</th>
+                                <th>Maximum speed of users (km/h)</th>
+                                <th></th>
+                            </tr>
                         
+                        </thead>
+                            
+                        <tbody>
+                            <tr>
+                                <td>Parametros generales</td>
+                                <td>10</td>
+                                <td>1500</td>
+                                <td>250 m</td>
+                                <td>50 km/hs</td>
+                                <td>10 km/h</td>
+                                <td>
+                                    <button class="btn btn-primary" type="button">Edit</button>
+                                </td> 
+                            </tr>
+
+                        </tbody>
+                    </table>                    
+
                     <nav align="center">
                         <ul class="pagination">
                             <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
