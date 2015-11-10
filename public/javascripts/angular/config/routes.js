@@ -12,6 +12,12 @@ app.config(['$routeProvider', '$httpProvider' ,function($routeProvider, $httpPro
 		controller: 'MapController'
 	}).when('/map/newMap', {
 		templateUrl: 'views/maps/newMap.html',
+		controller: 'MapController'        
+	}).when('/map/editScene', {
+		templateUrl: 'views/maps/editScene.html',
+		controller: 'MapController'        
+	}).when('/map/editMap', {
+		templateUrl: 'views/maps/editMap.html',
 		controller: 'MapController'
 	}).when('/simulator', {
 		templateUrl: 'views/simulator/index.html',
