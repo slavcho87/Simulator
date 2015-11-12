@@ -15,7 +15,7 @@
                 <ul class="nav navbar-nav side-nav">
                     <li class="active"><a href="#/map"><i class="fa fa-plus-circle"></i> Maps</a></li>
                     <li><a href="#/simulator"><i class="fa fa-globe"></i> Simulation</a></li>
-                    <li><a href="#/parameters"><i class="fa fa-globe"></i> Simulation parameters</a></li>
+                    <li><a href="#/parameters"><i class="fa fa-cog"></i> Simulation parameters</a></li>
                     <li><a href="#/profile"><i class="fa fa-edit"></i> Profile</a></li>
                 </ul>
             </div>
@@ -137,6 +137,24 @@
                                  <input id="initPosLong" class="form-control" disabled/>
                             </div>                
 
+                            <div class="col-xs-6">
+                                <div class="radio">
+                                  <label>
+                                    <input type="radio" name="opciones" id="upperLeftCorner" value="upperLeftCorner" checked>
+                                    select upper left corner
+                                  </label>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-6">
+                                <div class="radio">
+                                  <label>
+                                    <input type="radio" name="opciones" id="lowerRightCorner" value="lowerRightCorner">
+                                    select lower right corner
+                                  </label>
+                                </div>                                    
+                            </div>
+
                             <div class="col-xs-12">       
                                 </br>         
                                 <label>City</label>  
@@ -170,7 +188,7 @@
                                         ])        
                                     });          
 
-                                    map.on('singleclick', function(evt) {
+                                    map.on('singleclick', function(evt) { 
                                         $('#initPosLat').val(evt.coordinate[0]);
                                         $('#initPosLong').val(evt.coordinate[1]);
                                     });
