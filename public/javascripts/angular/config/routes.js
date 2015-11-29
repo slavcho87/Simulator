@@ -25,8 +25,11 @@ app.config(['$routeProvider', '$httpProvider' ,function($routeProvider, $httpPro
 	}).when('/parameters', {
 		templateUrl: 'views/parameters/index.html',
 		controller: 'ConfigurationController'
-    }).when('/parameters/newParameter', {
-		templateUrl: 'views/parameters/newParameter.html',
+    }).when('/parameters/simulationSettings', {
+		templateUrl: 'views/parameters/simulationSettings.html',
+		controller: 'ConfigurationController'
+    }).when('/parameters/recommenderSettings', {
+		templateUrl: 'views/parameters/recommenderSettings.html',
 		controller: 'ConfigurationController'
     }).when('/profile', {
 		templateUrl: 'views/configurations/index.html',

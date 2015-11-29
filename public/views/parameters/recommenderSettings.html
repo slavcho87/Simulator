@@ -23,15 +23,15 @@
         
         <div id="page-wrapper">		
             <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#parameters">Display settings</a></li>
+                <li><a data-toggle="tab" href="#parameters">Display settings</a></li>
                 <li><a data-toggle="tab" href="#parameters/simulationSettings">Simulation settings</a></li>
-                <li><a data-toggle="tab" href="#parameters/recommenderSettings">Recommender settings</a></li>
+                <li class="active"><a data-toggle="tab" href="#parameters/recommenderSettings">Recommender settings</a></li>
             </ul>
             
             <div class="panel-body">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-plus-circle"></i> Add new display settings</h3>                        
+                        <h3 class="panel-title"><i class="fa fa-plus-circle"></i> Add new recommender settings</h3>                        
                     </div>
 
                     <div class="panel-body">      
@@ -58,11 +58,11 @@
                             
                         </div>
                     </div>
-                </div>                
-
+                </div>  
+                
                 <div class="panel panel-primary table-responsive">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-list-alt"></i> Display settings list</h3>
+                        <h3 class="panel-title"><i class="fa fa-list-alt"></i> Recommender settings list</h3>
                     </div>
 
                     <table class="table table-striped">
@@ -90,11 +90,11 @@
                                                 </button>
 
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="#parameters" role="button" 
-                                                           data-toggle="modal" data-target="#editParameterModal">Edit setting</a></li>
+                                                    <li><a href="#parameters/recommenderSettings" role="button" 
+                                                           data-toggle="modal" data-target="#editRecommenderModal">Edit setting</a></li>
 
-                                                    <li><a href="#parameters" role="button" 
-                                                           data-toggle="modal" data-target="#deleteParameterModal">Delete setting</a>
+                                                    <li><a href="#parameters/recommenderSettings" role="button" 
+                                                           data-toggle="modal" data-target="#deleteRecommenderModal">Delete setting</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -120,12 +120,12 @@
                             </li>
                         </ul>
                     </nav>
-                </div>
+                </div>                     
             </div>    
         </div>
 
         <!-- Delete parameter Modal -->
-        <div class="modal fade" role="dialog" id="deleteParameterModal">
+        <div class="modal fade" role="dialog" id="deleteRecommenderModal">
           <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -147,9 +147,9 @@
 
           </div>
         </div>
- 
+         
         <!-- Edit parameter Modal -->
-        <div class="modal fade" role="dialog" id="editParameterModal">
+        <div class="modal fade" role="dialog" id="editRecommenderModal">
           <div class="modal-dialog" id="editParameterModal">
 
             <!-- Modal content-->
@@ -175,8 +175,6 @@
                                 <label>Parameter 3</label>
                                 <input class="form-control" type="text">
                             </div>
-
-                            
                         </div>
               </div>
                 
@@ -187,7 +185,6 @@
             </div>
 
           </div>
-        </div>        
-        
+        </div> 
     </div>
 </div>
