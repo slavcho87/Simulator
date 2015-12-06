@@ -12,6 +12,10 @@ Lo primero que tenemos que hacer es instalar mongodb. Los pasos para la instalac
 
 Vamos en la web oficial de nodejs (https://nodejs.org) y descargamos e instalamos el ejecutable. En el caso de Windows la instalación es igual que la de cualquier otro programa. Para más información visite https://nodejs.org/en/download/. 
 
+A continuación tenemos que instalar el gestor de paquetes NPM. En el caso de Windows vamos en la web oficial (https://www.npmjs.com/) y nos descargamos e instalamos el ejecutable. En el caso de Linux ejecutamos el siguiente comando en la consola:
+
+    sudo apt-get install npm
+
 ## Paso 3: instalar git
 Git es un sistema distribuido de control de versiones. Para la instalación de este nos descargamos el ejecutable de https://git-scm.com/downloads y seguimos los pasos que nos indica este. 
 
