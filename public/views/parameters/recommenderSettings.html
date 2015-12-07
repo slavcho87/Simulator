@@ -37,8 +37,17 @@
                     <div class="panel-body">      
                         <div class="row">      
                             <div class="col-sm-4">
-                                <label>Parameter name</label>
+                                <label>Pool name</label>
                                 <input class="form-control" />
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label>Recommender type</label>
+                                <select class="form-control">
+                                    <option value="nothing"></option>
+                                    <option value="push">Push</option>
+                                    <option value="pull">Pull</option>
+                                </select>
                             </div>
                             
                             <div class="col-sm-4">
@@ -47,9 +56,24 @@
                             </div>
                             
                             <div class="col-sm-4">
+                                </br>
                                 <label>Visibility radius (meters)</label>
                                 <input class="form-control" type="text">
                             </div>
+                            
+                            <div class="col-sm-4">
+                                </br>
+                                <label>Number of items to recommend</label>
+                                <input class="form-control" type="text">
+                            </div>
+                            
+                             <div class="col-sm-4">
+                                 </br>
+                                <label>Minimum score for recommending an item</label>
+                                <input class="form-control" type="text">
+                            </div>
+                            
+                            
                             
                             <div class="col-sm-12">
                                 <br>
@@ -67,26 +91,32 @@
 
                     <table class="table table-striped">
                         <thead>
-                            <tr>  
-                                <th>Parameter name</th>
-                                <th>Maximum distance to go (meters)</th>
-                                <th>Visibility radius (meters)</th>
-                                <th>Actions</th>
+                            <tr>
+                                <td>Pool name</td>
+                                <td>Recommender type</td>
+                                <td>Maximum distance to go (meters)</td>
+                                <td>Visibility radius (meters)</td>
+                                <td>Number of items to recommend</td>
+                                <td>Minimum score for recommending an item</td>
+                                <th></th>
                             </tr>
                         
                         </thead>
                             
                         <tbody>
                             <tr>
-                                <td>Actur parameter</td>
+                                <td>Parametros genericos</td>
+                                <td>Pull</td>
                                 <td>1500 m</td>
                                 <td>150 m</td>
+                                <td>10</td>
+                                <td>4</td>
                                 <td>
                                         <ul class="nav nav-tabs">  
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-primary dropdown-toggle" 
                                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Actions <span class="caret"></span>
+                                                        Options <span class="caret"></span>
                                                 </button>
 
                                                 <ul class="dropdown-menu">
@@ -162,8 +192,17 @@
               <div class="modal-body">
                         <div class="row">      
                             <div class="col-sm-4">
-                                <label>Parameter name</label>
+                                <label>Pool name</label>
                                 <input class="form-control" />
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label>Recommender type</label>
+                                <select class="form-control">
+                                    <option value="nothing"></option>
+                                    <option value="push">Push</option>
+                                    <option value="pull">Pull</option>
+                                </select>
                             </div>
                             
                             <div class="col-sm-4">
@@ -172,7 +211,20 @@
                             </div>
                             
                             <div class="col-sm-4">
+                                </br>
                                 <label>Visibility radius (meters)</label>
+                                <input class="form-control" type="text">
+                            </div>
+                            
+                            <div class="col-sm-4">
+                                </br>
+                                <label>Number of items to recommend</label>
+                                <input class="form-control" type="text">
+                            </div>
+                            
+                             <div class="col-sm-4">
+                                 </br>
+                                <label>Minimum score for recommending an item</label>
                                 <input class="form-control" type="text">
                             </div>
                         </div>
