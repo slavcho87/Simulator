@@ -15,7 +15,7 @@
                 <ul class="nav navbar-nav side-nav">
                     <li><a href="#/map"><i class="fa fa-map-marker"></i> Maps</a></li>
                     <li><a href="#/simulator"><i class="fa fa-globe"></i> Simulation</a></li>
-                    <li class="active"><a href="#/parameters"><i class="fa fa-cog"></i> Settings</a></li>
+                    <li class="active"><a href="#/settings"><i class="fa fa-cog"></i> Settings</a></li>
                     <li><a href="#/profile"><i class="fa fa-edit"></i> Profile</a></li>
                 </ul>
             </div>
@@ -23,28 +23,55 @@
         
         <div id="page-wrapper">		
             <ul class="nav nav-tabs">
-                <li><a data-toggle="tab" href="#parameters">Display settings</a></li>
-                <li class="active"><a data-toggle="tab" href="#parameters/simulationSettings">Simulation settings</a></li>
-                <li><a data-toggle="tab" href="#parameters/recommenderSettings">Recommender settings</a></li>
+                <li class="active"><a data-toggle="tab" href="#/settings">Recommender settings</a></li>
             </ul>
             
             <div class="panel-body">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-plus-circle"></i> Add new simulation settings</h3>                        
+                        <h3 class="panel-title"><i class="fa fa-plus-circle"></i> Add new recommender settings</h3>                        
                     </div>
 
                     <div class="panel-body">      
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label>Parameter name</label>
+                        <div class="row">      
+                            <div class="col-sm-4">
+                                <label>Pool name</label>
+                                <input class="form-control" />
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label>Recommender type</label>
+                                <select class="form-control">
+                                    <option value="nothing"></option>
+                                    <option value="push">Push</option>
+                                    <option value="pull">Pull</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-sm-4">
+                                <label>Maximum distance to go (meters)</label>
                                 <input class="form-control" />
                             </div>
                             
-                            <div class="col-sm-6">
-                                <label>Dynamic item speed (km/h)</label>
-                                <input class="form-control" />
+                            <div class="col-sm-4">
+                                </br>
+                                <label>Visibility radius (meters)</label>
+                                <input class="form-control" type="text">
                             </div>
+                            
+                            <div class="col-sm-4">
+                                </br>
+                                <label>Number of items to recommend</label>
+                                <input class="form-control" type="text">
+                            </div>
+                            
+                             <div class="col-sm-4">
+                                 </br>
+                                <label>Minimum score for recommending an item</label>
+                                <input class="form-control" type="text">
+                            </div>
+                            
+                            
                             
                             <div class="col-sm-12">
                                 <br>
@@ -53,18 +80,22 @@
                             
                         </div>
                     </div>
-                </div>      
-
+                </div>  
+                
                 <div class="panel panel-primary table-responsive">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-list-alt"></i> Simulation settings list</h3>
+                        <h3 class="panel-title"><i class="fa fa-list-alt"></i> Recommender settings list</h3>
                     </div>
 
                     <table class="table table-striped">
                         <thead>
-                            <tr>  
-                                <th>Parameter name</th>    
-                                <th>Dynamic item speed (km/h)</th>
+                            <tr>
+                                <td>Pool name</td>
+                                <td>Recommender type</td>
+                                <td>Maximum distance to go (meters)</td>
+                                <td>Visibility radius (meters)</td>
+                                <td>Number of items to recommend</td>
+                                <td>Minimum score for recommending an item</td>
                                 <th></th>
                             </tr>
                         
@@ -72,8 +103,12 @@
                             
                         <tbody>
                             <tr>
-                                <td>Parametros generales</td>
-                                <td>50 km/h</td>
+                                <td>Parametros genericos</td>
+                                <td>Pull</td>
+                                <td>1500 m</td>
+                                <td>150 m</td>
+                                <td>10</td>
+                                <td>4</td>
                                 <td>
                                         <ul class="nav nav-tabs">  
                                             <div class="btn-group">
@@ -83,11 +118,11 @@
                                                 </button>
 
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="#parameters/simulationSettings" role="button" 
-                                                           data-toggle="modal" data-target="#editSimulationModal">Edit setting</a></li>
+                                                    <li><a href="#settings/recommenderSettings" role="button" 
+                                                           data-toggle="modal" data-target="#editRecommenderModal">Edit setting</a></li>
 
-                                                    <li><a href="#parameters/simulationSettings" role="button" 
-                                                           data-toggle="modal" data-target="#deleteSimulationModal">Delete setting</a>
+                                                    <li><a href="#settings/recommenderSettings" role="button" 
+                                                           data-toggle="modal" data-target="#deleteRecommenderModal">Delete setting</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -113,12 +148,12 @@
                             </li>
                         </ul>
                     </nav>
-                </div>                
+                </div>                     
             </div>    
         </div>
 
         <!-- Delete parameter Modal -->
-        <div class="modal fade" role="dialog" id="deleteSimulationModal">
+        <div class="modal fade" role="dialog" id="deleteRecommenderModal">
           <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -142,25 +177,52 @@
         </div>
          
         <!-- Edit parameter Modal -->
-        <div class="modal fade" role="dialog" id="editSimulationModal">
+        <div class="modal fade" role="dialog" id="editRecommenderModal">
           <div class="modal-dialog" id="editParameterModal">
 
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Edit simulation setting</h4>
+                <h4 class="modal-title">Edit recommender setting</h4>
               </div>
                 
               <div class="modal-body">
                         <div class="row">      
-                            <div class="col-sm-6">
-                                <label>Parameter name</label>
+                            <div class="col-sm-4">
+                                <label>Pool name</label>
+                                <input class="form-control" />
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label>Recommender type</label>
+                                <select class="form-control">
+                                    <option value="nothing"></option>
+                                    <option value="push">Push</option>
+                                    <option value="pull">Pull</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-sm-4">
+                                <label>Maximum distance to go (meters)</label>
                                 <input class="form-control" />
                             </div>
                             
-                            <div class="col-sm-6">
-                                <label>Maximum number of dynamic item to show</label>
+                            <div class="col-sm-4">
+                                </br>
+                                <label>Visibility radius (meters)</label>
+                                <input class="form-control" type="text">
+                            </div>
+                            
+                            <div class="col-sm-4">
+                                </br>
+                                <label>Number of items to recommend</label>
+                                <input class="form-control" type="text">
+                            </div>
+                            
+                             <div class="col-sm-4">
+                                 </br>
+                                <label>Minimum score for recommending an item</label>
                                 <input class="form-control" type="text">
                             </div>
                         </div>
@@ -173,6 +235,6 @@
             </div>
 
           </div>
-        </div>           
+        </div> 
     </div>
 </div>

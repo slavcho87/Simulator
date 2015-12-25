@@ -15,7 +15,7 @@
                 <ul class="nav navbar-nav side-nav">
                     <li class="active"><a href="#/map"><i class="fa fa-map-marker"></i> Maps</a></li>
                     <li><a href="#/simulator"><i class="fa fa-globe"></i> Simulation</a></li>
-                    <li><a href="#/parameters"><i class="fa fa-globe"></i> Settings</a></li>
+                    <li><a href="#/settings"><i class="fa fa-globe"></i> Settings</a></li>
                     <li><a href="#/profile"><i class="fa fa-edit"></i> Profile</a></li>
                 </ul>
             </div>
@@ -67,136 +67,167 @@
 
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-xs-6">
-                                <label>Scene name</label>
-                                <input class="form-control" ng-model="map.name" />
-                            </div>
-                                    
-                            <div class="col-xs-6">
-                                <label>Display settings</label>
-                                <select class="form-control">
-                                    <option value="1">Display 1</option>
-                                    <option value="2">Display  2</option>
-                                    <option value="3">Display  3</option>
-                                </select>
-                            </div>
-                                                        
-                            <div class="col-xs-6">
-                                </br>
-                                <label>Simulation settings</label>
-                                <select class="form-control">
-                                    <option value="1">Simulation 1</option>
-                                    <option value="2">Simulation 2</option>
-                                    <option value="3">Simulation 3</option>
-                                </select>
-                            </div>
-                            
-                            <div class="col-xs-6">
-                                </br>
-                                <label>Recommender settings</label>
-                                <select class="form-control">
-                                    <option value="1">Recommender 1</option>
-                                    <option value="2">Recommender 2</option>
-                                    <option value="3">Recommender 3</option>
-                                </select>
-                            </div>
-                            
-                            <div class="col-xs-12">
-                                </br>                              
-                                <label>Static items</label>    
-                                <input type="file" name='imgPerfil'>     
-                                <b>
-                                    <i>* File containing these static objects on the map, that is, don't 
-                                        changing geographical position during the simulation
-                                    </i>
-                                </b>    
-                            </div>  
-            
-                            <div class="col-xs-12">           
-                                </br>      
-                                <label>Dynamic items</label>
-                                <input type="file" name='imgPerfil'>      
-                                <b>
-                                    <i>* File containing dynamic objects of the map, that is, the changing 
-                                    geographic position during the simulation such as automobiles
-                                    </i>
-                                </b>   
-                            </div>  
-                    
-                            <div class="col-xs-12">
-                                <br/>
-                                <h3>Limitations of the scene</h3>
-                            </div>    
-                    
-                            <div class="col-xs-6">
-                                </br>
-                                <label>Upper left corner: latitude</label>
-                                <input id="initPosLat" class="form-control" disabled/>
-                            </div>
-                            
-                            <div class="col-xs-6">
-                                </br>
-                                <label>Upper left corner: longitude</label>
-                                 <input id="initPosLong" class="form-control" disabled/>
-                            </div>        
-                    
-                            <div class="col-xs-6">
-                                </br>
-                                <label>Lower right corner: latitude</label>
-                                <input id="initPosLat" class="form-control"  disabled/>
-                            </div>
-                            
-                            <div class="col-xs-6">
-                                </br>
-                                <label>Lower right corner: longitude</label>
-                                 <input id="initPosLong" class="form-control" disabled/>
-                            </div>                
-                            
-                            <div class="col-xs-12">       
-                                </br>         
-                                <label>City</label>  
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search for...">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button">Go!</button>
-                                    </span>
+                            <div ng-hide="isStepActivate(1)">
+                                <div class="col-xs-6">
+                                    <label>Scene name</label>
+                                    <input class="form-control" ng-model="map.name" />
                                 </div>
-                            </div>
-        
-                            <div class="col-xs-12"> 
-                                <br/>
-                                <div id="crearMapa" >
-                                </div>
-                                        
-                                <script type="text/javascript">               
-                                    var map = new ol.Map({
-                                        target: 'crearMapa',
-                                        layers: [
-                                            new ol.layer.Tile({
-                                                source: new ol.source.MapQuest({layer: 'osm'})
-                                            })   
-                                        ],      
-                                        view: new ol.View({            
-                                            center: ol.proj.transform([-0.88824, 41.66991], 'EPSG:4326', 'EPSG:3857'),        
-                                            zoom: 15           
-                                        }),       
-                                        controls: ol.control.defaults().extend([      
-                                            new ol.control.FullScreen() 
-                                        ])        
-                                    });          
 
-                                    map.on('singleclick', function(evt) {
-                                        $('#initPosLat').val(evt.coordinate[0]);
-                                        $('#initPosLong').val(evt.coordinate[1]);
-                                    });
-                                </script>                                
-                            </div>    
-            
-                            <div class="col-sm-12">
-                                <br/>
-                                <input type="submit" class="btn btn-primary" value="Save">
+                                <div class="col-xs-6">
+                                    <label>Recommender settings</label>
+                                    <select class="form-control">
+                                        <option value="1">Recommender 1</option>
+                                        <option value="2">Recommender 2</option>
+                                        <option value="3">Recommender 3</option>
+                                    </select>
+                                </div>                            
                             </div>
-                    </div>     
+                            
+                            <div ng-hide="isStepActivate(2)">
+                                <div class="col-xs-12">
+                                    <h3>Limitations of the scene</h3>
+                                </div>    
+
+                                <div class="col-xs-6">
+                                    </br>
+                                    <label>Upper left corner: latitude</label>
+                                    <input id="initPosLat" class="form-control" disabled/>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    </br>
+                                    <label>Upper left corner: longitude</label>
+                                     <input id="initPosLong" class="form-control" disabled/>
+                                </div>        
+
+                                <div class="col-xs-6">
+                                    </br>
+                                    <label>Lower right corner: latitude</label>
+                                    <input id="initPosLat" class="form-control"  disabled/>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    </br>
+                                    <label>Lower right corner: longitude</label>
+                                     <input id="initPosLong" class="form-control" disabled/>
+                                </div>                
+
+                                <div class="col-xs-6">
+                                    <div class="radio">
+                                      <label>
+                                        <input type="radio" name="opciones" id="upperLeftCorner" value="upperLeftCorner" checked>
+                                        select upper left corner
+                                      </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <div class="radio">
+                                      <label>
+                                        <input type="radio" name="opciones" id="lowerRightCorner" value="lowerRightCorner">
+                                        select lower right corner
+                                      </label>
+                                    </div>                                    
+                                </div>
+
+                                <div class="col-xs-12">       
+                                    </br>         
+                                    <label>City</label>  
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search for...">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button">Go!</button>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12"> 
+                                    <br/>
+                                    <div id="crearMapa" >
+                                    </div>
+
+                                    <script type="text/javascript">               
+                                        var map = new ol.Map({
+                                            target: 'crearMapa',
+                                            layers: [
+                                                new ol.layer.Tile({
+                                                    source: new ol.source.MapQuest({layer: 'osm'})
+                                                })   
+                                            ],      
+                                            view: new ol.View({            
+                                                center: ol.proj.transform([-0.88824, 41.66991], 'EPSG:4326', 'EPSG:3857'),        
+                                                zoom: 15           
+                                            }),       
+                                            controls: ol.control.defaults().extend([      
+                                                new ol.control.FullScreen() 
+                                            ])        
+                                        });          
+
+                                        map.on('singleclick', function(evt) { 
+                                            $('#initPosLat').val(evt.coordinate[0]);
+                                            $('#initPosLong').val(evt.coordinate[1]);
+                                        });
+                                    </script>                                
+                                </div>                                    
+                            </div>                            
+
+                            <div ng-hide="isStepActivate(3)">
+                                <div class="col-xs-12">
+                                    <h3>Static items settings</h3>
+                                </div>
+                                
+                                <div class="col-xs-12">
+                                    <label>Maximum number of static items to show</label>
+                                    <input class="form-control" name='maxNumerStaticItemsShow'>
+                                </div>
+                                
+                                <div class="col-xs-12">
+                                    <label>Static items</label>    
+                                    <input type="file" name='imgPerfil'>     
+                                    <b>
+                                        <i>* File containing these static objects on the map, that is, don't 
+                                            changing geographical position during the simulation
+                                        </i>
+                                    </b>    
+                                </div>  
+                                
+                            </div>
+                            
+                            <div ng-hide="isStepActivate(4)">
+                                <div class="col-xs-12">
+                                    <h3>Dynamic items settings</h3>
+                                </div>
+                                
+                                <div class="col-xs-12">
+                                    <label>Maximum number of dynamic items to show</label>
+                                    <input class="form-control" name='maxNumerDynamicsItemsShow'>
+                                </div>
+                                
+                                <div class="col-xs-12">           
+                                    </br>      
+                                    <label>Dynamic items</label>
+                                    <input type="file" name='imgPerfil'>      
+                                    <b>
+                                        <i>* File containing dynamic objects of the map, that is, the changing 
+                                        geographic position during the simulation such as automobiles
+                                        </i>
+                                    </b>   
+                                </div>
+     
+                                <div class="col-sm-12">
+                                    <button type="button" class="btn btn-primary btn-block">Save</button>
+                                </div>
+                            </div>                            
+                            
+                            <nav align="center">
+                              <ul class="pagination">
+                                <li ng-class="{active:!isStepActivate('1')}"><a href="#/map/editMap" ng-click="setStep(1)">Step 1</a></li>
+                                <li ng-class="{active:!isStepActivate('2')}"><a href="#/map/editMap" ng-click="setStep(2)">Step  2</a></li>
+                                <li ng-class="{active:!isStepActivate('3')}"><a href="#/map/editMap" ng-click="setStep(3)">Step  3</a></li>
+                                <li ng-class="{active:!isStepActivate('4')}"><a href="#/map/editMap" ng-click="setStep(4)">Step  4</a></li>
+                              </ul>
+                            </nav>
+                        </div>     
                 </div>                         
         </div>   
 

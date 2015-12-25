@@ -6,35 +6,31 @@ app.config(['$routeProvider', '$httpProvider' ,function($routeProvider, $httpPro
 		controller: 'LoginController'
 	}).when('/register', {
 		templateUrl: 'views/register.html',
-		controller: 'LoginController'
+		controller: 'RegisterController'
 	}).when('/map', {
 		templateUrl: 'views/maps/index.html',
 		controller: 'MapController'
 	}).when('/map/newMap', {
 		templateUrl: 'views/maps/newMap.html',
-		controller: 'MapController'        
+		controller: 'NewMapController'        
 	}).when('/map/editScene', {
 		templateUrl: 'views/maps/editScene.html',
-		controller: 'MapController'        
+		controller: 'EditSceneController'        
 	}).when('/map/editMap', {
 		templateUrl: 'views/maps/editMap.html',
-		controller: 'MapController'
+		controller: 'EditMapController'
 	}).when('/simulator', {
 		templateUrl: 'views/simulator/index.html',
 		controller: 'SimulatorController'
-	}).when('/parameters', {
-		templateUrl: 'views/parameters/index.html',
-		controller: 'ConfigurationController'
-    }).when('/parameters/simulationSettings', {
-		templateUrl: 'views/parameters/simulationSettings.html',
-		controller: 'ConfigurationController'
-    }).when('/parameters/recommenderSettings', {
-		templateUrl: 'views/parameters/recommenderSettings.html',
-		controller: 'ConfigurationController'
+	}).when('/settings', {
+		templateUrl: '/settings/recommenderSettings',
+		controller: 'SettingsController'
     }).when('/profile', {
 		templateUrl: 'views/configurations/index.html',
 		controller: 'ConfigurationController'
-	}); 
+	}).otherwise({
+        redirectTo: '/'
+    }); 
     
     $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function($q, $location, $localStorage) {
         return {  

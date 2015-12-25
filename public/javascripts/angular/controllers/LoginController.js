@@ -2,17 +2,10 @@ var app = angular.module("app");
 
 app.controller("LoginController", ['$scope', '$location', '$http', '$localStorage', 'UserService', function ($scope, $location, $http, $localStorage, UserService) {
     $scope.errorMsgList = [];
-    $scope.successMsgList = [];
     
     $scope.loginForm = {
         userName: "",
         pass: ""
-    };
-    
-    $scope.registerForm = {
-        userName: "",
-        pass: "",
-        repeatPass: ""
     };
     
     /**
@@ -30,38 +23,6 @@ app.controller("LoginController", ['$scope', '$location', '$http', '$localStorag
             $scope.errorMsgList.push("Authentication fail!");
         });
     }
-
-    /**
-     * Login service
-     */
-    $scope.register = function() {
-        var error = false;
-        
-        if($scope.registerForm.pass!=$scope.registerForm.repeatPass){
-            error = true;
-             $scope.errorMsgList.push("Password not equals");
-        }
-        
-        if(!error){
-            UserService.save($scope.registerForm, function(res){ 
-                if (res.type == false) {
-                    $scope.errorMsgList.push(res.data);
-                } else {
-                    $localStorage.token = res.data.token;
-                    $scope.successMsgList.push("User has been created. Please login!");  
-                }
-            },function(error){
-                $scope.errorMsgList.push(error);
-            });
-        }
-    }
-    
-    /**
-     * redirecto to the login page
-     */
-    $scope.goToLogin = function(msg) {
-        $location.path('/');
-    }
     
     /*
      * Hide error message
@@ -76,16 +37,5 @@ app.controller("LoginController", ['$scope', '$location', '$http', '$localStorag
         }
     }
     
-    /*
-     * Hide success message
-     */    
-    $scope.successMsgHide = function(msg) {
-        var msgIndex = $scope.successMsgList.indexOf(msg);
-        
-        if(msgIndex>=0){
-            $scope.successMsgList.splice(msgIndex, 1);
-        }else{
-            $scope.successMsgList.push("Ha ocurrido un error");
-        }
-    }
+
 }])
