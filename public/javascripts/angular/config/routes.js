@@ -23,8 +23,14 @@ app.config(['$routeProvider', '$httpProvider' ,function($routeProvider, $httpPro
 		templateUrl: 'views/simulator/index.html',
 		controller: 'SimulatorController'
 	}).when('/settings', {
-		templateUrl: '/settings/recommenderSettings',
-		controller: 'SettingsController'
+		templateUrl: 'views//settings/recommenderSettings.html',
+		controller: 'RecommenderSettingsController'
+    }).when('/settings/staticItemSettings', {
+		templateUrl: 'views/settings/staticItemSettings.html',
+		controller: 'StaticItemSettingsController'
+    }).when('/settings/dynamicItemSettings', {
+		templateUrl: 'views/settings/dynamicItemSettings.html',
+		controller: 'DymanicItemSettingsController'
     }).when('/profile', {
 		templateUrl: 'views/configurations/index.html',
 		controller: 'ConfigurationController'
