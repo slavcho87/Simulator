@@ -30,4 +30,18 @@ app.controller("EditMapController", ['$scope', '$http', function ($scope, $http)
             $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
         }
     }
+    
+    /*
+     *
+     */
+    $scope.loadFromFileSelected = function(){        
+        return ($scope.defineForm!="loadFromFile");
+    }
+    
+    /*
+     *
+     */
+    $scope.setManuallySelected = function(){
+        return ($scope.defineForm!="setManually");
+    }    
 }]);

@@ -3,7 +3,8 @@ var app = angular.module("app");
 app.controller("NewMapController", ['$scope', '$http', function ($scope, $http) {
     $scope.errorMsgList = [];
     $scope.step=1;
-
+    $scope.maximumStaticItemsToDisplay = 150;
+    
     /*
      * 
      */
@@ -30,5 +31,18 @@ app.controller("NewMapController", ['$scope', '$http', function ($scope, $http) 
             $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
         }
     }
-     
+    
+    /*
+     *
+     */
+    $scope.loadFromFileSelected = function(){        
+        return ($scope.defineForm!="loadFromFile");
+    }
+    
+    /*
+     *
+     */
+    $scope.setManuallySelected = function(){
+        return ($scope.defineForm!="setManually");
+    }
 }]);

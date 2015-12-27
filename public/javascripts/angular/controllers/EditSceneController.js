@@ -30,4 +30,18 @@ app.controller("EditSceneController", ['$scope', '$http', function ($scope, $htt
             $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
         }
     } 
+    
+    /*
+     *
+     */
+    $scope.loadFromFileSelected = function(){        
+        return ($scope.defineForm!="loadFromFile");
+    }
+    
+    /*
+     *
+     */
+    $scope.setManuallySelected = function(){
+        return ($scope.defineForm!="setManually");
+    }  
 }]);

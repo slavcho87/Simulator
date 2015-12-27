@@ -172,25 +172,150 @@
                             </div>                            
 
                             <div ng-hide="isStepActivate(3)">
-                                <div class="col-xs-12">
+<div class="col-xs-12">
                                     <h3>Static items settings</h3>
                                 </div>
                                 
-                                <div class="col-xs-12">
-                                    <label>Maximum number of static items to show</label>
-                                    <input class="form-control" name='maxNumerStaticItemsShow'>
+                                <div class="col-xs-6">
+                                    <label>Define items form ...</label>
+                                    <select ng-model="defineForm" class="form-control">
+                                        <option value="loadFromFile">Load from file</option>
+                                        <option value="setManually">Set manually</option>
+                                    </select>
                                 </div>
                                 
-                                <div class="col-xs-12">
-                                    <label>Static items</label>    
-                                    <input type="file" name='imgPerfil'>     
-                                    <b>
-                                        <i>* File containing these static objects on the map, that is, don't 
-                                            changing geographical position during the simulation
-                                        </i>
-                                    </b>    
-                                </div>  
+                                <div class="col-xs-6">
+                                    <label>Maximum number of items to display</label>
+                                    <input ng-model="maximumStaticItemsToDisplay" class="form-control"/>
+                                </div>
                                 
+                                <div ng-hide="loadFromFileSelected()">
+                                    <!-- cuando cargamos los objetos desde un fichero de texto -->
+                                    
+                                    <div class="col-xs-12">
+                                        </br>
+                                        <label>Static items</label>    
+                                        <input type="file" name='imgPerfil'>     
+                                        <b>
+                                            <i>* File containing these static objects on the map, that is, don't 
+                                                changing geographical position during the simulation
+                                            </i>
+                                        </b>    
+                                    </div>
+                                </div>
+                                
+                                <div ng-hide="setManuallySelected()">
+                                    <!-- cuando tenemos que definir los objetos de forma manual en el mapa -->
+                                    
+                                    <div class="col-xs-12">
+                                        <nav>
+                                          <ul class="pagination">
+                                            <li class="active">
+                                                <a href="#/map/newMap"><img src="../../images/new-map.png" height="16" width="16"/></a>
+                                            </li>
+                                            <li>
+                                                <a href="#/map/newMap"><img src="../../images/new-map.png" height="16" width="16"/></a>
+                                            </li>
+                                            <li>
+                                                <a href="#/map/newMap"><img src="../../images/new-map.png" height="16" width="16"/></a>
+                                            </li>
+                                            <li>
+                                                <a href="#/map/newMap"><img src="../../images/new-map.png" height="16" width="16"/></a>
+                                            </li>
+                                          </ul>
+                                        </nav>    
+                                    </div>
+                                    
+                                    <div class="col-xs-12">
+                                        <label>Item name</label>
+                                        <input class="form-control"/>
+                                    </div>    
+                                </div>
+     
+                                <div class="col-xs-12">
+                                        </br>
+                                        <div id="staticItemsMap" >
+                                        </div>
+
+                                        <script type="text/javascript">               
+                                            var map = new ol.Map({
+                                                target: 'staticItemsMap',
+                                                layers: [
+                                                    new ol.layer.Tile({
+                                                        source: new ol.source.MapQuest({layer: 'osm'})
+                                                    })   
+                                                ],      
+                                                view: new ol.View({            
+                                                    center: ol.proj.transform([-0.88824, 41.66991], 'EPSG:4326', 'EPSG:3857'),        
+                                                    zoom: 15           
+                                                }),       
+                                                controls: ol.control.defaults().extend([      
+                                                    new ol.control.FullScreen() 
+                                                ])        
+                                            });     
+                                        </script>                                      
+                                </div>
+                                
+     
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Item name</th>
+                                            <th>Item type</th>
+                                            <th>Icon</th>
+                                            <th>Options</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Canterbury</td>
+                                            <td>Bar</td>
+                                            <td><img src="../../images/new-map.png" height="16" width="16"/></td>
+                                            <td>
+                                                <button class="btn btn-danger fa fa-trash-o" 
+                                                        data-toggle="modal" data-target="#deleteStaticItemModal"></button>
+                                            </td> 
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td>100 Montaditos</td>
+                                            <td>Hotel</td>
+                                            <td><img src="../../images/new-map.png" height="16" width="16"/></td>
+                                            <td>
+                                                <button class="btn btn-danger fa fa-trash-o" 
+                                                        data-toggle="modal" data-target="#deleteStaticItemModal"></button>
+                                            </td> 
+                                        </tr>
+                                    </tbody>
+                                </table>    
+     
+                                <nav align="center">
+                                    <ul class="pagination">
+                                        <li class="disabled"><a href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span></a>
+                                        </li>
+                                        <li class="active">
+                                            <a href="#">1</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">2</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">3</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">4</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">5</a>
+                                        </li>
+                                        <li>
+                                          <a href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                          </a>
+                                        </li>
+                                    </ul>
+                                </nav>
                             </div>
                             
                             <div ng-hide="isStepActivate(4)">
@@ -318,6 +443,30 @@
                 
               <div class="modal-body">
                 <p>Are you sure you want to delete this map?</p>
+              </div>
+                
+              <div class="modal-footer">  
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>  
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Delete static item Modal -->
+        <div class="modal fade" role="dialog" id="deleteStaticItemModal">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Confirmation</h4>
+              </div>
+                
+              <div class="modal-body">
+                <p>Are you sure you want to delete this static item?</p>
               </div>
                 
               <div class="modal-footer">  
