@@ -49,6 +49,9 @@ app.service('UserService', ['$http', '$localStorage', function($http, $localStor
         uploadImgProfile: function(data, success, error) {
             $http.post('/user/uploadPhoto', data).success(success).error(error);
         },
+        citySearch: function(data, success, error) {
+            $http.get('/maps/city/search/'+data).success(success).error(error);
+        },
         logout: function(success) {
             changeUser({});
             delete $localStorage.token;

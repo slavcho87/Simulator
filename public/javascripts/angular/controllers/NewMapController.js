@@ -1,9 +1,18 @@
 var app = angular.module("app");
 
-app.controller("NewMapController", ['$scope', '$http', function ($scope, $http) {
+app.controller("NewMapController", ['$scope', '$http', 'UserService', function ($scope, $http, UserService) {
     $scope.errorMsgList = [];
     $scope.step=1;
     $scope.maximumStaticItemsToDisplay = 150;
+    $scope.cityList = [];
+    
+    $scope.citySearch = function(){
+        UserService.citySearch($scope.citySearchValue, function(res){
+            $scope.cityList = res; 
+        },function(error){
+           alert("error");
+        });
+    }
     
     /*
      * 
