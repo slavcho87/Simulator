@@ -1,6 +1,6 @@
 var app = angular.module("app");
 
-app.controller("RegisterController", ['$scope', '$location', '$http', '$localStorage', 'UserService', function ($scope, $location, $http, $localStorage, UserService) {
+app.controller("RegisterController", ['$scope', '$location', '$http', '$localStorage', 'Services', function ($scope, $location, $http, $localStorage, Services) {
     $scope.errorMsgList = [];
     $scope.successMsgList = [];
 
@@ -22,7 +22,7 @@ app.controller("RegisterController", ['$scope', '$location', '$http', '$localSto
         }
         
         if(!error){
-            UserService.save($scope.registerForm, function(res){ 
+            Services.save($scope.registerForm, function(res){ 
                 if (res.type == false) {
                     $scope.errorMsgList.push(res.data);
                 } else {

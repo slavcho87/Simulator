@@ -21,7 +21,16 @@
             </div>
         </nav>            
 
-        <div id="page-wrapper">		
+        <div id="page-wrapper">	
+            <div class="alert alert-dismissable alert-danger" ng-repeat="errorMsg in errorMsgList">
+                <button type="button" 
+                        class="close" 
+                        data-dismiss="alert" 
+                        aria-hidden="true" 
+                        ng-click="msgHide(errorMsg)">&times;</button>
+                {{errorMsg}}
+            </div>            
+            
             <ul class="nav nav-tabs">
                 <li><a data-toggle="tab" href="#map">Map search</a></li>
                 <li class="active"><a data-toggle="tab" href="#newMap">New map</a></li>
@@ -158,13 +167,15 @@
                                     </div>
                                     
                                     <script type="text/javascript">
-                                        $("select[name=selectedCity]").change(function(){
-                                            var searchCitySelected = $("select[name=selectedCity]").val();
-                                            searchCitySelected = JSON.parse(searchCitySelected);
-                                            map.setCenter(ol.proj.transform([searchCitySelected.lon, searchCitySelected.lat], 'EPSG:4326', 'EPSG:3857'));
-                                        });
+                                         $(document).ready(function(){
+                                             $("select[name=selectedCity]").change(function(){
+                                                var searchCitySelected = $("select[name=selectedCity]").val();
+                                                searchCitySelected = JSON.parse(searchCitySelected);
+                                                limitMap.getView().setCenter(ol.proj.transform([parseFloat(searchCitySelected.lon), parseFloat(searchCitySelected.lat)], 'EPSG:4326', 'EPSG:3857'));
+                                            });
+                                        });                           
                                         
-                                        var map = new ol.Map({
+                                        var limitMap = new ol.Map({
                                             target: 'crearMapa',
                                             layers: [
                                                 new ol.layer.Tile({
@@ -173,14 +184,14 @@
                                             ],      
                                             view: new ol.View({            
                                                 center: ol.proj.transform([-0.88824, 41.66991], 'EPSG:4326', 'EPSG:3857'),        
-                                                zoom: 15           
+                                                zoom: 15        
                                             }),       
                                             controls: ol.control.defaults().extend([      
                                                 new ol.control.FullScreen() 
                                             ])        
                                         });
 
-                                        map.on('singleclick', function(evt) { 
+                                        limitMap.on('singleclick', function(evt) { 
                                             var corner = $('input[name=opciones]:checked').val()
                                             var pos = ol.proj.transform(evt.coordinate,'EPSG:3857', 'EPSG:4326');
                                             
@@ -266,7 +277,7 @@
                                         </div>
 
                                         <script type="text/javascript">               
-                                            var map = new ol.Map({
+                                            var staticItemsMap = new ol.Map({
                                                 target: 'staticItemsMap',
                                                 layers: [
                                                     new ol.layer.Tile({

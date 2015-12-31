@@ -1,6 +1,6 @@
 var app = angular.module("app");
 
-app.controller("LoginController", ['$scope', '$location', '$http', '$localStorage', 'UserService', function ($scope, $location, $http, $localStorage, UserService) {
+app.controller("LoginController", ['$scope', '$location', '$http', '$localStorage', 'Services', function ($scope, $location, $http, $localStorage, Services) {
     $scope.errorMsgList = [];
     
     $scope.loginForm = {
@@ -12,7 +12,7 @@ app.controller("LoginController", ['$scope', '$location', '$http', '$localStorag
      * Login service
      */
     $scope.login = function() {
-        UserService.login($scope.loginForm, function(res){
+        Services.login($scope.loginForm, function(res){
             if(res.type == false){
                 $scope.errorMsgList.push(res.data);
             }else{

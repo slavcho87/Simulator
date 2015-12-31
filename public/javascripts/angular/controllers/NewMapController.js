@@ -1,17 +1,21 @@
 var app = angular.module("app");
 
-app.controller("NewMapController", ['$scope', '$http', 'UserService', function ($scope, $http, UserService) {
+app.controller("NewMapController", ['$scope', '$http', 'Services', function ($scope, $http, Services) {
     $scope.errorMsgList = [];
     $scope.step=1;
     $scope.maximumStaticItemsToDisplay = 150;
     $scope.cityList = [];
     
     $scope.citySearch = function(){
-        UserService.citySearch($scope.citySearchValue, function(res){
-            $scope.cityList = res; 
-        },function(error){
-           alert("error");
-        });
+        if(!$scope.citySearchValue || 0 === $scope.citySearchValue.length){
+            $scope.errorMsgList.push("Insert city name!");
+        }else{
+            Services.citySearch($scope.citySearchValue, function(res){
+                $scope.cityList = res; 
+            },function(error){
+               $scope.errorMsgList.push("Error: "+error);
+            });        
+        }
     }
     
     /*
