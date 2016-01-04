@@ -23,6 +23,12 @@ app.controller("NewMapController", ['$scope', '$http', 'Services', function ($sc
      */
     $scope.setStep = function(stepNumber){
         $scope.step = stepNumber;
+        
+        staticItemsMap.getView().setCenter(limitMap.getView().getCenter());
+        staticItemsMap.getView().setZoom(limitMap.getView().getZoom());
+
+        dynamicItemsMap.getView().setCenter(limitMap.getView().getCenter());
+        dynamicItemsMap.getView().setZoom(limitMap.getView().getZoom());
     }
     
     /*
@@ -55,7 +61,21 @@ app.controller("NewMapController", ['$scope', '$http', 'Services', function ($sc
     /*
      *
      */
+    $scope.loadFromFileSelectedDynamicItem = function(){
+        return ($scope.defineFormFileDynamicItem!="loadFromFileDynamicItem");
+    }
+    
+    /*
+     *
+     */
     $scope.setManuallySelected = function(){
         return ($scope.defineForm!="setManually");
+    }
+    
+    /*
+     *
+     */
+    $scope.setManuallySelectedDynamicItem = function(){
+        return ($scope.defineFormFileDynamicItem!="setManuallyDynamicItem");
     }
 }]);

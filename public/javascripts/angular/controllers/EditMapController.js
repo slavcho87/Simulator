@@ -20,7 +20,7 @@ app.controller("EditMapController", ['$scope', '$http', function ($scope, $http)
 
    /*
     * Hide error message
-    */    
+    */
     $scope.msgHide = function(msg){
         var msgIndex = $scope.errorMsgList.indexOf(msg);
         

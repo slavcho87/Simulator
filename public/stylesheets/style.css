@@ -19,6 +19,8 @@
     height: 300px;
 }
 
+.container { border:2px solid #ccc; width:auto; height: 100px; overflow-y: scroll; }
+
 .crearMapa{
     height: 200px;
 }

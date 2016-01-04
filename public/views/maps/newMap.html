@@ -273,10 +273,10 @@
      
                                 <div class="col-xs-12">
                                         </br>
-                                        <div id="staticItemsMap" >
+                                        <div id="staticItemsMap">
                                         </div>
 
-                                        <script type="text/javascript">               
+                                        <script type="text/javascript">                                              
                                             var staticItemsMap = new ol.Map({
                                                 target: 'staticItemsMap',
                                                 layers: [
@@ -364,22 +364,103 @@
                                     <h3>Dynamic items settings</h3>
                                 </div>
                                 
-                                <div class="col-xs-12">
-                                    <label>Maximum number of dynamic items to show</label>
-                                    <input class="form-control" name='maxNumerDynamicsItemsShow'>
+                                <div class="col-xs-6">
+                                    <label>Define items form ...</label>
+                                    <select ng-model="defineFormFileDynamicItem" class="form-control">
+                                        <option value="loadFromFileDynamicItem">Load from file</option>
+                                        <option value="setManuallyDynamicItem">Set manually</option>
+                                    </select>
                                 </div>
                                 
-                                <div class="col-xs-12">           
-                                    </br>      
-                                    <label>Dynamic items</label>
-                                    <input type="file" name='imgPerfil'>      
-                                    <b>
-                                        <i>* File containing dynamic objects of the map, that is, the changing 
-                                        geographic position during the simulation such as automobiles
-                                        </i>
-                                    </b>   
+                                <div class="col-xs-6">
+                                    <label>Maximum number of items to display</label>
+                                    <input ng-model="maximumDynamicItemsToDisplay" class="form-control"/>
                                 </div>
-     
+                                
+                                <div ng-hide="loadFromFileSelectedDynamicItem()">
+                                    <!-- cuando cargamos los objetos desde un fichero de texto -->
+                                    
+                                    <div class="col-xs-12">           
+                                        </br>      
+                                        <label>Dynamic items</label>
+                                        <input type="file" name='imgPerfil'>      
+                                        <b>
+                                            <i>* File containing dynamic objects of the map, that is, the changing 
+                                            geographic position during the simulation such as automobiles
+                                            </i>
+                                        </b>   
+                                    </div>
+                                </div>
+                                
+                                <div ng-hide="setManuallySelectedDynamicItem()">                                
+                                    </br>
+                                    <div class="col-xs-12">
+                                        <nav>
+                                            <ul class="pagination">
+                                                <li class="active">
+                                                    <a href="#/map/newMap"><img src="../../images/new-map.png" height="16" width="16"/></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#/map/newMap"><img src="../../images/new-map.png" height="16" width="16"/></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#/map/newMap"><img src="../../images/new-map.png" height="16" width="16"/></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#/map/newMap"><img src="../../images/new-map.png" height="16" width="16"/></a>
+                                                </li>
+                                            </ul>
+                                        </nav>    
+                                    </div>
+                                    
+                                    <div class="col-xs-6">
+                                        <label>Item name</label>
+                                        <input class="form-control"/>
+                                    </div>
+
+                                    <div class="col-xs-6"> 
+                                        <div class="container">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    </br>
+                                    <div id="dynamicItemsMap">
+                                    </div>
+
+                                    <script type="text/javascript">
+                                        var dynamicItemsMap = new ol.Map({
+                                            target: 'dynamicItemsMap',
+                                            layers: [
+                                                new ol.layer.Tile({
+                                                    source: new ol.source.MapQuest({layer: 'osm'})
+                                                })   
+                                            ],      
+                                            view: new ol.View({            
+                                                center: ol.proj.transform([-0.88824, 41.66991], 'EPSG:4326', 'EPSG:3857'),        
+                                                zoom: 15           
+                                            }),       
+                                            controls: ol.control.defaults().extend([      
+                                                new ol.control.FullScreen() 
+                                            ])        
+                                        });    
+                                        
+                                        dynamicItemsMap.on('singleclick', function(evt) {
+                                            var pos = ol.proj.transform(evt.coordinate,'EPSG:3857', 'EPSG:4326');
+                                            // pos[0] -> lat
+                                            // pos[1] --> long
+                                            var pos0 = Math.round(pos[0] * 100) / 100;
+                                            var pos1 = Math.round(pos[1] * 100) / 100;
+                                            
+                                            var input = "<input type=\"checkbox\">("+pos0+", "+pos1+")</input> <button>x</button> <br />";
+                                            $('.container').append(input);
+                                            console.log(input);
+                                            
+                                        });
+                                    </script>
+                                </div>
+                                    
                                 <div class="col-sm-12">
                                     <button type="button" class="btn btn-primary btn-block">Save</button>
                                 </div>
