@@ -29,7 +29,16 @@
                         aria-hidden="true" 
                         ng-click="msgHide(errorMsg)">&times;</button>
                 {{errorMsg}}
-            </div>            
+            </div>      
+            
+            <div class="alert alert-dismissable alert-success" ng-repeat="msg in msgList">
+                <button type="button" 
+                        class="close" 
+                        data-dismiss="alert" 
+                        aria-hidden="true" 
+                        ng-click="msgSuccessHide(msg)">&times;</button>
+                {{msg}}
+            </div>
             
             <ul class="nav nav-tabs">
                 <li><a data-toggle="tab" href="#map">Map search</a></li>
@@ -67,14 +76,14 @@
                             
                             <div class="col-xs-12">
                                 </br>
-                                <input type="submit" class="btn btn-primary" value="Save">
+                                <input type="submit" class="btn btn-primary" value="Save" ng-click="mapSave()">
                             </div>
                     </div>     
                 </div>   
 
             </div>
  
-                <div class="panel panel-primary">
+                <div class="panel panel-primary" ng-hide="hideScene">
                     <div class="panel-heading">
                         <h3 class="panel-title"><i class="fa fa-plus-circle"></i> Create scene </h3>
                     </div>
@@ -84,12 +93,12 @@
                             <div ng-hide="isStepActivate(1)">
                                 <div class="col-xs-6">
                                     <label>Scene name</label>
-                                    <input class="form-control" ng-model="map.name" />
+                                    <input class="form-control" ng-model="scene.name" />
                                 </div>
 
                                 <div class="col-xs-6">
                                     <label>Recommender settings</label>
-                                    <select class="form-control">
+                                    <select class="form-control" ng-model="scene.recommenderSettings">
                                         <option value="1">Recommender 1</option>
                                         <option value="2">Recommender 2</option>
                                         <option value="3">Recommender 3</option>
@@ -105,25 +114,25 @@
                                 <div class="col-xs-6">
                                     </br>
                                     <label>Upper left corner: latitude</label>
-                                    <input id="initPosLat" class="form-control" disabled/>
+                                    <input id="initPosLat" class="form-control" ng-model="scene.latitudeULC" disabled/>
                                 </div>
 
                                 <div class="col-xs-6">
                                     </br>
                                     <label>Upper left corner: longitude</label>
-                                     <input id="initPosLong" class="form-control" disabled/>
+                                     <input id="initPosLong" class="form-control" ng-model="scene..longitudeULC" disabled/>
                                 </div>        
 
                                 <div class="col-xs-6">
                                     </br>
                                     <label>Lower right corner: latitude</label>
-                                    <input id="endPosLat" class="form-control"  disabled/>
+                                    <input id="endPosLat" class="form-control" ng-model="scene.latitudeLRC" disabled/>
                                 </div>
 
                                 <div class="col-xs-6">
                                     </br>
                                     <label>Lower right corner: longitude</label>
-                                     <input id="endPosLong" class="form-control" disabled/>
+                                     <input id="endPosLong" class="form-control" ng-model="scene.latitudeLRC" disabled/>
                                 </div>                
 
                                 <div class="col-xs-6">
@@ -146,7 +155,7 @@
                                     </br>         
                                     <label>City</label>  
                                     <div class="input-group">
-                                        <input ng-model="citySearchValue" type="text" class="form-control" placeholder="Search for...">
+                                        <input ng-model="scene.citySearchValue" type="text" class="form-control" placeholder="Search for...">
                                         <span class="input-group-btn">
                                             <button class="btn btn-default" type="button" ng-click="citySearch()">Go!</button>
                                         </span>
@@ -156,7 +165,7 @@
                                 <div ng-hide="cityList.length==0" class="col-xs-6">
                                     </br>
                                     <label>Places: </label>    
-                                    <select ng-model="selectedCity" name="selectedCity" class="form-control">
+                                    <select ng-model="scene.selectedCity" name="selectedCity" class="form-control">
                                         <option ng-repeat="city in cityList" value={{city}}>{{city.display_name}}</option>
                                     </select>
                                 </div>
@@ -217,7 +226,7 @@
                                 
                                 <div class="col-xs-6">
                                     <label>Define items form ...</label>
-                                    <select ng-model="defineForm" class="form-control">
+                                    <select ng-model="scene.defineForm" class="form-control">
                                         <option value="loadFromFile">Load from file</option>
                                         <option value="setManually">Set manually</option>
                                     </select>
@@ -225,7 +234,7 @@
                                 
                                 <div class="col-xs-6">
                                     <label>Maximum number of items to display</label>
-                                    <input ng-model="maximumStaticItemsToDisplay" class="form-control"/>
+                                    <input ng-model="scene.maximumStaticItemsToDisplay" class="form-control"/>
                                 </div>
                                 
                                 <div ng-hide="loadFromFileSelected()">
@@ -234,7 +243,7 @@
                                     <div class="col-xs-12">
                                         </br>
                                         <label>Static items</label>    
-                                        <input type="file" name='imgPerfil'>     
+                                        <input type="file" name='staticItemFile'>     
                                         <b>
                                             <i>* File containing these static objects on the map, that is, don't 
                                                 changing geographical position during the simulation
@@ -267,7 +276,7 @@
                                     
                                     <div class="col-xs-12">
                                         <label>Item name</label>
-                                        <input class="form-control"/>
+                                        <input ng-model="scene.staticItemNames" class="form-control"/>
                                     </div>    
                                 </div>
      
@@ -366,7 +375,7 @@
                                 
                                 <div class="col-xs-6">
                                     <label>Define items form ...</label>
-                                    <select ng-model="defineFormFileDynamicItem" class="form-control">
+                                    <select ng-model="scene.defineFormFileDynamicItem" class="form-control">
                                         <option value="loadFromFileDynamicItem">Load from file</option>
                                         <option value="setManuallyDynamicItem">Set manually</option>
                                     </select>
@@ -374,7 +383,7 @@
                                 
                                 <div class="col-xs-6">
                                     <label>Maximum number of items to display</label>
-                                    <input ng-model="maximumDynamicItemsToDisplay" class="form-control"/>
+                                    <input ng-model="scene.maximumDynamicItemsToDisplay" class="form-control"/>
                                 </div>
                                 
                                 <div ng-hide="loadFromFileSelectedDynamicItem()">
@@ -383,7 +392,7 @@
                                     <div class="col-xs-12">           
                                         </br>      
                                         <label>Dynamic items</label>
-                                        <input type="file" name='imgPerfil'>      
+                                        <input type="file" name='scene.dynamicItemFile'>      
                                         <b>
                                             <i>* File containing dynamic objects of the map, that is, the changing 
                                             geographic position during the simulation such as automobiles
@@ -415,12 +424,23 @@
                                     
                                     <div class="col-xs-6">
                                         <label>Item name</label>
-                                        <input class="form-control"/>
+                                        <input ng-model="scene.dynamicItemName" class="form-control"/>
                                     </div>
 
-                                    <div class="col-xs-6"> 
+                                    <div class="col-xs-6">
+                                        <label>Item speed (km/h)</label>
+                                        <input ng-model="scene.itemSpeed" class="form-control"/>
+                                    </div>
+
+                                    <div class="col-xs-3">
+                                        </br>
                                         <div class="container">
                                         </div>
+                                    </div>
+
+                                    <div class="col-xs-4">
+                                        </br>
+                                        <button type="button" class="btn btn-danger" onclick="deleteDynamicItemPoit()">Delete</button>
                                     </div>
                                 </div>
 
@@ -453,11 +473,35 @@
                                             var pos0 = Math.round(pos[0] * 100) / 100;
                                             var pos1 = Math.round(pos[1] * 100) / 100;
                                             
-                                            var input = "<input type=\"checkbox\">("+pos0+", "+pos1+")</input> <button>x</button> <br />";
+                                            var input = "<input name=\"point\" type=\"checkbox\" value=\""+pos+"\">("+pos0+", "+pos1+")</input> <br />";
                                             $('.container').append(input);
-                                            console.log(input);
-                                            
                                         });
+                                        
+                                        function deleteDynamicItemPoit(){
+                                            //var checkboxList = $('input[name=point]');
+                                            //var checkboxSelectedList = $('input[name=point]:checked');
+                                            alert($('input[name=point]:checkbox:not(:checked)').length);
+                                            
+                                            
+                                            
+                                            //console.log(checkboxList);
+                                            //console.log(checkboxSelectedList);
+                                            
+                                            //alert(checkboxList.length+" -- "+checkboxSelectedList.length);
+                                            
+                                            for(index=0; index<checkboxSelectedList.length; index++){
+                                                var pos = checkboxSelectedList[index];
+                                                var index = checkboxList.indexOf(pos);
+                                                
+                                                if(index>=0){
+                                                    checkboxList.splice(index,1);
+                                                }
+                                                
+                                                alert(checkboxList.length);      
+                                            }
+                                            
+                                            $('.container').html(checkboxList);
+                                        }
                                     </script>
                                 </div>
                                     
@@ -489,7 +533,7 @@
                 </div>                         
         </div>   
 
-                <div class="panel panel-primary table-responsive">
+                <div class="panel panel-primary table-responsive" ng-hide="hideScene">
                     <div class="panel-heading">
                         <h3 class="panel-title"><i class="fa fa-list-alt"></i> List of scenes for this map</h3>
                     </div>

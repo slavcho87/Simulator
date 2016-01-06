@@ -1,10 +1,24 @@
 var app = angular.module("app");
 
-app.controller("NewMapController", ['$scope', '$http', 'Services', function ($scope, $http, Services) {
+app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Services', function ($scope, $http, $localStorage, Services) {
     $scope.errorMsgList = [];
+    $scope.msgList = [];
     $scope.step=1;
-    $scope.maximumStaticItemsToDisplay = 150;
     $scope.cityList = [];
+    $scope.hideScene = true;
+    
+    $scope.mapSave = function(){
+        Services.mapSave($scope.map, function(res){
+            if(res.result == "OK"){
+                $scope.msgList.push(res.msg);
+                $scope.hideScene = false;
+            }else{
+                $scope.errorMsgList.push(res.msg);    
+            }
+        },function(error){
+            $scope.errorMsgList.push(error);
+        });
+    }
     
     $scope.citySearch = function(){
         if(!$scope.citySearchValue || 0 === $scope.citySearchValue.length){
@@ -17,7 +31,7 @@ app.controller("NewMapController", ['$scope', '$http', 'Services', function ($sc
             });        
         }
     }
-    
+
     /*
      * 
      */
@@ -48,6 +62,19 @@ app.controller("NewMapController", ['$scope', '$http', 'Services', function ($sc
             $scope.errorMsgList.splice(msgIndex, 1);
         }else{
             $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
+        }
+    }
+    
+    /*
+    * Hide message
+    */    
+    $scope.msgSuccessHide = function(msg){
+        var msgIndex = $scope.msgList.indexOf(msg);
+        
+        if(msgIndex>=0){
+            $scope.msgList.splice(msgIndex, 1);
+        }else{
+            $scope.msgList.push(ERROR_HAS_OCCURRED);
         }
     }
     

@@ -5,8 +5,7 @@ var MapSchema   = new Schema({
     name: String,
     type: String,
     state: String,
-    userName: String,
-    password: String,
+    userToken: String,
 });
  
 module.exports = mongoose.model('Map', MapSchema);

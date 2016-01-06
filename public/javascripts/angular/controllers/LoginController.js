@@ -16,8 +16,8 @@ app.controller("LoginController", ['$scope', '$location', '$http', '$localStorag
             if(res.type == false){
                 $scope.errorMsgList.push(res.data);
             }else{
-                $localStorage.token = res.data.token;
-                $location.path('/map');    
+                $localStorage.token = res.token;
+                window.location = '#/map';    
             }
         },function(error){
             $scope.errorMsgList.push("Authentication fail!");
@@ -37,5 +37,5 @@ app.controller("LoginController", ['$scope', '$location', '$http', '$localStorag
         }
     }
     
-
+    $scope.token = $localStorage.token;
 }])

@@ -42,7 +42,7 @@ app.config(['$routeProvider', '$httpProvider' ,function($routeProvider, $httpPro
         return {  
             'request': function (config) {    
                 config.headers = config.headers || {};
-                
+
                 if ($localStorage.token) {
                     config.headers.Authorization = 'Bearer ' + $localStorage.token;
                 }

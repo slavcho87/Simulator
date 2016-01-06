@@ -49,6 +49,9 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
         uploadImgProfile: function(data, success, error) {
             $http.post('/user/uploadPhoto', data).success(success).error(error);
         },
+        mapSave: function(data, success, error) {
+            $http.post('/maps/save', data).success(success).error(error);
+        },
         citySearch: function(data, success, error) {
             $http.get('/maps/city/search/'+data).success(success).error(error);
         },

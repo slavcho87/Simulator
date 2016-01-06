@@ -30,7 +30,7 @@ var app = express();
 app.use(favicon(__dirname + '/public/images/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(multipart());
@@ -45,7 +45,7 @@ app.listen(port, function () {
 });
 
 app.use('/configurations', configurations);
-app.use('/maps', maps);
+app.use('/maps', ensureAuthorized, maps);
 app.use('/simulation', simulation);
 app.use('/user', user);
 
