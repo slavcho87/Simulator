@@ -49,7 +49,6 @@ app.controller("RecommenderSettingsController", ['$scope', '$http','Services', f
     }
     
     $scope.selectDeleteRecommender = function(recommender){
-        console.log("-> "+recommender);
         $scope.selectDeleteRecommender = recommender;
     }
     

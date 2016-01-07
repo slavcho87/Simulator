@@ -52,9 +52,7 @@ router.get('/recommenderList', function(req, res, next){
     });
 });
 
-router.delete('/deleteRecommender/:poolName', function(req, res, next){
-    console.log("pool name"+req.params.poolName);
-    
+router.delete('/deleteRecommender/:poolName', function(req, res, next){    
    Recommender.remove({poolName: req.params.poolName}, function(err){
        if(err){
             res.json({
