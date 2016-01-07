@@ -1,5 +1,23 @@
 <div>    
     <div id="wrapper">
+            <div class="alert alert-dismissable alert-danger" ng-repeat="errorMsg in errorMsgList">
+                <button type="button" 
+                        class="close" 
+                        data-dismiss="alert" 
+                        aria-hidden="true" 
+                        ng-click="msgHide(errorMsg)">&times;</button>
+                {{errorMsg}}
+            </div>      
+            
+            <div class="alert alert-dismissable alert-success" ng-repeat="msg in msgList">
+                <button type="button" 
+                        class="close" 
+                        data-dismiss="alert" 
+                        aria-hidden="true" 
+                        ng-click="msgSuccessHide(msg)">&times;</button>
+                {{msg}}
+            </div>
+        
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">    
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">           
@@ -38,7 +56,7 @@
                         <div class="row">      
                             <div class="col-sm-6">
                                 <label>Name</label>
-                                <input class="form-control" />
+                                <input ng-click="staticItem.name" class="form-control" />
                             </div>
 
                             <div class="col-sm-6">
