@@ -52,8 +52,22 @@ router.get('/recommenderList', function(req, res, next){
     });
 });
 
-router.delete('/deleteRecommender', function(req, res, next){
-    console.log("-> "+req.body);
+router.delete('/deleteRecommender/:poolName', function(req, res, next){
+    console.log("pool name"+req.params.poolName);
+    
+   Recommender.remove({poolName: req.params.poolName}, function(err){
+       if(err){
+            res.json({
+                result: "NOK",
+                msg: err
+            });
+       }else{
+            res.json({
+                result: "OK",
+                msg: "Recommender deleted successfully!"
+            });
+       }
+   });
 });
 
 

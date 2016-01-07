@@ -62,7 +62,7 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
             $http.get('/settings/recommenderList').success(success).error(error);
         },
         deleteRecommender: function(data, success, error){
-            $http.delete('/settings/deleteRecommender', data).success(success).error(error);
+            $http.delete('/settings/deleteRecommender/'+data).success(success).error(error);
         },
         logout: function(success) {
             changeUser({});

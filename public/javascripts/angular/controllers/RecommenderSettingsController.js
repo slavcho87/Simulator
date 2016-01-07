@@ -49,14 +49,26 @@ app.controller("RecommenderSettingsController", ['$scope', '$http','Services', f
     }
     
     $scope.selectDeleteRecommender = function(recommender){
+        console.log("-> "+recommender);
         $scope.selectDeleteRecommender = recommender;
     }
     
     $scope.deleteRecommender = function(){
-       Services.deleteRecommender($scope.selectDeleteRecommender, function(res){
-            console.log(res);
+       Services.deleteRecommender($scope.selectDeleteRecommender.poolName, function(res){
+            if(res.result == "NOK"){
+                $scope.errorMsgList.push(res.msg);    
+            }else{
+                $scope.msgList.push(res.msg);
+                
+                var index = $scope.recommenderList.indexOf($scope.selectDeleteRecommender);
+                if(index>=0){
+                    $scope.recommenderList.splice(index, 1);
+                }
+                
+                $scope.selectDeleteRecommender = null;
+            }
        }, function(err){
-            console.log(err);
+            $scope.errorMsgList.push(err);
        });
     }
 
