@@ -1,26 +1,64 @@
 var app = angular.module("app");
 
-app.controller("RecommenderSettingsController", ['$scope', '$http', function ($scope, $http) {
+app.controller("RecommenderSettingsController", ['$scope', '$http','Services', function ($scope, $http, Services) {
     $scope.errorMsgList = [];
+    $scope.msgList = [];
+    $scope.recommenderList = [];
     
-   /*
-    * Delete one bar from the data base
-    */    
-    $scope.deleteBar = function (bar) {
-        var barIndex = $scope.barList.indexOf(bar);
-        
-        if(barIndex>=0){
-            $http.delete(BASE_DIR+BAR_SERVICE+DELETE_BAR_BY_ID+bar.id).
-            success(function(data, status) {
-                $scope.barList.splice(barIndex, 1);
-            }).
-            error(function(data, status) {
-                $scope.errorMsgList.push(BAR_NOT_DELETED);
+    /*
+     * Save new recommeder settings
+     */
+    $scope.saveRecommeder = function(){
+        Services.recommenderSave($scope.rec, function(res){
+            if(res.result == "NOK"){
+                $scope.errorMsgList.push(res.msg);
+            }else{
+                $scope.msgList.push(res.msg);
+                
+                //insert new recommender into the recommender list
+                $scope.recommenderList.push({    
+                    poolName: $scope.rec.poolName,
+                    recommenderType: $scope.rec.type,
+                    maximuDistanteToGo: $scope.rec.maxDistanceToGo,
+                    visibilityRadius: $scope.rec.visibilityRadius,
+                    itemsToRecommend: $scope.rec.numItemToRec,
+                    minimumScore: $scope.rec.minScoreForRec
+                });
+                
+                //reset object rec
+                $scope.rec.poolName="";
+                $scope.rec.type="";
+                $scope.rec.maxDistanceToGo="";
+                $scope.rec.visibilityRadius="";
+                $scope.rec.numItemToRec="";
+                $scope.rec.minScoreForRec="";
+            }
+        }, function(error){
+            $scope.errorMsgList.push("ERROR: "+error);
+        });
+    }
+    
+    $scope.getRecommenderList = function(){
+        Services.getRecommenderList(function(res){
+            angular.forEach(res, function(value, key) {
+                $scope.recommenderList.push(value);
             });
-        }else{
-            $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
-        }
-    }	
+        }, function(err){
+            $scope.errorMsgList.push(err);
+        });
+    }
+    
+    $scope.selectDeleteRecommender = function(recommender){
+        $scope.selectDeleteRecommender = recommender;
+    }
+    
+    $scope.deleteRecommender = function(){
+       Services.deleteRecommender($scope.selectDeleteRecommender, function(res){
+            console.log(res);
+       }, function(err){
+            console.log(err);
+       });
+    }
 
    /*
     * Hide error message
@@ -32,6 +70,19 @@ app.controller("RecommenderSettingsController", ['$scope', '$http', function ($s
             $scope.errorMsgList.splice(msgIndex, 1);
         }else{
             $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
+        }
+    }
+    
+    /*
+    * Hide message
+    */    
+    $scope.msgSuccessHide = function(msg){
+        var msgIndex = $scope.msgList.indexOf(msg);
+        
+        if(msgIndex>=0){
+            $scope.msgList.splice(msgIndex, 1);
+        }else{
+            $scope.msgList.push(ERROR_HAS_OCCURRED);
         }
     }
 }]);

@@ -33,7 +33,10 @@ router.get('/city/search/:location', function(req, resp){
 router.post('/save', function(req, resp){
     User.findOne({token: req.token}, function(err, user) {
         if (err) {
-            resp.json({result: "NOK"});
+            resp.json({
+                result: "NOK", 
+                msg: err
+            });
         } else {
             var mapModel = new Map();
             mapModel.name = req.body.name; 

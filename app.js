@@ -44,7 +44,7 @@ app.listen(port, function () {
     console.log("Express server listening on port " + port);
 });
 
-app.use('/configurations', configurations);
+app.use('/settings', ensureAuthorized, configurations);
 app.use('/maps', ensureAuthorized, maps);
 app.use('/simulation', simulation);
 app.use('/user', user);

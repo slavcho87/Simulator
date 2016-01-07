@@ -1,4 +1,4 @@
-<div>    
+<div ng-init="getRecommenderList()">    
     <div id="wrapper">
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">    
             <div class="navbar-header">
@@ -21,7 +21,25 @@
             </div>
         </nav>
         
-        <div id="page-wrapper">		
+        <div id="page-wrapper">	
+            <div class="alert alert-dismissable alert-danger" ng-repeat="errorMsg in errorMsgList">
+                <button type="button" 
+                        class="close" 
+                        data-dismiss="alert" 
+                        aria-hidden="true" 
+                        ng-click="msgHide(errorMsg)">&times;</button>
+                {{errorMsg}}
+            </div>      
+            
+            <div class="alert alert-dismissable alert-success" ng-repeat="msg in msgList">
+                <button type="button" 
+                        class="close" 
+                        data-dismiss="alert" 
+                        aria-hidden="true" 
+                        ng-click="msgSuccessHide(msg)">&times;</button>
+                {{msg}}
+            </div>
+            
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#/settings">Recommender settings</a></li>
                 <li><a data-toggle="tab" href="#/settings/staticItemSettings">Static item types</a></li>
@@ -38,12 +56,12 @@
                         <div class="row">      
                             <div class="col-sm-4">
                                 <label>Pool name</label>
-                                <input class="form-control" />
+                                <input ng-model="rec.poolName" class="form-control" />
                             </div>
 
                             <div class="col-sm-4">
                                 <label>Recommender type</label>
-                                <select class="form-control">
+                                <select ng-model="rec.type" class="form-control">
                                     <option value="nothing"></option>
                                     <option value="push">Push</option>
                                     <option value="pull">Pull</option>
@@ -52,32 +70,30 @@
                             
                             <div class="col-sm-4">
                                 <label>Maximum distance to go (meters)</label>
-                                <input class="form-control" />
+                                <input  ng-model="rec.maxDistanceToGo" class="form-control" />
                             </div>
                             
                             <div class="col-sm-4">
                                 </br>
                                 <label>Visibility radius (meters)</label>
-                                <input class="form-control" type="text">
+                                <input ng-model="rec.visibilityRadius" class="form-control" type="text">
                             </div>
                             
                             <div class="col-sm-4">
                                 </br>
                                 <label>Number of items to recommend</label>
-                                <input class="form-control" type="text">
+                                <input ng-model="rec.numItemToRec" class="form-control" type="text">
                             </div>
                             
                              <div class="col-sm-4">
                                  </br>
                                 <label>Minimum score for recommending an item</label>
-                                <input class="form-control" type="text">
+                                <input ng-model="rec.minScoreForRec" class="form-control" type="text">
                             </div>
-                            
-                            
                             
                             <div class="col-sm-12">
                                 <br>
-                                <input type="submit" class="btn btn-primary" value="Save">
+                                <input ng-click="saveRecommeder()" type="submit" class="btn btn-primary" value="Save">
                             </div>
                             
                         </div>
@@ -92,25 +108,24 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <td>Pool name</td>
-                                <td>Recommender type</td>
-                                <td>Maximum distance to go (meters)</td>
-                                <td>Visibility radius (meters)</td>
-                                <td>Number of items to recommend</td>
-                                <td>Minimum score for recommending an item</td>
-                                <th></th>
+                                <td><strong>Pool name</strong></td>
+                                <td><strong>Recommender type</strong></td>
+                                <td><strong>Maximum distance to go (meters)</strong></td>
+                                <td><strong>Visibility radius (meters)</strong></td>
+                                <td><strong>Number of items to recommend</strong></td>
+                                <td><strong>Minimum score for recommending an item</strong></td>
+                                <th><strong>Options</strong></th>
                             </tr>
-                        
                         </thead>
-                            
+
                         <tbody>
-                            <tr>
-                                <td>Parametros genericos</td>
-                                <td>Pull</td>
-                                <td>1500 m</td>
-                                <td>150 m</td>
-                                <td>10</td>
-                                <td>4</td>
+                            <tr ng-repeat="recommender in recommenderList">
+                                <td>{{recommender.poolName}}</td>
+                                <td>{{recommender.recommenderType}}</td>
+                                <td>{{recommender.maximuDistanteToGo}}</td>
+                                <td>{{recommender.visibilityRadius}}</td>
+                                <td>{{recommender.itemsToRecommend}}</td>
+                                <td>{{recommender.minimumScore}}</td>
                                 <td>
                                         <ul class="nav nav-tabs">  
                                             <div class="btn-group">
@@ -124,7 +139,8 @@
                                                            data-toggle="modal" data-target="#editRecommenderModal">Edit setting</a></li>
 
                                                     <li><a href="#settings" role="button" 
-                                                           data-toggle="modal" data-target="#deleteRecommenderModal">Delete setting</a>
+                                                           data-toggle="modal" data-target="#deleteRecommenderModal" 
+                                                           ng-click="selectDeleteRecommender(recommender)">Delete setting</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -133,23 +149,7 @@
                             </tr>
 
                         </tbody>
-                    </table>                    
-
-                    <nav align="center">
-                        <ul class="pagination">
-                            <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li>
-                              <a href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                              </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    </table>
                 </div>                     
             </div>    
         </div>
@@ -171,7 +171,7 @@
                 
               <div class="modal-footer">  
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>  
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deleteRecommender()">Delete</button>  
               </div>
             </div>
 

@@ -55,6 +55,15 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
         citySearch: function(data, success, error) {
             $http.get('/maps/city/search/'+data).success(success).error(error);
         },
+        recommenderSave: function(data, success, error){
+            $http.post('/settings/recommenderSave', data).success(success).error(error);
+        },
+        getRecommenderList: function(success, error){
+            $http.get('/settings/recommenderList').success(success).error(error);
+        },
+        deleteRecommender: function(data, success, error){
+            $http.delete('/settings/deleteRecommender', data).success(success).error(error);
+        },
         logout: function(success) {
             changeUser({});
             delete $localStorage.token;

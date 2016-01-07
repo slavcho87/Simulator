@@ -1,9 +1,62 @@
 var express = require('express');
+var Recommender = require('../models/Recommender');
 var router = express.Router();
 
+router.post('/recommenderSave', function(req, res, next){
+    Recommender.findOne({poolName: req.body.poolName}, function(err, recommender){
+        console.log("err -> "+err);
+        console.log("rec -> "+recommender);
+        console.log(req.body);
+        
+        if(err){
+            res.json({
+                result: "NOK",
+                msg: err
+            });
+        }else{
+            if(!recommender){
+                var recommederModel = new Recommender();
+                recommederModel.poolName=req.body.poolName;
+                recommederModel.recommenderType=req.body.type;
+                recommederModel.maximuDistanteToGo=req.body.maxDistanceToGo;
+                recommederModel.visibilityRadius=req.body.visibilityRadius;
+                recommederModel.itemsToRecommend=req.body.numItemToRec;   
+                recommederModel.minimumScore=req.body.minScoreForRec;
 
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+                recommederModel.save(function(err){
+                    if(err){
+                        res.json({
+                            result: "NOK",
+                            msg: err
+                        });
+                    }else{
+                        res.json({
+                            result: "OK",
+                            msg: "Recommender save successfully!"
+                        });
+                    }
+                });             
+            }else{
+                res.json({
+                    result: "NOK",
+                    msg: "Pool name exist! Insert new pool name"
+                });
+            }
+        }
+    });
 });
+
+router.get('/recommenderList', function(req, res, next){
+    Recommender.find({}, function(err, recommenderList){
+        res.json(recommenderList);
+    });
+});
+
+router.delete('/deleteRecommender', function(req, res, next){
+    console.log("-> "+req.body);
+});
+
+
+
 
 module.exports = router;
