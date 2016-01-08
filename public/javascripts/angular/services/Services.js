@@ -53,7 +53,7 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
             $http.post('/maps/save', data).success(success).error(error);
         },
         citySearch: function(data, success, error) {
-            $http.get('/maps/city/search/'+data).success(success).error(error);
+            $http.get('/maps/cwity/search/'+data).success(success).error(error);
         },
         recommenderSave: function(data, success, error){
             $http.post('/settings/recommenderSave', data).success(success).error(error);
@@ -63,6 +63,9 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
         },
         deleteRecommender: function(data, success, error){
             $http.delete('/settings/deleteRecommender/'+data).success(success).error(error);
+        },
+        updateRecommender: function(data, success, error){
+            $http.post('/settings/updateRecommender', data).success(success).error(error);
         },
         logout: function(success) {
             changeUser({});

@@ -68,7 +68,21 @@ router.delete('/deleteRecommender/:poolName', function(req, res, next){
    });
 });
 
-
+router.post('/updateRecommender', function(req, res, next){    
+    Recommender.findOneAndUpdate({_id: req.body._id}, req.body, function(err){
+        if(err){
+            res.json({
+                result: "NOK",
+                msg: err
+            });
+        }else{
+            res.json({
+                result: "OK",
+                msg: "Recommender updated successfully!"
+            });
+        }
+    });
+});
 
 
 module.exports = router;

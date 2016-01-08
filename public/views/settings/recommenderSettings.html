@@ -62,7 +62,6 @@
                             <div class="col-sm-4">
                                 <label>Recommender type</label>
                                 <select ng-model="rec.type" class="form-control">
-                                    <option value="nothing"></option>
                                     <option value="push">Push</option>
                                     <option value="pull">Pull</option>
                                 </select>
@@ -136,7 +135,8 @@
 
                                                 <ul class="dropdown-menu">
                                                     <li><a href="#settings" role="button" 
-                                                           data-toggle="modal" data-target="#editRecommenderModal">Edit setting</a></li>
+                                                           data-toggle="modal" data-target="#editRecommenderModal"
+                                                           ng-click="selectEditRecommender(recommender)">Edit setting</a></li>
 
                                                     <li><a href="#settings" role="button" 
                                                            data-toggle="modal" data-target="#deleteRecommenderModal" 
@@ -170,7 +170,7 @@
               </div>
                 
               <div class="modal-body">
-                <p>Are you sure you want to delete this parameters?</p>
+                <p>Are you sure you want to delete this setting?</p>
               </div>
                 
               <div class="modal-footer">  
@@ -197,13 +197,12 @@
                         <div class="row">      
                             <div class="col-sm-4">
                                 <label>Pool name</label>
-                                <input class="form-control" />
+                                <input class="form-control" ng-model="selectEditRecommenderValue.poolName"/>
                             </div>
 
                             <div class="col-sm-4">
                                 <label>Recommender type</label>
-                                <select class="form-control">
-                                    <option value="nothing"></option>
+                                <select ng-model="selectEditRecommenderValue.recommenderType" class="form-control">
                                     <option value="push">Push</option>
                                     <option value="pull">Pull</option>
                                 </select>
@@ -211,32 +210,32 @@
                             
                             <div class="col-sm-4">
                                 <label>Maximum distance to go (meters)</label>
-                                <input class="form-control" />
+                                <input ng-model="selectEditRecommenderValue.maximuDistanteToGo" class="form-control" />
                             </div>
                             
                             <div class="col-sm-4">
                                 </br>
                                 <label>Visibility radius (meters)</label>
-                                <input class="form-control" type="text">
+                                <input ng-model="selectEditRecommenderValue.visibilityRadius" class="form-control" type="text">
                             </div>
                             
                             <div class="col-sm-4">
                                 </br>
                                 <label>Number of items to recommend</label>
-                                <input class="form-control" type="text">
+                                <input ng-model="selectEditRecommenderValue.itemsToRecommend" class="form-control" type="text">
                             </div>
                             
                              <div class="col-sm-4">
                                  </br>
                                 <label>Minimum score for recommending an item</label>
-                                <input class="form-control" type="text">
+                                <input ng-model="selectEditRecommenderValue.minimumScore" class="form-control" type="text">
                             </div>
                         </div>
               </div>
                 
               <div class="modal-footer">  
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>  
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="saveEditRecommender()">Save</button>  
               </div>
             </div>
 

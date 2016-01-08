@@ -49,26 +49,44 @@ app.controller("RecommenderSettingsController", ['$scope', '$http','Services', f
     }
     
     $scope.selectDeleteRecommender = function(recommender){
-        $scope.selectDeleteRecommender = recommender;
+        $scope.selectDeleteRecommenderValue = recommender;
+    }
+    
+    $scope.selectEditRecommender = function(recommender){
+        $scope.selectEditRecommenderValue = recommender;
     }
     
     $scope.deleteRecommender = function(){
-       Services.deleteRecommender($scope.selectDeleteRecommender.poolName, function(res){
+       Services.deleteRecommender($scope.selectDeleteRecommenderValue.poolName, function(res){
             if(res.result == "NOK"){
                 $scope.errorMsgList.push(res.msg);    
             }else{
                 $scope.msgList.push(res.msg);
                 
-                var index = $scope.recommenderList.indexOf($scope.selectDeleteRecommender);
+               // window.location.reload();
+                var index = $scope.recommenderList.indexOf($scope.selectDeleteRecommenderValue);
                 if(index>=0){
                     $scope.recommenderList.splice(index, 1);
                 }
                 
-                $scope.selectDeleteRecommender = null;
+                //$scope.selectDeleteRecommender = null;
             }
        }, function(err){
             $scope.errorMsgList.push(err);
        });
+    }
+    
+    $scope.saveEditRecommender = function(){
+        console.log($scope.selectEditRecommenderValue);
+        Services.updateRecommender($scope.selectEditRecommenderValue, function(res){
+            if(res.result == "NOK"){
+                $scope.errorMsgList.push(res.msg);
+            }else{
+                $scope.msgList.push(res.msg);
+            }
+        }, function(err){
+            $scope.errorMsgList.push(err);
+        });
     }
 
    /*
