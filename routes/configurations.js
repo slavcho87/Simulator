@@ -162,8 +162,8 @@ router.post('/updateItem', function(req, res, next){
     });    
 });
 
-router.delete('/deleteItem/:id', function(req, res, next){
-    Item.remove({_id: req.params.id}, function(err){
+router.delete('/deleteItem/:itemName', function(req, res, next){
+    Item.remove({name: req.params.itemName}, function(err){
         if(err){
             res.json({
                 result: "NOK",

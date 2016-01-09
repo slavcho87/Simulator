@@ -53,7 +53,7 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
             $http.post('/maps/save', data).success(success).error(error);
         },
         citySearch: function(data, success, error) {
-            $http.get('/maps/cwity/search/'+data).success(success).error(error);
+            $http.get('/maps/city/search/'+data).success(success).error(error);
         },
         recommenderSave: function(data, success, error){
             $http.post('/settings/recommenderSave', data).success(success).error(error);
@@ -82,12 +82,6 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
         deleteItem: function(data, success, error){
             $http.delete('/settings/deleteItem/'+data).success(success).error(error);
         },
-       /* 
-        
-        
-        updateStaticItem: function(data, success, error){
-            $http.post('/settings/updateStaticItem', data).success(success).error(error);
-        },*/
         logout: function(success) {
             changeUser({});
             delete $localStorage.token;

@@ -6,7 +6,6 @@ app.controller("StaticItemSettingsController", ['$scope', '$http', 'Services', f
     $scope.staticItemList = [];
 
     $scope.saveStaticItem = function(){
-        $scope.staticItem.speed = 0;
         $scope.staticItem.type= "static";
         
         Services.saveItem($scope.staticItem, function(res){
@@ -18,7 +17,6 @@ app.controller("StaticItemSettingsController", ['$scope', '$http', 'Services', f
                 $scope.staticItemList.push({
                     name: $scope.staticItem.name,
                     icon: $scope.staticItem.icon,
-                    speed: $scope.staticItem.speed,
                     type: $scope.staticItem.type
                 });
                 
@@ -73,7 +71,7 @@ app.controller("StaticItemSettingsController", ['$scope', '$http', 'Services', f
     }
     
     $scope.deleteSelectedStaticItem = function(){
-        Services.deleteItem($scope.selectDeletedItemValue._id, function(res){
+        Services.deleteItem($scope.selectDeletedItemValue.name, function(res){
             if(res.result == "NOK"){
                 $scope.errorMsgList.push(res.msg);    
             }else{
