@@ -67,7 +67,7 @@ router.post('/authenticate', function(req, res, next) {
 //tenemos que hacer que el usuario se coga del token
 //este metodo tiene que ser controlado por sesion
 //tambien lo tienen que ser as url's de mapa, configurations y simulator
-router.post('/uploadPhoto', function(req, res) {  
+router.post('/uploadPhoto', function(req, res) {    
     var img = req.files.imgPerfil;
     var fs = require('fs');
     
