@@ -1,9 +1,6 @@
 var express = require('express');
 var Recommender = require('../models/Recommender');
 var Item = require('../models/Item');
-var DynamicItem = require('../models/DynamicItem');
-var StaticItem = require('../models/StaticItem');
-
 var fs = require('fs');
 var router = express.Router();
 
@@ -85,13 +82,8 @@ router.post('/updateRecommender', function(req, res, next){
     });
 });
 
-router.post('/saveStaticItem', function(req, res, next){    
-    var item = {
-        name: req.body.name,
-        icon: req.body.icon
-    };
-    
-    Item.findOne({name: item.name}, function(err, findItem){
+router.post('/saveItem', function(req, res, next){
+    Item.findOne({name: req.body.name}, function(err, findItem){
         if(err){
             res.json({
                 result: "NOK",
@@ -99,7 +91,25 @@ router.post('/saveStaticItem', function(req, res, next){
             });
         }else{
             if(!findItem){
-                saveStaticItem(item, res);       
+                var itemModel = new Item();
+                itemModel.name = req.body.name
+                itemModel.icon = req.body.icon
+                itemModel.speed = req.body.speed
+                itemModel.type = req.body.type;
+                
+                itemModel.save(function(err){
+                    if(err){
+                        res.json({
+                            result: "NOK",
+                            msg: err
+                        });
+                    }else{
+                        res.json({
+                            result: "OK",
+                            msg: "Item saved successfully"
+                        });
+                    }
+                });
             }else{
                 res.json({
                     result: "NOK",
@@ -110,110 +120,33 @@ router.post('/saveStaticItem', function(req, res, next){
     });
 });
 
-/*
- * Returns true if and only if item is successfully saved like static item
- */
-function saveStaticItem(item, res){
-    var itemModel = new Item();
-    itemModel.name = item.name;
-    itemModel.icon = item.icon;
-    
-    itemModel.save(function(err){
-        if(err){
-            res.json({
-                result: "NOK",
-                msg: "Item not saved!",
-            });
-        }else{
-            var staticItemModel = new StaticItem();
-            staticItemModel.name = item.name;
-    
-            staticItemModel.save(function(err){
-                if(err){
-                    res.json({
-                        result: "NOK",
-                        msg: "Item not saved!",
-                    });
-                }else{
-                    res.json({
-                        result: "OK",
-                        msg: "Item saved successfully!",
-                    });
-                }
-            });
-        }
-    });
-}
-
-/*
- * Return true if and only if existe name item into the data base
- */
-function itemExist(item){
-    Item.findOne({name: item.name}, function(err, findItem){
-        if(err){
-            console.log(1);
-            return false;
-        }else{
-            if(!findItem){
-                console.log(2);
-                return false;
-            }else{
-                console.log(3);
-                return true;
-            }
-        }
-    });
-}
-
 router.get('/staticItemList', function(req, res, next){
-    Item.find({}, function(err, itemList){
-        StaticItem.find({}, function(err, staticItemList){
-            var list = [];
-            
-            for(staticItemIndex in staticItemList){
-                for(itemIndex in itemList){
-                    if(staticItemList[staticItemIndex].name == itemList[itemIndex].name){
-                        var item = itemList[itemIndex];
-                        item.staticItemID=staticItemList[staticItemIndex]._id; 
-                        
-                        list.push(item);   
-                    }
-                }
-            }
-            
-            res.json(list);
-        });
-    });
-});
-
-router.delete('/deleteStaticItem/:itemName', function(req, res, next){
-    console.log(req.params.itemName);
-    
-    StaticItem.remove({name: req.params.itemName}, function(err){
-       if(err){
+    Item.find({type: "static"}, function(err, list){
+        if(err){
             res.json({
                 result: "NOK",
                 msg: err
             });
-       }else{
-            Item.remove({name: req.params.itemName}, function(err){
-                if(err){
-                    res.json({
-                        result: "NOK",
-                        msg: err
-                    }); 
-                }else{
-                    res.json({
-                        result: "",
-                        msg: "Static item deleted successfully!"
-                    });
-                }
-            });      
-       }
-   });
+        }else{
+            res.json(list);
+        }
+    });
 });
 
-router.post('/updateStaticItem', function(req, res, next){
+router.get('/dynamicItemList', function(req, res, next){
+    Item.find({type: "dynamic"}, function(err, list){
+        if(err){
+            res.json({
+                result: "NOK",
+                msg: err
+            });
+        }else{
+            res.json(list);
+        }
+    });    
+});
+
+router.post('/updateItem', function(req, res, next){
     Item.findOneAndUpdate({_id: req.body._id}, req.body, function(err){
         if(err){
             res.json({
@@ -221,25 +154,30 @@ router.post('/updateStaticItem', function(req, res, next){
                 msg: err
             });
         }else{
-            var staticItemModel = new StaticItem();
-            staticItemModel.name = req.body.name;
-            
-            StaticItem.findOneAndUpdate({name: req.body.staticItemID}, staticItemModel,function(err){
-                if(err){
-                    res.json({
-                        result: "NOK",
-                        msg: err
-                    });  
-                }else{
-                    res.json({
-                        result: "OK",
-                        msg: "Static Item updated successfully!"
-                    });
-                }
+            res.json({
+                result: "OK",
+                msg: "Item update successfully!"
+            });
+        }
+    });    
+});
+
+router.delete('/deleteItem/:id', function(req, res, next){
+    Item.remove({_id: req.params.id}, function(err){
+        if(err){
+            res.json({
+                result: "NOK",
+                msg: err
+            });
+        }else{
+            res.json({
+                result: "OK",
+                msg: "Item deleted successfully!"
             });
         }
     });
 });
+
 
 
 module.exports = router;

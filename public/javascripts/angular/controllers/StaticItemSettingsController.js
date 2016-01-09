@@ -6,7 +6,10 @@ app.controller("StaticItemSettingsController", ['$scope', '$http', 'Services', f
     $scope.staticItemList = [];
 
     $scope.saveStaticItem = function(){
-        Services.saveStaticItem($scope.staticItem, function(res){
+        $scope.staticItem.speed = 0;
+        $scope.staticItem.type= "static";
+        
+        Services.saveItem($scope.staticItem, function(res){
             if(res.result == "NOK"){
                 $scope.errorMsgList.push(res.msg);
             }else{
@@ -14,7 +17,9 @@ app.controller("StaticItemSettingsController", ['$scope', '$http', 'Services', f
                 
                 $scope.staticItemList.push({
                     name: $scope.staticItem.name,
-                    icon: $scope.staticItem.icon
+                    icon: $scope.staticItem.icon,
+                    speed: $scope.staticItem.speed,
+                    type: $scope.staticItem.type
                 });
                 
                 $scope.staticItem.name="";
@@ -25,7 +30,7 @@ app.controller("StaticItemSettingsController", ['$scope', '$http', 'Services', f
     }
     
     $scope.getStaticItemList = function(){
-        Services.getStaticItemList(function(res){
+        Services.staticItemList(function(res){
             for(index in res){
                 $scope.staticItemList.push(res[index]);
             }
@@ -39,7 +44,7 @@ app.controller("StaticItemSettingsController", ['$scope', '$http', 'Services', f
     }
     
     $scope.updateStaticItem = function(){
-        Services.updateStaticItem($scope.selectEditItemValue, function(res){
+        Services.updateItem($scope.selectEditItemValue, function(res){
             if(res.result=="NOK"){
                 $scope.errorMsgList.push(res.msg);
             }else{
@@ -68,7 +73,7 @@ app.controller("StaticItemSettingsController", ['$scope', '$http', 'Services', f
     }
     
     $scope.deleteSelectedStaticItem = function(){
-        Services.deleteStaticItem($scope.selectDeletedItemValue.name, function(res){
+        Services.deleteItem($scope.selectDeletedItemValue._id, function(res){
             if(res.result == "NOK"){
                 $scope.errorMsgList.push(res.msg);    
             }else{
@@ -78,7 +83,6 @@ app.controller("StaticItemSettingsController", ['$scope', '$http', 'Services', f
                 if(index>=0){
                     $scope.staticItemList.splice(index, 1);
                 }
-                
             }
         }, function(err){
             $scope.errorMsgList.push(err);

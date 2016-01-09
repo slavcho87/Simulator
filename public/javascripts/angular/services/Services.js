@@ -67,18 +67,27 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
         updateRecommender: function(data, success, error){
             $http.post('/settings/updateRecommender', data).success(success).error(error);
         },
-        saveStaticItem: function(data, success, error){
-            $http.post('/settings/saveStaticItem', data).success(success).error(error);
+        saveItem: function(data, success, error){
+            $http.post('/settings/saveItem', data).success(success).error(error);
         },
-        getStaticItemList: function(success, error){
+        staticItemList: function(success, error){
             $http.get('/settings/staticItemList').success(success).error(error);
         },
-        deleteStaticItem: function(data, success, error){
-            $http.delete('/settings/deleteStaticItem/'+data).success(success).error(error);
+        dynamicItemList: function(success, error){
+            $http.get('/settings/dynamicItemList').success(success).error(error);
         },
+        updateItem: function(data, success, error){
+            $http.post('/settings/updateItem', data).success(success).error(error);
+        },
+        deleteItem: function(data, success, error){
+            $http.delete('/settings/deleteItem/'+data).success(success).error(error);
+        },
+       /* 
+        
+        
         updateStaticItem: function(data, success, error){
             $http.post('/settings/updateStaticItem', data).success(success).error(error);
-        },
+        },*/
         logout: function(success) {
             changeUser({});
             delete $localStorage.token;
