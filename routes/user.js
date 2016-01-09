@@ -22,10 +22,15 @@ router.post('/save', function(req, res, next) {
                 var userModel = new User();
                 userModel.name = req.body.userName;
                 userModel.pass = req.body.pass;
-                userModel.img = "";
+                userModel.img = req.body.img;
                 
                 userModel.save(function(err, user) {
+                    var img = user.img;
+                    user.img = "";
+                    
                     user.token = jwt.sign(user, 'sshhhhh');
+                    user.img = img;
+                    
                     user.save(function(err, user1) {
                         res.json({
                             type: true,
@@ -64,37 +69,134 @@ router.post('/authenticate', function(req, res, next) {
     });
 });
 
-//tenemos que hacer que el usuario se coga del token
-//este metodo tiene que ser controlado por sesion
-//tambien lo tienen que ser as url's de mapa, configurations y simulator
-router.post('/uploadPhoto', function(req, res) {    
-    var img = req.files.imgPerfil;
-    var fs = require('fs');
-    
-    fs.readFile(img.path, function (err, data) {
-        var path = 'fotos/'+img.originalFilename;
-        
-        if (err){
-            throw err;
-        }else{        
-            User.findOne({name: req.body.userName, pass: req.body.pass}, function(err, user){
-                if (err) {
+router.post('/updatePassword', ensureAuthorized, function(req, res, next){
+    User.findOne({token: req.token}, function(err, user) {
+         if (err) {
+            resp.json({
+                result: "NOK", 
+                msg: err
+            });
+        }else{
+            if(req.body.currentPass==user.pass){
+                if(req.body.newPass == req.body.newPassRepeat){
+                    var img = user.img;
+                    user.img = "";
+                    
+                    user.pass = req.body.newPass;
+                    user.token = jwt.sign(user, 'sshhhhh');
+                    user.img = img;
 
-                } else {
-                    if (user) {
-                        user.img = data;
-                        user.save();
-                          
-                        res.redirect('/#/configurations');
-                        //res.json({upload: "OK"});
-                    }else{
-                        res.redirect('/#/configurations');
-                        //res.json({upload: "NOK"});
-                    }
+                    //NOTA!!! Tenemos que cambiar el token en el mapa tambien
+                    
+                    user.save(function(err, user1){
+                        if(err){
+                            res.json({
+                                result: "NOK",
+                                msg: err
+                            });
+                        }else{
+                            res.json({
+                                result: "OK",
+                                token: user1.token,
+                                msg: "Password updated successfully!"
+                            });
+                        }
+                    });
+                }else{
+                    res.json({
+                        result: "NOK",
+                        msg: "New passwords do not match!"
+                    });
                 }
-            });            
-        } 
+            }else{
+                res.json({
+                    result: "NOK",
+                    msg: "Incorrect current password!"    
+                });
+            }
+        }
     });
 });
+
+router.post('/updateUserName', ensureAuthorized, function(req, res, next){
+    User.findOne({token: req.token}, function(err, user){
+        if(err){
+            res.json({
+                result: "NOK",
+                msg: err
+            });
+        }else{
+            if(req.body.newUserName==req.body.repatNewUserName){
+                var img = user.img;
+                user.img = "";
+                
+                user.name = req.body.newUserName;
+                user.token = jwt.sign(user, 'sshhhhh');
+                user.img = img;
+                
+                //NOTA!!! Tenemos que cambiar el token en el mapa tambien
+                
+                user.save(function(err, user1){
+                    if(err){
+                        res.json({
+                            result: "NOK",
+                            msg: err
+                        });
+                    }else{
+                        res.json({
+                            result: "OK",
+                            msg: "User name updated successfully!",
+                            token: user1.token
+                        });
+                    }
+                });
+            }else{
+                res.json({
+                    result: "NOK",
+                    msg: "User names not match!"
+                });
+            }
+        }
+    });
+});
+
+router.post('/uploadPhoto', ensureAuthorized, function(req, res) {    
+    User.findOne({token: req.token}, function(err, user){
+        if(err){
+            res.json({
+                result: "NOK",
+                msg: err
+            });
+        }else{
+            user.img = req.body.img;
+            user.save(function(err){
+                if(err){
+                    res.json({
+                        result: "NOK",
+                        msg: err
+                    });
+                }else{
+                    res.json({
+                        result: "OK",
+                        msg: "Image updated successfully"
+                    });
+                }
+            });
+        }
+    });
+});
+
+function ensureAuthorized(req, res, next) {
+    var bearerToken;
+    var bearerHeader = req.headers["authorization"];
+    if (typeof bearerHeader !== 'undefined') {
+        var bearer = bearerHeader.split(" ");
+        bearerToken = bearer[1];
+        req.token = bearerToken;
+        next();
+    } else {
+        res.send(403);
+    }
+}
 
 module.exports = router;

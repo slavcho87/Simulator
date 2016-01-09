@@ -82,6 +82,12 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
         deleteItem: function(data, success, error){
             $http.delete('/settings/deleteItem/'+data).success(success).error(error);
         },
+        updatePassword: function(data, success, error){
+            $http.post('/user/updatePassword', data).success(success).error(error);
+        },
+        updateUserName: function(data, success, error){
+            $http.post('/user/updateUserName', data).success(success).error(error);
+        },
         logout: function(success) {
             changeUser({});
             delete $localStorage.token;

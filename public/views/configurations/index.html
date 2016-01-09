@@ -22,6 +22,24 @@
             </nav>            
                 
                 <div class="panel-body">
+                     <div class="alert alert-dismissable alert-danger" ng-repeat="errorMsg in errorMsgList">
+                            <button type="button" 
+                                    class="close" 
+                                    data-dismiss="alert" 
+                                    aria-hidden="true" 
+                                    ng-click="msgHide(errorMsg)">&times;</button>
+                            {{errorMsg}}
+                    </div>      
+
+                    <div class="alert alert-dismissable alert-success" ng-repeat="msg in msgList">
+                            <button type="button" 
+                                    class="close" 
+                                    data-dismiss="alert" 
+                                    aria-hidden="true" 
+                                    ng-click="msgSuccessHide(msg)">&times;</button>
+                            {{msg}}
+                    </div>                    
+                    
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Change password</h3>
@@ -31,27 +49,26 @@
                             <div class="row">                                            
                                 <div class="col-lg-4">
                                     <label>Current password</label>
-                                    <input class="form-control" type="text"/>
+                                    <input ng-model="password.currentPass" class="form-control" type="password"/>
                                 </div>
                                 
                                 <div class="col-lg-4">
                                     <label>New Password</label>
-                                    <input class="form-control" type="text"/>
+                                    <input ng-model="password.newPass" class="form-control" type="password"/>
                                 </div>
                                 
                                 <div class="col-lg-4">
                                     <label>Repeat new password</label>
-                                    <input class="form-control" type="text"/>
+                                    <input ng-model="password.newPassRepeat"  class="form-control" type="password"/>
                                 </div>
                                 
                                 <div class="col-xs-12">
                                     <br/>
-                                    <input type="submit" class="btn btn-primary" value="Save">
+                                    <input type="submit" class="btn btn-primary" ng-click="updatePassword()" value="Save">
                                  </div>                            
                             </div>
                         </div>
                     </div>                     
-                    
                     
                     <div class="panel panel-primary">
                         <div class="panel-heading">
@@ -60,24 +77,19 @@
 
                         <div class="panel-body">
                             <div class="row">     
-                                <div class="col-lg-4">
-                                    <label>Actual username</label>
-                                    <input class="form-control" type="text"/>
-                                </div>
-                                
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <label>New username</label>
-                                    <input class="form-control" type="text"/>
+                                    <input ng-model="userName.newUserName" class="form-control" type="text"/>
                                 </div>
                                 
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <label>Repeat new username</label>
-                                    <input class="form-control" type="text"/>
+                                    <input ng-model="userName.repatNewUserName" class="form-control" type="text"/>
                                 </div>
                                 
                                 <div class="col-xs-12">
                                     <br/>
-                                    <input type="submit" class="btn btn-primary" value="Save">
+                                    <input type="submit" class="btn btn-primary" ng-click="updateUserName()" value="Save">
                                  </div>
                             </div>
                         </div>
@@ -91,13 +103,11 @@
                         <div class="panel-body">
                             <div class="row">                                            
                                 <div class="col-lg-4">
-                                    <form action="/user/uploadPhoto" method='POST' enctype='multipart/form-data'>
-                                        <input type="file" name='imgPerfil'>
+                                    <input type="file" fileread="updateImgPerfilValue.img" name='imgPerfil'>
                                         
-                                        <br/>
+                                    <br/>
                                         
-                                        <input type="submit" class="btn btn-primary" value='Upload'>
-                                    </form>
+                                    <input type="submit" class="btn btn-primary" ng-click="updateImgPerfil()" value='Upload'>
                                 </div>
                             </div>
                         </div>
