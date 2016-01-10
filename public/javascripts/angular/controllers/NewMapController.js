@@ -6,6 +6,9 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
     $scope.step=1;
     $scope.cityList = [];
     $scope.hideScene = true;
+    $scope.recommenderList = [];
+    $scope.staticItemList = [];
+    $scope.dynamicItemList = [];
     
     $scope.mapSave = function(){
         Services.mapSave($scope.map, function(res){
@@ -21,10 +24,10 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
     }
     
     $scope.citySearch = function(){
-        if(!$scope.citySearchValue || 0 === $scope.citySearchValue.length){
+        if(!$scope.scene.citySearchValue || $scope.scene.citySearchValue.length == 0){
             $scope.errorMsgList.push("Insert city name!");
         }else{
-            Services.citySearch($scope.citySearchValue, function(res){
+            Services.citySearch($scope.scene.citySearchValue, function(res){
                 $scope.cityList = res; 
             },function(error){
                $scope.errorMsgList.push("Error: "+error);
@@ -82,27 +85,60 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
      *
      */
     $scope.loadFromFileSelected = function(){        
-        return ($scope.defineForm!="loadFromFile");
+        return ($scope.scene.defineForm!="loadFromFile");
     }
     
     /*
      *
      */
     $scope.loadFromFileSelectedDynamicItem = function(){
-        return ($scope.defineFormFileDynamicItem!="loadFromFileDynamicItem");
+        return ($scope.scene.defineFormFileDynamicItem!="loadFromFileDynamicItem");
     }
     
     /*
      *
      */
     $scope.setManuallySelected = function(){
-        return ($scope.defineForm!="setManually");
+        return ($scope.scene.defineForm!="setManually");
     }
     
     /*
      *
      */
     $scope.setManuallySelectedDynamicItem = function(){
-        return ($scope.defineFormFileDynamicItem!="setManuallyDynamicItem");
+        return ($scope.scene.defineFormFileDynamicItem!="setManuallyDynamicItem");
+    }
+    
+    $scope.loadData = function(){
+        //load recommeders list
+        Services.getRecommenderList(function(res){
+            angular.forEach(res, function(value, key) {
+                $scope.recommenderList.push(value);
+            });
+        }, function(err){
+             $scope.errorMsgList.push(err);
+        });
+        
+        //load static items
+        Services.staticItemList(function(res){
+           for(index in res){
+                $scope.staticItemList.push(res[index]);
+            } 
+        }, function(err){
+            $scope.errorMsgList.push(err);
+        });
+        
+        //load dynamic items
+        Services.dynamicItemList(function(res){
+            if(res.result == "NOK"){
+                $scope.errorMsgList.push(res.msg);
+            }else{
+                for(index in res){
+                    $scope.dynamicItemList.push(res[index]);
+                }
+            }        
+        }, function(err){
+            $scope.errorMsgList.push(err);
+        });
     }
 }]);

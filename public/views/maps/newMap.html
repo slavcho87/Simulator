@@ -1,4 +1,4 @@
- <div>    
+ <div ng-init="loadData()">    
     <div id="wrapper">
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="navbar-header">
@@ -99,9 +99,7 @@
                                 <div class="col-xs-6">
                                     <label>Recommender settings</label>
                                     <select class="form-control" ng-model="scene.recommenderSettings">
-                                        <option value="1">Recommender 1</option>
-                                        <option value="2">Recommender 2</option>
-                                        <option value="3">Recommender 3</option>
+                                        <option ng-repeat="recommender in recommenderList" value="{{recommender}}">{{recommender.poolName}}</option>
                                     </select>
                                 </div>                            
                             </div>
@@ -258,7 +256,11 @@
                                     <div class="col-xs-12">
                                         <nav>
                                           <ul class="pagination">
-                                            <li class="active">
+                                            <li ng-repeat="staticItem in staticItemList">
+                                                <a href="#/map/newMap"><img src="{{staticItem.icon}}" height="16" width="16"/></a>  
+                                            </li>  
+                                              
+                                            <!--<li class="active">
                                                 <a href="#/map/newMap"><img src="../../images/new-map.png" height="16" width="16"/></a>
                                             </li>
                                             <li>
@@ -269,7 +271,7 @@
                                             </li>
                                             <li>
                                                 <a href="#/map/newMap"><img src="../../images/new-map.png" height="16" width="16"/></a>
-                                            </li>
+                                            </li>-->
                                           </ul>
                                         </nav>    
                                     </div>
@@ -277,6 +279,11 @@
                                     <div class="col-xs-12">
                                         <label>Item name</label>
                                         <input ng-model="scene.staticItemNames" class="form-control"/>
+                                    </div>    
+                                    
+                                    <div class="col-xs-12">
+                                        </br>
+                                        <button type="button" class="btn btn-success">Save item</button>
                                     </div>    
                                 </div>
      
@@ -406,7 +413,11 @@
                                     <div class="col-xs-12">
                                         <nav>
                                             <ul class="pagination">
-                                                <li class="active">
+                                                <li ng-repeat="dynamicItem in dynamicItemList">
+                                                    <a href="#/map/newMap"><img src="{{dynamicItem.icon}}" height="16" width="16"/></a>
+                                                </li>
+                                                
+                                                <!--<li class="active">
                                                     <a href="#/map/newMap"><img src="../../images/new-map.png" height="16" width="16"/></a>
                                                 </li>
                                                 <li>
@@ -417,7 +428,7 @@
                                                 </li>
                                                 <li>
                                                     <a href="#/map/newMap"><img src="../../images/new-map.png" height="16" width="16"/></a>
-                                                </li>
+                                                </li>-->
                                             </ul>
                                         </nav>    
                                     </div>
@@ -441,6 +452,7 @@
                                     <div class="col-xs-4">
                                         </br>
                                         <button type="button" class="btn btn-danger" onclick="deleteDynamicItemPoit()">Delete</button>
+                                        <button type="button" class="btn btn-success">Save item</button>
                                     </div>
                                 </div>
 
