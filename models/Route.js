@@ -6,7 +6,8 @@ var RouteSchema   = new Schema({
     latitude: String,
     itemName: String,
     sceneID: String,
-    mapID: String
+    mapID: String,
+    speed: Number,
 });
  
 module.exports = mongoose.model('Route', RouteSchema);

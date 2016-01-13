@@ -7,7 +7,6 @@ var DisplaySchema   = new Schema({
    map_id: String,                 
    recommender: String,   
    item_name: String,
-   speed: Number,
 });
  
 module.exports = mongoose.model('Display', DisplaySchema);

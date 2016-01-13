@@ -9,7 +9,12 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
     $scope.recommenderList = [];
     $scope.staticItemList = [];
     $scope.dynamicItemList = [];
-    
+    $scope.scene = {
+        defineFormFileDynamicItem: "",
+        maximumStaticItemsToDisplay: 50
+    };
+    $scope.staticItemListInScene = [];
+
     $scope.mapSave = function(){
         Services.mapSave($scope.map, function(res){
             if(res.result == "OK"){
@@ -31,7 +36,7 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
                 $scope.cityList = res; 
             },function(error){
                $scope.errorMsgList.push("Error: "+error);
-            });        
+            });
         }
     }
 
@@ -54,7 +59,49 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
     $scope.isStepActivate = function(stepNumer){        
         return ($scope.step != stepNumer);
     }
-
+    
+    $scope.saveScene = function(){
+        console.log($scope.scene);
+    }
+    
+    $scope.saveStaticItemInScene = function(){
+        console.log($scope.newStaticItem);
+        if($scope.staticItemListInScene.length < $scope.scene.maximumStaticItemsToDisplay){
+            $scope.newStaticItem.type = JSON.parse($scope.newStaticItem.type);
+            $scope.staticItemListInScene.push({
+                name: $scope.newStaticItem.name,
+                type: $scope.newStaticItem.type,
+                longitude: $scope.newStaticItem.longitude,
+                latitude: $scope.newStaticItem.latitude
+            });
+            
+            $scope.msgList.push("Static item inserted!");
+            
+            $scope.newStaticItem.name = "";
+            $scope.newStaticItem.type = "";
+            $scope.newStaticItem.longitude = "";
+            $scope.newStaticItem.latitude = "";
+        }else{
+            $scope.errorMsgList.push("Element limit reached!");
+        }
+    }
+    
+    $scope.selectStaticItemToDeleteFromScene = function(item){
+        $scope.selectStaticItemToDeleteFromSceneValue = item;
+    }
+    
+    $scope.deleteStaticItemFromScene = function(){
+        var index = $scope.staticItemListInScene.indexOf($scope.selectStaticItemToDeleteFromSceneValue);
+        
+        if(index>=0){
+            $scope.staticItemListInScene.splice(index, 1);
+        }else{
+            $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
+        }
+    }
+    
+    
+    
    /*
     * Hide error message
     */    
