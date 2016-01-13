@@ -15,7 +15,10 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
         maximumDynamicItemsToDisplay: 50
     };
     $scope.staticItemListInScene = [];
-
+    $scope.newDynamicItem = {
+        route: []
+    };
+    
     $scope.mapSave = function(){
         Services.mapSave($scope.map, function(res){
             if(res.result == "OK"){
@@ -93,6 +96,24 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
             $scope.newStaticItem.latitude = "";
         }else{
             $scope.errorMsgList.push("Element limit reached!");
+        }
+    }
+    
+    $scope.saveDynamicItemInScene = function(){
+        
+    }
+    
+    $scope.selectPointToDelete = function(point){
+        $scope.selectPointToDeleteValue = point;
+    }
+    
+    $scope.deletePointFromRoute = function(){
+        var index = $scope.newDynamicItem.route.indexOf($scope.selectPointToDeleteValue);
+        
+        if(inde>=0){
+            $scope.newDynamicItem.route.splice(index, 1);
+        }else{
+            $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
         }
     }
     
