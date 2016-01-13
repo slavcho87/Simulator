@@ -11,7 +11,8 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
     $scope.dynamicItemList = [];
     $scope.scene = {
         defineFormFileDynamicItem: "",
-        maximumStaticItemsToDisplay: 50
+        maximumStaticItemsToDisplay: 50,
+        maximumDynamicItemsToDisplay: 50
     };
     $scope.staticItemListInScene = [];
 
@@ -20,6 +21,7 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
             if(res.result == "OK"){
                 $scope.msgList.push(res.msg);
                 $scope.hideScene = false;
+                $scope.map.id=res.id;
             }else{
                 $scope.errorMsgList.push(res.msg);    
             }
@@ -61,11 +63,19 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
     }
     
     $scope.saveScene = function(){
+        $scope.scene.staticItemList = $scope.staticItemListInScene;
+        
+        Services.saveScene($scope.scene, function(res){
+            
+            $scope.msgList.push(res.msg);
+        }, function(err){
+            $scope.errorMsgList.push(err);
+        });
+        
         console.log($scope.scene);
     }
     
     $scope.saveStaticItemInScene = function(){
-        console.log($scope.newStaticItem);
         if($scope.staticItemListInScene.length < $scope.scene.maximumStaticItemsToDisplay){
             $scope.newStaticItem.type = JSON.parse($scope.newStaticItem.type);
             $scope.staticItemListInScene.push({
@@ -99,8 +109,6 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
             $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
         }
     }
-    
-    
     
    /*
     * Hide error message
@@ -147,6 +155,14 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
      */
     $scope.setManuallySelected = function(){
         return ($scope.scene.defineForm!="setManually");
+    }
+    
+    $scope.loadStaticItemsFromFile = function(){
+        console.log($scope.scene.staticItemFile);
+    }
+    
+    $scope.loadDynamicItemsFromFile = function(){
+        console.log($scope.scene.dynamicItemFile);
     }
     
     /*

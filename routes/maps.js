@@ -44,7 +44,7 @@ router.post('/save', function(req, resp){
             mapModel.state = req.body.state;
             mapModel.userToken = req.token;
             
-            mapModel.save(function(err){
+            mapModel.save(function(err, map){
                 if(err){
                     resp.json({       
                         result: "NOK",       
@@ -53,12 +53,18 @@ router.post('/save', function(req, resp){
                 }else{
                     resp.json({        
                         result: "OK",
-                        msg: "Map created successfully!"    
+                        msg: "Map created successfully!",
+                        id: map._id
                     }); 
                 }
             });
         }
     });
+})
+
+router.post('/saveScene', function(req, resp){
+    console.log(req.body);
+    resp.json({msg: "guardado con exito!"});
 })
 
 module.exports = router;

@@ -11,10 +11,9 @@ var SceneSchema   = new Schema({
     maxStaticItems: Number,
     maxDynamicItems: Number,
     mapId: String,
-    recommenderPoolName: String
+    recommender: String
     zoomLevel: { type: Number, min: 1, max: 22 },
-    mapCenterLong: String,
-    mapCenterLat: String
+    selectedCity: String
 });
  
 module.exports = mongoose.model('Scene', SceneSchema);
