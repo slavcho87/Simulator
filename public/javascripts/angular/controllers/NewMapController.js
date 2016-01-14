@@ -15,6 +15,7 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
         maximumDynamicItemsToDisplay: 50
     };
     $scope.staticItemListInScene = [];
+    $scope.dynamicItemListInScene = [];
     $scope.newDynamicItem = {
         route: []
     };
@@ -67,15 +68,13 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
     
     $scope.saveScene = function(){
         $scope.scene.staticItemList = $scope.staticItemListInScene;
+        $scope.scene.dynamicItemList = $scope.dynamicItemListInScene;
         
-        Services.saveScene($scope.scene, function(res){
-            
+        Services.saveScene($scope.scene, function(res){ 
             $scope.msgList.push(res.msg);
         }, function(err){
             $scope.errorMsgList.push(err);
         });
-        
-        console.log($scope.scene);
     }
     
     $scope.saveStaticItemInScene = function(){
@@ -100,7 +99,24 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
     }
     
     $scope.saveDynamicItemInScene = function(){
-        
+        if($scope.dynamicItemListInScene.length < $scope.scene.maximumDynamicItemsToDisplay){
+            $scope.newDynamicItem.type = JSON.parse($scope.newDynamicItem.type);
+            $scope.dynamicItemListInScene.push({
+                type: $scope.newDynamicItem.type,
+                name: $scope.newDynamicItem.dynamicItemName,
+                speed: $scope.newDynamicItem.itemSpeed,
+                route: $scope.newDynamicItem.route
+            });
+            
+            $scope.msgList.push("Dynamic item inserted!");
+            
+            $scope.newDynamicItem.type = "";
+            $scope.newDynamicItem.dynamicItemName = "";
+            $scope.newDynamicItem.itemSpeed = "",
+            $scope.newDynamicItem.route = [];
+        }else{
+            $scope.errorMsgList.push("Element limit reached!");
+        }
     }
     
     $scope.selectPointToDelete = function(point){
@@ -110,7 +126,7 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
     $scope.deletePointFromRoute = function(){
         var index = $scope.newDynamicItem.route.indexOf($scope.selectPointToDeleteValue);
         
-        if(inde>=0){
+        if(index>=0){
             $scope.newDynamicItem.route.splice(index, 1);
         }else{
             $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
@@ -126,6 +142,20 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
         
         if(index>=0){
             $scope.staticItemListInScene.splice(index, 1);
+        }else{
+            $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
+        }
+    }
+    
+    $scope.selectDynamicItemToDelete = function(item){
+        $scope.selectDynamicItemToDeleteValue = item;
+    }
+    
+    $scope.deleteDynamicItemFromScene = function(){
+        var index = $scope.dynamicItemListInScene.indexOf($scope.selectDynamicItemToDeleteValue);
+        
+        if(index>=0){
+            $scope.dynamicItemListInScene.splice(index, 1);    
         }else{
             $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
         }
