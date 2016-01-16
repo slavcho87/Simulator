@@ -3,6 +3,7 @@ var http = require('http');
 var request = require('request');
 var User = require('../models/User');
 var Map = require('../models/Map');
+var Scene = require('../models/Scene');
 var router = express.Router();
 
 /*
@@ -43,6 +44,7 @@ router.post('/save', function(req, resp){
             mapModel.type = req.body.type;
             mapModel.state = req.body.state;
             mapModel.userToken = req.token;
+            mapModel.creationDate = new Date();
             
             mapModel.save(function(err, map){
                 if(err){
@@ -63,8 +65,36 @@ router.post('/save', function(req, resp){
 })
 
 router.post('/saveScene', function(req, resp){
-    console.log(req.body);
-    resp.json({msg: "guardado con exito!"});
+    var scene = new Scene();
+    scene.sceneName = req.body.name;
+    scene.city = req.body.citySearchValue; 
+    scene.latitudeULC = req.body.latitudeULC;
+    scene.longitudeULC  = req.body.longitudeULC;
+    scene.latitudeLRC  = req.body.latitudeLRC;
+    scene.longitudeLRC = req.body.longitudeLRC;
+    scene.maxStaticItems = req.body.maximumStaticItemsToDisplay; 
+    scene.maxDynamicItems = req.body.maximumStaticItemsToDisplay;
+    scene.mapId = req.body.mapId;
+    scene.recommender = req.body.recommenderSettings;
+    scene.zoomLevel = req.body.zoom;
+    scene.selectedCity = req.body.selectedCity;
+    scene.creationDate = new Date();
+    
+    scene.save(function(err, scene1){
+        if(err){
+            resp.json({
+                result: "NOK",
+                msg: err
+            });
+        }else{
+            resp.json({
+                result: "OK",
+                msg: "Scene saved successfully!",
+                id: scene1._id,
+                creationDate: scene1.creationDate
+            });
+        }
+    });    
 })
 
 module.exports = router;

@@ -11,9 +11,10 @@ var SceneSchema   = new Schema({
     maxStaticItems: Number,
     maxDynamicItems: Number,
     mapId: String,
-    recommender: String
-    zoomLevel: { type: Number, min: 1, max: 22 },
-    selectedCity: String
+    recommender: String,
+    zoomLevel: Number,
+    selectedCity: String,
+    creationDate: Date
 });
  
 module.exports = mongoose.model('Scene', SceneSchema);

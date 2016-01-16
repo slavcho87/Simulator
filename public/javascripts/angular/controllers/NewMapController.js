@@ -19,6 +19,7 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
     $scope.newDynamicItem = {
         route: []
     };
+    $scope.sceneList = [];
     
     $scope.mapSave = function(){
         Services.mapSave($scope.map, function(res){
@@ -69,9 +70,42 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
     $scope.saveScene = function(){
         $scope.scene.staticItemList = $scope.staticItemListInScene;
         $scope.scene.dynamicItemList = $scope.dynamicItemListInScene;
+        $scope.scene.mapId = $scope.map.id;
+        $scope.scene.zoom = dynamicItemsMap.getView().getZoom();
         
         Services.saveScene($scope.scene, function(res){ 
-            $scope.msgList.push(res.msg);
+            if(res.result == "NOK"){
+                $scope.errorMsgList.push(res.msg);
+            }else{
+                $scope.msgList.push(res.msg);
+                
+                $scope.sceneList.push({
+                    sceneID: res.id,
+                    sceneName: $scope.scene.name, 	
+                    creationDate: res.creationDate,
+                    recommenderSettings: getRecommenderNameFromID($scope.scene.recommenderSettings),
+                    staticItemNumber: $scope.scene.staticItemList.length,
+                    dynamicItemNumber: $scope.scene.dynamicItemList.length,
+                    city: $scope.scene.city,
+                });
+                
+                $scope.dynamicItemListInScene = [];
+                $scope.dynamicItemListInScene = []; 
+                $scope.scene.staticItemList = [];
+                $scope.scene.dynamicItemList = [];
+                $scope.scene.name = "";
+                $scope.scene.citySearchValue = "";
+                $scope.scene.latitudeULC = "";
+                $scope.scene.longitudeULC = "";
+                $scope.scene.latitudeLRC = "";
+                $scope.scene.longitudeLRC = "";
+                $scope.scene.maximumStaticItemsToDisplay = "";
+                $scope.scene.maximumStaticItemsToDisplay = "";
+                $scope.scene.mapId = "";
+                $scope.scene.recommenderSettings = "";
+                $scope.scene.zoom = "";
+                $scope.scene.selectedCity = "";             
+            }
         }, function(err){
             $scope.errorMsgList.push(err);
         });
@@ -221,6 +255,10 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
      */
     $scope.setManuallySelectedDynamicItem = function(){
         return ($scope.scene.defineFormFileDynamicItem!="setManuallyDynamicItem");
+    }
+    
+    function getRecommenderNameFromID(id){
+        return "recommender";
     }
     
     $scope.loadData = function(){

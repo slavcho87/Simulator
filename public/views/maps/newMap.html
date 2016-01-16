@@ -593,7 +593,7 @@
                 </div>                         
         </div>   
 
-                <div class="panel panel-primary table-responsive" ng-hide="hideScene">
+                <div class="panel panel-primary table-responsive" ng-hide="hideScene" ng-show="sceneList.length>0">
                     <div class="panel-heading">
                         <h3 class="panel-title"><i class="fa fa-list-alt"></i> List of scenes for this map</h3>
                     </div>
@@ -603,14 +603,21 @@
                                 <tr>
                                     <th>Scene name</th>
                                     <th>Creation date</th>
-                                    <th>Simulation parameters</th>
+                                    <th>Recommender settings</th>
+                                    <th>Number of static items into the scene</th>
+                                    <th>Number of dynamic items into the scene</th>
+                                    <th></th>
                                 </tr>
                             </thead>
+                            
                             <tbody>
-                                <tr>
-                                    <td>Actur</td>
-                                    <td>01/10/2015</td>
-                                    <td>parameters 1</td>
+                                <tr ng-repeat="scene in sceneList">
+                                    <td>{{scene.sceneName}}</td>
+                                    <td>{{scene.creationDate}}</td>
+                                    <td>{{scene.recommenderSettings}}</td>
+                                    <td>{{scene.staticItemNumber}}</td>
+                                    <td>{{scene.dynamicItemNumber}}</td>
+                                    <td>{{scene.city}}</td><!--scene.sceneID -->
                                     <td>
                                         <button class="btn btn-primary fa fa-pencil-square-o" 
                                                 onclick="window.location.href='#/map/editScene'"></button>
@@ -619,31 +626,6 @@
                                                 data-toggle="modal" data-target="#deleteMapModal"></button>
                                     </td> 
                                 </tr>
-
-                                <tr>
-                                    <td>Casco historico</td>
-                                    <td>02/10/2015</td>
-                                    <td>parameters 2</td>
-                                    <td>
-                                       <button class="btn btn-primary fa fa-pencil-square-o" 
-                                               onclick="window.location.href='#/map/editScene'"></button>
-                                        <button class="btn btn-danger fa fa-trash-o" 
-                                                data-toggle="modal" data-target="#deleteMapModal"></button>
-                                    </td> 
-                                </tr>
-                                
-                                <tr>
-                                    <td>Casablanca</td>
-                                    <td>04/10/2015</td>
-                                    <td>parameters 1</td>
-                                    <td>
-                                       <button class="btn btn-primary fa fa-pencil-square-o" 
-                                               onclick="window.location.href='#/map/editScene'"></button>
-                                        <button class="btn btn-danger fa fa-trash-o" 
-                                                data-toggle="modal" data-target="#deleteMapModal"></button>
-                                    </td> 
-                                </tr>
-
                             </tbody>
                         </table>
                     

@@ -6,6 +6,7 @@ var MapSchema   = new Schema({
     type: String,
     state: String,
     userToken: String,
+    creationDate: Date
 });
  
 module.exports = mongoose.model('Map', MapSchema);
