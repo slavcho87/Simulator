@@ -97,4 +97,20 @@ router.post('/saveScene', function(req, resp){
     });    
 })
 
+router.delete('/deleteScene/:sceneID', function(req, res){    
+    Scene.remove({_id: req.params.sceneID}, function(err, scene){
+       if(err){
+            res.json({
+                result: "NOK",
+                msg: err
+            });
+       }else{
+            res.json({
+                result: "OK",
+                msg: "Scene deleted successfully!"
+            });
+       }
+   });
+})
+
 module.exports = router;

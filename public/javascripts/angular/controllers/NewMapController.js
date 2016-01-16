@@ -111,6 +111,29 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
         });
     }
     
+    $scope.selectSceneToDelete = function(scene){
+        $scope.selectSceneToDeleteValue = scene;
+    }
+    
+    $scope.deleteScene = function(){
+        Services.deleteScene($scope.selectSceneToDeleteValue.sceneID, function(res){
+            if(res.result=="NOK"){
+                $scope.errorMsgList.push(res.msg);
+            }else{
+                $scope.msgList.push(res.msg);
+                
+                var index =  $scope.sceneList.indexOf($scope.selectSceneToDeleteValue);
+                if(index>=0){
+                    $scope.sceneList.splice(index, 1);
+                }else{
+                    $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
+                }
+            }   
+        }, function(err){
+            $scope.errorMsgList.push(err);
+        });
+    }
+    
     $scope.saveStaticItemInScene = function(){
         if($scope.staticItemListInScene.length < $scope.scene.maximumStaticItemsToDisplay){
             $scope.newStaticItem.type = JSON.parse($scope.newStaticItem.type);
@@ -258,7 +281,14 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
     }
     
     function getRecommenderNameFromID(id){
-        return "recommender";
+        var recommenderName = "";
+        for(index in $scope.recommenderList){
+            if($scope.recommenderList[index]._id==id){
+                recommenderName = $scope.recommenderList[index].poolName;
+            }
+        }
+        
+        return recommenderName;
     }
     
     $scope.loadData = function(){
