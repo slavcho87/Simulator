@@ -94,6 +94,9 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
         deleteScene: function(data, success, error){
             $http.delete('/maps/deleteScene/'+data).success(success).error(error);
         },
+        getUser: function(){
+            return currentUser;
+        },
         logout: function(success) {
             changeUser({});
             delete $localStorage.token;

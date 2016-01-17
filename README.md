@@ -33,7 +33,7 @@ Una vez que nos hemos clonado el proyecto y descargado las dependencias de este 
 
     npm start
     
-De esta forma tenemos arrancamos el servidor en el puerto 81 y para acceder tenemos que abrir un navegador web y acceder en localhost:81. Si queremos modificar el puerto donde se ejecuta el serividor tenemos que editar el fichero app.js diposponible en el directorio raiz del proyecto y buscar la sigueinte linea de codigo:
+De esta forma tenemos arrancado el servidor en el puerto 81 y para acceder tenemos que abrir un navegador web y acceder en localhost:81. Si queremos modificar el puerto donde se ejecuta el serividor tenemos que editar el fichero app.js diposponible en el directorio raiz del proyecto y buscar la sigueinte linea de codigo:
 
     var port = process.env.PORT || 81;
     

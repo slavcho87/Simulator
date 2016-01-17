@@ -25,7 +25,10 @@
                 <div class="row">    
                     <div id="mapa" class="mapa col-sm-8">
                     </div>
-
+                        <script src="javascripts/socketsIO/socket.io.js"></script>
+                        <script>
+                            var socket = io();
+                        </script>
                         <script type="text/javascript">
                             var map = new ol.Map({
                                 target: 'mapa',
@@ -43,20 +46,76 @@
                                 ])
                             });
                     
-                            map.on('singleclick', function(evt) {
+                            map.on('singleclick', function(evt) { 
+                                map.getOverlays().getArray().slice(0).forEach(function(overlay) {
+                                    if(overlay.getElement()[0].name==getUser()._id){
+                                        map.removeOverlay(overlay);
+                                    }
+                                });
+                                
                                 map.addOverlay(new ol.Overlay({
                                     position: evt.coordinate,
-                                    element: $('<img src="images/yo.jpg" class="img-circle">')
+                                    element: $('<img src="'+getUser().img+'" class="img-circle" name="'+getUser()._id+'">')
                                     .css({marginTop: '-50%', marginLeft: '-50%', width: '40px', height: '40px', cursor: 'pointer'})
                                     .tooltip({title: 'Hello, world!', trigger: 'click'})
                                 }));
                                 
+                                /*var lista = map.getOverlays().getArray();
+                                
+                                for(index in lista){
+                                    console.log(lista[index].getElement()[0].name);
+                                }*/
+                                
                                 //alert(ol.proj.transform(evt.coordinate,'EPSG:3857', 'EPSG:4326'));
                                 
                                 //alert("overlays --> "+map.getOverlays());
-                              
                                 
-                            });        
+                            });      
+                            
+                            $(document).keypress(function(e)
+                            {   
+                                if(window.location.hash=="#/simulator"){
+                                    switch(e.which)
+                                    {
+                                        case 119: //es la w. Significa arriba
+                                            up(); 
+                                            break;
+                                        case 115: //es la s. Significa abajo
+                                            down(); 
+                                            break;  
+                                        case 97: //es la a. Significa izq  
+                                            left(); 
+                                            break; 
+                                        case 100: //es la d. Signfica dcha
+                                            right(); 
+                                            break;
+                                    }
+                                }
+                            });
+                            
+                            function up(){
+                                alert("up");
+                            }
+                            
+                            function down(){
+                                alert("down");
+                            }
+                            
+                            function left(){
+                                alert("left");
+                            }
+                            
+                            function right(){
+                                alert("right");
+                            }
+                            
+                            function getUser(){
+                                var appElement = document.querySelector('[ng-app=app]');
+                                var $scope = angular.element(appElement).scope();
+                                $scope = $scope.$$childHead;
+                                return $scope.getUser();
+                            }
+                            
                             /*var exportPNGElement = document.getElementById('export-png');
                             if ('download' in exportPNGElement) {
                                 exportPNGElement.addEventListener('click', function(e) {
@@ -74,7 +133,7 @@
                         </script>
                     
                     <div class="col-sm-4">
-                        <button type="button" class="btn btn-default fa fa-play-circle-o">                         
+                        <button type="button" class="btn btn-default fa fa-play-circle-o" ng-click="getUser()">                         
                         </button>
                         
                         <button type="button" class="btn btn-default fa fa-pause">                         

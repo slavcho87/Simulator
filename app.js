@@ -40,7 +40,7 @@ app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
     next();
 });
-app.listen(port, function () {
+var server = app.listen(port, function () {
     console.log("Express server listening on port " + port);
 });
 
@@ -90,6 +90,24 @@ app.use(function(err, req, res, next) {
     res.render('error', {
         message: err.message,
         error: {}
+    });
+});
+
+var io = require('socket.io')(server);
+
+io.on('connection', function(socket){
+    console.log('a user connected');
+    
+    socket.on('user change position', function(data){
+        console.log(data);
+    });
+    
+    socket.on('user change speed', function(data){
+        console.log(data);
+    });
+    
+    socket.on('disconnect', function(){
+        console.log('user disconnected');
     });
 });
 
