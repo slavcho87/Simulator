@@ -124,7 +124,8 @@
 
                                                 <ul class="dropdown-menu">
                                                     <li><a href="#map" role="button" 
-                                                           data-toggle="modal" data-target="#startSimulationModal">Start simulation</a></li>
+                                                           data-toggle="modal" data-target="#startSimulationModal"
+                                                           ng-click="startSimulation()">Start simulation</a></li>
 
                                                     <li><a href="#map/editMap" role="button" 
                                                            data-toggle="modal" data-target="#editMap">Edit map</a>
@@ -150,7 +151,7 @@
                                     <td>01/05/2014</td>
                                     <td>
                                         <button type="button" class="btn btn-success" 
-                                                data-toggle="modal" data-target="#startSimulationModal">Start simulation</button>
+                                                ng-click="startSimulation()">Start simulation</button>
                                     </td>
                                 </tr>
 
@@ -204,7 +205,7 @@
                 
               <div class="modal-footer">  
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success" data-dismiss="modal">Start</button>  
+                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="startSimulation()">Start</button>  
               </div>
             </div>
 

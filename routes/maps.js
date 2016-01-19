@@ -43,7 +43,7 @@ router.post('/save', function(req, resp){
             mapModel.name = req.body.name; 
             mapModel.type = req.body.type;
             mapModel.state = req.body.state;
-            mapModel.userToken = req.token;
+            mapModel.userID = user._id;
             mapModel.creationDate = new Date();
             
             mapModel.save(function(err, map){

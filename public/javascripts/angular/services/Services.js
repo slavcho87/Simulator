@@ -97,6 +97,9 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
         getUser: function(){
             return currentUser;
         },
+        getUserImg(success, error){
+            $http.get('/user/img').success(success).error(error);
+        },
         logout: function(success) {
             changeUser({});
             delete $localStorage.token;

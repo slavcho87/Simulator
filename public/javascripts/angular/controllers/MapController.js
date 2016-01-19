@@ -1,6 +1,6 @@
 var app = angular.module("app");
 
-app.controller("MapController", ['$scope', '$http', function ($scope, $http) {
+app.controller("MapController", ['$scope', '$http', '$location', 'DataFactory', function ($scope, $http, $location, DataFactory) {
     $scope.errorMsgList = [];
     
     $scope.map = {
@@ -11,6 +11,11 @@ app.controller("MapController", ['$scope', '$http', function ($scope, $http) {
         mapCenterLong: "",
         mapCenterLat: ""
     };
+    
+    $scope.startSimulation = function(){
+        DataFactory.data.msg = "Esto es una prueba";
+        $location.url('/simulator');
+    }
     
    /*
     * Insert new map

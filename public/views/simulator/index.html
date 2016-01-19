@@ -1,5 +1,5 @@
-<div>    
-        <div id="wrapper">
+<div ng-init="loadData()">    
+        <div id="wrapper" >
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -20,8 +20,19 @@
                     </ul>
                 </div>		
             </nav>
+            --> {{msg}} --
+            <div id="page-wrapper" ng-hide="simulationDataLoaded">
+                {{info}}
+                <div class="progress progress-striped active">
+                    <div class="progress-bar" role="progressbar"
+                         aria-valuemin="0" aria-valuemax="100"
+                         style="width: 90%">
+                        <span class="sr-only">45% completado</span>
+                    </div>
+                </div>
+            </div>
             
-            <div id="page-wrapper">		                
+            <div id="page-wrapper" ng-show="simulationDataLoaded">		                
                 <div class="row">    
                     <div id="mapa" class="mapa col-sm-8">
                     </div>
@@ -30,6 +41,8 @@
                             var socket = io();
                         </script>
                         <script type="text/javascript">
+                            var overlayList = {};
+                            
                             var map = new ol.Map({
                                 target: 'mapa',
                                 layers: [
@@ -47,7 +60,7 @@
                             });
                     
                             map.on('singleclick', function(evt) { 
-                                map.getOverlays().getArray().slice(0).forEach(function(overlay) {
+                                /*map.getOverlays().getArray().slice(0).forEach(function(overlay) {
                                     if(overlay.getElement()[0].name==getUser()._id){
                                         map.removeOverlay(overlay);
                                     }
@@ -55,10 +68,26 @@
                                 
                                 map.addOverlay(new ol.Overlay({
                                     position: evt.coordinate,
-                                    element: $('<img src="'+getUser().img+'" class="img-circle" name="'+getUser()._id+'">')
+                                    element: $('<img src="'+getImg()+'" class="img-circle" name="'+getUser()._id+'">')
                                     .css({marginTop: '-50%', marginLeft: '-50%', width: '40px', height: '40px', cursor: 'pointer'})
                                     .tooltip({title: 'Hello, world!', trigger: 'click'})
-                                }));
+                                }));*/
+                                
+                                if(overlayList['user']){
+                                    console.log(overlayList['user']);
+                                    map.removeOverlay(overlayList['user']);                                
+                                }
+
+                                overlayList['user'] = new ol.Overlay({
+                                    position: evt.coordinate,
+                                    element: $('<img src="'+getImg()+'" class="img-circle" name="'+getUser()._id+'">')
+                                    .css({marginTop: '-50%', marginLeft: '-50%', width: '40px', height: '40px', cursor: 'pointer'})
+                                    .tooltip({title: 'Hello, world!', trigger: 'click'})
+                                });
+                                                                
+                                map.addOverlay(overlayList['user']);
+                                
+                                
                                 
                                 /*var lista = map.getOverlays().getArray();
                                 
@@ -109,11 +138,18 @@
                                 alert("right");
                             }
                             
+                            function getImg(){
+                                return getScope().userImg;
+                            }
+                            
                             function getUser(){
+                                return getScope().getUser();
+                            }
+                            
+                            function getScope(){
                                 var appElement = document.querySelector('[ng-app=app]');
                                 var $scope = angular.element(appElement).scope();
-                                $scope = $scope.$$childHead;
-                                return $scope.getUser();
+                                return $scope.$$childHead;
                             }
                             
                             /*var exportPNGElement = document.getElementById('export-png');
@@ -145,16 +181,16 @@
                         <button type="button" class="btn btn-default fa fa-download">                         
                         </button>
                             
-                        <button type="button" class="btn btn-default fa fa-arrow-up">                         
+                        <button type="button" class="btn btn-default fa fa-arrow-up" onclick="up()">                         
                         </button>
 
-                        <button type="button" class="btn btn-default fa fa-arrow-down" hidden="hidden">                         
+                        <button type="button" class="btn btn-default fa fa-arrow-down" hidden="hidden" onclick="down()">                         
                         </button>
                         
-                        <button type="button" class="btn btn-default fa fa-arrow-left" >                         
+                        <button type="button" class="btn btn-default fa fa-arrow-left" onclick="left()">                         
                         </button>
                  
-                        <button type="button" class="btn btn-default fa fa-arrow-right">                         
+                        <button type="button" class="btn btn-default fa fa-arrow-right" onclick="right()">                         
                         </button>
                     
                         

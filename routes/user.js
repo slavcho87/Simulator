@@ -134,8 +134,6 @@ router.post('/updateUserName', ensureAuthorized, function(req, res, next){
                 user.token = jwt.sign(user, 'sshhhhh');
                 user.img = img;
                 
-                //NOTA!!! Tenemos que cambiar el token en el mapa tambien
-                
                 user.save(function(err, user1){
                     if(err){
                         res.json({
@@ -181,6 +179,22 @@ router.post('/uploadPhoto', ensureAuthorized, function(req, res) {
                         msg: "Image updated successfully"
                     });
                 }
+            });
+        }
+    });
+});
+
+router.get('/img', ensureAuthorized, function(req, res){
+    User.findOne({token: req.token}, function(err, user){
+        if(err){
+            res.json({
+                result: "NOK",
+                msg: err
+            });
+        }else{
+            res.json({
+                result: "OK",
+                img: user.img
             });
         }
     });

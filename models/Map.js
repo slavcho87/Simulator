@@ -5,7 +5,7 @@ var MapSchema   = new Schema({
     name: String,
     type: String,
     state: String,
-    userToken: String,
+    userID: String,
     creationDate: Date
 });
  
