@@ -100,6 +100,9 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
         getUserImg(success, error){
             $http.get('/user/img').success(success).error(error);
         },
+        findMaps: function(data, success, error){
+            $http.post('/maps/findMaps',data).success(success).error(error);
+        },
         logout: function(success) {
             changeUser({});
             delete $localStorage.token;

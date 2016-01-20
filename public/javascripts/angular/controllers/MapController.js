@@ -1,7 +1,10 @@
 var app = angular.module("app");
 
-app.controller("MapController", ['$scope', '$http', '$location', 'DataFactory', function ($scope, $http, $location, DataFactory) {
+app.controller("MapController", ['$scope', '$http', '$location', 'Services', 'DataFactory', function ($scope, $http, $location, Services, DataFactory) {
     $scope.errorMsgList = [];
+    $scope.msgList = [];
+    $scope.mapList = [];
+    $scope.findMap = {};
     
     $scope.map = {
         name: "", 
@@ -14,7 +17,27 @@ app.controller("MapController", ['$scope', '$http', '$location', 'DataFactory', 
     
     $scope.startSimulation = function(){
         DataFactory.data.msg = "Esto es una prueba";
+        //por aqui tenemos que pasar todos los datos al siguiente controlador
         $location.url('/simulator');
+    }
+    
+    $scope.findMaps = function(){
+        $scope.mapList = [];
+        Services.findMaps($scope.findMap, function(res){
+            if(res.result=="NOK"){
+                $scope.errorMsgList.push(res.msg);    
+            }else{
+                if(res.mapList.length==0){
+                    $scope.msgList.push("The search returned 0 results");
+                }
+                
+                angular.forEach(res.mapList, function(value, key) {
+                    $scope.mapList.push(value);
+                });
+            }
+        }, function(err){
+            $scope.errorMsgList.push(err);
+        });
     }
     
    /*
@@ -43,5 +66,18 @@ app.controller("MapController", ['$scope', '$http', '$location', 'DataFactory', 
         }else{
             $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
         }
-    }  
+    } 
+    
+    /*
+     *
+     */
+    $scope.msgSuccessHide = function(msg){
+        var msgIndex = $scope.msgList.indexOf(msg);
+        
+        if(msgIndex>=0){
+            $scope.msgList.splice(msgIndex, 1);
+        }else{
+            $scope.msgList.push(ERROR_HAS_OCCURRED);
+        }            
+    }
 }]);
