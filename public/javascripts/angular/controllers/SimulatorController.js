@@ -4,8 +4,11 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
     $scope.errorMsgList = [];
     $scope.userImg;
     $scope.simulationDataLoaded = false;
+    $scope.hideLoadBar = true;
     $scope.info = "";
-    $scope.msg = DataFactory.data.msg;
+    $scope.mapId = DataFactory.data.mapId;
+    $scope.sceneList = [];
+    
     
     $scope.getUserImg = function(){
             Services.getUserImg(function(res){
@@ -23,9 +26,25 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
         return Services.getUser();
     }
     
-    $scope.loadData = function(){
-        //load user image
-        $scope.info = "Loading user image ...";
+    $scope.getSceneList = function(){
+        Services.findSceneListFromMapId($scope.mapId, function(res){
+            if(res.result=="NOK"){
+                $scope.errorMsgList.push(res.msg);
+            }else{
+                angular.forEach(res.sceneList, function(value, key) {
+                    $scope.sceneList.push(value);
+                });
+            }
+        }, function(err){
+            $scope.errorMsgList.push(err);
+        });
+    }
+    
+    $scope.loadData = function(){    
+        $scope.sceneList = [];
+        $scope.hideLoadBar = false;
+        
+        $scope.info = "Loading ...";
         Services.getUserImg(function(res){
             if(res.result=="NOK"){
                 $scope.errorMsgList.push(res.msg);    
@@ -36,13 +55,19 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
             $scope.errorMsgList.push(err);   
         });
         
-        $scope.info = "Loading static items ...";
+        /*
+        Para calcular el punto medio:
+        x = ( x_1 + x_2 ) / 2 
+        y = ( y_1 + y_2 ) / 2 
+        ( x , y ) -> punto medio
+        */
+        
         //load static ites
         
         
-        $scope.info = "Loading dynamic items ...";
         //load dynamic items
         
+        $scope.hideLoadBar = true;
         $scope.simulationDataLoaded = true; 
     }
     

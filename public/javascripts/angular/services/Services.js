@@ -97,11 +97,17 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
         getUser: function(){
             return currentUser;
         },
-        getUserImg(success, error){
+        getUserImg: function(success, error){
             $http.get('/user/img').success(success).error(error);
         },
         findMaps: function(data, success, error){
             $http.post('/maps/findMaps',data).success(success).error(error);
+        },
+        findSceneListFromMapId: function(data, success, error){
+            $http.get('/maps/sceneListFromMapId/'+data).success(success).error(error);
+        }, 
+        getStaticItems: function(){
+            $http.get('/maps/staticItemList/'+data).success(success).error(error);
         },
         logout: function(success) {
             changeUser({});

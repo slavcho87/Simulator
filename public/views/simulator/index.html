@@ -1,4 +1,4 @@
-<div ng-init="loadData()">    
+<div ng-init="getSceneList()">    
         <div id="wrapper" >
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
                 <div class="navbar-header">
@@ -20,8 +20,24 @@
                     </ul>
                 </div>		
             </nav>
-            --> {{msg}} --
-            <div id="page-wrapper" ng-hide="simulationDataLoaded">
+            
+            <div id="page-wrapper" ng-show="sceneList.length>0">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>Select scene: </label>
+                         <select ng-model="selectedScene" class="form-control">
+                            <option ng-repeat="sceneValue in sceneList" value="{{sceneValue}}">{{sceneValue.sceneName}}</option>
+                         </select>
+                    </div>
+                    
+                    <div class="col-sm-4">
+                        </br>
+                        <button type="button" class="btn btn-primary" ng-click="loadData()">Load scene</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="page-wrapper" ng-hide="hideLoadBar">
                 {{info}}
                 <div class="progress progress-striped active">
                     <div class="progress-bar" role="progressbar"

@@ -4,6 +4,9 @@ var request = require('request');
 var User = require('../models/User');
 var Map = require('../models/Map');
 var Scene = require('../models/Scene');
+var Display = require('../models/Display');
+var Location = require('../models/Location');
+var Route = require('../models/Route');
 var router = express.Router();
 
 /*
@@ -87,6 +90,74 @@ router.post('/saveScene', function(req, resp){
                 msg: err
             });
         }else{
+            var staticItemList = req.body.staticItemList; 
+            var dynamicItemList = req.body.dynamicItemList;
+            
+            //Save static items
+            console.log("Save static items");
+            for (index = 0; index < staticItemList.length; index++) { 
+                var display = new Display();
+                display.itemType = staticItemList[index].type.type;
+                display.sceneId = scene1._id;
+                display.mapId = scene1.mapId;
+                display.recommender = scene1.recommender;    
+                display.itemName = staticItemList[index].name;
+                display.save(function(err){
+                    if(err){
+                        console.log(err);
+                    }else{
+                        console.log("dislay saved");
+                    }
+                });
+                
+                var location = new Location();
+                location.longitude = staticItemList[index].longitude 
+                location.latitude =  staticItemList[index].latitude;
+                location.itemName =  staticItemList[index].name;
+                location.save(function(err){
+                    if(err){
+                        console.log(err);
+                    }else{
+                        console.log("location saved");
+                    }
+                });
+            }
+            
+            //Save dynamic items
+            for (index = 0; index < dynamicItemList.length; index++) {
+                var display = new Display();
+                display.itemType = dynamicItemList[index].type.type;
+                display.sceneId = scene1._id;
+                display.mapId = scene1.mapId;
+                display.recommender = scene1.recommender;    
+                display.itemName = dynamicItemList[index].name;
+                display.save(function(err){
+                    if(err){
+                        console.log(err);
+                    }else{
+                        console.log("display saved");
+                    }
+                });
+                
+                //Save route
+                for (i = 0; i < dynamicItemList[index].route.length; i++) {
+                    var route = new Route();
+                    route.longitude = dynamicItemList[index].route[i].long; 
+                    route.latitude = dynamicItemList[index].route[i].lat;
+                    route.itemName = dynamicItemList[index].name;
+                    route.sceneID = scene1._id;
+                    route.mapID = scene1.mapId;
+                    route.speed = dynamicItemList[index].speed;
+                    route.save(function(err){
+                        if(err){
+                            console.log(err);
+                        }else{
+                            console.log("route saved");
+                        }
+                    });
+                }
+            }
+            
             resp.json({
                 result: "OK",
                 msg: "Scene saved successfully!",
@@ -114,14 +185,6 @@ router.delete('/deleteScene/:sceneID', function(req, res){
 })
 
 router.post('/findMaps', function(req, res){
-    /*req.body.city: "wwww"
-        req.body.endDate: "2016-01-30"
-        req.body.name: "qqq"
-    req.body.onlyMyMaps: true
-        req.body.startDate: "2016-01-11"
-    req.body.state: "draft"
-    req.body.type: "all"*/
-    
     User.findOne({token: req.token}, function(err, user) {
         if(err){
            res.json({
@@ -163,10 +226,26 @@ router.post('/findMaps', function(req, res){
                         result: "OK",
                         mapList: list
                     });    
-                }                
+                }
             });
         }
     });
+})
+
+router.get('/sceneListFromMapId/:mapId', function(req, res){
+    Scene.find({mapId: req.params.mapId}, function(err, sceneList){
+        if(err){
+            res.json({
+                result: "NOK",
+                msg: err
+            });
+        }else{
+            res.json({
+                result: "OK",
+                sceneList: sceneList
+            });
+        }
+    }); 
 })
 
 module.exports = router;
