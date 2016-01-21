@@ -248,4 +248,9 @@ router.get('/sceneListFromMapId/:mapId', function(req, res){
     }); 
 })
 
+router.post('/staticItemList', function(req, res){
+    req.body.sceneId 
+    req.body.mapId
+})
+
 module.exports = router;

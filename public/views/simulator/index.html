@@ -36,6 +36,15 @@
                     </div>
                 </div>
             </div>
+    
+            <div id="page-wrapper" ng-show="sceneListEmpty">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <p>This map has no scenes</p>
+                    </div>
+                </div>
+            </div>
+    
             
             <div id="page-wrapper" ng-hide="hideLoadBar">
                 {{info}}
@@ -57,6 +66,81 @@
                             var socket = io();
                         </script>
                         <script type="text/javascript">
+                            var dirMove;
+                            var appElement = document.querySelector('[ng-app=app]');
+                            var $scope = angular.element(appElement).scope();
+                            $scope = $scope.$$childHead; 
+                            var mapCenter = $scope.mapCenter;
+                            console.log(mapCenter);
+                            var lastMove = "";
+                            
+                            function userMove(){
+                                switch(dirMove){
+                                case "up":
+                                        //mas long
+                                        moveUp();
+                                        break;
+                                case "down":
+                                        //menos long
+                                        moveDown();
+                                        break;
+                                case "left":
+                                        //menos lat
+                                        moveLeft();
+                                        break;
+                                case "right":
+                                        //mas lat
+                                        moveRight();
+                                        break;
+                                }
+                            }
+                            
+                            function moveUp(){
+                                var pos = overlayList['user'].getPosition();
+                                pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326')
+                                pos[1]=pos[1]+0.0001;
+                                setUserPos(pos);
+                            }
+                            
+                            function moveDown(){
+                                var pos = overlayList['user'].getPosition();
+                                pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326')
+                                pos[1]=pos[1]-0.0001;
+                                setUserPos(pos);
+                            }
+                            
+                            function moveLeft(){
+                                var pos = overlayList['user'].getPosition();
+                                pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326')
+                                pos[0]=pos[0]-0.0001;
+                                setUserPos(pos);
+                            }
+                            
+                            function moveRight(){
+                                var pos = overlayList['user'].getPosition();
+                                pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326')
+                                pos[0]=pos[0]+0.0001;
+                                setUserPos(pos);
+                            }
+                            
+                            function setUserPos(newPos){
+                                if(overlayList['user']){
+                                    map.removeOverlay(overlayList['user']);                                
+                                }
+
+                                overlayList['user'] = new ol.Overlay({
+                                    position: ol.proj.transform(newPos, 'EPSG:4326', 'EPSG:3857'),
+                                    element: $('<img src="'+getImg()+'" class="img-circle" name="'+getUser()._id+'">')
+                                    .css({marginTop: '-50%', marginLeft: '-50%', width: '40px', height: '40px', cursor: 'pointer'})
+                                    .tooltip({title: 'Hello, world!', trigger: 'click'})
+                                });
+                                                                
+                                map.addOverlay(overlayList['user']);
+                            }
+                            
+                            setInterval('userMove()',1000);
+                            
+                            
                             var overlayList = {};
                             
                             var map = new ol.Map({
@@ -66,31 +150,13 @@
                                         source: new ol.source.MapQuest({layer: 'osm'})
                                     })
                                 ],
-                                view: new ol.View({
-                                    center: ol.proj.transform([-0.88824, 41.66991], 'EPSG:4326', 'EPSG:3857'),
-                                    zoom: 15
-                                }),
                                 controls: ol.control.defaults().extend([
                                     new ol.control.FullScreen()
                                 ])
                             });
                     
                             map.on('singleclick', function(evt) { 
-                                /*map.getOverlays().getArray().slice(0).forEach(function(overlay) {
-                                    if(overlay.getElement()[0].name==getUser()._id){
-                                        map.removeOverlay(overlay);
-                                    }
-                                });
-                                
-                                map.addOverlay(new ol.Overlay({
-                                    position: evt.coordinate,
-                                    element: $('<img src="'+getImg()+'" class="img-circle" name="'+getUser()._id+'">')
-                                    .css({marginTop: '-50%', marginLeft: '-50%', width: '40px', height: '40px', cursor: 'pointer'})
-                                    .tooltip({title: 'Hello, world!', trigger: 'click'})
-                                }));*/
-                                
                                 if(overlayList['user']){
-                                    console.log(overlayList['user']);
                                     map.removeOverlay(overlayList['user']);                                
                                 }
 
@@ -102,7 +168,6 @@
                                 });
                                                                 
                                 map.addOverlay(overlayList['user']);
-                                
                                 
                                 
                                 /*var lista = map.getOverlays().getArray();
@@ -118,7 +183,7 @@
                             });      
                             
                             $(document).keypress(function(e)
-                            {   
+                            {  
                                 if(window.location.hash=="#/simulator"){
                                     switch(e.which)
                                     {
@@ -134,24 +199,37 @@
                                         case 100: //es la d. Signfica dcha
                                             right(); 
                                             break;
+                                        case 32:  //es la barra de espacio
+                                            startStopUser();
+                                            break;
                                     }
                                 }
                             });
                             
                             function up(){
-                                alert("up");
+                                dirMove = "up";
                             }
                             
                             function down(){
-                                alert("down");
+                                dirMove = "down";
                             }
                             
                             function left(){
-                                alert("left");
+                                dirMove = "left";
                             }
                             
                             function right(){
-                                alert("right");
+                                dirMove = "right";
+                            }
+                            
+                            function startStopUser(){
+                                if(lastMove == ""){
+                                    lastMove = dirMove;
+                                    dirMove = "";
+                                }else{
+                                    dirMove = lastMove;
+                                    lastMove = "";
+                                }
                             }
                             
                             function getImg(){

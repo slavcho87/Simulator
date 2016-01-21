@@ -17,12 +17,8 @@ app.controller("MapController", ['$scope', '$http', '$location', 'Services', 'Da
     
     $scope.startSimulation = function(id){
         DataFactory.data.mapId = id;
-        //por aqui tenemos que pasar todos los datos al siguiente controlador
-        //$("#startSimulationModal").modal('hide');
-        //$location.url('/simulator');
         window.location = '#/simulator';
     }
-    
     
     $scope.findMaps = function(){
         $scope.mapList = [];

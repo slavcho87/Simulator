@@ -8,7 +8,8 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
     $scope.info = "";
     $scope.mapId = DataFactory.data.mapId;
     $scope.sceneList = [];
-    
+    $scope.sceneListEmpty = false;
+    $scope.mapCenter = [0, 0];
     
     $scope.getUserImg = function(){
             Services.getUserImg(function(res){
@@ -30,13 +31,19 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
         Services.findSceneListFromMapId($scope.mapId, function(res){
             if(res.result=="NOK"){
                 $scope.errorMsgList.push(res.msg);
+                $scope.sceneListEmpty = true;
             }else{
+                if(res.sceneList.length == 0){
+                    $scope.sceneListEmpty = true;
+                }
+                
                 angular.forEach(res.sceneList, function(value, key) {
                     $scope.sceneList.push(value);
                 });
             }
         }, function(err){
             $scope.errorMsgList.push(err);
+            $scope.sceneListEmpty = true;
         });
     }
     
@@ -55,15 +62,16 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
             $scope.errorMsgList.push(err);   
         });
         
-        /*
-        Para calcular el punto medio:
-        x = ( x_1 + x_2 ) / 2 
-        y = ( y_1 + y_2 ) / 2 
-        ( x , y ) -> punto medio
-        */
+        $scope.selectedScene = JSON.parse($scope.selectedScene);
+        var lat = ($scope.selectedScene.latitudeLRC + $scope.selectedScene.latitudeULC)/2;
+        var long = ($scope.selectedScene.longitudeLRC + $scope.selectedScene.longitudeULC)/2;
+        map.setView(new ol.View({
+            center: ol.proj.transform([lat, long], 'EPSG:4326', 'EPSG:3857'),                     
+            zoom: 15           
+        }));
         
         //load static ites
-        
+        console.log($scope.selectedScene);
         
         //load dynamic items
         

@@ -106,8 +106,8 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
         findSceneListFromMapId: function(data, success, error){
             $http.get('/maps/sceneListFromMapId/'+data).success(success).error(error);
         }, 
-        getStaticItems: function(){
-            $http.get('/maps/staticItemList/'+data).success(success).error(error);
+        getStaticItems: function(data, success, error){
+            $http.post('/maps/staticItemList',data).success(success).error(error);
         },
         logout: function(success) {
             changeUser({});
