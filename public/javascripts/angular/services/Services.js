@@ -107,7 +107,10 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
             $http.get('/maps/sceneListFromMapId/'+data).success(success).error(error);
         }, 
         getStaticItems: function(data, success, error){
-            $http.post('/maps/staticItemList',data).success(success).error(error);
+            $http.post('/maps/staticItemList', data).success(success).error(error);
+        },
+        staticItemInfo: function(data, success, error){
+            $http.get('/maps/staticItemInfo/'+data).success(success).error(error);
         },
         logout: function(success) {
             changeUser({});

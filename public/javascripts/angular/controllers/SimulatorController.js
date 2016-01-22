@@ -10,6 +10,7 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
     $scope.sceneList = [];
     $scope.sceneListEmpty = false;
     $scope.mapCenter = [0, 0];
+    $scope.staticItemList = [];
     
     $scope.getUserImg = function(){
             Services.getUserImg(function(res){
@@ -71,7 +72,35 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
         }));
         
         //load static ites
-        console.log($scope.selectedScene);
+        var data = {
+            sceneId: $scope.selectedScene._id, 
+            mapId: $scope.selectedScene.mapId
+        };
+        
+        Services.getStaticItems(data, function(res){
+            if(res.result == "NOK"){
+                $scope.errorMsgList.push(res.msg);
+            }else{
+                angular.forEach(res.staticItemList, function(value, key) {
+                    Services.staticItemInfo(value.itemId, function(res){
+                        var location = [parseFloat(res.itemInfo.location.latitude), parseFloat(res.itemInfo.location.longitude)];
+                        
+                        var overlay = new ol.Overlay({
+                            position: ol.proj.transform(location, 'EPSG:4326', 'EPSG:3857'),
+                            element: $('<img src="'+res.itemInfo.icon+'" class="img-circle">')
+                            .css({marginTop: '-50%', marginLeft: '-50%', width: '40px', height: '40px', cursor: 'pointer'})        
+                        });
+                        
+                        map.addOverlay(overlay);
+                    }, function(err){
+                        $scope.errorMsgList.push(err);            
+                    });
+                    
+                });
+            }
+        }, function(err){
+            $scope.errorMsgList.push(err);
+        });
         
         //load dynamic items
         

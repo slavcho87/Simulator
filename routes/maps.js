@@ -7,6 +7,7 @@ var Scene = require('../models/Scene');
 var Display = require('../models/Display');
 var Location = require('../models/Location');
 var Route = require('../models/Route');
+var Item = require('../models/Item');
 var router = express.Router();
 
 /*
@@ -94,10 +95,10 @@ router.post('/saveScene', function(req, resp){
             var dynamicItemList = req.body.dynamicItemList;
             
             //Save static items
-            console.log("Save static items");
             for (index = 0; index < staticItemList.length; index++) { 
                 var display = new Display();
                 display.itemType = staticItemList[index].type.type;
+                display.itemId = staticItemList[index].type._id;
                 display.sceneId = scene1._id;
                 display.mapId = scene1.mapId;
                 display.recommender = scene1.recommender;    
@@ -113,7 +114,7 @@ router.post('/saveScene', function(req, resp){
                 var location = new Location();
                 location.longitude = staticItemList[index].longitude 
                 location.latitude =  staticItemList[index].latitude;
-                location.itemName =  staticItemList[index].name;
+                location.item =  staticItemList[index].type._id;
                 location.save(function(err){
                     if(err){
                         console.log(err);
@@ -127,6 +128,7 @@ router.post('/saveScene', function(req, resp){
             for (index = 0; index < dynamicItemList.length; index++) {
                 var display = new Display();
                 display.itemType = dynamicItemList[index].type.type;
+                display.itemId = dynamicItemList[index].type._id;
                 display.sceneId = scene1._id;
                 display.mapId = scene1.mapId;
                 display.recommender = scene1.recommender;    
@@ -144,7 +146,7 @@ router.post('/saveScene', function(req, resp){
                     var route = new Route();
                     route.longitude = dynamicItemList[index].route[i].long; 
                     route.latitude = dynamicItemList[index].route[i].lat;
-                    route.itemName = dynamicItemList[index].name;
+                    route.item = dynamicItemList[index].type._id;
                     route.sceneID = scene1._id;
                     route.mapID = scene1.mapId;
                     route.speed = dynamicItemList[index].speed;
@@ -249,8 +251,50 @@ router.get('/sceneListFromMapId/:mapId', function(req, res){
 })
 
 router.post('/staticItemList', function(req, res){
-    req.body.sceneId 
-    req.body.mapId
+    Display.find({itemType: 'static', sceneId: req.body.sceneId, mapId: req.body.mapId}, function(err, list){
+        if(err){
+            res.json({
+                result: "NOK",
+                msg: err
+            });
+        }else{
+            res.json({                   
+                result: "OK",
+                staticItemList: list
+            });
+        }
+    });
+    
+})
+
+router.get('/staticItemInfo/:id', function(req, res){
+    Item.findOne({_id: req.params.id}, function(err, item){
+        if(err){
+            res.json({
+                result:  "NOK",
+                msg: err
+            });
+        }else{
+            Location.findOne({item: req.params.id}, function(err, location){
+                if(err){
+                    res.json({
+                        result:  "NOK",
+                        msg: err
+                    }); 
+                }else{
+                    var itemInfo = {
+                        icon: item.icon,
+                        location: location
+                    };
+                    
+                    res.json({
+                        result: "OK",
+                        itemInfo: itemInfo 
+                    });
+                }
+            });
+        }
+    });    
 })
 
 module.exports = router;

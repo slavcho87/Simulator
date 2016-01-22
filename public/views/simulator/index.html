@@ -71,28 +71,32 @@
                             var $scope = angular.element(appElement).scope();
                             $scope = $scope.$$childHead; 
                             var mapCenter = $scope.mapCenter;
-                            console.log(mapCenter);
                             var lastMove = "";
+                            var cont = 0;
+                            var date = new Date();
                             
                             function userMove(){
-                                switch(dirMove){
-                                case "up":
-                                        //mas long
-                                        moveUp();
-                                        break;
-                                case "down":
-                                        //menos long
-                                        moveDown();
-                                        break;
-                                case "left":
-                                        //menos lat
-                                        moveLeft();
-                                        break;
-                                case "right":
-                                        //mas lat
-                                        moveRight();
-                                        break;
+                                if(date != new Date()){
+                                    switch(dirMove){
+                                    case "up":
+                                            //mas long
+                                            moveUp();
+                                            break;
+                                    case "down":
+                                            //menos long
+                                            moveDown();
+                                            break;
+                                    case "left":
+                                            //menos lat
+                                            moveLeft();
+                                            break;
+                                    case "right":
+                                            //mas lat
+                                            moveRight();
+                                            break;
+                                    }
                                 }
+                                date = new Date();
                             }
                             
                             function moveUp(){
@@ -124,22 +128,12 @@
                             }
                             
                             function setUserPos(newPos){
-                                if(overlayList['user']){
-                                    map.removeOverlay(overlayList['user']);                                
+                                var index = map.getOverlays().getArray().indexOf(overlayList['user']);
+                                
+                                if(index>=0){
+                                    map.getOverlays().getArray()[index].setPosition(ol.proj.transform(newPos, 'EPSG:4326', 'EPSG:3857'));
                                 }
-
-                                overlayList['user'] = new ol.Overlay({
-                                    position: ol.proj.transform(newPos, 'EPSG:4326', 'EPSG:3857'),
-                                    element: $('<img src="'+getImg()+'" class="img-circle" name="'+getUser()._id+'">')
-                                    .css({marginTop: '-50%', marginLeft: '-50%', width: '40px', height: '40px', cursor: 'pointer'})
-                                    .tooltip({title: 'Hello, world!', trigger: 'click'})
-                                });
-                                                                
-                                map.addOverlay(overlayList['user']);
                             }
-                            
-                            setInterval('userMove()',1000);
-                            
                             
                             var overlayList = {};
                             
@@ -159,16 +153,15 @@
                                 if(overlayList['user']){
                                     map.removeOverlay(overlayList['user']);                                
                                 }
-
+                                
                                 overlayList['user'] = new ol.Overlay({
                                     position: evt.coordinate,
                                     element: $('<img src="'+getImg()+'" class="img-circle" name="'+getUser()._id+'">')
                                     .css({marginTop: '-50%', marginLeft: '-50%', width: '40px', height: '40px', cursor: 'pointer'})
-                                    .tooltip({title: 'Hello, world!', trigger: 'click'})
                                 });
                                                                 
                                 map.addOverlay(overlayList['user']);
-                                
+                                window.setInterval('userMove()',1000);
                                 
                                 /*var lista = map.getOverlays().getArray();
                                 
@@ -183,26 +176,25 @@
                             });      
                             
                             $(document).keypress(function(e)
-                            {  
+                            { 
                                 if(window.location.hash=="#/simulator"){
-                                    switch(e.which)
-                                    {
-                                        case 119: //es la w. Significa arriba
-                                            up(); 
-                                            break;
-                                        case 115: //es la s. Significa abajo
-                                            down(); 
-                                            break;  
-                                        case 97: //es la a. Significa izq  
-                                            left(); 
-                                            break; 
-                                        case 100: //es la d. Signfica dcha
-                                            right(); 
-                                            break;
-                                        case 32:  //es la barra de espacio
-                                            startStopUser();
-                                            break;
-                                    }
+                                        switch(e.which){
+                                            case 119: //es la w. Significa arriba
+                                                up(); 
+                                                break;
+                                            case 115: //es la s. Significa abajo
+                                                down(); 
+                                                break;  
+                                            case 97: //es la a. Significa izq  
+                                                left(); 
+                                                break; 
+                                            case 100: //es la d. Signfica dcha
+                                                right(); 
+                                                break;
+                                            case 32:  //es la barra de espacio
+                                                startStopUser();
+                                                break;
+                                        }
                                 }
                             });
                             
