@@ -71,9 +71,11 @@
                             var $scope = angular.element(appElement).scope();
                             $scope = $scope.$$childHead; 
                             var mapCenter = $scope.mapCenter;
-                            var lastMove = "";
                             var cont = 0;
                             var date = new Date();
+                            var userMoveRefreshInterval = 1000;
+                            var userMoveTemporizador;
+                            var userTimeStamp;
                             
                             function userMove(){
                                 if(date != new Date()){
@@ -161,7 +163,7 @@
                                 });
                                                                 
                                 map.addOverlay(overlayList['user']);
-                                window.setInterval('userMove()',1000);
+                                userMoveTemporizador = window.setInterval('userMove()',userMoveRefreshInterval);
                                 
                                 /*var lista = map.getOverlays().getArray();
                                 
@@ -177,25 +179,29 @@
                             
                             $(document).keypress(function(e)
                             { 
-                                if(window.location.hash=="#/simulator"){
-                                        switch(e.which){
-                                            case 119: //es la w. Significa arriba
-                                                up(); 
-                                                break;
-                                            case 115: //es la s. Significa abajo
-                                                down(); 
-                                                break;  
-                                            case 97: //es la a. Significa izq  
-                                                left(); 
-                                                break; 
-                                            case 100: //es la d. Signfica dcha
-                                                right(); 
-                                                break;
-                                            case 32:  //es la barra de espacio
-                                                startStopUser();
-                                                break;
-                                        }
+                                if(e.timeStamp != userTimeStamp){
+                                    if(window.location.hash=="#/simulator"){
+                                            switch(e.which){
+                                                case 119: //es la w. Significa arriba
+                                                    up(); 
+                                                    break;
+                                                case 115: //es la s. Significa abajo
+                                                    down(); 
+                                                    break;  
+                                                case 97: //es la a. Significa izq  
+                                                    left(); 
+                                                    break; 
+                                                case 100: //es la d. Signfica dcha
+                                                    right(); 
+                                                    break;
+                                                case 32:  //es la barra de espacio
+                                                    startStopUser(e);
+                                                    break;
+                                            }
+                                    }
                                 }
+                                
+                                userTimeStamp = e.timeStamp;
                             });
                             
                             function up(){
@@ -214,13 +220,11 @@
                                 dirMove = "right";
                             }
                             
-                            function startStopUser(){
-                                if(lastMove == ""){
-                                    lastMove = dirMove;
-                                    dirMove = "";
+                            function startStopUser(e){
+                                if(userMoveTemporizador){
+                                    userMoveTemporizador= window.clearInterval(userMoveTemporizador);
                                 }else{
-                                    dirMove = lastMove;
-                                    lastMove = "";
+                                    userMoveTemporizador = window.setInterval('userMove()',userMoveRefreshInterval);
                                 }
                             }
                             

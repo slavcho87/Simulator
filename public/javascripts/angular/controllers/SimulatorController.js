@@ -88,7 +88,7 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
                         var overlay = new ol.Overlay({
                             position: ol.proj.transform(location, 'EPSG:4326', 'EPSG:3857'),
                             element: $('<img src="'+res.itemInfo.icon+'" class="img-circle">')
-                            .css({marginTop: '-50%', marginLeft: '-50%', width: '40px', height: '40px', cursor: 'pointer'})        
+                            .css({marginTop: '-50%', marginLeft: '-50%', width: '32px', height: '32px', cursor: 'pointer'})        
                         });
                         
                         map.addOverlay(overlay);
