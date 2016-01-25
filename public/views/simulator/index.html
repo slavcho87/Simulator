@@ -102,31 +102,57 @@
                             }
                             
                             function moveUp(){
-                                var pos = overlayList['user'].getPosition();
+                                var pos = overlayList['user'].getPosition();console.log(pos);
                                 pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326')
-                                pos[1]=pos[1]+0.0001;
+                                pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 90);
                                 setUserPos(pos);
                             }
                             
                             function moveDown(){
                                 var pos = overlayList['user'].getPosition();
                                 pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326')
-                                pos[1]=pos[1]-0.0001;
+                                pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 270);
                                 setUserPos(pos);
                             }
                             
                             function moveLeft(){
                                 var pos = overlayList['user'].getPosition();
                                 pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326')
-                                pos[0]=pos[0]-0.0001;
+                                pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 180);
                                 setUserPos(pos);
                             }
                             
                             function moveRight(){
                                 var pos = overlayList['user'].getPosition();
                                 pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326')
-                                pos[0]=pos[0]+0.0001;
+                                pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 0);
                                 setUserPos(pos);
+                            }
+                            
+                            function toRad(num) {
+                               return num * Math.PI / 180;
+                            }
+                            
+                            function toGrad(radianes){
+                                return radianes*180/Math.PI;
+                            }
+                            
+                            /* Dada la posicion actual, la distancia a recorrer y el rumbo devuelve las coordenadas geograficas del punto
+                            donde hay que mverse*/
+                            function getNewPos(pos, d, brng){
+                                var R = 6378000;
+                                var φ1 = toRad(pos[0]);
+                                var λ1 = toRad(pos[1]);
+                                
+                                var φ2 = Math.asin(Math.sin(φ1)*Math.cos(d/R)+Math.cos(φ1)*Math.sin(d/R)*Math.cos(toRad(brng)));
+                                var λ2 = λ1 + Math.atan2(Math.sin(toRad(brng))*Math.sin(d/R)*Math.cos(φ1),
+                                                         Math.cos(d/R)-Math.sin(φ1)*Math.sin(φ2));
+                                
+                                var newPos = [toGrad(φ2), toGrad(λ2)];
+                                console.log(pos);
+                                console.log(newPos);
+                                console.log("=================================");
+                                return newPos;
                             }
                             
                             function setUserPos(newPos){
@@ -163,7 +189,10 @@
                                 });
                                                                 
                                 map.addOverlay(overlayList['user']);
-                                userMoveTemporizador = window.setInterval('userMove()',userMoveRefreshInterval);
+                                
+                                if(!userMoveTemporizador){
+                                    userMoveTemporizador = window.setInterval('userMove()',userMoveRefreshInterval);
+                                }
                                 
                                 /*var lista = map.getOverlays().getArray();
                                 
@@ -240,6 +269,21 @@
                                 var appElement = document.querySelector('[ng-app=app]');
                                 var $scope = angular.element(appElement).scope();
                                 return $scope.$$childHead;
+                            }
+                            
+                            /* Recibe el tiempo de ms y lo pasa en segundos */
+                            function getTiemeInSecunds(time){
+                                return (time/1000);
+                            }
+                            
+                            /* Distancia recorrida por el usuario dado el tiempo de refresco */
+                            function distance(vel, time){console.log(vel);
+                                var oneKm = 1000;
+                                var oneHour = 3600;
+                                var factor = oneKm/oneHour;
+                                
+                                var userVel = factor*vel;
+                                return (userVel*getTiemeInSecunds(userMoveRefreshInterval));
                             }
                             
                             /*var exportPNGElement = document.getElementById('export-png');
@@ -519,7 +563,7 @@
                             <div class="">
                                 <div class="col-xs-6">
                                     <label>User speed (km/h)</label>
-                                    <input class="form-control" value="5"/>
+                                    <input id="userSpeed" class="form-control" value="5"/>
                                 </div>
                             </div>
                         </div>
