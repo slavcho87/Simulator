@@ -102,7 +102,7 @@
                             }
                             
                             function moveUp(){
-                                var pos = overlayList['user'].getPosition();console.log(pos);
+                                var pos = overlayList['user'].getPosition();
                                 pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326')
                                 pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 90);
                                 setUserPos(pos);
@@ -149,9 +149,6 @@
                                                          Math.cos(d/R)-Math.sin(φ1)*Math.sin(φ2));
                                 
                                 var newPos = [toGrad(φ2), toGrad(λ2)];
-                                console.log(pos);
-                                console.log(newPos);
-                                console.log("=================================");
                                 return newPos;
                             }
                             
@@ -277,7 +274,7 @@
                             }
                             
                             /* Distancia recorrida por el usuario dado el tiempo de refresco */
-                            function distance(vel, time){console.log(vel);
+                            function distance(vel, time){
                                 var oneKm = 1000;
                                 var oneHour = 3600;
                                 var factor = oneKm/oneHour;
