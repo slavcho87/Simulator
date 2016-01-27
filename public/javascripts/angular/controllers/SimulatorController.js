@@ -95,7 +95,6 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
                     }, function(err){
                         $scope.errorMsgList.push(err);            
                     });
-                    
                 });
             }
         }, function(err){
@@ -103,6 +102,26 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
         });
         
         //load dynamic items
+        Services.getDynamicItemList(data, function(res){
+            if(res.result=="NOK"){
+                $scope.errorMsgList.push(res.msg);
+            }else{
+                angular.forEach(res.dynamicItemList, function(value, key) {
+                    Services.dynamicItemRoute(value.itemId, function(res2){
+                        if(res2.result=="NOK"){
+                            $scope.errorMsgList.push(res2.msg);
+                        }else{
+                            console.log(res2.itemInfo.route);
+                            console.log(res2.itemInfo.icon);
+                        }
+                    }, function(err){
+                        $scope.errorMsgList.push(err);            
+                    });
+                });
+            }
+        }, function(err){
+            $scope.errorMsgList.push(err);
+        });
         
         $scope.hideLoadBar = true;
         $scope.simulationDataLoaded = true; 

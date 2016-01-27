@@ -147,6 +147,7 @@ router.post('/saveScene', function(req, resp){
                     route.longitude = dynamicItemList[index].route[i].long; 
                     route.latitude = dynamicItemList[index].route[i].lat;
                     route.item = dynamicItemList[index].type._id;
+                    route.routePos = i;
                     route.sceneID = scene1._id;
                     route.mapID = scene1.mapId;
                     route.speed = dynamicItemList[index].speed;
@@ -264,7 +265,6 @@ router.post('/staticItemList', function(req, res){
             });
         }
     });
-    
 })
 
 router.get('/staticItemInfo/:id', function(req, res){
@@ -296,5 +296,53 @@ router.get('/staticItemInfo/:id', function(req, res){
         }
     });    
 })
+
+router.post('/dynamicItemList', function(req, res){
+    Display.find({itemType: 'dynamic', sceneId: req.body.sceneId, mapId: req.body.mapId}, function(err, list){
+        if(err){
+            res.json({
+                result: "NOK",
+                msg: err
+            });
+        }else{
+                    
+            res.json({
+                result: "OK",
+                dynamicItemList: list
+            });
+        }
+    });        
+})
+
+router.get('/dynamicItemRoute/:id', function(req, res){
+    Item.findOne({_id: req.params.id}, function(err, item){
+         if(err){
+             res.json({
+                 result:  "NOK",    
+                 msg: err
+             });
+         }else{
+             Route.find({item: req.params.id}, function(err, route){
+                if(err){
+                    res.json({
+                        result: "NOK",
+                        msg: err
+                    });
+                }else{
+                    var itemInfo = {
+                        icon: item.icon,
+                        route: route
+                    };
+                    
+                    res.json({
+                        result: "OK",
+                        itemInfo: itemInfo
+                    });
+                }
+            });             
+         }
+     });    
+})
+
 
 module.exports = router;

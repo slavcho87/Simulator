@@ -103,28 +103,28 @@
                             
                             function moveUp(){
                                 var pos = overlayList['user'].getPosition();
-                                pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326')
+                                pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326');
                                 pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 90);
                                 setUserPos(pos);
                             }
                             
                             function moveDown(){
                                 var pos = overlayList['user'].getPosition();
-                                pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326')
+                                pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326');
                                 pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 270);
                                 setUserPos(pos);
                             }
                             
                             function moveLeft(){
                                 var pos = overlayList['user'].getPosition();
-                                pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326')
+                                pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326');
                                 pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 180);
                                 setUserPos(pos);
                             }
                             
                             function moveRight(){
                                 var pos = overlayList['user'].getPosition();
-                                pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326')
+                                pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326');
                                 pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 0);
                                 setUserPos(pos);
                             }
@@ -138,9 +138,9 @@
                             }
                             
                             /* Dada la posicion actual, la distancia a recorrer y el rumbo devuelve las coordenadas geograficas del punto
-                            donde hay que mverse*/
+                            donde hay que moverse*/
                             function getNewPos(pos, d, brng){
-                                var R = 6378000;
+                                var R = 6378000;//radio de la tierra
                                 var φ1 = toRad(pos[0]);
                                 var λ1 = toRad(pos[1]);
                                 

@@ -20,7 +20,7 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
         route: []
     };
     $scope.sceneList = [];
-    
+        
     $scope.mapSave = function(){
         Services.mapSave($scope.map, function(res){
             if(res.result == "OK"){
@@ -190,8 +190,9 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
         }
     }
     
-    $scope.selectStaticItemToDeleteFromScene = function(item){
+    $scope.selectStaticItemToDeleteFromScene = function(item, index){
         $scope.selectStaticItemToDeleteFromSceneValue = item;
+        $scope.selectStaticItemToDeleteFromSceneIndex = index;
     }
     
     $scope.deleteStaticItemFromScene = function(){
@@ -199,6 +200,7 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
         
         if(index>=0){
             $scope.staticItemListInScene.splice(index, 1);
+             staticItemsMap.removeOverlay(overlayList[$scope.selectStaticItemToDeleteFromSceneIndex]);
         }else{
             $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
         }
@@ -305,7 +307,7 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
         Services.staticItemList(function(res){
            for(index in res){
                 $scope.staticItemList.push(res[index]);
-            } 
+            }
         }, function(err){
             $scope.errorMsgList.push(err);
         });

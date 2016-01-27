@@ -109,8 +109,14 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
         getStaticItems: function(data, success, error){
             $http.post('/maps/staticItemList', data).success(success).error(error);
         },
+        getDynamicItemList: function(data, success, error){
+            $http.post('/maps/dynamicItemList', data).success(success).error(error);
+        },
         staticItemInfo: function(data, success, error){
             $http.get('/maps/staticItemInfo/'+data).success(success).error(error);
+        },
+        dynamicItemRoute: function(data, success, error){
+            $http.get('/maps/dynamicItemRoute/'+data).success(success).error(error);
         },
         logout: function(success) {
             changeUser({});
