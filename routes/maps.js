@@ -4,10 +4,10 @@ var request = require('request');
 var User = require('../models/User');
 var Map = require('../models/Map');
 var Scene = require('../models/Scene');
-var Display = require('../models/Display');
 var Location = require('../models/Location');
 var Route = require('../models/Route');
 var Item = require('../models/Item');
+var Move = require('../models/Move');
 var router = express.Router();
 
 /*
@@ -93,72 +93,59 @@ router.post('/saveScene', function(req, resp){
         }else{
             var staticItemList = req.body.staticItemList; 
             var dynamicItemList = req.body.dynamicItemList;
+            var locationsToSave = [];
             
             //Save static items
-            for (index = 0; index < staticItemList.length; index++) { 
-                var display = new Display();
-                display.itemType = staticItemList[index].type.type;
-                display.itemId = staticItemList[index].type._id;
-                display.sceneId = scene1._id;
-                display.mapId = scene1.mapId;
-                display.recommender = scene1.recommender;    
-                display.itemName = staticItemList[index].name;
-                display.save(function(err){
-                    if(err){
-                        console.log(err);
-                    }else{
-                        console.log("dislay saved");
-                    }
-                });
-                
+            for (index = 0; index < staticItemList.length; index++) {
                 var location = new Location();
-                location.longitude = staticItemList[index].longitude 
-                location.latitude =  staticItemList[index].latitude;
-                location.item =  staticItemList[index].type._id;
-                location.save(function(err){
-                    if(err){
-                        console.log(err);
-                    }else{
-                        console.log("location saved");
-                    }
-                });
+                location.longitude = staticItemList[index].longitude;
+                location.latitude = staticItemList[index].latitude;
+                location.sceneId = scene1._id;
+                location.mapId = scene1.mapId;
+                locationsToSave.push(location);
             }
+            
+            Location.create(locationsToSave, function(err, locations){
+                for(index=0; index<locations.length; index++){
+                    var item = new Item();
+                    item.itemName = staticItemList[index].name;
+                    item.sceneId = scene1._id;
+                    item.mapId = scene1.mapId;
+                    item.itemType = staticItemList[index].type._id;
+                    item.location = locations[index]._id;
+                    
+                    item.save();
+                }
+            });
             
             //Save dynamic items
             for (index = 0; index < dynamicItemList.length; index++) {
-                var display = new Display();
-                display.itemType = dynamicItemList[index].type.type;
-                display.itemId = dynamicItemList[index].type._id;
-                display.sceneId = scene1._id;
-                display.mapId = scene1.mapId;
-                display.recommender = scene1.recommender;    
-                display.itemName = dynamicItemList[index].name;
-                display.save(function(err){
-                    if(err){
-                        console.log(err);
-                    }else{
-                        console.log("display saved");
-                    }
-                });
+                var item = new Item();
+                item.itemName = dynamicItemList[index].name;
+                item.sceneId = scene1._id;
+                item.mapId = scene1.mapId;
+                item.itemType = dynamicItemList[index].type._id;
                 
-                //Save route
-                for (i = 0; i < dynamicItemList[index].route.length; i++) {
-                    var route = new Route();
-                    route.longitude = dynamicItemList[index].route[i].long; 
-                    route.latitude = dynamicItemList[index].route[i].lat;
-                    route.item = dynamicItemList[index].type._id;
-                    route.routePos = i;
-                    route.sceneID = scene1._id;
-                    route.mapID = scene1.mapId;
-                    route.speed = dynamicItemList[index].speed;
-                    route.save(function(err){
-                        if(err){
-                            console.log(err);
-                        }else{
-                            console.log("route saved");
-                        }
-                    });
-                }
+                item.save(function(err, item1){
+                    for (i = 0; i < dynamicItemList[index].route.length; i++) {
+                        var route = new Route();
+                        route.longitude = dynamicItemList[index].route[i].long;
+                        route.latitude = dynamicItemList[index].route[i].lat; 
+                        route.speed = dynamicItemList[index].speed;
+                        route.routePos = i;
+                        
+                        route.save(function(err, route1){
+                            if(!err){
+                                var move = new Move();
+                                move.sceneId = scene1._id; 
+                                move.mapId =  scene1.mapId;
+                                move.routeId = route1._id;
+                                
+                                move.save();
+                            }  
+                        });
+                    } 
+                });
             }
             
             resp.json({
@@ -252,7 +239,16 @@ router.get('/sceneListFromMapId/:mapId', function(req, res){
 })
 
 router.post('/staticItemList', function(req, res){
-    Display.find({itemType: 'static', sceneId: req.body.sceneId, mapId: req.body.mapId}, function(err, list){
+    Item.find({sceneId: req.body.sceneId, mapId: req.body.mapId})
+    .populate({
+        path: 'itemType',
+        type: "static",
+        select: "icon"
+    })
+    .populate({
+        path: 'location'
+    })
+    .exec(function(err, list){
         if(err){
             res.json({
                 result: "NOK",
@@ -263,12 +259,14 @@ router.post('/staticItemList', function(req, res){
                 result: "OK",
                 staticItemList: list
             });
-        }
+        } 
     });
 })
 
 router.get('/staticItemInfo/:id', function(req, res){
-    Item.findOne({_id: req.params.id}, function(err, item){
+    
+    
+    /*Item.findOne({_id: req.params.id}, function(err, item){
         if(err){
             res.json({
                 result:  "NOK",
@@ -294,11 +292,11 @@ router.get('/staticItemInfo/:id', function(req, res){
                 }
             });
         }
-    });    
+    });    */
 })
 
 router.post('/dynamicItemList', function(req, res){
-    Display.find({itemType: 'dynamic', sceneId: req.body.sceneId, mapId: req.body.mapId}, function(err, list){
+    /*Display.find({itemType: 'dynamic', sceneId: req.body.sceneId, mapId: req.body.mapId}, function(err, list){
         if(err){
             res.json({
                 result: "NOK",
@@ -311,11 +309,11 @@ router.post('/dynamicItemList', function(req, res){
                 dynamicItemList: list
             });
         }
-    });        
+    });  */      
 })
 
 router.get('/dynamicItemRoute/:id', function(req, res){
-    Item.findOne({_id: req.params.id}, function(err, item){
+    /*Item.findOne({_id: req.params.id}, function(err, item){
          if(err){
              res.json({
                  result:  "NOK",    
@@ -341,7 +339,7 @@ router.get('/dynamicItemRoute/:id', function(req, res){
                 }
             });             
          }
-     });    
+     });    */
 })
 
 

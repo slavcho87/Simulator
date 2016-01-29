@@ -1,6 +1,6 @@
 var express = require('express');
 var Recommender = require('../models/Recommender');
-var Item = require('../models/Item');
+var ItemType = require('../models/ItemType');
 var fs = require('fs');
 var router = express.Router();
 
@@ -83,7 +83,7 @@ router.post('/updateRecommender', function(req, res, next){
 });
 
 router.post('/saveItem', function(req, res, next){
-    Item.findOne({name: req.body.name}, function(err, findItem){
+    ItemType.findOne({name: req.body.name}, function(err, findItem){
         if(err){
             res.json({
                 result: "NOK",
@@ -91,10 +91,9 @@ router.post('/saveItem', function(req, res, next){
             });
         }else{
             if(!findItem){
-                var itemModel = new Item();
-                itemModel.name = req.body.name
-                itemModel.icon = req.body.icon
-                itemModel.speed = req.body.speed
+                var itemModel = new ItemType();
+                itemModel.name = req.body.name;
+                itemModel.icon = req.body.icon;
                 itemModel.type = req.body.type;
                 
                 itemModel.save(function(err){
@@ -121,7 +120,7 @@ router.post('/saveItem', function(req, res, next){
 });
 
 router.get('/staticItemList', function(req, res, next){
-    Item.find({type: "static"}, function(err, list){
+    ItemType.find({type: "static"}, function(err, list){
         if(err){
             res.json({
                 result: "NOK",
@@ -134,7 +133,7 @@ router.get('/staticItemList', function(req, res, next){
 });
 
 router.get('/dynamicItemList', function(req, res, next){
-    Item.find({type: "dynamic"}, function(err, list){
+    ItemType.find({type: "dynamic"}, function(err, list){
         if(err){
             res.json({
                 result: "NOK",
@@ -147,7 +146,7 @@ router.get('/dynamicItemList', function(req, res, next){
 });
 
 router.post('/updateItem', function(req, res, next){
-    Item.findOneAndUpdate({_id: req.body._id}, req.body, function(err){
+    ItemType.findOneAndUpdate({_id: req.body._id}, req.body, function(err){
         if(err){
             res.json({
                 result: "NOK",
@@ -163,7 +162,7 @@ router.post('/updateItem', function(req, res, next){
 });
 
 router.delete('/deleteItem/:itemName', function(req, res, next){
-    Item.remove({name: req.params.itemName}, function(err){
+    ItemType.remove({name: req.params.itemName}, function(err){
         if(err){
             res.json({
                 result: "NOK",

@@ -4,7 +4,8 @@ var Schema = mongoose.Schema;
 var LocationSchema   = new Schema({
     longitude: String,
     latitude: String,
-    item: String,
+    sceneId: String,
+    mapId: String
 });
  
 module.exports = mongoose.model('Location', LocationSchema);
