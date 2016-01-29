@@ -113,7 +113,7 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
             $http.get('/maps/staticItemInfo/'+data).success(success).error(error);
         },
         dynamicItemRoute: function(data, success, error){
-            $http.get('/maps/dynamicItemRoute/'+data).success(success).error(error);
+            $http.post('/maps/dynamicItemRoute', data).success(success).error(error);
         },
         logout: function(success) {
             changeUser({});

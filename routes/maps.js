@@ -275,51 +275,24 @@ router.post('/itemList', function(req, res){
     });
 })
 
-router.post('/dynamicItemList', function(req, res){
-    /*Display.find({itemType: 'dynamic', sceneId: req.body.sceneId, mapId: req.body.mapId}, function(err, list){
+router.post('/dynamicItemRoute', function(req, res){
+    Move.find({itemId: req.body.itemId, sceneId: req.body.sceneId, mapId: req.body.mapId})
+    .populate({
+        path: 'routeId',
+    })
+    .exec(function(err, list){
         if(err){
             res.json({
                 result: "NOK",
                 msg: err
             });
         }else{
-                    
             res.json({
                 result: "OK",
-                dynamicItemList: list
+                route: list
             });
         }
-    });  */
-})
-
-router.get('/dynamicItemRoute/:id', function(req, res){
-    /*Item.findOne({_id: req.params.id}, function(err, item){
-         if(err){
-             res.json({
-                 result:  "NOK",    
-                 msg: err
-             });
-         }else{
-             Route.find({item: req.params.id}, function(err, route){
-                if(err){
-                    res.json({
-                        result: "NOK",
-                        msg: err
-                    });
-                }else{
-                    var itemInfo = {
-                        icon: item.icon,
-                        route: route
-                    };
-                    
-                    res.json({
-                        result: "OK",
-                        itemInfo: itemInfo
-                    });
-                }
-            });             
-         }
-     });    */
+    });
 })
 
 

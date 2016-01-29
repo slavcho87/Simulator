@@ -83,7 +83,31 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
             }else{
                 angular.forEach(res.staticItemList, function(value, key) {
                     if(value.itemType.type=="dynamic"){
-                        console.log(value);
+                        data.itemId = value._id;
+                        Services.dynamicItemRoute(data, function(res){
+                            res.route.sort(function(a, b){
+                                return a.routeId.routePos-b.routeId.routePos;
+                            });
+                            
+                            var course = [];
+                            for(index=0; index<res.route.length-1; index++){
+                                //calculamos el rumbo
+                                var lm = (parseFloat(res.route[index].routeId.latitude) + 
+                                          parseFloat(res.route[index+1].routeId.latitude))/2;
+                                
+                                var dL = parseFloat(res.route[index+1].routeId.latitude) - 
+                                        parseFloat(res.route[index].routeId.latitude);
+                                
+                                var ap = dL * Math.cos(lm);
+                                var r = Math.atan(ap/dL);
+                                course.push(r);
+                            }
+                            
+                            
+                        }, function(err){
+                            $scope.errorMsgList.push("The dynamic objects could not be saved!");
+                            $scope.errorMsgList.push(err);
+                        });
                     }else if(value.itemType.type=="static"){
                         var location = [parseFloat(value.location.latitude), parseFloat(value.location.longitude)];
 
