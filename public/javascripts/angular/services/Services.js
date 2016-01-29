@@ -106,11 +106,8 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
         findSceneListFromMapId: function(data, success, error){
             $http.get('/maps/sceneListFromMapId/'+data).success(success).error(error);
         }, 
-        getStaticItems: function(data, success, error){
-            $http.post('/maps/staticItemList', data).success(success).error(error);
-        },
-        getDynamicItemList: function(data, success, error){
-            $http.post('/maps/dynamicItemList', data).success(success).error(error);
+        getItemList: function(data, success, error){
+            $http.post('/maps/itemList', data).success(success).error(error);
         },
         staticItemInfo: function(data, success, error){
             $http.get('/maps/staticItemInfo/'+data).success(success).error(error);

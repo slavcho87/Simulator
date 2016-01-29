@@ -6,7 +6,7 @@ var ItemSchema   = new Schema({
     sceneId: String,
     mapId: String,
     itemType: { type: Schema.Types.ObjectId, ref: 'ItemType' },
-    location: { type: Schema.Types.ObjectId, ref: 'Location' }
+    location: { type: Schema.Types.ObjectId, ref: 'Location' },
 });
  
 module.exports = mongoose.model('Item', ItemSchema);

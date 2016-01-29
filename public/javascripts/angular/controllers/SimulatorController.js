@@ -77,27 +77,31 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
             mapId: $scope.selectedScene.mapId
         };
         
-        Services.getStaticItems(data, function(res){
+        Services.getItemList(data, function(res){
             if(res.result == "NOK"){
                 $scope.errorMsgList.push(res.msg);
             }else{
                 angular.forEach(res.staticItemList, function(value, key) {
-                    var location = [parseFloat(value.location.latitude), parseFloat(value.location.longitude)];
-                        
-                    var overlay = new ol.Overlay({
-                        position: ol.proj.transform(location, 'EPSG:4326', 'EPSG:3857'),
-                        element: $('<img src="'+value.itemType.icon+'" class="img-circle">')
-                        .css({marginTop: '-50%', marginLeft: '-50%', width: '32px', height: '32px', cursor: 'pointer'})        
-                    });
-                        
-                    map.addOverlay(overlay);
+                    if(value.itemType.type=="dynamic"){
+                        console.log(value);
+                    }else if(value.itemType.type=="static"){
+                        var location = [parseFloat(value.location.latitude), parseFloat(value.location.longitude)];
+
+                        var overlay = new ol.Overlay({
+                            position: ol.proj.transform(location, 'EPSG:4326', 'EPSG:3857'),
+                            element: $('<img src="'+value.itemType.icon+'" class="img-circle">')
+                            .css({marginTop: '-50%', marginLeft: '-50%', width: '32px', height: '32px', cursor: 'pointer'})        
+                        });
+
+                        map.addOverlay(overlay);
+                    }
                 });
             }
         }, function(err){
             $scope.errorMsgList.push(err);
         });
         
-        //load dynamic items
+        /*//load dynamic items
         Services.getDynamicItemList(data, function(res){
             if(res.result=="NOK"){
                 $scope.errorMsgList.push(res.msg);
@@ -117,7 +121,7 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
             }
         }, function(err){
             $scope.errorMsgList.push(err);
-        });
+        });*/
         
         $scope.hideLoadBar = true;
         $scope.simulationDataLoaded = true; 

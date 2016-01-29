@@ -94,6 +94,8 @@ router.post('/saveScene', function(req, resp){
             var staticItemList = req.body.staticItemList; 
             var dynamicItemList = req.body.dynamicItemList;
             var locationsToSave = [];
+            var dynamicItemToSave = [];
+            var routeToSave = [];
             
             //Save static items
             for (index = 0; index < staticItemList.length; index++) {
@@ -125,28 +127,26 @@ router.post('/saveScene', function(req, resp){
                 item.sceneId = scene1._id;
                 item.mapId = scene1.mapId;
                 item.itemType = dynamicItemList[index].type._id;
+                dynamicItemToSave.push(item);
                 
-                item.save(function(err, item1){
-                    for (i = 0; i < dynamicItemList[index].route.length; i++) {
-                        var route = new Route();
-                        route.longitude = dynamicItemList[index].route[i].long;
-                        route.latitude = dynamicItemList[index].route[i].lat; 
-                        route.speed = dynamicItemList[index].speed;
-                        route.routePos = i;
-                        
-                        route.save(function(err, route1){
-                            if(!err){
-                                var move = new Move();
-                                move.sceneId = scene1._id; 
-                                move.mapId =  scene1.mapId;
-                                move.routeId = route1._id;
-                                
-                                move.save();
-                            }  
-                        });
-                    } 
-                });
+                var itemRoute = [];
+                for (i = 0; i < dynamicItemList[index].route.length; i++) {
+                    var route = new Route();
+                    route.longitude = dynamicItemList[index].route[i].long;
+                    route.latitude = dynamicItemList[index].route[i].lat; 
+                    route.speed = dynamicItemList[index].speed;
+                    route.routePos = i;
+                    
+                    itemRoute.push(route);
+                }
+                routeToSave.push(itemRoute);
             }
+            
+            Item.create(dynamicItemToSave, function(err, items){
+                for(index=0; index<items.length; index++){
+                    saveRoute(routeToSave[index], items[index], scene1);
+                }
+            });
             
             resp.json({
                 result: "OK",
@@ -157,6 +157,19 @@ router.post('/saveScene', function(req, resp){
         }
     });    
 })
+
+function saveRoute(routeToSave, item, scene1){
+    Route.create(routeToSave, function(err, routes){
+        for(i=0; i<routes.length; i++){
+            var move = new Move();
+            move.itemId = item._id;
+            move.sceneId = scene1._id;
+            move.mapId = scene1.mapId;
+            move.routeId = routes[i]._id;
+            move.save();
+        }
+    });
+}
 
 router.delete('/deleteScene/:sceneID', function(req, res){    
     Scene.remove({_id: req.params.sceneID}, function(err, scene){
@@ -238,12 +251,11 @@ router.get('/sceneListFromMapId/:mapId', function(req, res){
     }); 
 })
 
-router.post('/staticItemList', function(req, res){
+router.post('/itemList', function(req, res){
     Item.find({sceneId: req.body.sceneId, mapId: req.body.mapId})
     .populate({
         path: 'itemType',
-        type: "static",
-        select: "icon"
+        select: "icon type"
     })
     .populate({
         path: 'location'
@@ -263,38 +275,6 @@ router.post('/staticItemList', function(req, res){
     });
 })
 
-router.get('/staticItemInfo/:id', function(req, res){
-    
-    
-    /*Item.findOne({_id: req.params.id}, function(err, item){
-        if(err){
-            res.json({
-                result:  "NOK",
-                msg: err
-            });
-        }else{
-            Location.findOne({item: req.params.id}, function(err, location){
-                if(err){
-                    res.json({
-                        result:  "NOK",
-                        msg: err
-                    }); 
-                }else{
-                    var itemInfo = {
-                        icon: item.icon,
-                        location: location
-                    };
-                    
-                    res.json({
-                        result: "OK",
-                        itemInfo: itemInfo 
-                    });
-                }
-            });
-        }
-    });    */
-})
-
 router.post('/dynamicItemList', function(req, res){
     /*Display.find({itemType: 'dynamic', sceneId: req.body.sceneId, mapId: req.body.mapId}, function(err, list){
         if(err){
@@ -309,7 +289,7 @@ router.post('/dynamicItemList', function(req, res){
                 dynamicItemList: list
             });
         }
-    });  */      
+    });  */
 })
 
 router.get('/dynamicItemRoute/:id', function(req, res){
