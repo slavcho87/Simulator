@@ -111,7 +111,7 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
                                 position: ol.proj.transform(location, 'EPSG:4326', 'EPSG:3857'),
                                 element: $('<img src="'+value.itemType.icon+'" class="img-circle">')
                                 .css({marginTop: '-50%', marginLeft: '-50%', width: '32px', height: '32px', cursor: 'pointer'})        
-                            }); 
+                            });
                             
                             map.addOverlay(overlay);
                             
@@ -149,6 +149,7 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
         $scope.simulationDataLoaded = true; 
     }
     
+    //Calculo de rumbo entre dos coordenadas geograficas
     function bearing(lon1, lat1, lon2, lat2){
         var incL = lon2 - lon1;
     
