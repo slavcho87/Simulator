@@ -75,7 +75,9 @@
                             var date = new Date();
                             var userMoveRefreshInterval = 1000;
                             var userMoveTemporizador;
+                            var dynamicItemMoveTemporizador;
                             var userTimeStamp;
+                            var dynamicItemRefreshInterval = 1000;
                             
                             function userMove(){
                                 if(date != new Date()){
@@ -283,27 +285,60 @@
                                 return (userVel*getTiemeInSecunds(userMoveRefreshInterval));
                             }
                             
-                            /*var exportPNGElement = document.getElementById('export-png');
-                            if ('download' in exportPNGElement) {
-                                exportPNGElement.addEventListener('click', function(e) {
-                                    map.once('postcompose', function(event) {
-                                        var canvas = event.context.canvas;
-                                        //exportPNGElement.href = canvas.toDataURL('image/png');
-                                        document.getElementById('captura').src=canvas.toDataURL('image/png');
-                                    });
-                                    map.renderSync();
-                                }, false);
-                            } else {
-                                var info = document.getElementById('no-download');
-                                info.style.display = '';
-                            }           */                  
+                            function ItemsMove(){
+                                //remove overlays
+                                console.log($scope.dynamiItemsList);
+                                var list = $scope.dynamiItemsList;
+                                
+                                //for(index in list){
+                                    //map.removeOverlay(list[index].overlay);
+                                //}
+                                
+                                var overlay = list[0].overlay;
+                                var pos = ol.proj.transform(overlay.getPosition(), 'EPSG:3857', 'EPSG:4326');
+                                var newPos = getNewPos(pos, distance(list[0].speed, dynamicItemRefreshInterval),
+                                                       list[0].course[0]);
+                                
+                                console.log(pos);
+                                console.log(newPos);
+                                
+                                map.removeOverlay(overlay);
+                                
+                                list[0].overlay = new ol.Overlay({
+                                    position: ol.proj.transform(newPos, 'EPSG:4326', 'EPSG:3857'),
+                                    element: $('<img src="'+list[0].icon+'" class="img-circle">')
+                                    .css({marginTop: '-50%', marginLeft: '-50%', width: '32px', height: '32px', cursor: 'pointer'})        
+                                }); 
+                                
+                                map.addOverlay(list[0].overlay);
+                                /*
+                                map.removeOverlay(list[0].overlay);
+                                
+                                var pos = list[0].overlay.getPosition();
+                                var newPos = getNewPos(pos, distance(list[0].speed, dynamicItemRefreshInterval), list[0].course[0]);
+                                
+                                var overlay = list[0].overlay.setPosition(newPos);
+                                
+                                list[0].overlay = overlay;
+                                
+                                map.addOverlay(overlay);
+                                */    
+                            }
+                            
+                            function startMoveDynamicItems(){                           
+                                dynamicItemMoveTemporizador = window.setInterval('ItemsMove()', dynamicItemRefreshInterval);
+                            }              
+                            
+                            function stopMoveDynamicItems(){
+                                dynamicItemMoveTemporizador = window.clearInterval(dynamicItemMoveTemporizador);
+                            }
                         </script>
                     
                     <div class="col-sm-4">
-                        <button type="button" class="btn btn-default fa fa-play-circle-o" ng-click="getUser()">                         
+                        <button type="button" class="btn btn-default fa fa-play-circle-o" onclick="startMoveDynamicItems()">
                         </button>
                         
-                        <button type="button" class="btn btn-default fa fa-pause">                         
+                        <button type="button" class="btn btn-default fa fa-pause" onclick="stopMoveDynamicItems()">                         
                         </button>
                         
                         <button type="button" class="btn btn-default fa fa-stop">                         

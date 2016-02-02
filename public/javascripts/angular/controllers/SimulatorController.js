@@ -11,6 +11,7 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
     $scope.sceneListEmpty = false;
     $scope.mapCenter = [0, 0];
     $scope.staticItemList = [];
+    $scope.dynamiItemsList = [];
     
     $scope.getUserImg = function(){
             Services.getUserImg(function(res){
@@ -87,23 +88,42 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
                         Services.dynamicItemRoute(data, function(res){
                             res.route.sort(function(a, b){
                                 return a.routeId.routePos-b.routeId.routePos;
-                            });
+                            }); 
                             
+                            //calculamos el rumbo
                             var course = [];
                             for(index=0; index<res.route.length-1; index++){
-                                //calculamos el rumbo
-                                var lm = (parseFloat(res.route[index].routeId.latitude) + 
-                                          parseFloat(res.route[index+1].routeId.latitude))/2;
-                                
-                                var dL = parseFloat(res.route[index+1].routeId.latitude) - 
-                                        parseFloat(res.route[index].routeId.latitude);
-                                
-                                var ap = dL * Math.cos(lm);
-                                var r = Math.atan(ap/dL);
+                                var lon1 = parseFloat(res.route[index].routeId.longitude);
+                                var lon2 = parseFloat(res.route[index+1].routeId.longitude);
+                                var lat1 = parseFloat(res.route[index].routeId.latitude);
+                                var lat2 = parseFloat(res.route[index+1].routeId.latitude);    
+                            
+                                var r = bearing(lon1, lat1, lon2, lat2);
                                 course.push(r);
                             }
                             
+                            var speed = res.route[0].routeId.speed;
                             
+                            var location = [parseFloat(res.route[0].routeId.latitude),
+                                            parseFloat(res.route[0].routeId.longitude)];
+                            
+                            var overlay = new ol.Overlay({
+                                position: ol.proj.transform(location, 'EPSG:4326', 'EPSG:3857'),
+                                element: $('<img src="'+value.itemType.icon+'" class="img-circle">')
+                                .css({marginTop: '-50%', marginLeft: '-50%', width: '32px', height: '32px', cursor: 'pointer'})        
+                            }); 
+                            
+                            map.addOverlay(overlay);
+                            
+                            var info = {
+                                overlay: overlay,
+                                speed: speed,
+                                route: res.route,
+                                course: course,
+                                icon: value.itemType.icon
+                            };
+                            
+                            $scope.dynamiItemsList.push(info);
                         }, function(err){
                             $scope.errorMsgList.push("The dynamic objects could not be saved!");
                             $scope.errorMsgList.push(err);
@@ -125,30 +145,62 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
             $scope.errorMsgList.push(err);
         });
         
-        /*//load dynamic items
-        Services.getDynamicItemList(data, function(res){
-            if(res.result=="NOK"){
-                $scope.errorMsgList.push(res.msg);
-            }else{
-                angular.forEach(res.dynamicItemList, function(value, key) {
-                    Services.dynamicItemRoute(value.itemId, function(res2){
-                        if(res2.result=="NOK"){
-                            $scope.errorMsgList.push(res2.msg);
-                        }else{
-                            console.log(res2.itemInfo.route);
-                            console.log(res2.itemInfo.icon);
-                        }
-                    }, function(err){
-                        $scope.errorMsgList.push(err);            
-                    });
-                });
-            }
-        }, function(err){
-            $scope.errorMsgList.push(err);
-        });*/
-        
         $scope.hideLoadBar = true;
         $scope.simulationDataLoaded = true; 
+    }
+    
+    function bearing(lon1, lat1, lon2, lat2){
+        var incL = lon2 - lon1;
+    
+        //Resolver rumbos 0 y 180
+        if(incL == 0.0){
+            if(lat1<lat2){
+                return 0.0;
+            }else if(lat1>lat2){
+                return 180.0;
+            }else{
+                return 0.0;
+            }
+        }
+        
+        //Resolver rumbos 90 y 270
+        var incLat = lat2 - lat1;
+        if(incLat == 0.0){
+            if(lon1<lon2){
+                return 90.0;
+            }else if(lon1>lon2){
+                return 270.0;
+            }else{
+                return 0.0;
+            }
+        }
+        
+        var incLonRadians = (lon2 - lon1) * Math.PI / 180.0;
+        var incLatRadians = (lat2 - lat1) * Math.PI / 180.0;
+        var lm = (lat1 + lat2) / 2.0;
+        var lmRadians = lm * Math.PI / 180.0;
+        var coslm = Math.cos(lmRadians);
+        var apRadians = incLonRadians * Math.abs(coslm);
+        var tanR = apRadians / incLatRadians;
+        var rRadians = Math.atan(tanR);
+        var r = rRadians * 180.0 / Math.PI;
+        
+        if(r > 0){
+            if(apRadians < 0){
+                //tercer cuadrante
+                r = 180.0 + r;
+            }
+        }else{
+            if(apRadians > 0){
+                //segundo cuadrante
+                r = 180.0 + r;
+            }else{
+                //cuarto cuadrante
+                r = 360.0 + r;
+            }
+        }
+        
+        return r;
     }
     
     /*
