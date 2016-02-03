@@ -12,6 +12,7 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
     $scope.mapCenter = [0, 0];
     $scope.staticItemList = [];
     $scope.dynamiItemsList = [];
+    $scope.showPlay = true;
     
     $scope.getUserImg = function(){
             Services.getUserImg(function(res){
@@ -84,50 +85,13 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
             }else{
                 angular.forEach(res.staticItemList, function(value, key) {
                     if(value.itemType.type=="dynamic"){
-                        data.itemId = value._id;
-                        Services.dynamicItemRoute(data, function(res){
-                            res.route.sort(function(a, b){
-                                return a.routeId.routePos-b.routeId.routePos;
-                            }); 
-                            
-                            //calculamos el rumbo
-                            var course = [];
-                            for(index=0; index<res.route.length-1; index++){
-                                var lon1 = parseFloat(res.route[index].routeId.longitude);
-                                var lon2 = parseFloat(res.route[index+1].routeId.longitude);
-                                var lat1 = parseFloat(res.route[index].routeId.latitude);
-                                var lat2 = parseFloat(res.route[index+1].routeId.latitude);    
-                            
-                                var r = bearing(lon1, lat1, lon2, lat2);
-                                course.push(r);
-                            }
-                            
-                            var speed = res.route[0].routeId.speed;
-                            
-                            var location = [parseFloat(res.route[0].routeId.latitude),
-                                            parseFloat(res.route[0].routeId.longitude)];
-                            
-                            var overlay = new ol.Overlay({
-                                position: ol.proj.transform(location, 'EPSG:4326', 'EPSG:3857'),
-                                element: $('<img src="'+value.itemType.icon+'" class="img-circle">')
-                                .css({marginTop: '-50%', marginLeft: '-50%', width: '32px', height: '32px', cursor: 'pointer'})        
-                            });
-                            
-                            map.addOverlay(overlay);
-                            
-                            var info = {
-                                overlay: overlay,
-                                speed: speed,
-                                route: res.route,
-                                course: course,
-                                icon: value.itemType.icon
-                            };
-                            
-                            $scope.dynamiItemsList.push(info);
-                        }, function(err){
-                            $scope.errorMsgList.push("The dynamic objects could not be saved!");
-                            $scope.errorMsgList.push(err);
-                        });
+                        var data2 = {
+                            sceneId: data.sceneId, 
+                            mapId: data.mapId,
+                            itemId: value._id
+                        };
+                        
+                        getDynamicItems(value, data2);
                     }else if(value.itemType.type=="static"){
                         var location = [parseFloat(value.location.latitude), parseFloat(value.location.longitude)];
 
@@ -147,6 +111,52 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
         
         $scope.hideLoadBar = true;
         $scope.simulationDataLoaded = true; 
+    }
+    
+    function getDynamicItems(value, data){
+        Services.dynamicItemRoute(data, function(res){
+            res.route.sort(function(a, b){
+                return a.routeId.routePos-b.routeId.routePos;
+            });
+            
+            //calculamos el rumbo
+            var course = [];
+            for(index=0; index<res.route.length-1; index++){
+                var lon1 = parseFloat(res.route[index].routeId.longitude);
+                var lon2 = parseFloat(res.route[index+1].routeId.longitude);
+                var lat1 = parseFloat(res.route[index].routeId.latitude);
+                var lat2 = parseFloat(res.route[index+1].routeId.latitude);    
+                
+                var r = bearing(lon1, lat1, lon2, lat2);
+                course.push(r);    
+            }
+            
+            var speed = res.route[0].routeId.speed;
+            
+            var location = [parseFloat(res.route[0].routeId.latitude),
+                            parseFloat(res.route[0].routeId.longitude)];
+                            
+            var overlay = new ol.Overlay({
+                position: ol.proj.transform(location, 'EPSG:4326', 'EPSG:3857'),
+                element: $('<img src="'+value.itemType.icon+'" class="img-circle">')
+                .css({marginTop: '-50%', marginLeft: '-50%', width: '32px', height: '32px', cursor: 'pointer'})    
+            });
+                            
+            map.addOverlay(overlay);
+                            
+            var info = {
+                overlay: overlay,
+                speed: speed,
+                route: res.route,
+                course: course,
+                icon: value.itemType.icon    
+            };
+                            
+            $scope.dynamiItemsList.push(info);
+        }, function(err){
+            $scope.errorMsgList.push("The dynamic objects could not be saved!");
+            $scope.errorMsgList.push(err);
+        });    
     }
     
     //Calculo de rumbo entre dos coordenadas geograficas
