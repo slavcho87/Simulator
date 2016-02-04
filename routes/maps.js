@@ -295,5 +295,30 @@ router.post('/dynamicItemRoute', function(req, res){
     });
 })
 
+router.delete('/deleteMap/:id', function(req, res){
+    Map.remove({_id: req.params.id}, function(err){
+        if(err){
+            res.json({
+                result: "NOK",
+                msg: err
+            });
+        }else{
+            Scene.remove({mapId: req.params.id}, function(err){
+                if(err){
+                    res.json({
+                        result: "NOK",
+                        msg: err
+                    });     
+                }else{
+                    res.json({
+                        result: "OK",
+                        msg: "Map deleted successfully!"
+                    });
+                }
+            });
+        }
+    });
+})
+
 
 module.exports = router;

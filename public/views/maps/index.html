@@ -135,35 +135,12 @@
                                                 class="btn btn-success fa fa-play-circle-o" 
                                                 ng-click="startSimulation(map._id)">
                                         </button>
+                                        <!-- #map/editMap -->
                                         <button type="button" class="btn btn-primary fa fa-pencil-square-o"></button>
                                         <button type="button" class="btn btn-primary fa fa-download"></button>
-                                        <button type="button" class="btn btn-danger fa fa-trash-o"></button>
-                                        
-                                        <!--<ul class="nav nav-tabs">  
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-primary dropdown-toggle" 
-                                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Actions <span class="caret"></span>
-                                                </button>
-
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="#map" role="button" 
-                                                           data-toggle="modal" data-target="#startSimulationModal"
-                                                           ng-click="startSimulation()">Start simulation</a></li>
-
-                                                    <li><a href="#map/editMap" role="button" 
-                                                           data-toggle="modal" data-target="#editMap">Edit map</a>
-                                                    </li>
-
-                                                    <li><a href="#map" role="button" 
-                                                           data-toggle="modal" data-target="#exportMapModal">Export map</a></li>
-
-                                                    <li role="separator" class="divider"></li>
-
-                                                    <li><a href="#map" role="button" data-toggle="modal" data-target="#deleteMapModal">Delete map</a></li>
-                                                </ul>-->
-                                            </div>
-                                        </ul>
+                                        <button type="button" class="btn btn-danger fa fa-trash-o"
+                                                data-toggle="modal" data-target="#deleteMapModal" ng-click="selectMapToDelete(map)">
+                                        </button>
                                     </td> 
                                 </tr>
                             </tbody>
@@ -256,7 +233,7 @@
                 
               <div class="modal-footer">  
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>  
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deleteMap()">Delete</button>  
               </div>
             </div>
 

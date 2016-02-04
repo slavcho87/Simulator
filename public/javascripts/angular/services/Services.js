@@ -115,6 +115,9 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
         dynamicItemRoute: function(data, success, error){
             $http.post('/maps/dynamicItemRoute', data).success(success).error(error);
         },
+        deleteMap: function(data, success, error){
+            $http.delete('/maps/deleteMap/'+data).success(success).error(error);
+        },
         logout: function(success) {
             changeUser({});
             delete $localStorage.token;

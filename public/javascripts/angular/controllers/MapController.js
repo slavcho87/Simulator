@@ -39,20 +39,26 @@ app.controller("MapController", ['$scope', '$http', '$location', 'Services', 'Da
         });
     }
     
-   /*
-    * Insert new map
-    */
-    $scope.addMap = function() {
-        //insertar codigo para la creacion del nuevo mapa    
+    $scope.selectMapToDelete = function(map){
+        $scope.selectMapToDeleteValue = map;
     }
     
-    /*
-    * Insert new map
-    */
-    $scope.searchMap = function() {
-            
+    $scope.deleteMap = function(){
+        Services.deleteMap($scope.selectMapToDeleteValue._id, function(res){
+            if(res.result=="NOK"){
+                $scope.errorMsgList.push(res.msg);
+            }else{
+                $scope.msgList.push(res.msg);
+                
+                var index = $scope.mapList.indexOf($scope.selectMapToDeleteValue);
+                if(index>=0){
+                    $scope.mapList.splice(index, 1)
+                }
+            }
+        }, function(err){
+            $scope.errorMsgList.push(err);
+        });
     }
-    
 
    /*
     * Hide error message
