@@ -1,3 +1,5 @@
 node_modules/
 \.brackets.json
 npm-debug.txt
+.metadata
+RemoteSystemsTempFiles
