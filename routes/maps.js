@@ -248,14 +248,14 @@ router.get('/sceneListFromMapId/:mapId', function(req, res){
                 sceneList: sceneList
             });
         }
-    }); 
+    });
 })
 
 router.post('/itemList', function(req, res){
     Item.find({sceneId: req.body.sceneId, mapId: req.body.mapId})
     .populate({
         path: 'itemType',
-        select: "icon type"
+        select: "icon type name"
     })
     .populate({
         path: 'location'

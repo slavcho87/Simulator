@@ -75,20 +75,57 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
             }else{
                 angular.forEach(res.staticItemList, function(value, key) {
                     if(value.itemType.type=="dynamic"){
-                        //$scope.staticItemListInScene
-                        console.log(value);
+                         var data2 = {
+                            sceneId: data.sceneId, 
+                            mapId: data.mapId,
+                            itemId: value._id
+                        };
+                        
+                        getDynamicItem(value, data2);
                     }else if(value.itemType.type=="static"){
-                        console.log(value);
-                        //$scope.dynamicItemListInScene
+                        var staticItem = {
+                            name: value.itemName,
+                            type: {
+                                name: value.itemType.name,
+                                icon: value.itemType.icon
+                            },
+                        };
+                        
+                        $scope.staticItemListInScene.push(staticItem);
                     }
                 });
             }
         }, function(err){
             $scope.errorMsgList.push(err);
         });
-        
-        
-        
+    }
+    
+    function getDynamicItem(value, data){
+        Services.dynamicItemRoute(data, function(res){
+            var route = [];
+            for(index in res.route){
+                var point = {
+                    lat: res.route[index].routeId.latitude,
+                    long: res.route[index].routeId.longitude
+                };
+                
+                route.push(point);
+            }
+            
+            var dynamicItem = {
+                name: value.itemName,
+                type: {
+                    name: value.itemType.name,
+                    icon: value.itemType.icon
+                },
+                speed: res.route[0].routeId.speed,
+                route: route
+            };      
+            console.log(dynamicItem);
+            $scope.dynamicItemListInScene.push(dynamicItem);
+        }, function(err){
+            
+        });        
     }
      
     $scope.citySearch = function(){
