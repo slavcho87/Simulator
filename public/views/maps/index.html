@@ -136,7 +136,9 @@
                                                 ng-click="startSimulation(map._id)">
                                         </button>
                                         <!-- #map/editMap -->
-                                        <button type="button" class="btn btn-primary fa fa-pencil-square-o"></button>
+                                        <button type="button" class="btn btn-primary fa fa-pencil-square-o" 
+                                                ng-click="editMap(map)">
+                                        </button>
                                         <button type="button" class="btn btn-primary fa fa-download"></button>
                                         <button type="button" class="btn btn-danger fa fa-trash-o"
                                                 data-toggle="modal" data-target="#deleteMapModal" ng-click="selectMapToDelete(map)">

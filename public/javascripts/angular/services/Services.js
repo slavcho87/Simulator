@@ -118,6 +118,12 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
         deleteMap: function(data, success, error){
             $http.delete('/maps/deleteMap/'+data).success(success).error(error);
         },
+        editMapData: function(data, success, error){
+            $http.get('/maps/editMapData/'+data).success(success).error(error);
+        },
+        updateMap: function(data, success, error){
+            $http.post('/maps/updateMap', data).success(success).error(error);
+        },
         logout: function(success) {
             changeUser({});
             delete $localStorage.token;

@@ -1,8 +1,24 @@
 var app = angular.module("app");
 
-app.controller("EditMapController", ['$scope', '$http', function ($scope, $http) {    
-   $scope.errorMsgList = [];
-   $scope.step=1;
+app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory', function ($scope, $http, Services, DataFactory) {    
+    $scope.errorMsgList = [];
+    $scope.step=1;
+    $scope.recommenderList = [];
+    $scope.scene = {
+        defineFormFileDynamicItem: "",
+        maximumStaticItemsToDisplay: 50,
+        maximumDynamicItemsToDisplay: 50
+    };
+    $scope.cityList = [];
+    $scope.staticItemList = [];
+    $scope.dynamicItemList = [];
+    $scope.staticItemListInScene = [];
+    $scope.dynamicItemListInScene = [];
+    $scope.msgList = [];  
+    $scope.newDynamicItem = {
+        route: []
+    };
+    $scope.sceneList = [];
     
    /*
     * 
@@ -18,6 +34,162 @@ app.controller("EditMapController", ['$scope', '$http', function ($scope, $http)
        return ($scope.step != stepNumer);
    }
 
+   $scope.loadData = function(){
+       //load recommeders list
+        Services.getRecommenderList(function(res){
+            angular.forEach(res, function(value, key) {
+                $scope.recommenderList.push(value);
+            });
+        }, function(err){
+             $scope.errorMsgList.push(err);
+        });
+       
+       //load static items
+        Services.staticItemList(function(res){
+           for(index in res){
+                $scope.staticItemList.push(res[index]);
+            }
+        }, function(err){
+            $scope.errorMsgList.push(err);
+        });
+        
+        //load dynamic items
+        Services.dynamicItemList(function(res){
+            if(res.result == "NOK"){
+                $scope.errorMsgList.push(res.msg);
+            }else{
+                for(index in res){
+                    $scope.dynamicItemList.push(res[index]);
+                }
+            }        
+        }, function(err){
+            $scope.errorMsgList.push(err);
+        });
+       
+       //load basic data
+       Services.editMapData(DataFactory.data.mapId, function(res){
+          if(res.result == "NOK"){
+              $scope.errorMsgList.push(res.msg);
+          }else{
+              $scope.map = {
+                  name: res.map.name,
+                  type: res.map.type,
+                  state: res.map.state
+              }
+                
+              for(index in res.sceneList){
+                  $scope.sceneList.push({
+                    sceneID: res.sceneList[index]._id,
+                    sceneName: res.sceneList[index].sceneName, 	
+                    creationDate: res.sceneList[index].creationDate,
+                    recommenderSettings: getRecommenderNameFromID(res.sceneList[index].recommender),
+                    city: res.sceneList[index].city,
+                  }); 
+              }
+          }
+       }, function(err){
+           $scope.errorMsgList.push(err);
+       });       
+   }
+   
+   $scope.citySearch = function(){
+        if(!$scope.scene.citySearchValue || $scope.scene.citySearchValue.length == 0){
+            $scope.errorMsgList.push("Insert city name!");
+        }else{
+            Services.citySearch($scope.scene.citySearchValue, function(res){
+                $scope.cityList = res; 
+            },function(error){
+               $scope.errorMsgList.push("Error: "+error);
+            });
+        }
+    }
+     
+   $scope.saveStaticItemInScene = function(){
+        if($scope.staticItemListInScene.length < $scope.scene.maximumStaticItemsToDisplay){
+            $scope.newStaticItem.type = JSON.parse($scope.newStaticItem.type);
+            $scope.staticItemListInScene.push({
+                name: $scope.newStaticItem.name,
+                type: $scope.newStaticItem.type,
+                longitude: $scope.newStaticItem.longitude,
+                latitude: $scope.newStaticItem.latitude
+            });
+            
+            $scope.msgList.push("Static item inserted!");
+            
+            $scope.newStaticItem.name = "";
+            $scope.newStaticItem.type = "";
+            $scope.newStaticItem.longitude = "";
+            $scope.newStaticItem.latitude = "";
+        }else{
+            $scope.errorMsgList.push("Element limit reached!");
+        }
+    }
+  
+   $scope.selectStaticItemToDeleteFromScene = function(item, index){
+        $scope.selectStaticItemToDeleteFromSceneValue = item;
+        $scope.selectStaticItemToDeleteFromSceneIndex = index;
+    }
+     
+   $scope.deleteStaticItemFromScene = function(){
+        var index = $scope.staticItemListInScene.indexOf($scope.selectStaticItemToDeleteFromSceneValue);
+        
+        if(index>=0){
+            $scope.staticItemListInScene.splice(index, 1);
+             staticItemsMap.removeOverlay(overlayList[$scope.selectStaticItemToDeleteFromSceneIndex]);
+        }else{
+            $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
+        }
+    }
+   
+    $scope.saveDynamicItemInScene = function(){
+        if($scope.dynamicItemListInScene.length < $scope.scene.maximumDynamicItemsToDisplay){
+            $scope.newDynamicItem.type = JSON.parse($scope.newDynamicItem.type);
+            $scope.dynamicItemListInScene.push({
+                type: $scope.newDynamicItem.type,
+                name: $scope.newDynamicItem.dynamicItemName,
+                speed: $scope.newDynamicItem.itemSpeed,
+                route: $scope.newDynamicItem.route
+            });
+            
+            $scope.msgList.push("Dynamic item inserted!");
+            
+            $scope.newDynamicItem.type = "";
+            $scope.newDynamicItem.dynamicItemName = "";
+            $scope.newDynamicItem.itemSpeed = "",
+            $scope.newDynamicItem.route = [];
+        }else{
+            $scope.errorMsgList.push("Element limit reached!");
+        }
+    }   
+   
+    $scope.selectPointToDelete = function(point){
+        $scope.selectPointToDeleteValue = point;
+    }
+    
+    $scope.deletePointFromRoute = function(){
+        var index = $scope.newDynamicItem.route.indexOf($scope.selectPointToDeleteValue);
+        
+        if(index>=0){
+            $scope.newDynamicItem.route.splice(index, 1);
+        }else{
+            $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
+        }
+    }   
+    
+    $scope.selectDynamicItemToDelete = function(item){
+        $scope.selectDynamicItemToDeleteValue = item;
+    }
+    
+    $scope.deleteDynamicItemFromScene = function(){
+        var index = $scope.dynamicItemListInScene.indexOf($scope.selectDynamicItemToDeleteValue);
+        
+        if(index>=0){
+            $scope.dynamicItemListInScene.splice(index, 1);    
+        }else{
+            $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
+        }
+    }    
+   
    /*
     * Hide error message
     */
@@ -30,18 +202,149 @@ app.controller("EditMapController", ['$scope', '$http', function ($scope, $http)
             $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
         }
     }
+     
+    $scope.selectSceneToDelete = function(scene){
+        $scope.selectSceneToDeleteValue = scene;
+    }
+    
+    $scope.deleteScene = function(){
+        Services.deleteScene($scope.selectSceneToDeleteValue.sceneID, function(res){
+            if(res.result=="NOK"){
+                $scope.errorMsgList.push(res.msg);
+            }else{
+                $scope.msgList.push(res.msg);
+                
+                var index =  $scope.sceneList.indexOf($scope.selectSceneToDeleteValue);
+                if(index>=0){
+                    $scope.sceneList.splice(index, 1);
+                }else{
+                    $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
+                }
+            }   
+        }, function(err){
+            $scope.errorMsgList.push(err);
+        });
+    }
+    
+    $scope.saveMap = function(){
+        $scope.map._id = DataFactory.data.mapId;
+        Services.updateMap($scope.map, function(res){
+            if(res.result == "NOK"){
+                $scope.errorMsgList.push(res.msg);    
+            }else{
+                $scope.msgList.push(res.msg);
+            }
+        }, function(err){
+            $scope.errorMsgList.push(err);
+        });
+    }
+    
+    $scope.saveScene = function(){
+        $scope.scene.staticItemList = $scope.staticItemListInScene;
+        $scope.scene.dynamicItemList = $scope.dynamicItemListInScene;
+        $scope.scene.mapId = DataFactory.data.mapId;
+        $scope.scene.zoom = dynamicItemsMap.getView().getZoom();
+           
+        Services.saveScene($scope.scene, function(res){ 
+            if(res.result == "NOK"){
+                $scope.errorMsgList.push(res.msg);
+            }else{
+                $scope.msgList.push(res.msg);
+                
+                $scope.sceneList.push({
+                    sceneID: res.id,
+                    sceneName: $scope.scene.name, 	
+                    creationDate: res.creationDate,
+                    recommenderSettings: getRecommenderNameFromID($scope.scene.recommenderSettings),
+                    city: $scope.scene.citySearchValue,
+                });
+                
+                $scope.dynamicItemListInScene = [];
+                $scope.dynamicItemListInScene = []; 
+                $scope.scene.staticItemList = [];
+                $scope.scene.dynamicItemList = [];
+                $scope.scene.name = "";
+                $scope.scene.citySearchValue = "";
+                $scope.scene.latitudeULC = "";
+                $scope.scene.longitudeULC = "";
+                $scope.scene.latitudeLRC = "";
+                $scope.scene.longitudeLRC = "";
+                $scope.scene.maximumStaticItemsToDisplay = "";
+                $scope.scene.maximumStaticItemsToDisplay = "";
+                $scope.scene.mapId = "";
+                $scope.scene.recommenderSettings = "";
+                $scope.scene.zoom = "";
+                $scope.scene.selectedCity = "";             
+            }
+        }, function(err){
+            $scope.errorMsgList.push(err);
+        });
+    }
+    
+    function getRecommenderNameFromID(id){
+        var recommenderName = "";
+        for(index in $scope.recommenderList){
+            if($scope.recommenderList[index]._id==id){
+                recommenderName = $scope.recommenderList[index].poolName;
+            }
+        }
+        
+        return recommenderName;
+    }    
+    
+    /*
+    * Hide message
+    */    
+    $scope.msgSuccessHide = function(msg){
+        var msgIndex = $scope.msgList.indexOf(msg);
+        
+        if(msgIndex>=0){
+            $scope.msgList.splice(msgIndex, 1);
+        }else{
+            $scope.msgList.push(ERROR_HAS_OCCURRED);
+        }
+    }
     
     /*
      *
      */
     $scope.loadFromFileSelected = function(){        
-        return ($scope.defineForm!="loadFromFile");
+        return ($scope.scene.defineForm!="loadFromFile");
+    }
+    
+    /*
+     *
+     */
+    $scope.loadFromFileSelectedDynamicItem = function(){
+        return ($scope.scene.defineFormFileDynamicItem!="loadFromFileDynamicItem");
     }
     
     /*
      *
      */
     $scope.setManuallySelected = function(){
-        return ($scope.defineForm!="setManually");
+        return ($scope.scene.defineForm!="setManually");
+    }
+    
+    /*
+     *
+     */
+    $scope.setManuallySelectedDynamicItem = function(){
+        return ($scope.scene.defineFormFileDynamicItem!="setManuallyDynamicItem");
+    }
+    
+    /*
+     *
+     */
+    $scope.loadFromFileSelectedDynamicItem = function(){
+        return ($scope.scene.defineFormFileDynamicItem!="loadFromFileDynamicItem");
+    }
+    
+    $scope.loadStaticItemsFromFile = function(){
+        console.log($scope.scene.staticItemFile);
+    }
+    
+    $scope.loadDynamicItemsFromFile = function(){
+        console.log($scope.scene.dynamicItemFile);
     }    
 }]);

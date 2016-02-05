@@ -305,6 +305,51 @@ router.delete('/deleteMap/:id', function(req, res){
         }else{
             Scene.remove({mapId: req.params.id}, function(err){
                 if(err){
+                    console.log(err);
+                }    
+            });
+            
+            Item.remove({mapId: req.params.id}, function(err){
+                if(err){
+                    console.log(err);
+                }    
+            });
+            
+            Location.remove({mapId: req.params.id}, function(err){
+                if(err){
+                    console.log(err);
+                }    
+            });
+            
+            Move.remove({mapId: req.params.id}, function(err, route){
+                if(!err){
+                    for(index in route){
+                        deleteRouteById(route[index].routeId);
+                    }
+                }
+            });
+            res.json({
+                result: "OK",
+                msg: "Map deleted successfully!"
+            });
+        }
+    });
+})
+
+function deleteRouteById(id){
+    Route.remove({_id: id});
+}
+
+router.get('/editMapData/:mapId', function(req, res){
+    Scene.find({mapId: req.params.mapId}, function(err, list){
+        if(err){
+            res.json({
+                result: "NOK",
+                msg: err
+            });
+        }else{
+            Map.findOne({_id: req.params.mapId}, function(err, map){
+                if(err){
                     res.json({
                         result: "NOK",
                         msg: err
@@ -312,7 +357,8 @@ router.delete('/deleteMap/:id', function(req, res){
                 }else{
                     res.json({
                         result: "OK",
-                        msg: "Map deleted successfully!"
+                        sceneList: list,
+                        map: map
                     });
                 }
             });
@@ -320,5 +366,26 @@ router.delete('/deleteMap/:id', function(req, res){
     });
 })
 
+router.post('/updateMap', function(req, res){
+    var data = { 
+        name: req.body.name,
+        type: req.body.type,
+        state: req.body.state,
+    };
+    
+    Map.findOneAndUpdate({_id: req.body._id}, data, function(err){
+        if(err){
+            res.json({
+                result: "NOK",
+                msg: err
+            });
+        }else{
+            res.json({
+                result: "OK",
+                msg: "Map updated successfully!"
+            });
+        }
+    });
+})
 
 module.exports = router;

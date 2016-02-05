@@ -59,6 +59,11 @@ app.controller("MapController", ['$scope', '$http', '$location', 'Services', 'Da
             $scope.errorMsgList.push(err);
         });
     }
+    
+    $scope.editMap = function(map){
+        DataFactory.data.mapId = map._id;
+        window.location = '#/map/editMap';
+    }
 
    /*
     * Hide error message
