@@ -25,6 +25,12 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
     */
    $scope.setStep = function(stepNumber){
        $scope.step = stepNumber;
+       
+        staticItemsMap.getView().setCenter(limitMap.getView().getCenter());
+        staticItemsMap.getView().setZoom(limitMap.getView().getZoom());
+
+        dynamicItemsMap.getView().setCenter(limitMap.getView().getCenter());
+        dynamicItemsMap.getView().setZoom(limitMap.getView().getZoom());
    }
     
    /*
@@ -79,11 +85,12 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
                 
               for(index in res.sceneList){
                   $scope.sceneList.push({
-                    sceneID: res.sceneList[index]._id,
-                    sceneName: res.sceneList[index].sceneName, 	
-                    creationDate: res.sceneList[index].creationDate,
-                    recommenderSettings: getRecommenderNameFromID(res.sceneList[index].recommender),
-                    city: res.sceneList[index].city,
+                      sceneID: res.sceneList[index]._id,
+                      sceneName: res.sceneList[index].sceneName, 	
+                      creationDate: res.sceneList[index].creationDate,
+                      recommenderSettings: getRecommenderNameFromID(res.sceneList[index].recommender),
+                      city: res.sceneList[index].city,
+                      allData: res.sceneList[index]
                   }); 
               }
           }
@@ -347,4 +354,9 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
     $scope.loadDynamicItemsFromFile = function(){
         console.log($scope.scene.dynamicItemFile);
     }    
+    
+    $scope.editScene = function(scene){
+        DataFactory.data.scene = scene.allData;
+        window.location = '#/map/editScene';
+    }
 }]);

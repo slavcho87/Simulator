@@ -1,4 +1,4 @@
- <div>    
+ <div ng-init="loadData()">    
     <div id="wrapper">
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="navbar-header">
@@ -28,20 +28,21 @@
                         <h3 class="panel-title"><i class="fa fa-plus-circle"></i> Edit scene </h3>
                     </div>
 
+                           
                     <div class="panel-body">
                         <div class="row">
- <div ng-hide="isStepActivate(1)">
+                            
+                            <div ng-hide="isStepActivate(1)">
                                 <div class="col-xs-6">
                                     <label>Scene name</label>
-                                    <input class="form-control" ng-model="map.name" />
+                                    <input class="form-control" ng-model="scene.name" />
                                 </div>
 
                                 <div class="col-xs-6">
                                     <label>Recommender settings</label>
-                                    <select class="form-control">
-                                        <option value="1">Recommender 1</option>
-                                        <option value="2">Recommender 2</option>
-                                        <option value="3">Recommender 3</option>
+                                    <select class="form-control" ng-model="scene.recommenderSettings">
+                                        <option ng-repeat="recommender in recommenderList" 
+                                                value="{{recommender._id}}">{{recommender.poolName}}</option>
                                     </select>
                                 </div>                            
                             </div>
@@ -54,63 +55,77 @@
                                 <div class="col-xs-6">
                                     </br>
                                     <label>Upper left corner: latitude</label>
-                                    <input id="initPosLat" class="form-control" disabled/>
+                                    <input id="initPosLat" class="form-control" ng-model="scene.latitudeULC" disabled/>
                                 </div>
 
                                 <div class="col-xs-6">
                                     </br>
                                     <label>Upper left corner: longitude</label>
-                                     <input id="initPosLong" class="form-control" disabled/>
+                                     <input id="initPosLong" class="form-control" ng-model="scene.longitudeULC" disabled/>
                                 </div>        
 
                                 <div class="col-xs-6">
                                     </br>
                                     <label>Lower right corner: latitude</label>
-                                    <input id="initPosLat" class="form-control"  disabled/>
+                                    <input id="endPosLat" class="form-control" ng-model="scene.latitudeLRC" disabled/>
                                 </div>
 
                                 <div class="col-xs-6">
                                     </br>
                                     <label>Lower right corner: longitude</label>
-                                     <input id="initPosLong" class="form-control" disabled/>
+                                     <input id="endPosLong" class="form-control" ng-model="scene.latitudeLRC" disabled/>
                                 </div>                
 
                                 <div class="col-xs-6">
                                     <div class="radio">
-                                      <label>
                                         <input type="radio" name="opciones" id="upperLeftCorner" value="upperLeftCorner" checked>
                                         select upper left corner
-                                      </label>
+                                        </input>
                                     </div>
                                 </div>
 
                                 <div class="col-xs-6">
                                     <div class="radio">
-                                      <label>
                                         <input type="radio" name="opciones" id="lowerRightCorner" value="lowerRightCorner">
                                         select lower right corner
-                                      </label>
+                                        </input>
                                     </div>                                    
                                 </div>
 
-                                <div class="col-xs-12">       
+                                <div class="col-xs-6">       
                                     </br>         
                                     <label>City</label>  
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search for...">
+                                        <input ng-model="scene.citySearchValue" type="text" class="form-control" placeholder="Search for...">
                                         <span class="input-group-btn">
-                                            <button class="btn btn-default" type="button">Go!</button>
+                                            <button class="btn btn-default" type="button" ng-click="citySearch()">Go!</button>
                                         </span>
                                     </div>
+                                </div>
+
+                                <div ng-hide="cityList.length==0" class="col-xs-6">
+                                    </br>
+                                    <label>Places: </label>    
+                                    <select ng-model="scene.selectedCity" name="selectedCity" class="form-control">
+                                        <option ng-repeat="city in cityList" value={{city}}>{{city.display_name}}</option>
+                                    </select>
                                 </div>
 
                                 <div class="col-xs-12"> 
                                     <br/>
                                     <div id="crearMapa" >
                                     </div>
-
-                                    <script type="text/javascript">               
-                                        var map = new ol.Map({
+                                    
+                                    <script type="text/javascript">
+                                         $(document).ready(function(){
+                                             $("select[name=selectedCity]").change(function(){
+                                                var searchCitySelected = $("select[name=selectedCity]").val();
+                                                searchCitySelected = JSON.parse(searchCitySelected);
+                                                limitMap.getView().setCenter(ol.proj.transform([parseFloat(searchCitySelected.lon), parseFloat(searchCitySelected.lat)], 'EPSG:4326', 'EPSG:3857'));
+                                            });
+                                        });                           
+                                        
+                                        var limitMap = new ol.Map({
                                             target: 'crearMapa',
                                             layers: [
                                                 new ol.layer.Tile({
@@ -119,18 +134,40 @@
                                             ],      
                                             view: new ol.View({            
                                                 center: ol.proj.transform([-0.88824, 41.66991], 'EPSG:4326', 'EPSG:3857'),        
-                                                zoom: 15           
+                                                zoom: 15        
                                             }),       
                                             controls: ol.control.defaults().extend([      
                                                 new ol.control.FullScreen() 
                                             ])        
-                                        });          
-
-                                        map.on('singleclick', function(evt) { 
-                                            $('#initPosLat').val(evt.coordinate[0]);
-                                            $('#initPosLong').val(evt.coordinate[1]);
                                         });
-                                    </script>                                
+
+                                        limitMap.on('singleclick', function(evt) { 
+                                             var appElement = document.querySelector('[ng-app=app]');
+                                             var $scope = angular.element(appElement).scope();
+                                             $scope = $scope.$$childHead; 
+                                            
+                                            var corner = $('input[name=opciones]:checked').val()
+                                            var pos = ol.proj.transform(evt.coordinate,'EPSG:3857', 'EPSG:4326');
+                                            
+                                            if(corner == "upperLeftCorner"){
+                                                $('#initPosLat').val(pos[0]);
+                                                $scope.scene.latitudeULC = pos[0];
+                                                
+                                                $('#initPosLong').val(pos[1]);
+                                                $scope.scene.longitudeULC = pos[1];
+                                                
+                                            }else if(corner == "lowerRightCorner"){
+                                                $('#endPosLat').val(pos[0]);
+                                                $scope.scene.latitudeLRC = pos[0];
+                                                
+                                                $('#endPosLong').val(pos[1]);
+                                                $scope.scene.longitudeLRC = pos[1];
+                                            }else{
+                                                alert("Invalid option");
+                                            }
+                                        });
+                                    </script>    
+                                    
                                 </div>                                    
                             </div>                            
 
@@ -141,7 +178,7 @@
                                 
                                 <div class="col-xs-6">
                                     <label>Define items form ...</label>
-                                    <select ng-model="defineForm" class="form-control">
+                                    <select ng-model="scene.defineForm" class="form-control">
                                         <option value="loadFromFile">Load from file</option>
                                         <option value="setManually">Set manually</option>
                                     </select>
@@ -149,7 +186,7 @@
                                 
                                 <div class="col-xs-6">
                                     <label>Maximum number of items to display</label>
-                                    <input ng-model="maximumStaticItemsToDisplay" class="form-control"/>
+                                    <input ng-model="scene.maximumStaticItemsToDisplay" class="form-control"/>
                                 </div>
                                 
                                 <div ng-hide="loadFromFileSelected()">
@@ -158,50 +195,71 @@
                                     <div class="col-xs-12">
                                         </br>
                                         <label>Static items</label>    
-                                        <input type="file" name='imgPerfil'>     
+                                        <input type="file" name='staticItemFile' ng-model="scene.staticItemFile">     
                                         <b>
                                             <i>* File containing these static objects on the map, that is, don't 
                                                 changing geographical position during the simulation
                                             </i>
                                         </b>    
                                     </div>
+                                
+                                    <div class="col-xs-12">
+                                        </br>
+                                        <button type="button" 
+                                                class="btn btn-success" 
+                                                ng-click="loadStaticItemsFromFile()">
+                                            Load static items
+                                        </button>
+                                    </div>
                                 </div>
                                 
                                 <div ng-hide="setManuallySelected()">
                                     <!-- cuando tenemos que definir los objetos de forma manual en el mapa -->
                                     
-                                    <div class="col-xs-12">
-                                        <nav>
-                                          <ul class="pagination">
-                                            <li class="active">
-                                                <a href="#/map/newMap"><img src="../../images/new-map.png" height="16" width="16"/></a>
-                                            </li>
-                                            <li>
-                                                <a href="#/map/newMap"><img src="../../images/new-map.png" height="16" width="16"/></a>
-                                            </li>
-                                            <li>
-                                                <a href="#/map/newMap"><img src="../../images/new-map.png" height="16" width="16"/></a>
-                                            </li>
-                                            <li>
-                                                <a href="#/map/newMap"><img src="../../images/new-map.png" height="16" width="16"/></a>
-                                            </li>
-                                          </ul>
-                                        </nav>    
+                                    <div class="col-xs-3">
+                                        </br> 
+                                         <label>Static item type</label>
+                                         <select class="form-control" ng-model="newStaticItem.type">
+                                            <option ng-repeat="staticItem in staticItemList" value="{{staticItem}}">
+                                                {{staticItem.name}}
+                                             </option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="col-xs-3">
+                                        </br>
+                                        <label>Item name</label>
+                                        <input ng-model="newStaticItem.name" class="form-control"/>
+                                    </div>    
+                                    
+                                    <div class="col-xs-3">
+                                        </br>
+                                        <label>Longitude</label>
+                                        <input id="staticItemLong" class="form-control" ng-model="newStaticItem.longitude" disabled/>
+                                    </div>
+                                    
+                                    <div class="col-xs-3">
+                                        </br>
+                                        <label>Latitude</label>
+                                        <input id="staticItemLat" class="form-control" ng-model="newStaticItem.latitude" disabled/>
                                     </div>
                                     
                                     <div class="col-xs-12">
-                                        <label>Item name</label>
-                                        <input class="form-control"/>
+                                        </br>
+                                        <button type="button" class="btn btn-success" onclick="saveStaticItem()" ng-click="saveStaticItemInScene()">Save item</button>
                                     </div>    
                                 </div>
      
                                 <div class="col-xs-12">
                                         </br>
-                                        <div id="staticItemsMap" >
+                                        <div id="staticItemsMap">
                                         </div>
 
-                                        <script type="text/javascript">               
-                                            var map = new ol.Map({
+                                        <script type="text/javascript">
+                                            var overlayList = {};
+                                            var index = 0;
+                                            
+                                            var staticItemsMap = new ol.Map({
                                                 target: 'staticItemsMap',
                                                 layers: [
                                                     new ol.layer.Tile({
@@ -215,12 +273,44 @@
                                                 controls: ol.control.defaults().extend([      
                                                     new ol.control.FullScreen() 
                                                 ])        
-                                            });     
+                                            });
+                                            
+                                            staticItemsMap.on('singleclick', function(evt) { 
+                                                var position = ol.proj.transform(evt.coordinate,'EPSG:3857', 'EPSG:4326');
+                                                var appElement = document.querySelector('[ng-app=app]');
+                                                var $scope = angular.element(appElement).scope();
+                                                $scope = $scope.$$childHead; 
+                                                
+                                                if(overlayList[index]){
+                                                    staticItemsMap.removeOverlay(overlayList[index]); 
+                                                }
+                                                
+                                                var staticItemType = JSON.parse($scope.newStaticItem.type);
+                                                overlayList[index] = new ol.Overlay({
+                                                    position: evt.coordinate,
+                                                    element: $('<img src="'+staticItemType.icon+'" class="img-circle">')
+                                                    .css({marginTop: '-50%', marginLeft: '-50%', width: '40px', height: '40px', cursor: 'pointer'})
+                                                });
+                                                
+                                                $('#staticItemLat').val(position[0]);
+                                                $('#staticItemLong').val(position[1]);
+                                                
+                                                staticItemsMap.addOverlay(overlayList[index]);
+                                                
+                                                $scope.$apply(function () {
+                                                    $scope.newStaticItem.latitude = position[0];    
+                                                    $scope.newStaticItem.longitude = position[1];
+                                                });
+                                            });
+                                            
+                                            function saveStaticItem(){
+                                                index++;
+                                            }
                                         </script>                                      
                                 </div>
                                 
      
-                                <table class="table table-striped">
+                                <table class="table table-striped" ng-show="staticItemListInScene.length>0">
                                     <thead>
                                         <tr>
                                             <th>Item name</th>
@@ -229,30 +319,21 @@
                                             <th>Options</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody ng-repeat="staticItemElement in staticItemListInScene">
                                         <tr>
-                                            <td>Canterbury</td>
-                                            <td>Bar</td>
-                                            <td><img src="../../images/new-map.png" height="16" width="16"/></td>
+                                            <td>{{staticItemElement.name}}</td>
+                                            <td>{{staticItemElement.type.name}}</td>
+                                            <td><img src="{{staticItemElement.type.icon}}" height="16" width="16"/></td>
                                             <td>
                                                 <button class="btn btn-danger fa fa-trash-o" 
-                                                        data-toggle="modal" data-target="#deleteStaticItemModal"></button>
-                                            </td> 
-                                        </tr>
-                                        
-                                        <tr>
-                                            <td>100 Montaditos</td>
-                                            <td>Hotel</td>
-                                            <td><img src="../../images/new-map.png" height="16" width="16"/></td>
-                                            <td>
-                                                <button class="btn btn-danger fa fa-trash-o" 
-                                                        data-toggle="modal" data-target="#deleteStaticItemModal"></button>
+                                                        data-toggle="modal" data-target="#deleteStaticItemModal"
+                                                        ng-click="selectStaticItemToDeleteFromScene(staticItemElement, $index)"></button>
                                             </td> 
                                         </tr>
                                     </tbody>
                                 </table>    
      
-                                <nav align="center">
+                                <nav align="center" ng-show="staticItemListInScene.length>0">
                                     <ul class="pagination">
                                         <li class="disabled"><a href="#" aria-label="Previous">
                                             <span aria-hidden="true">&laquo;</span></a>
@@ -278,7 +359,9 @@
                                           </a>
                                         </li>
                                     </ul>
-                                </nav>                                
+                                </nav>
+
+     
                             </div>
                             
                             <div ng-hide="isStepActivate(4)">
@@ -286,38 +369,193 @@
                                     <h3>Dynamic items settings</h3>
                                 </div>
                                 
-                                <div class="col-xs-12">
-                                    <label>Maximum number of dynamic items to show</label>
-                                    <input class="form-control" name='maxNumerDynamicsItemsShow'>
+                                <div class="col-xs-6">
+                                    <label>Define items form ...</label>
+                                    <select ng-model="scene.defineFormFileDynamicItem" class="form-control">
+                                        <option value="loadFromFileDynamicItem">Load from file</option>
+                                        <option value="setManuallyDynamicItem">Set manually</option>
+                                    </select>
                                 </div>
                                 
-                                <div class="col-xs-12">           
-                                    </br>      
-                                    <label>Dynamic items</label>
-                                    <input type="file" name='imgPerfil'>      
-                                    <b>
-                                        <i>* File containing dynamic objects of the map, that is, the changing 
-                                        geographic position during the simulation such as automobiles
-                                        </i>
-                                    </b>   
+                                <div class="col-xs-6">
+                                    <label>Maximum number of items to display</label>
+                                    <input ng-model="scene.maximumDynamicItemsToDisplay" class="form-control"/>
                                 </div>
-     
+                                
+                                <div ng-hide="loadFromFileSelectedDynamicItem()">
+                                    <!-- cuando cargamos los objetos desde un fichero de texto -->
+                                    
+                                    <div class="col-xs-12">           
+                                        </br>      
+                                        <label>Dynamic items</label>
+                                        <input type="file" ng-model='scene.dynamicItemFile'>      
+                                        <b>
+                                            <i>* File containing dynamic objects of the map, that is, the changing 
+                                            geographic position during the simulation such as automobiles
+                                            </i>
+                                        </b>   
+                                    </div>
+                                    <div class="col-xs-12">
+                                        </br>
+                                        <button type="button" 
+                                                class="btn btn-success" 
+                                                ng-click="loadDynamicItemsFromFile()">
+                                            Load dynamic items
+                                        </button>
+                                    </div>                                
+                                
+                                </div>
+                                
+                                <div ng-hide="setManuallySelectedDynamicItem()">                                
+                                    </br>
+                                    <div class="col-xs-4">
+                                        </br>
+                                        <label>Dynamic item type</label>
+                                        <select class="form-control" ng-model="newDynamicItem.type">
+                                            <option ng-repeat="dynamicItem in dynamicItemList" value="{{dynamicItem}}">
+                                                {{dynamicItem.name}}
+                                             </option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="col-xs-4">
+                                        </br>
+                                        <label>Item name</label>
+                                        <input ng-model="newDynamicItem.dynamicItemName" class="form-control"/>
+                                    </div>
+
+                                    <div class="col-xs-4">
+                                        </br>
+                                        <label>Item speed (km/h)</label>
+                                        <input ng-model="newDynamicItem.itemSpeed" class="form-control"/>
+                                    </div>
+
+                                    <div class="col-xs-12">
+                                        <table class="table table-striped" ng-show="newDynamicItem.route.length>0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Order</th>
+                                                    <th>Longitude</th>
+                                                    <th>Latitude</th>
+                                                    <th>Optiones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="point in newDynamicItem.route track by $index">
+                                                    <td>{{$index}}</td>
+                                                    <td>{{point.long}}</td>
+                                                    <td>{{point.lat}}</td>
+                                                    <td>
+                                                        <button class="btn btn-danger fa fa-trash-o" 
+                                                                data-toggle="modal" data-target="#deletePointFromRouteModal"
+                                                                ng-click="selectPointToDelete(point)"></button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>    
+
+                                    <div class="col-xs-12">
+                                        </br>
+                                        <button type="button" class="btn btn-success" ng-click="saveDynamicItemInScene()">Save item</button>
+                                    </div>
+                                </div>
+
                                 <div class="col-sm-12">
-                                    <button type="button" class="btn btn-primary btn-block">Save</button>
+                                    </br>
+                                    <div id="dynamicItemsMap">
+                                    </div>
+
+                                    <script type="text/javascript">
+                                        var dynamicItemsMap = new ol.Map({
+                                            target: 'dynamicItemsMap',
+                                            layers: [
+                                                new ol.layer.Tile({
+                                                    source: new ol.source.MapQuest({layer: 'osm'})
+                                                })   
+                                            ],      
+                                            view: new ol.View({            
+                                                center: ol.proj.transform([-0.88824, 41.66991], 'EPSG:4326', 'EPSG:3857'),        
+                                                zoom: 15           
+                                            }),       
+                                            controls: ol.control.defaults().extend([      
+                                                new ol.control.FullScreen() 
+                                            ])        
+                                        });    
+                                        
+                                        dynamicItemsMap.on('singleclick', function(evt) {
+                                            var pos = ol.proj.transform(evt.coordinate,'EPSG:3857', 'EPSG:4326');
+                                            var appElement = document.querySelector('[ng-app=app]');
+                                            var $scope = angular.element(appElement).scope();
+                                            $scope = $scope.$$childHead; 
+                                            
+                                            $scope.$apply(function () {
+                                                $scope.newDynamicItem.route.push({
+                                                    long: pos[1],  
+                                                    lat: pos[0] 
+                                                });
+                                            });
+                                        });
+                                    </script>
+                                </div>
+                    
+                                <div class="col-sm-12">
+                                    <table class="table table-striped" ng-show="dynamicItemListInScene.length>0">
+                                        <thead>
+                                            <tr>
+                                                <th>Item name</th>
+                                                <th>Item type</th>
+                                                <th>Speed</th>
+                                                <th>Icon</th>
+                                                <th>Options</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody ng-repeat="dynamicItem in dynamicItemListInScene">
+                                            <tr>
+                                                <td>{{dynamicItem.name}}</td>
+                                                <td>{{dynamicItem.type.name}}</td>
+                                                <td>{{dynamicItem.speed}}</td>
+                                                <td><img src="{{dynamicItem.type.icon}}" height="16" width="16"/></td>
+                                                <td>
+                                                    <button class="btn btn-danger fa fa-trash-o" 
+                                                            data-toggle="modal" data-target="#deleteDynamicItemModal"
+                                                            ng-click="selectDynamicItemToDelete(dynamicItem)"></button>
+                                                </td> 
+                                            </tr>
+                                        </tbody>
+                                    </table>                                    
+                                </div>
+                                    
+                                    
+                                <div class="col-sm-12">
+                                    <button type="button" class="btn btn-primary btn-block" ng-click="saveScene()">Save</button>
                                 </div>
                             </div>                            
                             
-                            <nav align="center">
-                              <ul class="pagination">
-                                <li ng-class="{active:!isStepActivate('1')}"><a href="#/map/editScene" ng-click="setStep(1)">Step 1</a></li>
-                                <li ng-class="{active:!isStepActivate('2')}"><a href="#/map/editScene" ng-click="setStep(2)">Step  2</a></li>
-                                <li ng-class="{active:!isStepActivate('3')}"><a href="#/map/editScene" ng-click="setStep(3)">Step  3</a></li>
-                                <li ng-class="{active:!isStepActivate('4')}"><a href="#/map/editScene" ng-click="setStep(4)">Step  4</a></li>
-                              </ul>
-                            </nav>
-                        </div>     
-                </div>                         
-        </div>   
+                            <div class="col-xs-12">
+                                <nav align="center">
+                                  <ul class="pagination">
+                                    <li ng-class="{active:!isStepActivate('1')}">
+                                        <a href="#/map/editScene" ng-click="setStep(1)">Step 1</a>
+                                    </li>
+                                    <li ng-class="{active:!isStepActivate('2')}">
+                                        <a href="#/map/editScene" ng-click="setStep(2)">Step  2</a>
+                                    </li>
+                                    <li ng-class="{active:!isStepActivate('3')}">
+                                        <a href="#/map/editScene" ng-click="setStep(3)">Step  3</a>
+                                    </li>
+                                    <li ng-class="{active:!isStepActivate('4')}">
+                                        <a href="#/map/editScene" ng-click="setStep(4)">Step  4</a>
+                                    </li>
+                                  </ul>
+                                </nav>    
+                            </div>
+                            
+                    </div>     
+                </div>     
+
+
+                </div>   
     </div>
 </div>
 
@@ -338,7 +576,30 @@
                 
               <div class="modal-footer">  
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>  
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deleteStaticItemFromScene()">Delete</button>  
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="modal fade" role="dialog" id="deleteDynamicItemModal">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Confirmation</h4>
+              </div>
+                
+              <div class="modal-body">
+                <p>Are you sure you want to delete this item?</p>
+              </div>
+                
+              <div class="modal-footer">  
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deleteDynamicItemFromScene()">Delete</button>  
               </div>
             </div>
 
