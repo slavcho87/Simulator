@@ -388,4 +388,8 @@ router.post('/updateMap', function(req, res){
     });
 })
 
+router.post('/updateMap', function(req, res){
+    res.json(req.body);
+})
+
 module.exports = router;

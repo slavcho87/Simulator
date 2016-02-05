@@ -124,6 +124,9 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
         updateMap: function(data, success, error){
             $http.post('/maps/updateMap', data).success(success).error(error);
         },
+        updateMap: function(data, success, error){
+            $http.post('/maps/updateMap', data).success(success).error(error);
+        },
         logout: function(success) {
             changeUser({});
             delete $localStorage.token;

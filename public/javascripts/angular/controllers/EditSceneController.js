@@ -120,11 +120,11 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
                 },
                 speed: res.route[0].routeId.speed,
                 route: route
-            };      
-            console.log(dynamicItem);
+            };
+            
             $scope.dynamicItemListInScene.push(dynamicItem);
         }, function(err){
-            
+            $scope.errorMsgList.push(err);
         });        
     }
      
@@ -200,8 +200,12 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
        $scope.scene.dynamicItemList = $scope.dynamicItemListInScene;
        $scope.scene.mapId = DataFactory.data.mapId;
        $scope.scene.zoom = dynamicItemsMap.getView().getZoom();
-       
-       console.log($scope.scene);
+    
+       Services.updateMap($scope.scene, function(res){
+           $scope.errorMsgList.push(res);
+       }, function(err){
+           $scope.errorMsgList.push(err);
+       });
    }
     
     $scope.deleteDynamicItemFromScene = function(){
