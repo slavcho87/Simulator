@@ -112,16 +112,53 @@ app.controller("RecommenderSettingsController", ['$scope', '$http','Services', f
     }
     
     $scope.saveEditRecommender = function(){
-        console.log($scope.selectEditRecommenderValue);
-        Services.updateRecommender($scope.selectEditRecommenderValue, function(res){
-            if(res.result == "NOK"){
-                $scope.errorMsgList.push(res.msg);
-            }else{
-                $scope.msgList.push(res.msg);
+        var error = false;
+        
+        if(!$scope.selectEditRecommenderValue){
+            $scope.errorMsgList.push("Fill the form!");
+        }else{
+            if(!$scope.selectEditRecommenderValue.poolName){
+                $scope.errorMsgList.push("The pool name can not be empty!");
+                error = true;
             }
-        }, function(err){
-            $scope.errorMsgList.push(err);
-        });
+            
+            if(!$scope.selectEditRecommenderValue.recommenderType){
+                $scope.errorMsgList.push("The recommender type can not be empty!");
+                error = true;
+            }
+            
+            if(!$scope.selectEditRecommenderValue.maximuDistanteToGo){
+                $scope.errorMsgList.push("The maximum distance to go can not be empty!");
+                error = true;
+            }
+            
+            if(!$scope.selectEditRecommenderValue.visibilityRadius){
+                $scope.errorMsgList.push("The visibility radius can not be empty!");
+                error = true;
+            }
+            
+            if(!$scope.selectEditRecommenderValue.itemsToRecommend){
+                $scope.errorMsgList.push("The number of items to recommend can not be empty!");
+                error = true;
+            }
+            
+            if(!$scope.selectEditRecommenderValue.minimumScore){
+                $scope.errorMsgList.push("The minimum score for recommending an item can not be empty!");
+                error = true;
+            }
+        
+            if(!error){
+                Services.updateRecommender($scope.selectEditRecommenderValue, function(res){
+                    if(res.result == "NOK"){
+                        $scope.errorMsgList.push(res.msg);
+                    }else{
+                        $scope.msgList.push(res.msg);
+                    }
+                }, function(err){
+                    $scope.errorMsgList.push(err);
+                });    
+            }
+        }
     }
 
    /*

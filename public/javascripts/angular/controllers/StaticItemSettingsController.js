@@ -60,15 +60,33 @@ app.controller("StaticItemSettingsController", ['$scope', '$http', 'Services', f
     }
     
     $scope.updateStaticItem = function(){
-        Services.updateItem($scope.selectEditItemValue, function(res){
-            if(res.result=="NOK"){
-                $scope.errorMsgList.push(res.msg);
-            }else{
-                $scope.msgList.push(res.msg);
+        var error = false;
+        
+        if(!$scope.selectEditItemValue){
+            $scope.errorMsgList.push("Fill the form!");
+        }else{  
+            if(!$scope.selectEditItemValue.name){    
+                $scope.errorMsgList.push("Static item name can not be empty!");
+                error = true;
             }
-        }, function(err){
-            $scope.errorMsgList.push(err);
-        });   
+            
+            if(!$scope.selectEditItemValue.icon){
+                $scope.errorMsgList.push("Static item icon can not be empty!");
+                error = true;
+            }
+            
+            if(!error){
+                Services.updateItem($scope.selectEditItemValue, function(res){
+                    if(res.result=="NOK"){
+                        $scope.errorMsgList.push(res.msg);
+                    }else{
+                        $scope.msgList.push(res.msg);
+                    }
+                }, function(err){
+                    $scope.errorMsgList.push(err);
+                }); 
+            }
+        }  
     }
 
    /*

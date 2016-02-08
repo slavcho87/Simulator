@@ -6,25 +6,43 @@ app.controller("DymanicItemSettingsController", ['$scope', '$http', 'Services', 
     $scope.dynamicItemList = [];
     
     $scope.saveDynamicItem = function(){
-        $scope.dynamicItem.type = "dynamic";
+        var error = false;
         
-        Services.saveItem($scope.dynamicItem, function(res){
-            if(res.result == "NOK"){
-                $scope.errorMsgList.push(res.msg);
-            }else{
-                $scope.msgList.push(res.msg);
-                
-                $scope.dynamicItemList.push({
-                    name: $scope.dynamicItem.name,
-                    icon: $scope.dynamicItem.icon,
-                    type: $scope.dynamicItem.type
-                });
-                
-                $scope.dynamicItem.name = "";
+        if(!$scope.dynamicItem){
+            $scope.errorMsgList.push("Fill the form!");
+        }else{  
+            if(!$scope.dynamicItem.name){    
+                $scope.errorMsgList.push("Dynamic item name can not be empty!");
+                error = true;
             }
-        }, function(err){
-            $scope.errorMsgList.push(err);
-        });
+            
+            if(!$scope.dynamicItem.icon){
+                $scope.errorMsgList.push("Dynamic item icon can not be empty!");
+                error = true;
+            }
+            
+            if(!error){
+                $scope.dynamicItem.type = "dynamic";
+        
+                Services.saveItem($scope.dynamicItem, function(res){
+                    if(res.result == "NOK"){
+                        $scope.errorMsgList.push(res.msg);
+                    }else{
+                        $scope.msgList.push(res.msg);
+
+                        $scope.dynamicItemList.push({
+                            name: $scope.dynamicItem.name,
+                            icon: $scope.dynamicItem.icon,
+                            type: $scope.dynamicItem.type
+                        });
+
+                        $scope.dynamicItem.name = "";
+                    }
+                }, function(err){
+                    $scope.errorMsgList.push(err);
+                });
+            }
+        }
     }
 
     $scope.getDynamicItemList = function(){
@@ -67,19 +85,35 @@ app.controller("DymanicItemSettingsController", ['$scope', '$http', 'Services', 
     }
     
     $scope.updateDynamicItem = function(){
-        Services.updateItem($scope.selectEditDynamicItemValue, function(res){
-            if(res.result == "NOK"){
-                $scope.errorMsgList.push(res.msg);
-            }else{
-                $scope.msgList.push(res.msg);
+        var error = false;
+        
+        if(!$scope.selectEditDynamicItemValue){
+            $scope.errorMsgList.push("Fill the form!");
+        }else{  
+            if(!$scope.selectEditDynamicItemValue.name){    
+                $scope.errorMsgList.push("Dynamic item name can not be empty!");
+                error = true;
             }
-        }, function(err){
-            $scope.errorMsgList.push(err);
-        });
+            
+            if(!$scope.selectEditDynamicItemValue.icon){
+                $scope.errorMsgList.push("Dynamic item icon can not be empty!");
+                error = true;
+            }
+            
+            if(!error){        
+                Services.updateItem($scope.selectEditDynamicItemValue, function(res){
+                    if(res.result == "NOK"){
+                        $scope.errorMsgList.push(res.msg);
+                    }else{
+                        $scope.msgList.push(res.msg);
+                    }
+                }, function(err){
+                    $scope.errorMsgList.push(err);
+                });            
+            }
+        }
     }
-    
-    
-       
+     
     /*
     * Hide message
     */    
