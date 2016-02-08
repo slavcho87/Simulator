@@ -48,7 +48,7 @@ router.post('/save', function(req, resp){
             mapModel.type = req.body.type;
             mapModel.state = req.body.state;
             mapModel.userID = user._id;
-            mapModel.creationDate = new Date();
+            mapModel.creationDate = formattDate(new Date());
             
             mapModel.save(function(err, map){
                 if(err){
@@ -163,6 +163,17 @@ router.post('/saveScene', function(req, resp){
     });    
 })
 
+function formattDate(date){console.log(date);
+    var d = new Date(date || Date.now()),
+    month = '' + (d.getMonth() + 1),
+    day = '' + d.getDate(),
+    year = d.getFullYear();
+        console.log(d);
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    return [day, month, year].join('/');
+}
+
 function saveRoute(routeToSave, item, scene1){
     Route.create(routeToSave, function(err, routes){
         for(i=0; i<routes.length; i++){
@@ -212,7 +223,7 @@ router.post('/findMaps', function(req, res){
             }
             
             if(req.body.startDate && req.body.endDate){
-                query.where('creationDate').gte(req.body.startDate).lte(req.body.endDate);
+                query.where('creationDate').gte(formattDate(req.body.startDate)).lte(formattDate(req.body.endDate));
             }
                 
             if(req.body.type && req.body.type!="all"){

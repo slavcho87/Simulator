@@ -22,17 +22,46 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
     $scope.sceneList = [];
         
     $scope.mapSave = function(){
-        Services.mapSave($scope.map, function(res){
-            if(res.result == "OK"){
-                $scope.msgList.push(res.msg);
-                $scope.hideScene = false;
-                $scope.map.id=res.id;
-            }else{
-                $scope.errorMsgList.push(res.msg);    
-            }
-        },function(error){
-            $scope.errorMsgList.push(error);
-        });
+        var error = false;
+        
+        if(!$scope.map || !$scope.map.name){
+            $scope.errorMsgList.push("The name of map can not be empty");
+            error = true;
+        }
+        
+        if(!$scope.map || !$scope.map.type){
+            $scope.errorMsgList.push("The type of map can not be empty");
+            error = true;
+        } 
+        
+        if(!$scope.map || !$scope.map.state){
+            $scope.errorMsgList.push("The state of map can not be empty");
+            error = true;
+        }
+        
+        if(!error){
+            Services.mapSave($scope.map, function(res){
+                if(res.result == "OK"){
+                    $scope.msgList.push(res.msg);
+                    $scope.hideScene = false;
+                    $scope.map.id=res.id;
+                    
+                    setEditableFalse("mapName");
+                    setEditableFalse("mapType");
+                    setEditableFalse("mapState");
+                    setEditableFalse("btnSaveMap");
+                }else{
+                    $scope.errorMsgList.push(res.msg);    
+                }
+            },function(error){
+                $scope.errorMsgList.push(error);
+            });   
+        }
+    }
+    
+    function setEditableFalse(id){
+        var element = document.getElementById(id);
+        element.setAttribute("disabled", false);
     }
     
     $scope.citySearch = function(){

@@ -94,12 +94,23 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
                       allData: allData
                   }); 
               }
-              console.log($scope.sceneList);
           }
        }, function(err){
            $scope.errorMsgList.push(err);
        });       
    }
+   
+   $scope.formattDDmmYYY = function(date) {
+        var d = new Date(date || Date.now()),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [day, month, year].join('/');
+    }
    
    $scope.citySearch = function(){
         if(!$scope.scene.citySearchValue || $scope.scene.citySearchValue.length == 0){

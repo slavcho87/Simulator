@@ -85,13 +85,13 @@
                             <div class="col-sm-4">
                                 </br>
                                 <label>Creation start date</label>
-                                <input ng-model="findMap.startDate" class="form-control" type="date"/>
+                                <input ng-model="findMap.startDate" min="{{minDate | date:'yyyy-MM-dd'}}" class="form-control" type="date"/>
                             </div>
                             
                             <div class="col-sm-4">
                                 </br>
                                 <label>Creation end date</label>
-                                <input ng-model="findMap.endDate" class="form-control" type="date"/>
+                                <input ng-model="findMap.endDate" max="{{maxDate | date:'yyyy-MM-dd'}}" class="form-control" type="date"/>
                             </div>
                 
                             <div class="col-sm-12">
@@ -129,7 +129,7 @@
                                     <td>{{map.name}}</td>
                                     <td>{{map.type}}</td>
                                     <td>{{map.state}}</td>
-                                    <td>{{map.creationDate}}</td>
+                                    <td>{{formattDDmmYYY(map.creationDate)}}</td>
                                     <td>
                                         <button type="button" 
                                                 class="btn btn-success fa fa-play-circle-o" 

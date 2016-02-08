@@ -630,7 +630,7 @@
                             <tbody>
                                 <tr ng-repeat="scene in sceneList">
                                     <td>{{scene.sceneName}}</td>
-                                    <td>{{scene.creationDate}}</td>
+                                    <td>{{formattDDmmYYY(scene.creationDate)}}</td>
                                     <td>{{scene.recommenderSettings}}</td>
                                     <td>{{scene.city}}</td>
                                     <td>

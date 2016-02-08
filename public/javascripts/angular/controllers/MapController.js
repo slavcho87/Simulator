@@ -21,22 +21,54 @@ app.controller("MapController", ['$scope', '$http', '$location', 'Services', 'Da
     }
     
     $scope.findMaps = function(){
-        $scope.mapList = [];
-        Services.findMaps($scope.findMap, function(res){
-            if(res.result=="NOK"){
-                $scope.errorMsgList.push(res.msg);    
-            }else{
-                if(res.mapList.length==0){
-                    $scope.msgList.push("The search returned 0 results");
+        if($scope.findMap.startDate && !$scope.findMap.endDate){
+            $scope.findMap.endDate = formattedDate(new Date());
+        }
+        
+        if($scope.findMap.startDate > $scope.findMap.endDate){
+            $scope.errorMsgList.push("La fecha de inicio no puede ser mayor que la fecha fin");
+        }else{
+            $scope.mapList = [];
+            Services.findMaps($scope.findMap, function(res){
+                if(res.result=="NOK"){
+                    $scope.errorMsgList.push(res.msg);    
+                }else{
+                    if(res.mapList.length==0){
+                        $scope.msgList.push("The search returned 0 results");
+                    }
+
+                    angular.forEach(res.mapList, function(value, key) {
+                        $scope.mapList.push(value);
+                    });
                 }
-                
-                angular.forEach(res.mapList, function(value, key) {
-                    $scope.mapList.push(value);
-                });
-            }
-        }, function(err){
-            $scope.errorMsgList.push(err);
-        });
+            }, function(err){
+                $scope.errorMsgList.push(err);
+            });            
+        }
+    }
+    
+    function formattedDate(date) {
+        var d = new Date(date || Date.now()),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
+    
+    $scope.formattDDmmYYY = function(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+        
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [month, day, year].join('/');
     }
     
     $scope.selectMapToDelete = function(map){

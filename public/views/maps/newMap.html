@@ -42,7 +42,7 @@
             
             <ul class="nav nav-tabs">
                 <li><a data-toggle="tab" href="#map">Map search</a></li>
-                <li class="active"><a data-toggle="tab" href="#newMap">New map</a></li>
+                <li class="active"><a data-toggle="tab" href="#/map/newMap">New map</a></li>
             </ul>
 
             <div class="panel-body">  
@@ -55,12 +55,12 @@
                         <div class="row">
                             <div class="col-xs-4">
                                 <label>Name</label>
-                                <input class="form-control" ng-model="map.name" />
+                                <input id="mapName" class="form-control" ng-model="map.name" />
                             </div>
                                     
                             <div class="col-xs-4">
                                 <label>Type</label>
-                                <select ng-model="map.type" class="form-control">
+                                <select id="mapType" ng-model="map.type" class="form-control">
                                     <option value="private">Private</option>
                                     <option value="public">Public</option>
                                 </select>
@@ -68,7 +68,7 @@
     
                             <div class="col-xs-4">
                                 <label>State</label>
-                                <select ng-model="map.state" class="form-control">
+                                <select id="mapState" ng-model="map.state" class="form-control">
                                     <option value="draft">Draft</option>
                                     <option value="active">Active</option>
                                 </select>
@@ -76,7 +76,7 @@
                             
                             <div class="col-xs-12">
                                 </br>
-                                <input type="submit" class="btn btn-primary" value="Save" ng-click="mapSave()">
+                                <input id="btnSaveMap" type="submit" class="btn btn-primary" value="Save" ng-click="mapSave()">
                             </div>
                     </div>     
                 </div>   
