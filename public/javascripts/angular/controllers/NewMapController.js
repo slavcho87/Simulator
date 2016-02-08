@@ -97,47 +97,70 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
     }
     
     $scope.saveScene = function(){
+        var error = false;
         $scope.scene.staticItemList = $scope.staticItemListInScene;
         $scope.scene.dynamicItemList = $scope.dynamicItemListInScene;
         $scope.scene.mapId = $scope.map.id;
         $scope.scene.zoom = dynamicItemsMap.getView().getZoom();
         
-        Services.saveScene($scope.scene, function(res){ 
-            if(res.result == "NOK"){
-                $scope.errorMsgList.push(res.msg);
-            }else{
-                $scope.msgList.push(res.msg);
-                
-                $scope.sceneList.push({
-                    sceneID: res.id,
-                    sceneName: $scope.scene.name, 	
-                    creationDate: res.creationDate,
-                    recommenderSettings: getRecommenderNameFromID($scope.scene.recommenderSettings),
-                    staticItemNumber: $scope.scene.staticItemList.length,
-                    dynamicItemNumber: $scope.scene.dynamicItemList.length,
-                    city: $scope.scene.city,
-                });
-                
-                $scope.dynamicItemListInScene = [];
-                $scope.dynamicItemListInScene = []; 
-                $scope.scene.staticItemList = [];
-                $scope.scene.dynamicItemList = [];
-                $scope.scene.name = "";
-                $scope.scene.citySearchValue = "";
-                $scope.scene.latitudeULC = "";
-                $scope.scene.longitudeULC = "";
-                $scope.scene.latitudeLRC = "";
-                $scope.scene.longitudeLRC = "";
-                $scope.scene.maximumStaticItemsToDisplay = "";
-                $scope.scene.maximumStaticItemsToDisplay = "";
-                $scope.scene.mapId = "";
-                $scope.scene.recommenderSettings = "";
-                $scope.scene.zoom = "";
-                $scope.scene.selectedCity = "";             
-            }
-        }, function(err){
-            $scope.errorMsgList.push(err);
-        });
+        if(!$scope.scene.name){
+           $scope.errorMsgList.push("The name of scene can not be empty!");
+            error = true;
+        }
+        
+        if(!$scope.scene.recommenderSettings){
+            $scope.errorMsgList.push("The recommender can not be empty!");
+            error = true;
+        }
+        
+        if(!$scope.scene.latitudeULC && !$scope.scene.longitudeULC){
+            $scope.errorMsgList.push("The upper left corner can not be empty!");
+            error = true;
+        }
+        
+        if(!$scope.scene.latitudeLRC && !$scope.scene.longitudeLRC){
+            $scope.errorMsgList.push("The lower right corner can not be empty!");
+            error = true;
+        }
+        
+        if(!error){
+            Services.saveScene($scope.scene, function(res){ 
+                if(res.result == "NOK"){
+                    $scope.errorMsgList.push(res.msg);
+                }else{
+                    $scope.msgList.push(res.msg);
+
+                    $scope.sceneList.push({
+                        sceneID: res.id,
+                        sceneName: $scope.scene.name, 	
+                        creationDate: res.creationDate,
+                        recommenderSettings: getRecommenderNameFromID($scope.scene.recommenderSettings),
+                        staticItemNumber: $scope.scene.staticItemList.length,
+                        dynamicItemNumber: $scope.scene.dynamicItemList.length,
+                        city: $scope.scene.city,
+                    });
+
+                    $scope.dynamicItemListInScene = [];
+                    $scope.dynamicItemListInScene = []; 
+                    $scope.scene.staticItemList = [];
+                    $scope.scene.dynamicItemList = [];
+                    $scope.scene.name = "";
+                    $scope.scene.citySearchValue = "";
+                    $scope.scene.latitudeULC = "";
+                    $scope.scene.longitudeULC = "";
+                    $scope.scene.latitudeLRC = "";
+                    $scope.scene.longitudeLRC = "";
+                    $scope.scene.maximumStaticItemsToDisplay = "";
+                    $scope.scene.maximumStaticItemsToDisplay = "";
+                    $scope.scene.mapId = "";
+                    $scope.scene.recommenderSettings = "";
+                    $scope.scene.zoom = "";
+                    $scope.scene.selectedCity = "";             
+                }
+            }, function(err){
+                $scope.errorMsgList.push(err);
+            });            
+        }
     }
     
     $scope.selectSceneToDelete = function(scene){

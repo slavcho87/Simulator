@@ -260,45 +260,68 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
     }
     
     $scope.saveScene = function(){
+        var error = false;
         $scope.scene.staticItemList = $scope.staticItemListInScene;
         $scope.scene.dynamicItemList = $scope.dynamicItemListInScene;
         $scope.scene.mapId = DataFactory.data.mapId;
         $scope.scene.zoom = dynamicItemsMap.getView().getZoom();
+        
+        if(!$scope.scene.name){
+           $scope.errorMsgList.push("The name of scene can not be empty!");
+            error = true;
+        }
+        
+        if(!$scope.scene.recommenderSettings){
+            $scope.errorMsgList.push("The recommender can not be empty!");
+            error = true;
+        }
+        
+        if(!$scope.scene.latitudeULC && !$scope.scene.longitudeULC){
+            $scope.errorMsgList.push("The upper left corner can not be empty!");
+            error = true;
+        }
+        
+        if(!$scope.scene.latitudeLRC && !$scope.scene.longitudeLRC){
+            $scope.errorMsgList.push("The lower right corner can not be empty!");
+            error = true;
+        }
            
-        Services.saveScene($scope.scene, function(res){ 
-            if(res.result == "NOK"){
-                $scope.errorMsgList.push(res.msg);
-            }else{
-                $scope.msgList.push(res.msg);
-                
-                $scope.sceneList.push({
-                    sceneID: res.id,
-                    sceneName: $scope.scene.name, 	
-                    creationDate: res.creationDate,
-                    recommenderSettings: getRecommenderNameFromID($scope.scene.recommenderSettings),
-                    city: $scope.scene.citySearchValue,
-                });
-                
-                $scope.dynamicItemListInScene = [];
-                $scope.dynamicItemListInScene = []; 
-                $scope.scene.staticItemList = [];
-                $scope.scene.dynamicItemList = [];
-                $scope.scene.name = "";
-                $scope.scene.citySearchValue = "";
-                $scope.scene.latitudeULC = "";
-                $scope.scene.longitudeULC = "";
-                $scope.scene.latitudeLRC = "";
-                $scope.scene.longitudeLRC = "";
-                $scope.scene.maximumStaticItemsToDisplay = "";
-                $scope.scene.maximumStaticItemsToDisplay = "";
-                $scope.scene.mapId = "";
-                $scope.scene.recommenderSettings = "";
-                $scope.scene.zoom = "";
-                $scope.scene.selectedCity = "";             
-            }
-        }, function(err){
-            $scope.errorMsgList.push(err);
-        });
+        if(!error){
+            Services.saveScene($scope.scene, function(res){ 
+                if(res.result == "NOK"){
+                    $scope.errorMsgList.push(res.msg);
+                }else{
+                    $scope.msgList.push(res.msg);
+
+                    $scope.sceneList.push({
+                        sceneID: res.id,
+                        sceneName: $scope.scene.name, 	
+                        creationDate: res.creationDate,
+                        recommenderSettings: getRecommenderNameFromID($scope.scene.recommenderSettings),
+                        city: $scope.scene.citySearchValue,
+                    });
+
+                    $scope.dynamicItemListInScene = [];
+                    $scope.dynamicItemListInScene = []; 
+                    $scope.scene.staticItemList = [];
+                    $scope.scene.dynamicItemList = [];
+                    $scope.scene.name = "";
+                    $scope.scene.citySearchValue = "";
+                    $scope.scene.latitudeULC = "";
+                    $scope.scene.longitudeULC = "";
+                    $scope.scene.latitudeLRC = "";
+                    $scope.scene.longitudeLRC = "";
+                    $scope.scene.maximumStaticItemsToDisplay = "";
+                    $scope.scene.maximumStaticItemsToDisplay = "";
+                    $scope.scene.mapId = "";
+                    $scope.scene.recommenderSettings = "";
+                    $scope.scene.zoom = "";
+                    $scope.scene.selectedCity = "";             
+                }
+            }, function(err){
+                $scope.errorMsgList.push(err);
+            });   
+        }
     }
     
     function getRecommenderNameFromID(id){
@@ -370,11 +393,6 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
     
     $scope.editScene = function(scene){
         DataFactory.data.scene = scene.allData;
-        console.log("=================================");
-        console.log(scene.allData);
-        console.log(scene);
-        console.log(DataFactory.data.scene);
-        console.log("=================================");
         window.location = '#/map/editScene';
     }
 }]);

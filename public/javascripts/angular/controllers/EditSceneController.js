@@ -32,9 +32,6 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
     $scope.sceneList = [];
     
     $scope.loadData = function(){
-        console.log("==============================");
-        console.log(DataFactory.data.scene);
-        console.log("==============================");
         //load recommeders list
         Services.getRecommenderList(function(res){
             angular.forEach(res, function(value, key) {
@@ -203,20 +200,43 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
    }
    
    $scope.saveScene = function(){
+       var error = false;
        $scope.scene.staticItemList = $scope.staticItemListInScene;
        $scope.scene.dynamicItemList = $scope.dynamicItemListInScene;
        $scope.scene.mapId = DataFactory.data.mapId;
        $scope.scene.zoom = dynamicItemsMap.getView().getZoom();
     
-       Services.updateScene($scope.scene, function(res){
-           if(res.result == "NOK"){
-               $scope.errorMsgList.push(res.msg);    
-           }else{
-               $scope.msgList.push(res.msg);
-           }
-       }, function(err){
-           $scope.errorMsgList.push(err);
-       });
+        if(!$scope.scene.name){
+           $scope.errorMsgList.push("The name of scene can not be empty!");
+            error = true;
+        }
+        
+        if(!$scope.scene.recommenderSettings){
+            $scope.errorMsgList.push("The recommender can not be empty!");
+            error = true;
+        }
+        
+        if(!$scope.scene.latitudeULC && !$scope.scene.longitudeULC){
+            $scope.errorMsgList.push("The upper left corner can not be empty!");
+            error = true;
+        }
+        
+        if(!$scope.scene.latitudeLRC && !$scope.scene.longitudeLRC){
+            $scope.errorMsgList.push("The lower right corner can not be empty!");
+            error = true;
+        }
+       
+       if(!error){
+            Services.updateScene($scope.scene, function(res){
+                if(res.result == "NOK"){
+                    $scope.errorMsgList.push(res.msg);
+                }else{
+                    $scope.msgList.push(res.msg);    
+                }
+            }, function(err){
+                $scope.errorMsgList.push(err);
+            });
+       }
    }
     
     $scope.deleteDynamicItemFromScene = function(){

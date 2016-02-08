@@ -53,17 +53,4 @@ app.controller("ConfigurationController", ['$scope', '$location', '$http', '$loc
             $scope.errorMsgList.push(err);
         });
     }
-    
-    
-   /*
-    * nota!!! no se usa
-    */
-    $scope.uploadImg = function() {
-       
-        Services.uploadImgProfile($scope.imgProfile, function(res){
-            console.log("res -> "+res);
-        },function(error){
-            console.log("ha fallado");
-        });
-    }
 }]);

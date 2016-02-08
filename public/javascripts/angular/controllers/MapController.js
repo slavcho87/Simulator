@@ -26,7 +26,7 @@ app.controller("MapController", ['$scope', '$http', '$location', 'Services', 'Da
         }
         
         if($scope.findMap.startDate > $scope.findMap.endDate){
-            $scope.errorMsgList.push("La fecha de inicio no puede ser mayor que la fecha fin");
+            $scope.errorMsgList.push("The start date can not be greater than the end date!");
         }else{
             $scope.mapList = [];
             Services.findMaps($scope.findMap, function(res){
