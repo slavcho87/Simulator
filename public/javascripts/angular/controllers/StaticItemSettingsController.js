@@ -6,25 +6,43 @@ app.controller("StaticItemSettingsController", ['$scope', '$http', 'Services', f
     $scope.staticItemList = [];
 
     $scope.saveStaticItem = function(){
-        $scope.staticItem.type= "static";
+        var error = false;
         
-        Services.saveItem($scope.staticItem, function(res){
-            if(res.result == "NOK"){
-                $scope.errorMsgList.push(res.msg);
-            }else{
-                $scope.msgList.push(res.msg);
-                
-                $scope.staticItemList.push({
-                    name: $scope.staticItem.name,
-                    icon: $scope.staticItem.icon,
-                    type: $scope.staticItem.type
-                });
-                
-                $scope.staticItem.name="";
+        if(!$scope.staticItem){
+            $scope.errorMsgList.push("Fill the form!");
+        }else{  
+            if(!$scope.staticItem.name){    
+                $scope.errorMsgList.push("Static item name can not be empty!");
+                error = true;
             }
-        }, function(err){
-            $scope.errorMsgList.push(err);
-        });
+            
+            if(!$scope.staticItem.icon){
+                $scope.errorMsgList.push("Static item icon can not be empty!");
+                error = true;
+            }
+            
+            if(!error){
+                $scope.staticItem.type= "static";
+
+                Services.saveItem($scope.staticItem, function(res){
+                    if(res.result == "NOK"){
+                        $scope.errorMsgList.push(res.msg);
+                    }else{
+                        $scope.msgList.push(res.msg);
+
+                        $scope.staticItemList.push({
+                            name: $scope.staticItem.name,
+                            icon: $scope.staticItem.icon,
+                            type: $scope.staticItem.type
+                        });
+
+                        $scope.staticItem.name="";
+                    }
+                }, function(err){
+                    $scope.errorMsgList.push(err);
+                });    
+            }            
+        }
     }
     
     $scope.getStaticItemList = function(){
