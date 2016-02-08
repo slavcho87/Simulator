@@ -76,9 +76,9 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
                 angular.forEach(res.staticItemList, function(value, key) {
                     if(value.itemType.type=="dynamic"){
                          var data2 = {
-                            sceneId: data.sceneId, 
-                            mapId: data.mapId,
-                            itemId: value._id
+                             sceneId: data.sceneId, 
+                             mapId: data.mapId,
+                             itemId: value._id
                         };
                         
                         getDynamicItem(value, data2);
@@ -87,8 +87,11 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
                             name: value.itemName,
                             type: {
                                 name: value.itemType.name,
-                                icon: value.itemType.icon
+                                icon: value.itemType.icon,
+                                _id: value.itemType._id
                             },
+                            longitude: value.location.longitude,
+                            latitude: value.location.latitude
                         };
                         
                         $scope.staticItemListInScene.push(staticItem);
@@ -116,7 +119,8 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
                 name: value.itemName,
                 type: {
                     name: value.itemType.name,
-                    icon: value.itemType.icon
+                    icon: value.itemType.icon,
+                    _id: value.itemType._id
                 },
                 speed: res.route[0].routeId.speed,
                 route: route
@@ -201,8 +205,12 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
        $scope.scene.mapId = DataFactory.data.mapId;
        $scope.scene.zoom = dynamicItemsMap.getView().getZoom();
     
-       Services.updateMap($scope.scene, function(res){
-           $scope.errorMsgList.push(res);
+       Services.updateScene($scope.scene, function(res){
+           if(res.result == "NOK"){
+               $scope.errorMsgList.push(res.msg);    
+           }else{
+               $scope.msgList.push(res.msg);
+           }
        }, function(err){
            $scope.errorMsgList.push(err);
        });
@@ -313,5 +321,5 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
     
     $scope.loadDynamicItemsFromFile = function(){
         console.log($scope.scene.dynamicItemFile);
-    }   
+    }
 }]);

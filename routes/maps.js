@@ -255,7 +255,7 @@ router.post('/itemList', function(req, res){
     Item.find({sceneId: req.body.sceneId, mapId: req.body.mapId})
     .populate({
         path: 'itemType',
-        select: "icon type name"
+        select: "icon type name _id"
     })
     .populate({
         path: 'location'
@@ -320,15 +320,17 @@ router.delete('/deleteMap/:id', function(req, res){
                     console.log(err);
                 }    
             });
-            
-            Move.remove({mapId: req.params.id}, function(err, route){
+               
+            Move.find({mapId: req.params.id}, function(err, moves){
                 if(!err){
-                    for(index in route){
-                        deleteRouteById(route[index].routeId);
-                    }
+                    for(index in moves){
+                        deleteRouteById(moves[index].routeId);
+                        moves[index].remove();
+                    }    
                 }
             });
-            res.json({
+            
+            res.json({ 
                 result: "OK",
                 msg: "Map deleted successfully!"
             });
@@ -337,7 +339,12 @@ router.delete('/deleteMap/:id', function(req, res){
 })
 
 function deleteRouteById(id){
-    Route.remove({_id: id});
+    Route.findOne({_id: id}, function(err, route){
+        console.log(route);
+        if(!err){
+            route.remove();
+        }
+    });
 }
 
 router.get('/editMapData/:mapId', function(req, res){
@@ -353,7 +360,7 @@ router.get('/editMapData/:mapId', function(req, res){
                     res.json({
                         result: "NOK",
                         msg: err
-                    });     
+                    });
                 }else{
                     res.json({
                         result: "OK",
@@ -388,8 +395,128 @@ router.post('/updateMap', function(req, res){
     });
 })
 
-router.post('/updateMap', function(req, res){
-    res.json(req.body);
+router.post('/updateScene', function(req, res){
+    var data = {
+        sceneName: req.body.name,
+        city: req.body.city,
+        latitudeULC: req.body.latitudeULC,
+        longitudeULC: req.body.longitudeULC,
+        latitudeLRC: req.body.latitudeLRC,
+        longitudeLRC: req.body.longitudeLRC,
+        maxStaticItems: req.body.maximumStaticItemsToDisplay,
+        maxDynamicItems: req.body.maximumDynamicItemsToDisplay,
+        mapId: req.body.mapId,
+        recommender: req.body.recommenderSettings,
+        zoomLevel: req.body.zoom,
+        selectedCity: req.body.selectedCity,
+        creationDate: req.body.creationDate,
+    };
+    
+    Scene.findOneAndUpdate({_id: req.body._id, mapId: req.body.mapId}, data, function(err, scene){    
+        if(err){
+            res.json({
+                result: "NOK",
+                msg: err
+            });
+        }else{
+            //delete old locations, items and routes
+            Location.remove({sceneId: req.body._id, mapId: req.body.mapId}, function(err){
+                if(err){
+                    console.log(err);
+                }    
+            });
+            
+            Item.remove({sceneId: req.body._id, mapId: req.body.mapId}, function(err){
+                if(err){
+                    console.log(err);
+                }    
+            });
+            
+            Move.find({sceneId: req.body._id, mapId: req.body.mapId}, function(err, moves){
+                if(!err){
+                    for(index in moves){
+                        deleteRouteById(moves[index].routeId);
+                        moves[index].remove();
+                    }    
+                }
+            });
+            
+            updateStaticItems(req.body.mapId, req.body._id, req.body.staticItemList, scene);
+            updateDynamicItems(req.body.mapId, req.body._id, req.body.dynamicItemList, scene);
+            
+            res.json({
+                result: "OK",
+                msg: "Scene updated successfully!"
+            });
+        }
+    });
 })
+
+/*
+ * Update static item list
+ */
+function updateStaticItems(mapId, sceneId, staticItemList, scene1){
+    //Prepare Locations to save
+    var locationsToSave = [];
+    
+    for (index = 0; index < staticItemList.length; index++) {
+        var location = new Location();
+        location.longitude = staticItemList[index].longitude;
+        location.latitude = staticItemList[index].latitude;
+        location.sceneId = scene1._id;
+        location.mapId = scene1.mapId;
+        locationsToSave.push(location);        
+    }
+    
+    //Insert new locations and items
+    Location.create(locationsToSave, function(err, locations){        
+        for(index=0; index<locations.length; index++){
+            var item = new Item();
+            item.itemName = staticItemList[index].name;
+            item.sceneId = scene1._id;
+            item.mapId = scene1.mapId;
+            item.itemType = staticItemList[index].type._id;
+            item.location = locations[index]._id;
+                    
+            item.save();    
+        }
+    });
+}
+
+/*
+ * Update dynamic item list
+ */
+function updateDynamicItems(mapId, sceneId, dynamicItemList, scene1){
+    //Save dynamic items
+    var dynamicItemToSave = [];
+    var routeToSave = [];
+    
+    for (index = 0; index < dynamicItemList.length; index++) {
+        var item = new Item();
+        item.itemName = dynamicItemList[index].name;
+        item.sceneId = scene1._id;
+        item.mapId = scene1.mapId;
+        item.itemType = dynamicItemList[index].type._id;
+        dynamicItemToSave.push(item);
+                
+        var itemRoute = [];
+        for (i = 0; i < dynamicItemList[index].route.length; i++) {
+            var route = new Route();
+            route.longitude = dynamicItemList[index].route[i].long;
+            route.latitude = dynamicItemList[index].route[i].lat; 
+            route.speed = dynamicItemList[index].speed;
+            route.routePos = i;
+                    
+            itemRoute.push(route);
+        }
+        routeToSave.push(itemRoute);
+    }
+            
+    Item.create(dynamicItemToSave, function(err, items){
+        for(index=0; index<items.length; index++){
+            saveRoute(routeToSave[index], items[index], scene1);
+        }
+    });
+}
 
 module.exports = router;
