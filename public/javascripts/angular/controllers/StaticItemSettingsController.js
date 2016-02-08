@@ -152,4 +152,8 @@ app.controller("StaticItemSettingsController", ['$scope', '$http', 'Services', f
             });
         }
     }
+    
+    $scope.exit = function(){
+        Services.logout();
+    }    
 }]);

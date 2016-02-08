@@ -233,7 +233,12 @@ router.post('/findMaps', function(req, res){
             if(req.body.state && req.body.state!="all"){
                 query.where('state').equals(req.body.state);        
             }
-                
+            
+            query.populate({
+                path: 'userID',
+                select: "token"
+            });
+            
             query.exec(function(err, list){
                 if(err){
                     res.json({

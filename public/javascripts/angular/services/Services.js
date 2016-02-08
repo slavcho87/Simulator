@@ -127,10 +127,9 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
         updateScene: function(data, success, error){
             $http.post('/maps/updateScene', data).success(success).error(error);
         },
-        logout: function(success) {
+        logout: function() {
             changeUser({});
             delete $localStorage.token;
-            success();
         }
     };
 }]);

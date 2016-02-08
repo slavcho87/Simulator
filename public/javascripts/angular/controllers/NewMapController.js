@@ -377,4 +377,8 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
             $scope.errorMsgList.push(err);
         });
     }
+        
+    $scope.exit = function(){
+        Services.logout();
+    }
 }]);

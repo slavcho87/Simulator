@@ -8,7 +8,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#/">Simulator</a>
+                <a class="navbar-brand" href="#/" ng-click="exit()">Simulator</a>
             </div>
 
             <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -17,6 +17,7 @@
                     <li><a href="#/simulator"><i class="fa fa-globe"></i> Simulation</a></li>
                     <li><a href="#/settings"><i class="fa fa-cog"></i> Settings</a></li>
                     <li><a href="#/profile"><i class="fa fa-edit"></i> Profile</a></li>
+                    <li><a href="#/" ng-click="exit()"><i class="fa fa-power-off"></i> Exit</a></li>
                 </ul>
             </div>
         </nav>
@@ -135,13 +136,16 @@
                                                 class="btn btn-success fa fa-play-circle-o" 
                                                 ng-click="startSimulation(map._id)">
                                         </button>
-                                        <!-- #map/editMap -->
-                                        <button type="button" class="btn btn-primary fa fa-pencil-square-o" 
-                                                ng-click="editMap(map)">
+                                        
+                                        <button type="button" class="btn btn-primary fa fa-pencil-square-o"
+                                                ng-click="editMap(map)" ng-show="isMyMap(map.userID.token)">
                                         </button>
+                                        
                                         <button type="button" class="btn btn-primary fa fa-download"></button>
+                                        
                                         <button type="button" class="btn btn-danger fa fa-trash-o"
-                                                data-toggle="modal" data-target="#deleteMapModal" ng-click="selectMapToDelete(map)">
+                                                data-toggle="modal" data-target="#deleteMapModal" 
+                                                ng-click="selectMapToDelete(map)" ng-show="isMyMap(map.userID.token)">
                                         </button>
                                     </td> 
                                 </tr>

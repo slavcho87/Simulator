@@ -5,7 +5,7 @@ var MapSchema   = new Schema({
     name: String,
     type: String,
     state: String,
-    userID: String,
+    userID: { type: Schema.Types.ObjectId, ref: 'User' },
     creationDate: Date
 });
  

@@ -1,6 +1,6 @@
 var app = angular.module("app");
 
-app.controller("MapController", ['$scope', '$http', '$location', 'Services', 'DataFactory', function ($scope, $http, $location, Services, DataFactory) {
+app.controller("MapController", ['$scope', '$http', '$location', '$localStorage','Services', 'DataFactory', function ($scope, $http, $location, $localStorage, Services, DataFactory) {
     $scope.errorMsgList = [];
     $scope.msgList = [];
     $scope.mapList = [];
@@ -121,5 +121,17 @@ app.controller("MapController", ['$scope', '$http', '$location', 'Services', 'Da
         }else{
             $scope.msgList.push(ERROR_HAS_OCCURRED);
         }            
+    }
+    
+    $scope.isMyMap = function(token){
+        if($localStorage.token == token){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    $scope.exit = function(){
+        Services.logout();
     }
 }]);

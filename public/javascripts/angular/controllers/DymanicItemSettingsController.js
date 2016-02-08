@@ -139,4 +139,8 @@ app.controller("DymanicItemSettingsController", ['$scope', '$http', 'Services', 
             $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
         }
     }
+    
+    $scope.exit = function(){
+        Services.logout();
+    }    
 }]);

@@ -395,4 +395,8 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
         DataFactory.data.scene = scene.allData;
         window.location = '#/map/editScene';
     }
+    
+    $scope.exit = function(){
+        Services.logout();
+    }
 }]);

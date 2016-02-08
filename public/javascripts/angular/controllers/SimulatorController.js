@@ -232,5 +232,9 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
     */    
     $scope.barListShow = function(){
         return $scope.barList.length>0;
-    }    
+    }
+    
+    $scope.exit = function(){
+        Services.logout();
+    }
 }]);

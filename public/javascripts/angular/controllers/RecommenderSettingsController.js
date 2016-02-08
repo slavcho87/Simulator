@@ -186,4 +186,8 @@ app.controller("RecommenderSettingsController", ['$scope', '$http','Services', f
             $scope.msgList.push(ERROR_HAS_OCCURRED);
         }
     }
+    
+    $scope.exit = function(){
+        Services.logout();
+    }    
 }]);

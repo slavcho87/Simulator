@@ -345,4 +345,8 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
     $scope.loadDynamicItemsFromFile = function(){
         console.log($scope.scene.dynamicItemFile);
     }
+    
+    $scope.exit = function(){
+        Services.logout();
+    }
 }]);

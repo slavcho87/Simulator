@@ -118,4 +118,8 @@ app.controller("ConfigurationController", ['$scope', '$location', '$http', '$loc
             $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
         }
     }
+    
+    $scope.exit = function(){
+        Services.logout();
+    }    
 }]);
