@@ -107,18 +107,21 @@ router.post('/saveScene', function(req, resp){
                 locationsToSave.push(location);
             }
             
-            Location.create(locationsToSave, function(err, locations){
-                for(index=0; index<locations.length; index++){
-                    var item = new Item();
-                    item.itemName = staticItemList[index].name;
-                    item.sceneId = scene1._id;
-                    item.mapId = scene1.mapId;
-                    item.itemType = staticItemList[index].type._id;
-                    item.location = locations[index]._id;
-                    
-                    item.save();
-                }
-            });
+            if(locationsToSave && locationsToSave.length>0){
+                Location.create(locationsToSave, function(err, locations){
+                    for(index=0; index<locations.length; index++){
+                        var item = new Item();
+                        item.itemName = staticItemList[index].name;
+                        item.sceneId = scene1._id;
+                        item.mapId = scene1.mapId;
+                        item.itemType = staticItemList[index].type._id;
+                        item.location = locations[index]._id;
+
+                        item.save();
+                    }
+                });    
+            }
+            
             
             //Save dynamic items
             for (index = 0; index < dynamicItemList.length; index++) {
@@ -142,11 +145,13 @@ router.post('/saveScene', function(req, resp){
                 routeToSave.push(itemRoute);
             }
             
-            Item.create(dynamicItemToSave, function(err, items){
-                for(index=0; index<items.length; index++){
-                    saveRoute(routeToSave[index], items[index], scene1);
-                }
-            });
+            if(routeToSave && routeToSave.length>0){    
+                Item.create(dynamicItemToSave, function(err, items){
+                    for(index=0; index<items.length; index++){
+                        saveRoute(routeToSave[index], items[index], scene1);
+                    }
+                });   
+            }
             
             resp.json({
                 result: "OK",
@@ -469,18 +474,20 @@ function updateStaticItems(mapId, sceneId, staticItemList, scene1){
     }
     
     //Insert new locations and items
-    Location.create(locationsToSave, function(err, locations){        
-        for(index=0; index<locations.length; index++){
-            var item = new Item();
-            item.itemName = staticItemList[index].name;
-            item.sceneId = scene1._id;
-            item.mapId = scene1.mapId;
-            item.itemType = staticItemList[index].type._id;
-            item.location = locations[index]._id;
-                    
-            item.save();    
-        }
-    });
+    if(locationsToSave && locationsToSave.length > 0){
+        Location.create(locationsToSave, function(err, locations){        
+            for(index=0; index<locations.length; index++){
+                var item = new Item();
+                item.itemName = staticItemList[index].name;
+                item.sceneId = scene1._id;
+                item.mapId = scene1.mapId;
+                item.itemType = staticItemList[index].type._id;
+                item.location = locations[index]._id;
+
+                item.save();    
+            }
+        });   
+    }
 }
 
 /*
@@ -512,11 +519,13 @@ function updateDynamicItems(mapId, sceneId, dynamicItemList, scene1){
         routeToSave.push(itemRoute);
     }
             
-    Item.create(dynamicItemToSave, function(err, items){
-        for(index=0; index<items.length; index++){
-            saveRoute(routeToSave[index], items[index], scene1);
-        }
-    });
+    if(dynamicItemToSave && dynamicItemToSave.length>0){
+        Item.create(dynamicItemToSave, function(err, items){
+                for(index=0; index<items.length; index++){
+                    saveRoute(routeToSave[index], items[index], scene1);
+                }
+        });        
+    }
 }
 
 module.exports = router;

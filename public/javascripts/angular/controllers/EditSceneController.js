@@ -32,6 +32,9 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
     $scope.sceneList = [];
     
     $scope.loadData = function(){
+        console.log("==============================");
+        console.log(DataFactory.data.scene);
+        console.log("==============================");
         //load recommeders list
         Services.getRecommenderList(function(res){
             angular.forEach(res, function(value, key) {

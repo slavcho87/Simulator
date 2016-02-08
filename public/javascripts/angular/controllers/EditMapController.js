@@ -84,15 +84,17 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
               }
                 
               for(index in res.sceneList){
+                  var allData = res.sceneList[index]; 
                   $scope.sceneList.push({
                       sceneID: res.sceneList[index]._id,
                       sceneName: res.sceneList[index].sceneName, 	
                       creationDate: res.sceneList[index].creationDate,
                       recommenderSettings: getRecommenderNameFromID(res.sceneList[index].recommender),
                       city: res.sceneList[index].city,
-                      allData: res.sceneList[index]
+                      allData: allData
                   }); 
               }
+              console.log($scope.sceneList);
           }
        }, function(err){
            $scope.errorMsgList.push(err);
@@ -357,6 +359,11 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
     
     $scope.editScene = function(scene){
         DataFactory.data.scene = scene.allData;
+        console.log("=================================");
+        console.log(scene.allData);
+        console.log(scene);
+        console.log(DataFactory.data.scene);
+        console.log("=================================");
         window.location = '#/map/editScene';
     }
 }]);
