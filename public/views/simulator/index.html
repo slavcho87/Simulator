@@ -63,10 +63,8 @@
                     <div id="mapa" class="mapa col-sm-8">
                     </div>
                         <script src="javascripts/socketsIO/socket.io.js"></script>
-                        <script>
-                            var socket = io();
-                        </script>
                         <script type="text/javascript">
+                            var socket = io();
                             var dirMove;
                             var appElement = document.querySelector('[ng-app=app]');
                             var $scope = angular.element(appElement).scope();
@@ -80,6 +78,18 @@
                             var userTimeStamp;
                             var dynamicItemRefreshInterval = 100;
                             var artists = [];
+                            
+                            socket.on('user change position', function(data){
+                                setUser(data.user, data.pos, data.id);
+                            });
+                            
+                            socket.on('start-pause', function(data){
+                                if(data.state == 'start'){
+                                    startMoveDynamicItems('event'); 
+                                }else{
+                                    stopMoveDynamicItems('event');
+                                }
+                            });
                             
                             function userMove(){
                                 if(date != new Date()){
@@ -110,6 +120,12 @@
                                 pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326');
                                 pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 90);
                                 setUserPos(pos);
+                                var data = {
+                                    user: getImg(),
+                                    pos: pos,
+                                    id: getUser()._id
+                                };
+                                socket.emit('user change position', data);
                             }
                             
                             function moveDown(){
@@ -117,6 +133,12 @@
                                 pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326');
                                 pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 270);
                                 setUserPos(pos);
+                                var data = {
+                                    user: getImg(),
+                                    pos: pos,
+                                    id: getUser()._id
+                                };
+                                socket.emit('user change position', data);
                             }
                             
                             function moveLeft(){
@@ -124,6 +146,12 @@
                                 pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326');
                                 pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 180);
                                 setUserPos(pos);
+                                var data = {
+                                    user: getImg(),
+                                    pos: pos,
+                                    id: getUser()._id
+                                };
+                                socket.emit('user change position', data);
                             }
                             
                             function moveRight(){
@@ -131,6 +159,12 @@
                                 pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326');
                                 pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 0);
                                 setUserPos(pos);
+                                var data = {
+                                    user: getImg(),
+                                    pos: pos,
+                                    id: getUser()._id
+                                };
+                                socket.emit('user change position', data);
                             }
                             
                             function toRad(num) {
@@ -164,6 +198,27 @@
                                 }
                             }
                             
+                            function setUser(img, newPos, id){ 
+                                if(overlayList[id]){
+                                    map.removeOverlay(overlayList[id]);                                
+                                }
+                                
+                                var user = new ol.Overlay({
+                                    position: ol.proj.transform(newPos, 'EPSG:4326', 'EPSG:3857'),
+                                    element: $('<img src="'+img+'" class="img-circle" name="'+id+'">')
+                                    .css({marginTop: '-50%', marginLeft: '-50%', width: '40px', height: '40px', cursor: 'pointer'})
+                                });
+                                
+                                overlayList[id] = user;
+                                
+                                map.addOverlay(user);
+                            }
+                            
+                            function getUser(){
+                                var index = map.getOverlays().getArray().indexOf(overlayList['user']);
+                                return map.getOverlays().getArray()[index];
+                            }
+                            
                             var overlayList = {};
                             
                             var map = new ol.Map({
@@ -188,12 +243,19 @@
                                     element: $('<img src="'+getImg()+'" class="img-circle" name="'+getUser()._id+'">')
                                     .css({marginTop: '-50%', marginLeft: '-50%', width: '40px', height: '40px', cursor: 'pointer'})
                                 });
-                                                                
+                                                               
                                 map.addOverlay(overlayList['user']);
                                 
                                 if(!userMoveTemporizador){
                                     userMoveTemporizador = window.setInterval('userMove()',userMoveRefreshInterval);
                                 }
+                                
+                                var data = {
+                                    user: getImg(),
+                                    pos: ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'),
+                                    id: getUser()._id
+                                };
+                                socket.emit('user change position', data);
                                 
                                 /*var lista = map.getOverlays().getArray();
                                 
@@ -342,7 +404,7 @@
                                 }
                             }
                             
-                            function startMoveDynamicItems(){
+                            function startMoveDynamicItems(event){
                                 if(artists.length == 0){
                                     for(index in $scope.dynamiItemsList){
                                         artists[index] = 0;
@@ -354,13 +416,28 @@
                                     $scope.showPlay = false;
                                 });
                                 
+                                if(event != 'event'){
+                                    var data = {
+                                        state: 'start',
+                                        user: getUser()._id        
+                                    };
+                                    socket.emit('start-pause', data);    
+                                }
                             }              
                             
-                            function stopMoveDynamicItems(){
+                            function stopMoveDynamicItems(event){
                                 dynamicItemMoveTemporizador = window.clearInterval(dynamicItemMoveTemporizador);
                                 $scope.$apply(function(){
                                     $scope.showPlay = true;
                                 });
+                                
+                                if(event != 'event'){
+                                    var data = {
+                                        state: 'stop',                                    
+                                        user: getUser()._id        
+                                    };
+                                    socket.emit('start-pause', data);
+                                }
                             }
                         </script>
                     

@@ -97,14 +97,14 @@ app.use(function(err, req, res, next) {
 var io = require('socket.io')(server);
 
 io.on('connection', function(socket){
-    console.log('a user connected');
+    console.log("user connected");
     
     socket.on('user change position', function(data){
-        console.log(data);
+        socket.broadcast.emit('user change position', data);
     });
     
-    socket.on('user change speed', function(data){
-        console.log(data);
+    socket.on('start-pause', function(data){ 
+        socket.broadcast.emit('start-pause', data);
     });
     
     socket.on('disconnect', function(){
