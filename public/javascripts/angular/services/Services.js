@@ -127,6 +127,9 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
         updateScene: function(data, success, error){
             $http.post('/maps/updateScene', data).success(success).error(error);
         },
+        recommenderTypes: function(success, error){
+            $http.get('/settings/recommenderTypes').success(success).error(error);
+        },
         logout: function() {
             changeUser({});
             delete $localStorage.token;

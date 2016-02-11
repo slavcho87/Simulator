@@ -14,6 +14,14 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
     $scope.dynamiItemsList = [];
     $scope.showPlay = true;
     
+    $scope.listar = function(){
+        Services.recommenderTypes(function(res){
+            console.log(res);
+        }, function(err){
+            console.log();
+        });
+    }
+    
     $scope.getUserImg = function(){
             Services.getUserImg(function(res){
                 if(res.result=="NOK"){

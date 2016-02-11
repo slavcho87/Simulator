@@ -1,6 +1,7 @@
 var express = require('express');
 var Recommender = require('../models/Recommender');
 var ItemType = require('../models/ItemType');
+var request = require('request');
 var fs = require('fs');
 var router = express.Router();
 
@@ -176,6 +177,24 @@ router.delete('/deleteItem/:itemName', function(req, res, next){
         }
     });
 });
+
+function baseConfig(){
+    var file = fs.readFileSync('./baseConfig.json', 'utf8');
+    return JSON.parse(file);
+}
+
+router.get('/recommenderTypes', function(req, res){
+    var url = "\'"+baseConfig().urlRecommender+"\'"
+    
+    request(url, function (error, response, body) {    
+        console.log(error);
+        if (!error && response.statusCode == 200) {
+            console.log(body);
+        }
+    });
+    
+    res.json({ok: "OK"});
+})
 
 
 

@@ -1,0 +1,6 @@
+{
+    "urlRecommender": "localhost:80/rest",
+    "port": 81,
+    "locationDB": "localhost",
+    "nameDB": "simulator"
+}

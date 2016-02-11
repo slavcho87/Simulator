@@ -6,15 +6,16 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var multipart = require('connect-multiparty');
 var mongoose = require('mongoose');
+var fs = require('fs');
 
 var configurations = require('./routes/configurations');
 var maps = require('./routes/maps');
 var simulation = require('./routes/simulation');
 var user = require('./routes/user');
 
-var port = process.env.PORT || 81;
-var locationDB = 'localhost';
-var nameDB = 'simulator';
+var port = process.env.PORT || baseConfig().port;
+var locationDB = baseConfig().locationDB;
+var nameDB = baseConfig().nameDB;
 
 //MongoDB connection
 mongoose.connect('mongodb://'+locationDB+'/'+nameDB, function(error){
@@ -24,6 +25,11 @@ mongoose.connect('mongodb://'+locationDB+'/'+nameDB, function(error){
         throw error;
     }
 });
+
+function baseConfig(){
+    var file = fs.readFileSync('./baseConfig.json', 'utf8');
+    return JSON.parse(file);
+}
 
 var app = express();
 
