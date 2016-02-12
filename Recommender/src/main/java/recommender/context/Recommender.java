@@ -1,8 +1,9 @@
 package recommender.context;
 
+import recommender.models.Configurations;
 import recommender.strategy.Strategy;
 
-public class Recommender implements InterfazRecommender{
+public class Recommender{
 	private Strategy strategy;
 	
 	public Recommender(Strategy strategy){
@@ -13,8 +14,7 @@ public class Recommender implements InterfazRecommender{
 		this.strategy = strategy;
 	}
 	
-	//tenemos que añadir los metodos del recomendador
-	public void recommend(){
-		this.strategy.recommend();
+	public void recommend(Configurations config){
+		this.strategy.recommend(config);
 	}
 }

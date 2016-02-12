@@ -1,10 +1,8 @@
 package recommender.strategy;
 
+import recommender.models.StrategyType;
+
 public class StrategyFactory {
-	public enum StrategyType{
-		UserBasedStrategy
-	}
-	
 	public static Strategy createStrategy(StrategyType type){
 		switch(type){
 		case UserBasedStrategy: return new UserBasedStrategy();
