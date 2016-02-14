@@ -1,9 +1,9 @@
 package recommender.strategy;
 
-import recommender.models.Configurations;
+import org.json.JSONObject;
 
 public class UserBasedStrategy implements Strategy {
-	public void recommend(Configurations config) {
+	public void recommend(JSONObject data) {
 		
 	}
 }

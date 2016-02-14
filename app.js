@@ -112,7 +112,17 @@ io.on('connection', function(socket){
     socket.on('start-pause', function(data){ 
         socket.broadcast.emit('start-pause', data);
     });
+
+    //Evento que se ejecuta para obtener la lista de recomendadores
+    socket.on('getStrategies', function(data){
+        socket.broadcast.emit('getStrategies', data); //este evento lo tiene el recomendador
+    });
     
+    //Evento que se ejecuta cuando el recomendador devuelve la lista de recomendadores
+    socket.on('strategies result', function(data){
+        socket.broadcast.emit('strategies result', data); //este evento lo tiene el navegador
+    });
+
     socket.on('disconnect', function(){
         console.log('user disconnected');
     });

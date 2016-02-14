@@ -1,0 +1,4 @@
+<config>
+  <host>http://localhost</host>
+  <port>81</port>
+</config>

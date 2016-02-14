@@ -15,11 +15,12 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
     $scope.showPlay = true;
     
     $scope.listar = function(){
-        Services.recommenderTypes(function(res){
+        socket.emit('getStrategies', "Esto es una prueba");
+        /*Services.recommenderTypes(function(res){
             console.log(res);
         }, function(err){
             console.log();
-        });
+        });*/
     }
     
     $scope.getUserImg = function(){

@@ -1,7 +1,7 @@
 package recommender.strategy;
 
-import recommender.models.Configurations;
+import org.json.JSONObject;
 
 public interface Strategy {
-	public void recommend(Configurations config);
+	public void recommend(JSONObject data);
 }

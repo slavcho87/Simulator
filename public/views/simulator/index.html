@@ -61,6 +61,7 @@
             <div id="page-wrapper" ng-show="simulationDataLoaded">		                
                 <div class="row">    
                     <button ng-click="listar()">Listar</button>
+                    {{verMsg}}
                     <div id="mapa" class="mapa col-sm-8">
                     </div>
                         <script src="javascripts/socketsIO/socket.io.js"></script>
@@ -79,6 +80,24 @@
                             var userTimeStamp;
                             var dynamicItemRefreshInterval = 100;
                             var artists = [];
+                            
+                            socket.on('strategies result', function(data){
+                                 var appElement = document.querySelector('[ng-app=app]');
+                                var $scope = angular.element(appElement).scope();
+                                $scope = $scope.$$childHead;
+                                $scope.$apply(function(){
+                                    $scope.verMsg = data;
+                                });
+                            });
+                            
+                            socket.on('ejemplo', function(data){
+                                 var appElement = document.querySelector('[ng-app=app]');
+                                var $scope = angular.element(appElement).scope();
+                                $scope = $scope.$$childHead;
+                                $scope.$apply(function(){
+                                    $scope.verMsg = data;
+                                });
+                            });
                             
                             socket.on('user change position', function(data){
                                 setUser(data.user, data.pos, data.id);

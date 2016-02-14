@@ -184,7 +184,7 @@ function baseConfig(){
 }
 
 router.get('/recommenderTypes', function(req, res){
-    var url = "\'"+baseConfig().urlRecommender+"\'"
+    var url = "\'"+baseConfig().urlRecommender+"\'";
     
     request(url, function (error, response, body) {    
         console.log(error);
