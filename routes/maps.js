@@ -48,7 +48,7 @@ router.post('/save', function(req, resp){
             mapModel.type = req.body.type;
             mapModel.state = req.body.state;
             mapModel.userID = user._id;
-            mapModel.creationDate = formattDate(new Date());
+            mapModel.creationDate = new Date();
             
             mapModel.save(function(err, map){
                 if(err){
@@ -164,7 +164,7 @@ router.post('/saveScene', function(req, resp){
 })
 
 function formattDate(date){console.log(date);
-    var d = new Date(date || Date.now()),
+    var d = date,
     month = '' + (d.getMonth() + 1),
     day = '' + d.getDate(),
     year = d.getFullYear();
@@ -223,7 +223,7 @@ router.post('/findMaps', function(req, res){
             }
             
             if(req.body.startDate && req.body.endDate){
-                query.where('creationDate').gte(formattDate(req.body.startDate)).lte(formattDate(req.body.endDate));
+                query.where('creationDate').gte(req.body.startDate).lte(req.body.endDate);
             }
                 
             if(req.body.type && req.body.type!="all"){

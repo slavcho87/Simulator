@@ -68,7 +68,7 @@ app.controller("MapController", ['$scope', '$http', '$location', '$localStorage'
         if (month.length < 2) month = '0' + month;
         if (day.length < 2) day = '0' + day;
 
-        return [month, day, year].join('/');
+        return [day, month, year].join('/');
     }
     
     $scope.selectMapToDelete = function(map){

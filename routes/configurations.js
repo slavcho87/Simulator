@@ -21,6 +21,7 @@ router.post('/recommenderSave', function(req, res, next){
                 recommederModel.visibilityRadius=req.body.visibilityRadius;
                 recommederModel.itemsToRecommend=req.body.numItemToRec;   
                 recommederModel.minimumScore=req.body.minScoreForRec;
+                recommederModel.strategyType=req.body.strategyType;
 
                 recommederModel.save(function(err){
                     if(err){

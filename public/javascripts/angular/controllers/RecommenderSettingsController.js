@@ -24,6 +24,11 @@ app.controller("RecommenderSettingsController", ['$scope', '$http','Services', f
                 error = true;
             }
             
+            if(!$scope.rec.strategyType){
+                $scope.errorMsgList.push("The strategy type can not be empty!");
+                error = true;
+            }
+            
             if(!$scope.rec.maxDistanceToGo){
                 $scope.errorMsgList.push("The maximum distance to go can not be empty!");
                 error = true;
@@ -58,7 +63,8 @@ app.controller("RecommenderSettingsController", ['$scope', '$http','Services', f
                             maximuDistanteToGo: $scope.rec.maxDistanceToGo,
                             visibilityRadius: $scope.rec.visibilityRadius,
                             itemsToRecommend: $scope.rec.numItemToRec,
-                            minimumScore: $scope.rec.minScoreForRec
+                            minimumScore: $scope.rec.minScoreForRec,
+                            strategyType: $scope.rec.strategyType
                         });
 
                         //reset object rec
@@ -76,7 +82,7 @@ app.controller("RecommenderSettingsController", ['$scope', '$http','Services', f
         }
     }
     
-    $scope.getRecommenderList = function(){
+    $scope.loadData = function(){
         Services.getRecommenderList(function(res){
             angular.forEach(res, function(value, key) {
                 $scope.recommenderList.push(value);
@@ -84,6 +90,8 @@ app.controller("RecommenderSettingsController", ['$scope', '$http','Services', f
         }, function(err){
             $scope.errorMsgList.push(err);
         });
+        
+        socket.emit('getStrategies', "Esto es una prueba");
     }
     
     $scope.selectDeleteRecommender = function(recommender){
@@ -124,6 +132,11 @@ app.controller("RecommenderSettingsController", ['$scope', '$http','Services', f
             
             if(!$scope.selectEditRecommenderValue.recommenderType){
                 $scope.errorMsgList.push("The recommender type can not be empty!");
+                error = true;
+            }
+            
+            if(!$scope.selectEditRecommenderValue.strategyType){
+                $scope.errorMsgList.push("The strategy type can not be empty!");
                 error = true;
             }
             

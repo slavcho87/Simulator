@@ -7,7 +7,8 @@ var RecommenderSchema   = new Schema({
     maximuDistanteToGo: Number,
     visibilityRadius: Number, 
     itemsToRecommend: Number,   
-    minimumScore: Number
+    minimumScore: Number,
+    strategyType: String
 });
  
 module.exports = mongoose.model('Recommender', RecommenderSchema);
