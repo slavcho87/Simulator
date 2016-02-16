@@ -12,15 +12,19 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
     $scope.mapCenter = [0, 0];
     $scope.staticItemList = [];
     $scope.dynamiItemsList = [];
+    $scope.recommendedItemList = [];
+    $scope.itemTypeList = [];
     $scope.showPlay = true;
     
-    $scope.listar = function(){
-        socket.emit('getStrategies', "Esto es una prueba");
-        /*Services.recommenderTypes(function(res){
-            console.log(res);
-        }, function(err){
-            console.log();
-        });*/
+    $scope.recomend = function(){
+        $scope.recommendedItemList = [];
+        
+        var data = {
+            type: "User based recommender",
+            mapId: $scope.selectedScene.mapId,
+            sceneId: $scope.selectedScene._id
+        };
+        socket.emit('getRecommend', data);
     }
     
     $scope.getUserImg = function(){
@@ -113,6 +117,32 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
                         map.addOverlay(overlay);
                     }
                 });
+            }
+        }, function(err){
+            $scope.errorMsgList.push(err);
+        });
+        
+        Services.staticItemList(function(res){
+            for(index in res){
+                var item = {
+                    _id: res[index]._id,
+                    name: res[index].name
+                };
+
+                $scope.itemTypeList.push(item);    
+            }
+        }, function(err){
+            $scope.errorMsgList.push(err);
+        });
+        
+        Services.dynamicItemList(function(res){
+            for(index in res){
+                var item = {
+                    _id: res[index]._id,
+                    name: res[index].name
+                };
+
+                $scope.itemTypeList.push(item);    
             }
         }, function(err){
             $scope.errorMsgList.push(err);

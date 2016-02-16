@@ -122,7 +122,17 @@ io.on('connection', function(socket){
     socket.on('strategies result', function(data){
         socket.broadcast.emit('strategies result', data); //este evento lo tiene el navegador
     });
-
+        
+    //Evento que se ejecuta para obtener la lista items recomendados
+    socket.on('getRecommend', function(data){
+        socket.broadcast.emit('recommend', data); //este evento lo tiene el recomendador
+    });
+    
+    //Evento que ejecuta el servidor para dejar los resultados al navegador 
+    socket.on('recommended items', function(data){
+        socket.broadcast.emit('recommended items', data); //este evento lo tiene el navegador
+    });
+    
     socket.on('disconnect', function(){
         console.log('user disconnected');
     });

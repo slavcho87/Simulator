@@ -8,10 +8,13 @@ import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 import com.thoughtworks.xstream.XStream;
 import recommender.context.Recommender;
+import recommender.models.Item;
 import recommender.models.StrategyType;
 import recommender.strategy.Strategy;
 import recommender.strategy.StrategyFactory;
 import utils.Configurations;
+
+import java.util.List;
 import java.util.Scanner;
 
 public class Server {
@@ -32,7 +35,9 @@ public class Server {
 	                JSONObject data = (JSONObject) args[0];
 	                strategy = StrategyFactory.createStrategy(StrategyType.fromString(data.getString("type")));
 	        		recommender = new Recommender(strategy);
-	        		recommender.recommend(data);
+	        		
+	        		List<Item> itemList = recommender.recommend(data);
+	        		socket.emit("recommended items", itemList);
 	            }
 	        });
 			

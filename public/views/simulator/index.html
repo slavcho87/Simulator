@@ -60,8 +60,6 @@
             
             <div id="page-wrapper" ng-show="simulationDataLoaded">		                
                 <div class="row">    
-                    <button ng-click="listar()">Listar</button>
-                    {{verMsg}}
                     <div id="mapa" class="mapa col-sm-8">
                     </div>
                         <script src="javascripts/socketsIO/socket.io.js"></script>
@@ -79,14 +77,14 @@
                             var dynamicItemMoveTemporizador;
                             var userTimeStamp;
                             var dynamicItemRefreshInterval = 100;
-                            var artists = [];
+                            var artists = [];            
                             
-                            socket.on('strategies result', function(data){
-                                 var appElement = document.querySelector('[ng-app=app]');
+                            socket.on('recommended items', function(data){
+                                var appElement = document.querySelector('[ng-app=app]');
                                 var $scope = angular.element(appElement).scope();
                                 $scope = $scope.$$childHead;
                                 $scope.$apply(function(){
-                                    $scope.verMsg = data;
+                                    $scope.recommendedItemList = data;
                                 });
                             });
                             
@@ -491,9 +489,9 @@
                           
                         <table class="table">
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Bar numero 1</td>
+                                <tr ng-repeat="item in recommendedItemList">
+                                    <th scope="row">{{$index+1}}</th>
+                                    <td>{{item.itemName}}</td>
                                     <td>
                                         <div class="fa fa-star"></div>
                                         <div class="fa fa-star"></div>
@@ -512,206 +510,6 @@
                                         </select>
                                     </td>
                                 </tr>
-
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Restaurante num 1</td>
-                                    <td>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star"></div>
-                                    </td>
-                                    <td>
-                                        <select>
-                                            <option value="0"></option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Larry</td>
-                                    <td>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star-half"></div>
-                                    </td>
-                                    <td>
-                                        <select>
-                                            <option value="0"></option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select>
-                                    </td>
-                                </tr> 
-                                
-                                <tr>
-                                    <th scope="row">4</th>
-                                    <td>Bar numero 1</td>
-                                    <td>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star-half"></div>
-                                    </td>
-                                    <td>
-                                        <select>
-                                            <option value="0"></option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">5</th>
-                                    <td>Restaurante num 1</td>
-                                    <td>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star-o"></div>
-                                    </td>
-                                    <td>
-                                        <select>
-                                            <option value="0"></option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                
-                                <tr>
-                                    <th scope="row">6</th>
-                                    <td>Larry</td>
-                                    <td>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star-o"></div>
-                                    </td>
-                                    <td>
-                                        <select>
-                                            <option value="0"></option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select>
-                                    </td>
-                                </tr> 
-                                
-                                
-                                <tr>
-                                    <th scope="row">7</th>
-                                    <td>Bar numero 1</td>
-                                    <td>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star-half"></div>
-                                        <div class="fa fa-star-o"></div>
-                                        <div class="fa fa-star-o"></div>
-                                    </td>
-                                    <td>
-                                        <select>
-                                            <option value="0"></option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">8</th>
-                                    <td>Restaurante num 1</td>
-                                    <td>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star-o"></div>
-                                        <div class="fa fa-star-o"></div>
-                                        <div class="fa fa-star-o"></div>
-                                    </td>
-                                    <td>
-                                        <select>
-                                            <option value="0"></option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                
-                                <tr>
-                                    <th scope="row">9</th>
-                                    <td>Larry</td>
-                                    <td>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star-half"></div>
-                                        <div class="fa fa-star-o"></div>
-                                        <div class="fa fa-star-o"></div>
-                                        <div class="fa fa-star-o"></div>
-                                    </td>
-                                    <td>
-                                        <select>
-                                            <option value="0"></option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                
-                                <tr>
-                                    <th scope="row">10</th>
-                                    <td>Bar numero 1</td>
-                                    <td>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star-half"></div>
-                                        <div class="fa fa-star-o"></div>
-                                        <div class="fa fa-star-o"></div>
-                                        <div class="fa fa-star-o"></div>
-                                    </td>
-                                    <td>
-                                        <select>
-                                            <option value="0"></option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select>
-                                    </td>
-                                </tr>
-        
                             </tbody>
                         </table>    
                        
@@ -721,6 +519,20 @@
                                     <label>User speed (km/h)</label>
                                     <input id="userSpeed" class="form-control" value="5"/>
                                 </div>
+                                
+                                <div class="col-xs-12">
+                                    <br/>
+                                    <label>Item types to recommend</label>
+                                    <br/>
+                                    
+                                    <span ng-repeat="itemType in itemTypeList">
+                                        <input type="checkbox" name="{{itemType.name}}" value="{{itemType}}"/>{{itemType.name}} 
+                                    </span>
+                                    
+                                    <br><br>
+                                    <input type="submit" ng-click="recomend()" class="btn btn-primary" value="Recommend items">
+                                </div>
+                                
                             </div>
                         </div>
                     </div>

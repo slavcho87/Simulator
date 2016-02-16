@@ -1,7 +1,9 @@
 package recommender.strategy;
 
+import java.util.List;
 import org.json.JSONObject;
+import recommender.models.Item;
 
 public interface Strategy {
-	public void recommend(JSONObject data);
+	public List<Item> recommend(JSONObject data, List<Item> itemList);
 }
