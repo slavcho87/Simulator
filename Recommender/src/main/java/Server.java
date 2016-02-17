@@ -14,13 +14,14 @@ import recommender.strategy.Strategy;
 import recommender.strategy.StrategyFactory;
 import utils.Configurations;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Server {
-	private Socket socket;
-	private Strategy strategy;
-	private Recommender recommender;
+	private static Socket socket;
+	private static Strategy strategy;
+	private static Recommender recommender;
 	
 	public Server() throws URISyntaxException, InterruptedException, IOException{
 		try {
@@ -30,14 +31,22 @@ public class Server {
 			socket = IO.socket(url);
 			socket.connect();	
 			
+			recommender = new Recommender(configs);
+			
 			socket.on("recommend", new Emitter.Listener() {
 	            public void call(Object... args) {
 	                JSONObject data = (JSONObject) args[0];
-	                strategy = StrategyFactory.createStrategy(StrategyType.fromString(data.getString("type")));
-	        		recommender = new Recommender(strategy);
-	        		
+	                strategy = StrategyFactory.createStrategy(StrategyType.fromString(data.getString("strategyType")));
+	                recommender.setStrategy(strategy);
 	        		List<Item> itemList = recommender.recommend(data);
-	        		socket.emit("recommended items", itemList);
+	        		
+	        		List<String> userList = new ArrayList<String>();
+	        		userList.add(data.getString("token"));
+	        		
+	        		JSONObject result = new JSONObject();
+	        		result.put("itemList", itemList);
+	        		result.put("userList", userList);
+	        		socket.emit("recommended items", result);
 	            }
 	        });
 			
@@ -49,7 +58,6 @@ public class Server {
 	            }
 	        });
 			
-			menu();
 	    } catch (URISyntaxException e) {
 	    	System.out.println(e);
 	    }
@@ -71,7 +79,7 @@ public class Server {
 	 * It shows a simple menu screen
 	 */
 	@SuppressWarnings("resource")
-	private void menu(){
+	private static void menu(){
 		Scanner sc = new Scanner(System.in);
 		String resp = "";
 		do{
@@ -85,5 +93,6 @@ public class Server {
 	
 	public static void main(String[] args) throws URISyntaxException, InterruptedException, IOException {
 		new Server();
+		menu();
 	}
 }

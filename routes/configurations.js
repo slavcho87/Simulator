@@ -1,6 +1,7 @@
 var express = require('express');
 var Recommender = require('../models/Recommender');
 var ItemType = require('../models/ItemType');
+var Rating = require('../models/Rating');
 var request = require('request');
 var fs = require('fs');
 var router = express.Router();
@@ -42,6 +43,22 @@ router.post('/recommenderSave', function(req, res, next){
                     msg: "Pool name exist! Insert new pool name"
                 });
             }
+        }
+    });
+});
+
+router.get('/searchRecommenderById/:id', function(req, res){
+    Recommender.findOne({_id: req.params.id}, function(err, recommender){
+        if(err){
+            res.json({
+               result: "NOK",
+                msg: err
+            });
+        }else{
+            res.json({
+                result: "OK",
+                recommender: recommender
+            });
         }
     });
 });
@@ -195,6 +212,26 @@ router.get('/recommenderTypes', function(req, res){
     });
     
     res.json({ok: "OK"});
+})
+
+router.post('/setRating', function(req, res){
+    var rating = new Rating();    
+    rating.userId=req.token;  
+    rating.itemId=req.body.itemId; 
+    rating.value=req.body.rating;
+    
+    rating.save(function(err){
+        if(err){
+            res.json({
+                result: "NOK",
+                msg: err
+            });
+        }else{
+            res.json({
+                result: "OK"
+            });
+        }
+    });
 })
 
 

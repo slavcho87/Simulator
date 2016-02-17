@@ -61,6 +61,9 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
         getRecommenderList: function(success, error){
             $http.get('/settings/recommenderList').success(success).error(error);
         },
+        searchRecommenderById: function(data, success, error){
+            $http.get('/settings/searchRecommenderById/'+data).success(success).error(error);
+        },
         deleteRecommender: function(data, success, error){
             $http.delete('/settings/deleteRecommender/'+data).success(success).error(error);
         },
@@ -129,6 +132,9 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
         },
         recommenderTypes: function(success, error){
             $http.get('/settings/recommenderTypes').success(success).error(error);
+        },
+        setRating: function(data, success, error){
+            $http.post('/settings/setRating', data).success(success).error(error);
         },
         logout: function() {
             changeUser({});

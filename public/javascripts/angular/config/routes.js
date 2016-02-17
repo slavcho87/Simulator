@@ -1,4 +1,4 @@
-var app = angular.module("app", ['ngRoute', 'ngStorage']);
+var app = angular.module("app", ['ngRoute', 'ngStorage', 'checklist-model']);
 
 app.config(['$routeProvider', '$httpProvider' ,function($routeProvider, $httpProvider) {	 		   
 	$routeProvider.when('/', {

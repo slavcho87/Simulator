@@ -50,16 +50,12 @@
 	    <version>0.11.1</version>
 	</dependency>
 	<dependency>
-		<groupId>org.apache.mahout.commons</groupId>
-		<artifactId>commons-cli</artifactId>
-		<version>2.0-mahout</version>
-	</dependency>
-	<dependency>
 		<groupId>org.apache.mahout</groupId>
 		<artifactId>mahout-core</artifactId>
-		<version>0.4</version>
+		<version>0.9</version>
 	</dependency>
-		
+
+
   </dependencies>
   <build>
     <finalName>Recommender</finalName>

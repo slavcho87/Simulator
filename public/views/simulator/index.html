@@ -13,7 +13,7 @@
 
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav side-nav">
-                        <li><a href="#/map"><i class="fa fa-map-marker"></i> Maps</a></li>
+                        <li><a href="#/map"onclick="stopMoveDynamicItems()"><i class="fa fa-map-marker"></i> Maps</a></li>
                         <li class="active"><a href="#/simulator"><i class="fa fa-globe"></i> Simulation</a></li>
                         <li><a href="#/settings"><i class="fa fa-cog"></i> Settings</a></li>
                         <li><a href="#/profile"><i class="fa fa-edit"></i> Profile</a></li>
@@ -77,15 +77,19 @@
                             var dynamicItemMoveTemporizador;
                             var userTimeStamp;
                             var dynamicItemRefreshInterval = 100;
-                            var artists = [];            
+                            var artists = [];
                             
                             socket.on('recommended items', function(data){
                                 var appElement = document.querySelector('[ng-app=app]');
                                 var $scope = angular.element(appElement).scope();
                                 $scope = $scope.$$childHead;
-                                $scope.$apply(function(){
-                                    $scope.recommendedItemList = data;
-                                });
+                               
+                                var index = data.userList.indexOf($scope.token);
+                                if(index>=0){
+                                    $scope.$apply(function(){
+                                        $scope.recommendedItemList = data.itemList;
+                                    });    
+                                }
                             });
                             
                             socket.on('ejemplo', function(data){
@@ -480,12 +484,6 @@
                  
                         <button type="button" class="btn btn-default fa fa-arrow-right" onclick="right()">                         
                         </button>
-                    
-                        
-                         <!-- <a id="export-png" class="btn" download="map.png"><i class="icon-download"></i> Export PNG</a> 
-                        <br/>
-                        <img id="captura" style="height: 50%;width: 50%;">
-                          <!-- Table -->
                           
                         <table class="table">
                             <tbody>
@@ -493,15 +491,7 @@
                                     <th scope="row">{{$index+1}}</th>
                                     <td>{{item.itemName}}</td>
                                     <td>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star"></div>
-                                        <div class="fa fa-star"></div>
-                                    </td>
-                                    <td>
-                                        <select>
-                                            <option value="0"></option>
+                                        <select ng-change="setRating(item.id, rating)" ng-model="rating">
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
@@ -526,7 +516,8 @@
                                     <br/>
                                     
                                     <span ng-repeat="itemType in itemTypeList">
-                                        <input type="checkbox" name="{{itemType.name}}" value="{{itemType}}"/>{{itemType.name}} 
+                                        <input type="checkbox" 
+                                           checklist-model="itemTypesToRecommend" checklist-value="itemType._id">{{itemType.name}}  
                                     </span>
                                     
                                     <br><br>

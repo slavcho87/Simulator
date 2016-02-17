@@ -1,4 +1,7 @@
 <config>
   <host>http://localhost</host>
   <port>81</port>
+  <hostMongo>localhost</hostMongo>
+  <portMongo>27017</portMongo>
+  <nameDB>simulator</nameDB>
 </config>

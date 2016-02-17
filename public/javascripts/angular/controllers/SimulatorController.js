@@ -1,6 +1,6 @@
-var app = angular.module("app");
+var app = angular.module('app');
 
-app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFactory', function ($scope, $http, Services, DataFactory) {
+app.controller("SimulatorController", ['$scope', '$http', '$localStorage', 'Services', 'DataFactory', function ($scope, $http, $localStorage, Services, DataFactory) {
     $scope.errorMsgList = [];
     $scope.userImg;
     $scope.simulationDataLoaded = false;
@@ -14,17 +14,38 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
     $scope.dynamiItemsList = [];
     $scope.recommendedItemList = [];
     $scope.itemTypeList = [];
+    $scope.itemTypesToRecommend = [];
     $scope.showPlay = true;
+    $scope.token = $localStorage.token;
     
     $scope.recomend = function(){
         $scope.recommendedItemList = [];
         
         var data = {
-            type: "User based recommender",
+            strategyType: $scope.recommender.strategyType,
             mapId: $scope.selectedScene.mapId,
-            sceneId: $scope.selectedScene._id
+            sceneId: $scope.selectedScene._id,
+            token: $scope.token,
+            recommender: $scope.recommender._id,
+            itemTypesToRecommend: $scope.itemTypesToRecommend
         };
+        
         socket.emit('getRecommend', data);
+    }
+    
+    $scope.setRating = function(itemId, rating){
+        var data = {
+            rating: rating,
+            itemId: itemId
+        };
+        
+        Services.setRating(data, function(res){
+            if(res.result == "NOK"){
+                $scope.errorMsgList.push(res.msg);
+            }
+        }, function(err){
+            $scope.errorMsgList.push(err);
+        });
     }
     
     $scope.getUserImg = function(){
@@ -143,6 +164,16 @@ app.controller("SimulatorController", ['$scope', '$http', 'Services', 'DataFacto
                 };
 
                 $scope.itemTypeList.push(item);    
+            }
+        }, function(err){
+            $scope.errorMsgList.push(err);
+        });
+        
+        Services.searchRecommenderById($scope.selectedScene.recommender, function(res){
+            if(res.result == "NOK"){
+                $scope.errorMsgList.push(res.msg);    
+            }else{
+                $scope.recommender = res.recommender;
             }
         }, function(err){
             $scope.errorMsgList.push(err);
