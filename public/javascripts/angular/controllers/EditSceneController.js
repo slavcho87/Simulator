@@ -44,7 +44,7 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
        //load static items types
         Services.staticItemList(function(res){
            for(index in res){
-                $scope.staticItemList.push(res[index]);
+               $scope.staticItemList.push(res[index]);   
             }
         }, function(err){
             $scope.errorMsgList.push(err);
@@ -95,6 +95,15 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
                         };
                         
                         $scope.staticItemListInScene.push(staticItem);
+                         
+                        var location = [parseFloat(value.location.latitude), parseFloat(value.location.longitude)];
+                        var overlay = new ol.Overlay({
+                            position: ol.proj.transform(location, 'EPSG:4326', 'EPSG:3857'),
+                            element: $('<img src="'+value.itemType.icon+'" class="img-circle">')
+                            .css({marginTop: '-50%', marginLeft: '-50%', width: '32px', height: '32px', cursor: 'pointer'})        
+                        });
+                        overlayList[key-1] = overlay;
+                        staticItemsMap.addOverlay(overlay);
                     }
                 });
             }
@@ -189,7 +198,7 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
         
         if(index>=0){
             $scope.staticItemListInScene.splice(index, 1);
-             staticItemsMap.removeOverlay(overlayList[$scope.selectStaticItemToDeleteFromSceneIndex]);
+            staticItemsMap.removeOverlay(overlayList[$scope.selectStaticItemToDeleteFromSceneIndex]);
         }else{
             $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
         }

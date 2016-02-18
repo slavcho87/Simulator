@@ -252,7 +252,7 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
         
         if(index>=0){
             $scope.staticItemListInScene.splice(index, 1);
-             staticItemsMap.removeOverlay(overlayList[$scope.selectStaticItemToDeleteFromSceneIndex]);
+            staticItemsMap.removeOverlay(overlayList[$scope.selectStaticItemToDeleteFromSceneIndex]);
         }else{
             $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
         }
