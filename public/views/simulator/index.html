@@ -101,15 +101,6 @@
                                 }
                             });
                             
-                            socket.on('ejemplo', function(data){
-                                 var appElement = document.querySelector('[ng-app=app]');
-                                var $scope = angular.element(appElement).scope();
-                                $scope = $scope.$$childHead;
-                                $scope.$apply(function(){
-                                    $scope.verMsg = data;
-                                });
-                            });
-                            
                             socket.on('user change position', function(data){
                                 setUser(data.user, data.pos, data.id);
                             });
@@ -287,17 +278,6 @@
                                     id: getUser()._id
                                 };
                                 socket.emit('user change position', data);
-                                
-                                /*var lista = map.getOverlays().getArray();
-                                
-                                for(index in lista){
-                                    console.log(lista[index].getElement()[0].name);
-                                }*/
-                                
-                                //alert(ol.proj.transform(evt.coordinate,'EPSG:3857', 'EPSG:4326'));
-                                
-                                //alert("overlays --> "+map.getOverlays());
-                                
                             });      
                             
                             $(document).keypress(function(e)
