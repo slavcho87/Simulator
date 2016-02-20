@@ -32,7 +32,7 @@ public class Recommender{
 	public Recommender(Strategy strategy, Configurations config){
 		this.strategy = strategy;
 		mongoClient = new MongoClient(config.getHostMongo(), config.getPortMongo());
-		db = mongoClient.getDB(config.getNameDB());	
+		db = mongoClient.getDB(config.getNameDB());
 	}
 	
 	public void setStrategy(Strategy strategy){

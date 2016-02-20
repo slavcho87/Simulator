@@ -17,6 +17,7 @@ app.controller("SimulatorController", ['$scope', '$http', '$localStorage', 'Serv
     $scope.itemTypesToRecommend = [];
     $scope.showPlay = true;
     $scope.token = $localStorage.token;
+    $scope.resultTypeShow = "emptyList"
     
     $scope.recomend = function(){
         $scope.recommendedItemList = [];
@@ -27,8 +28,19 @@ app.controller("SimulatorController", ['$scope', '$http', '$localStorage', 'Serv
             sceneId: $scope.selectedScene._id,
             token: $scope.token,
             recommender: $scope.recommender._id,
-            itemTypesToRecommend: $scope.itemTypesToRecommend
+            itemTypesToRecommend: $scope.itemTypesToRecommend,
+            resultTypeShow: $scope.resultTypeShow
         };
+        
+        var index = map.getOverlays().getArray().indexOf(overlayList['user']);
+                                
+        if(index>=0){
+            var location = map.getOverlays().getArray()[index].getPosition();
+            location = ol.proj.transform(location, 'EPSG:3857', 'EPSG:4326');
+            data.location = location;
+        }
+        
+        console.log(data);
         
         socket.emit('getRecommend', data);
     }

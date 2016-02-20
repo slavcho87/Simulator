@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.apache.mahout.cf.taste.common.TasteException;
-import org.apache.mahout.cf.taste.impl.neighborhood.NearestNUserNeighborhood;
+import org.apache.mahout.cf.taste.impl.neighborhood.ThresholdUserNeighborhood;
 import org.apache.mahout.cf.taste.impl.recommender.GenericUserBasedRecommender;
 import org.apache.mahout.cf.taste.impl.similarity.PearsonCorrelationSimilarity;
 import org.apache.mahout.cf.taste.model.DataModel;
@@ -27,19 +27,22 @@ public class UserBasedStrategy implements Strategy {
 	public List<Item> recommend(JSONObject data, List<Item> itemList, List<Ratings> ratingList, RecommenderConfig recommenderConfig) {
 		List<Item> recommendedItemIdList = new ArrayList<Item>();
 		int indice = 0;
-		FastByIDMap<PreferenceArray> preferences = new FastByIDMap<PreferenceArray>(); 
+		FastByIDMap<PreferenceArray> preferences = new FastByIDMap<PreferenceArray>();
 		
+		//prepare users preferences
+		Map<String, Integer> userIdMap = new HashMap<String, Integer>();
 		Map<String, List<Ratings>> map = orderRatingsByUser(ratingList);
 		Set<String> keyList= map.keySet();
 		for(String key: keyList){
 			List<Ratings> ratingsByUser = map.get(key);
-			
-			PreferenceArray userPreference = new GenericUserPreferenceArray(ratingList.size());
-			userPreference.setUserID(0, Long.valueOf(key.hashCode()));
+			userIdMap.put(key, indice);
+
+			PreferenceArray userPreference = new GenericUserPreferenceArray(ratingsByUser.size());
 			for(int index=0; index<ratingsByUser.size(); index++){
 				Ratings rating = ratingsByUser.get(index);
+				userPreference.setUserID(0, Long.valueOf(key.hashCode()));
 				userPreference.setItemID(index, Long.valueOf(rating.getItemId().hashCode()));
-				userPreference.setValue(index, rating.getRating());
+				userPreference.setValue(index, Long.valueOf(rating.getRating()));
 			}
 			
 			preferences.put(indice, userPreference);
@@ -48,21 +51,19 @@ public class UserBasedStrategy implements Strategy {
 		
 		try {
 			DataModel model = new GenericDataModel(preferences);
-			//DataModel model = new FileDataModel(new File("./configs/dataset.csv"));
 			UserSimilarity similarity = new PearsonCorrelationSimilarity(model);
-			UserNeighborhood neighborhood = new NearestNUserNeighborhood(2, similarity, model);
+			UserNeighborhood neighborhood =  new ThresholdUserNeighborhood(0.1, similarity, model);
 			UserBasedRecommender recommender = new GenericUserBasedRecommender(model, neighborhood, similarity);
 			
-			List<RecommendedItem> recommendations = recommender.recommend(Long.valueOf(data.getString("token").hashCode()), recommenderConfig.getItemsToRecommend());
+			List<RecommendedItem> recommendations = recommender.recommend(userIdMap.get(data.get("token")), recommenderConfig.getItemsToRecommend());
 			for(RecommendedItem recItem: recommendations){
 				recommendedItemIdList.add(findItemID(itemList, recItem.getItemID()));
 			}
 		} catch (TasteException e) {
 			e.printStackTrace();
-		}
+		} 
 		
 		return recommendedItemIdList;
-	
 	}
 	
 	/**
