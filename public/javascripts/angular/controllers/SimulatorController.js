@@ -128,11 +128,13 @@ app.controller("SimulatorController", ['$scope', '$http', '$localStorage', 'Serv
                         getDynamicItems(value, data2);
                     }else if(value.itemType.type=="static"){
                         var location = [parseFloat(value.location.latitude), parseFloat(value.location.longitude)];
-
+                        
+                        var id='\''+value._id+'\'';
                         var overlay = new ol.Overlay({
                             position: ol.proj.transform(location, 'EPSG:4326', 'EPSG:3857'),
                             element: $('<img src="'+value.itemType.icon+'" class="img-circle">')
-                            .css({marginTop: '-50%', marginLeft: '-50%', width: '32px', height: '32px', cursor: 'pointer'})        
+                            .css({marginTop: '-50%', marginLeft: '-50%', width: '32px', height: '32px', cursor: 'pointer'})
+                            .tooltip({title: value.itemName, template: '<select id='+id+' onchange="setRating('+id+')"><option value="0"></option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>', trigger: 'click', html: true})
                         });
 
                         map.addOverlay(overlay);
@@ -205,11 +207,14 @@ app.controller("SimulatorController", ['$scope', '$http', '$localStorage', 'Serv
             
             var location = [parseFloat(res.route[0].routeId.latitude),
                             parseFloat(res.route[0].routeId.longitude)];
-                            
+            
+            var id='\''+value._id+'\'';
+            
             var overlay = new ol.Overlay({
                 position: ol.proj.transform(location, 'EPSG:4326', 'EPSG:3857'),
                 element: $('<img src="'+value.itemType.icon+'" class="img-circle">')
-                .css({marginTop: '-50%', marginLeft: '-50%', width: '32px', height: '32px', cursor: 'pointer'})    
+                .css({marginTop: '-50%', marginLeft: '-50%', width: '32px', height: '32px', cursor: 'pointer'})
+                .tooltip({title: 'Titulo', template: '<select id='+id+' onchange="setRating('+id+')"><option value="0"></option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>', trigger: 'click', html: true})
             });
                             
             map.addOverlay(overlay);

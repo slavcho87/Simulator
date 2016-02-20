@@ -384,7 +384,7 @@
                             
                             function ItemsMove(){
                                 var list = $scope.dynamiItemsList;
-                            
+                                
                                 for(index in list){
                                     var overlay = list[index].overlay;
                                     var i = artists[index];
@@ -417,9 +417,7 @@
 
                                     list[index].overlay = new ol.Overlay({
                                         position: ol.proj.transform(newPos, 'EPSG:4326', 'EPSG:3857'),
-                                        element: $('<img src="'+list[0].icon+'" class="img-circle">')
-                                        .css({marginTop: '-50%', marginLeft: '-50%', width: '32px', 
-                                              height: '32px', cursor: 'pointer'})
+                                        element: overlay.getElement()
                                     }); 
 
                                     map.addOverlay(list[index].overlay);   
@@ -459,6 +457,13 @@
                                         user: getUser()._id        
                                     };
                                     socket.emit('start-pause', data);
+                                }
+                            }
+                            
+                            function setRating(itemId){
+                                var rating = $('#'+itemId).val();
+                                if(rating>0){
+                                    $scope.setRating(itemId, rating);    
                                 }
                             }
                         </script>
@@ -524,6 +529,10 @@
                                     <input type="submit" ng-click="recomend()" class="btn btn-primary" value="Recommend items">
                                 </div>
                                 
+                                <div class="col-xs-12">
+                                    <br/>
+                                    <label></label>
+                                </div>
                             </div>
                         </div>
                     </div>
