@@ -1,6 +1,7 @@
 var express = require('express');
 var jwt = require("jsonwebtoken");
 var User = require('../models/User');
+var UserMove = require('../models/UserMove');
 var router = express.Router();
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
@@ -199,6 +200,26 @@ router.get('/img', ensureAuthorized, function(req, res){
         }
     });
 });
+
+router.post('/userMove', function(req, res){   
+    User.findOne({token: req.token}, function(err, user){
+        if(!err){
+            var userMove = new UserMove();
+            userMove.mapId = req.body.mapId;
+            userMove.sceneId = req.body.sceneId;
+            userMove.userId = user._id;
+            userMove.longitude = req.body.location.longitude;
+            userMove.latitude = req.body.location.latitude;
+            userMove.creationDate = new Date();
+            
+            userMove.save();
+            
+            res.json({
+                result: "OK"
+            });
+        }
+    });
+})
 
 function ensureAuthorized(req, res, next) {
     var bearerToken;

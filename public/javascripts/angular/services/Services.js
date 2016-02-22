@@ -136,6 +136,9 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
         setRating: function(data, success, error){
             $http.post('/settings/setRating', data).success(success).error(error);
         },
+        userMove: function(data, success, error){
+            $http.post('/user/userMove', data).error(error);
+        },
         logout: function() {
             changeUser({});
             delete $localStorage.token;

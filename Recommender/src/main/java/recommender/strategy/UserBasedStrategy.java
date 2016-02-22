@@ -24,7 +24,7 @@ import org.apache.mahout.cf.taste.impl.model.GenericDataModel;
 import org.apache.mahout.cf.taste.impl.model.GenericUserPreferenceArray;
 
 public class UserBasedStrategy implements Strategy {
-	public List<Item> recommend(JSONObject data, List<Item> itemList, List<Ratings> ratingList, RecommenderConfig recommenderConfig) {
+	public List<Item> recommend(JSONObject data, List<Item> itemList, List<Ratings> ratingList, RecommenderConfig recommenderConfig) {		
 		List<Item> recommendedItemIdList = new ArrayList<Item>();
 		int indice = 0;
 		FastByIDMap<PreferenceArray> preferences = new FastByIDMap<PreferenceArray>();
@@ -55,10 +55,17 @@ public class UserBasedStrategy implements Strategy {
 			UserNeighborhood neighborhood =  new ThresholdUserNeighborhood(0.1, similarity, model);
 			UserBasedRecommender recommender = new GenericUserBasedRecommender(model, neighborhood, similarity);
 			
-			List<RecommendedItem> recommendations = recommender.recommend(userIdMap.get(data.get("token")), recommenderConfig.getItemsToRecommend());
-			for(RecommendedItem recItem: recommendations){
-				recommendedItemIdList.add(findItemID(itemList, recItem.getItemID()));
+			if(!userIdMap.isEmpty()){
+				List<RecommendedItem> recommendations = recommender.recommend(userIdMap.get(data.get("token")), recommenderConfig.getItemsToRecommend());
+				for(RecommendedItem recItem: recommendations){
+					Item item = findItemID(itemList, recItem.getItemID());
+					if(item!=null){
+						item.setRating(recItem.getValue());
+						recommendedItemIdList.add(item);
+					}
+				}	
 			}
+			
 		} catch (TasteException e) {
 			e.printStackTrace();
 		} 

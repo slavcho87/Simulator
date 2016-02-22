@@ -106,10 +106,12 @@
                             });
                             
                             socket.on('start-pause', function(data){
-                                if(data.state == 'start'){
-                                    startMoveDynamicItems('event'); 
-                                }else{
-                                    stopMoveDynamicItems('event');
+                                if(data.mapId=$scope.selectedScene.mapId && data.sceneId==$scope.selectedScene._id){
+                                    if(data.state == 'start'){
+                                        startMoveDynamicItems('event'); 
+                                    }else{
+                                        stopMoveDynamicItems('event');
+                                    }    
                                 }
                             });
                             
@@ -142,6 +144,7 @@
                                 pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326');
                                 pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 90);
                                 setUserPos(pos);
+                                $scope.userMove();
                                 var data = {
                                     user: getImg(),
                                     pos: pos,
@@ -155,6 +158,7 @@
                                 pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326');
                                 pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 270);
                                 setUserPos(pos);
+                                $scope.userMove();
                                 var data = {
                                     user: getImg(),
                                     pos: pos,
@@ -168,6 +172,7 @@
                                 pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326');
                                 pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 180);
                                 setUserPos(pos);
+                                $scope.userMove();
                                 var data = {
                                     user: getImg(),
                                     pos: pos,
@@ -181,6 +186,7 @@
                                 pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326');
                                 pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 0);
                                 setUserPos(pos);
+                                $scope.userMove();
                                 var data = {
                                     user: getImg(),
                                     pos: pos,
@@ -277,6 +283,9 @@
                                     pos: ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'),
                                     id: getUser()._id
                                 };
+                                
+                                $scope.userMove();
+                                
                                 socket.emit('user change position', data);
                             });      
                             
@@ -414,23 +423,27 @@
                             }
                             
                             function startMoveDynamicItems(event){
-                                if(artists.length == 0){
-                                    for(index in $scope.dynamiItemsList){
-                                        artists[index] = 0;
+                                if(!dynamicItemMoveTemporizador){
+                                    if(artists.length == 0){
+                                        for(index in $scope.dynamiItemsList){
+                                            artists[index] = 0;
+                                        }
                                     }
-                                }
-                                
-                                dynamicItemMoveTemporizador = window.setInterval('ItemsMove()', dynamicItemRefreshInterval);
-                                $scope.$apply(function(){
-                                    $scope.showPlay = false;
-                                });
-                                
-                                if(event != 'event'){
-                                    var data = {
-                                        state: 'start',
-                                        user: getUser()._id        
-                                    };
-                                    socket.emit('start-pause', data);    
+
+                                    dynamicItemMoveTemporizador = window.setInterval('ItemsMove()', dynamicItemRefreshInterval);
+                                    $scope.$apply(function(){
+                                        $scope.showPlay = false;
+                                    });
+
+                                    if(event != 'event'){
+                                        var data = {
+                                            state: 'start',
+                                            user: getUser()._id,
+                                            sceneId: $scope.selectedScene._id, 
+                                            mapId: $scope.selectedScene.mapId
+                                        };
+                                        socket.emit('start-pause', data);    
+                                    }   
                                 }
                             }              
                             
@@ -443,7 +456,9 @@
                                 if(event != 'event'){
                                     var data = {
                                         state: 'stop',                                    
-                                        user: getUser()._id        
+                                        user: getUser()._id,
+                                        sceneId: $scope.selectedScene._id, 
+                                        mapId: $scope.selectedScene.mapId
                                     };
                                     socket.emit('start-pause', data);
                                 }
@@ -481,9 +496,18 @@
                           
                         <table class="table">
                             <tbody>
+                                <thead ng-show="recommendedItemList.length>0">
+                                    <tr>
+                                        <th>Order</th>
+                                        <th>Item name</th>
+                                        <th>Average rating</th>
+                                        <th>Set rating</th>
+                                    </tr>
+                                </thead>
                                 <tr ng-repeat="item in recommendedItemList">
                                     <th scope="row">{{$index+1}}</th>
                                     <td>{{item.itemName}}</td>
+                                    <td>{{item.rating}}</td>
                                     <td>
                                         <select ng-change="setRating(item.id, rating)" ng-model="rating">
                                             <option value="1">1</option>

@@ -37,12 +37,17 @@ app.controller("SimulatorController", ['$scope', '$http', '$localStorage', 'Serv
         if(index>=0){
             var location = map.getOverlays().getArray()[index].getPosition();
             location = ol.proj.transform(location, 'EPSG:3857', 'EPSG:4326');
-            data.location = location;
-        }
-        
-        console.log(data);
-        
-        socket.emit('getRecommend', data);
+            
+            var loc = {
+                latitude: location[0],
+                longitude: location[1]
+            };
+            
+            data.location = loc;
+            socket.emit('getRecommend', data);
+        }else{
+            $scope.errorMsgList.push("The user's location can not be empty!");
+        }   
     }
     
     $scope.setRating = function(itemId, rating){
@@ -312,6 +317,30 @@ app.controller("SimulatorController", ['$scope', '$http', '$localStorage', 'Serv
         }else{
             $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
         }
+    }
+    
+    $scope.userMove = function(){
+        var index = map.getOverlays().getArray().indexOf(overlayList['user']);
+                                
+        if(index>=0){
+            var location = map.getOverlays().getArray()[index].getPosition();
+            location = ol.proj.transform(location, 'EPSG:3857', 'EPSG:4326');
+            
+            var loc = {
+                latitude: location[0],
+                longitude: location[1]
+            };
+        }
+        
+        var data = {
+            sceneId: $scope.selectedScene._id, 
+            mapId: $scope.selectedScene.mapId,
+            location: loc
+        };
+        
+        Services.userMove(data, function(err){
+            $scope.errorMsgList.push();
+        });
     }
     
     /*

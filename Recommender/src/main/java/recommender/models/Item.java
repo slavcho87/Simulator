@@ -3,10 +3,8 @@ package recommender.models;
 public class Item {
 	private String id;
 	private String itemName;
-	private String sceneId;
-	private String mapId;
-	private String itemType;
-	private String location;
+	private float rating;
+	private Location location;
 	
 	public String getId() {
 		return id;
@@ -24,37 +22,20 @@ public class Item {
 		this.itemName = itemName;
 	}
 
-	public String getSceneId() {
-		return sceneId;
+	public float getRating() {
+		return rating;
 	}
 
-	public void setSceneId(String sceneId) {
-		this.sceneId = sceneId;
+	public void setRating(float rating) {
+		this.rating = rating;
 	}
 
-	public String getMapId() {
-		return mapId;
-	}
-
-	public void setMapId(String mapId) {
-		this.mapId = mapId;
-	}
-
-	public String getItemType() {
-		return itemType;
-	}
-
-	public void setItemType(String itemType) {
-		this.itemType = itemType;
-	}
-
-	public String getLocation() {
+	public Location getLocation() {
 		return location;
 	}
 
-	public void setLocation(String location) {
+	public void setLocation(Location location) {
 		this.location = location;
 	}
-	
 	
 }
