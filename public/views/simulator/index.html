@@ -13,11 +13,11 @@
 
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav side-nav">
-                        <li><a href="#/map"onclick="stopMoveDynamicItems()"><i class="fa fa-map-marker"></i> Maps</a></li>
-                        <li class="active"><a href="#/simulator"><i class="fa fa-globe"></i> Simulation</a></li>
-                        <li><a href="#/settings"><i class="fa fa-cog"></i> Settings</a></li>
-                        <li><a href="#/profile"><i class="fa fa-edit"></i> Profile</a></li>
-                        <li><a href="#/" ng-click="exit()"><i class="fa fa-power-off"></i> Exit</a></li>
+                        <li><a href="#/map" onclick="userExit()"><i class="fa fa-map-marker"></i> Maps</a></li>
+                        <li class="active"><a href="#/simulator" onclick="userExit()"><i class="fa fa-globe"></i> Simulation</a></li>
+                        <li><a href="#/settings" onclick="userExit()"><i class="fa fa-cog"></i> Settings</a></li>
+                        <li><a href="#/profile" onclick="userExit()"><i class="fa fa-edit"></i> Profile</a></li>
+                        <li><a href="#/" ng-click="exit()" onclick="userExit()"><i class="fa fa-power-off"></i> Exit</a></li>
                     </ul>
                 </div>
             </nav>
@@ -86,6 +86,38 @@
                             var userTimeStamp;
                             var dynamicItemRefreshInterval = 100;
                             var artists = [];
+                            var state = 'stop';
+                            
+                            socket.on('sincronize map', function(data){
+                                if(data.sceneId==$scope.selectedScene._id && data.mapId==$scope.selectedScene.mapId){
+                                    var data = {
+                                        state: state,
+                                        sceneId: $scope.selectedScene._id, 
+                                        mapId: $scope.selectedScene.mapId,
+                                        dynamicItemList: $scope.dynamiItemsList
+                                    };
+                                    console.log(data);
+                                    socket.emit('sincronize map result', data);    
+                                }
+                            });
+                    
+                            socket.on('sincronize map result', function(data){
+                                console.log(data);
+                                if(data.sceneId==$scope.selectedScene._id && data.mapId==$scope.selectedScene.mapId){
+                                    if(data.dynamicItemList.length!=0){
+                                        $scope.dynamiItemsList = data.dynamicItemList; 
+                                        ItemsMove();
+                                    }
+                                    
+                                    state = data.state;
+                                    
+                                    if(data.state == 'start'){
+                                        startMoveDynamicItems('event');
+                                    }else{
+                                        stopMoveDynamicItems('event');
+                                    }
+                                }
+                            });
                             
                             socket.on('recommended items', function(data){
                                 var appElement = document.querySelector('[ng-app=app]');
@@ -104,10 +136,16 @@
                                 setUser(data.user, data.pos, data.id);
                             });
                             
+                            socket.on('user exit', function(data){
+                                disconectUser(data.id);
+                            });
+                            
                             socket.on('start-pause', function(data){
                                 if(data.mapId=$scope.selectedScene.mapId && data.sceneId==$scope.selectedScene._id){
+                                    state = data.state;
+                                    
                                     if(data.state == 'start'){
-                                        startMoveDynamicItems('event'); 
+                                        startMoveDynamicItems('event');
                                     }else{
                                         stopMoveDynamicItems('event');
                                     }    
@@ -239,6 +277,13 @@
                                 overlayList[id] = user;
                                 
                                 map.addOverlay(user);
+                            }
+                            
+                            function disconectUser(id){
+                                if(overlayList[id]){
+                                    map.removeOverlay(overlayList[id]);   
+                                    delete overlayList[id];
+                                }
                             }
                             
                             function getUser(){
@@ -440,9 +485,9 @@
                                             user: getUser()._id,
                                             sceneId: $scope.selectedScene._id, 
                                             mapId: $scope.selectedScene.mapId
-                                        };
-                                        socket.emit('start-pause', data);    
-                                    }   
+                                        };    
+                                        socket.emit('start-pause', data);   
+                                    }  
                                 }
                             }              
                             
@@ -461,6 +506,12 @@
                                     };
                                     socket.emit('start-pause', data);
                                 }
+                            }
+                            
+                            function userExit(){
+                                socket.emit('user exit', {id: getUser()._id});
+                                stopMoveDynamicItems('event');
+                                
                             }
                             
                             function setRating(itemId){

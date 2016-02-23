@@ -175,6 +175,8 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
                     $scope.hideLoadBar = $scope.hideLoadBar || true;
                     $scope.simulationDataLoaded = $scope.simulationDataLoaded || true; 
                 }
+                
+                socket.emit('sincronize map', data);
             }
         }, function(err){
             $scope.errorMsgList.push(err);
@@ -190,13 +192,13 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
                 $scope.itemTypeList.push(item);      
             }
             
-            $scope.percentageSum+=20;
-                $scope.percentage=String($scope.percentageSum)+"%";
-
-                if($scope.percentageSum==100){
-                    $scope.hideLoadBar = $scope.hideLoadBar || true;
-                    $scope.simulationDataLoaded = $scope.simulationDataLoaded || true; 
-                }
+            $scope.percentageSum+=20;  
+            $scope.percentage=String($scope.percentageSum)+"%";
+            
+            if($scope.percentageSum==100){
+                $scope.hideLoadBar = $scope.hideLoadBar || true;
+                $scope.simulationDataLoaded = $scope.simulationDataLoaded || true; 
+            }
         }, function(err){
             $scope.errorMsgList.push(err);
         });
@@ -211,13 +213,13 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
                 $scope.itemTypeList.push(item);  
             }
             
-             $scope.percentageSum+=20;
-                $scope.percentage=String($scope.percentageSum)+"%";
+            $scope.percentageSum+=20;  
+            $scope.percentage=String($scope.percentageSum)+"%";
             
-                if($scope.percentageSum==100){
-                    $scope.hideLoadBar = $scope.hideLoadBar || true;
-                    $scope.simulationDataLoaded = $scope.simulationDataLoaded || true;  
-                }
+            if($scope.percentageSum==100){
+                $scope.hideLoadBar = $scope.hideLoadBar || true;
+                $scope.simulationDataLoaded = $scope.simulationDataLoaded || true; 
+            }
         }, function(err){
             $scope.errorMsgList.push(err);
         });
@@ -238,7 +240,7 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
             }
         }, function(err){
             $scope.errorMsgList.push(err);
-        }); 
+        });
     }
     
     function getDynamicItems(value, data){

@@ -109,6 +109,14 @@ io.on('connection', function(socket){
         socket.broadcast.emit('user change position', data);
     });
     
+    socket.on('sincronize map', function(data){ 
+        socket.broadcast.emit('sincronize map', data);
+    });
+    
+    socket.on('sincronize map result', function(data){
+        socket.broadcast.emit('sincronize map result', data);
+    });
+    
     socket.on('start-pause', function(data){ 
         socket.broadcast.emit('start-pause', data);
     });
@@ -131,6 +139,10 @@ io.on('connection', function(socket){
     //Evento que ejecuta el servidor para dejar los resultados al navegador 
     socket.on('recommended items', function(data){
         socket.broadcast.emit('recommended items', data); //este evento lo tiene el navegador
+    });
+    
+    socket.on('user exit', function(data){
+        socket.broadcast.emit('user exit', data); 
     });
     
     socket.on('disconnect', function(){
