@@ -1,6 +1,6 @@
 var app = angular.module('app');
 
-app.controller("SimulatorController", ['$scope', '$http', '$localStorage', 'Services', 'DataFactory', function ($scope, $http, $localStorage, Services, DataFactory) {
+app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localStorage', 'Services', 'DataFactory', function ($scope, $timeout, $http, $localStorage, Services, DataFactory) {
     $scope.errorMsgList = [];
     $scope.userImg;
     $scope.simulationDataLoaded = false;
@@ -17,7 +17,9 @@ app.controller("SimulatorController", ['$scope', '$http', '$localStorage', 'Serv
     $scope.itemTypesToRecommend = [];
     $scope.showPlay = true;
     $scope.token = $localStorage.token;
-    $scope.resultTypeShow = "emptyList"
+    $scope.resultTypeShow = "emptyList";
+    $scope.percentage = "0%";
+    $scope.percentageSum = 0;
     
     $scope.recomend = function(){
         $scope.recommendedItemList = [];
@@ -111,6 +113,14 @@ app.controller("SimulatorController", ['$scope', '$http', '$localStorage', 'Serv
                 $scope.errorMsgList.push(res.msg);    
             }else{
                 $scope.userImg = res.img;
+                
+                $scope.percentageSum+=20;
+                $scope.percentage=String($scope.percentageSum)+"%";
+                
+                if($scope.percentageSum==100){
+                    $scope.hideLoadBar = $scope.hideLoadBar || true;
+                    $scope.simulationDataLoaded = $scope.simulationDataLoaded || true;
+                }
             }
         }, function(err){
             $scope.errorMsgList.push(err);   
@@ -157,6 +167,14 @@ app.controller("SimulatorController", ['$scope', '$http', '$localStorage', 'Serv
                         map.addOverlay(overlay);
                     }
                 });
+                
+                $scope.percentageSum+=20;
+                $scope.percentage=String($scope.percentageSum)+"%";
+                
+                if($scope.percentageSum==100){
+                    $scope.hideLoadBar = $scope.hideLoadBar || true;
+                    $scope.simulationDataLoaded = $scope.simulationDataLoaded || true; 
+                }
             }
         }, function(err){
             $scope.errorMsgList.push(err);
@@ -169,8 +187,16 @@ app.controller("SimulatorController", ['$scope', '$http', '$localStorage', 'Serv
                     name: res[index].name
                 };
 
-                $scope.itemTypeList.push(item);    
+                $scope.itemTypeList.push(item);      
             }
+            
+            $scope.percentageSum+=20;
+                $scope.percentage=String($scope.percentageSum)+"%";
+
+                if($scope.percentageSum==100){
+                    $scope.hideLoadBar = $scope.hideLoadBar || true;
+                    $scope.simulationDataLoaded = $scope.simulationDataLoaded || true; 
+                }
         }, function(err){
             $scope.errorMsgList.push(err);
         });
@@ -182,8 +208,16 @@ app.controller("SimulatorController", ['$scope', '$http', '$localStorage', 'Serv
                     name: res[index].name
                 };
 
-                $scope.itemTypeList.push(item);    
+                $scope.itemTypeList.push(item);  
             }
+            
+             $scope.percentageSum+=20;
+                $scope.percentage=String($scope.percentageSum)+"%";
+            
+                if($scope.percentageSum==100){
+                    $scope.hideLoadBar = $scope.hideLoadBar || true;
+                    $scope.simulationDataLoaded = $scope.simulationDataLoaded || true;  
+                }
         }, function(err){
             $scope.errorMsgList.push(err);
         });
@@ -193,13 +227,18 @@ app.controller("SimulatorController", ['$scope', '$http', '$localStorage', 'Serv
                 $scope.errorMsgList.push(res.msg);    
             }else{
                 $scope.recommender = res.recommender;
+                
+                $scope.percentageSum+=20;
+                $scope.percentage=String($scope.percentageSum)+"%";
+                
+                if($scope.percentageSum==100){
+                    $scope.hideLoadBar = $scope.hideLoadBar || true;
+                    $scope.simulationDataLoaded = $scope.simulationDataLoaded || true; 
+                }
             }
         }, function(err){
             $scope.errorMsgList.push(err);
-        });
-        
-        $scope.hideLoadBar = true;
-        $scope.simulationDataLoaded = true; 
+        }); 
     }
     
     function getDynamicItems(value, data){
