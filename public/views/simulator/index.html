@@ -88,33 +88,56 @@
                             var artists = [];
                             var state = 'stop';
                             
+                            if(artists.length == 0){
+                                for(index in $scope.dynamiItemsList){
+                                    artists[index] = 0;
+                                }    
+                            }
+                            
                             socket.on('sincronize map', function(data){
+                                //alert("sincronize map");
                                 if(data.sceneId==$scope.selectedScene._id && data.mapId==$scope.selectedScene.mapId){
+                                    var dynamicItemListPositions = []
+                                    for(index in $scope.dynamiItemsList){
+                                        dynamicItemListPositions[index] = $scope.dynamiItemsList[index].overlay.getPosition();    
+                                    }
+                                
                                     var data = {
                                         state: state,
                                         sceneId: $scope.selectedScene._id, 
                                         mapId: $scope.selectedScene.mapId,
-                                        dynamicItemList: $scope.dynamiItemsList
+                                        artists: artists,
+                                        dynamicItemList: dynamicItemListPositions
                                     };
-                                    console.log(data);
+                                    
                                     socket.emit('sincronize map result', data);    
                                 }
                             });
                     
-                            socket.on('sincronize map result', function(data){
-                                console.log(data);
+                            socket.on('sincronize map result', function(data){                                
+                                //alert("sincronize map result");
+                                
+                                console.log($scope);
                                 if(data.sceneId==$scope.selectedScene._id && data.mapId==$scope.selectedScene.mapId){
                                     if(data.dynamicItemList.length!=0){
-                                        $scope.dynamiItemsList = data.dynamicItemList; 
+                                        for(index in data.dynamicItemList){
+                                            var overlay = $scope.dynamiItemsList[index].overlay;
+                                            map.removeOverlay(overlay);
+                                                
+                                            $scope.dynamiItemsList[index].overlay = new ol.Overlay({
+                                                position: data.dynamicItemList[index],
+                                                element: overlay.getElement()
+                                            });
+                                            map.addOverlay($scope.dynamiItemsList[index].overlay);
+                                        }
+                                        
+                                        artists = data.artists;
                                         ItemsMove();
                                     }
-                                    
                                     state = data.state;
                                     
                                     if(data.state == 'start'){
                                         startMoveDynamicItems('event');
-                                    }else{
-                                        stopMoveDynamicItems('event');
                                     }
                                 }
                             });
@@ -335,7 +358,7 @@
                             
                             $(document).keypress(function(e)
                             { 
-                                if(e.timeStamp != userTimeStamp){
+                                if(e.timeStamp != userTimeStamp){y
                                     if(window.location.hash=="#/simulator"){
                                             switch(e.which){
                                                 case 119: //es la w. Significa arriba
@@ -460,7 +483,7 @@
                                     list[index].overlay = new ol.Overlay({
                                         position: ol.proj.transform(newPos, 'EPSG:4326', 'EPSG:3857'),
                                         element: overlay.getElement()
-                                    }); 
+                                    });
 
                                     map.addOverlay(list[index].overlay);   
                                 }
@@ -473,7 +496,8 @@
                                             artists[index] = 0;
                                         }
                                     }
-
+                                    
+                                    state = 'start';
                                     dynamicItemMoveTemporizador = window.setInterval('ItemsMove()', dynamicItemRefreshInterval);
                                     $scope.$apply(function(){
                                         $scope.showPlay = false;
@@ -492,6 +516,7 @@
                             }              
                             
                             function stopMoveDynamicItems(event){
+                                state = 'stop';
                                 dynamicItemMoveTemporizador = window.clearInterval(dynamicItemMoveTemporizador);
                                 $scope.$apply(function(){
                                     $scope.showPlay = true;

@@ -201,7 +201,7 @@ router.get('/img', ensureAuthorized, function(req, res){
     });
 });
 
-router.post('/userMove', function(req, res){   
+router.post('/userMove', ensureAuthorized, function(req, res){   
     User.findOne({token: req.token}, function(err, user){
         if(!err){
             var userMove = new UserMove();

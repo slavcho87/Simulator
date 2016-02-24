@@ -49,7 +49,7 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
             socket.emit('getRecommend', data);
         }else{
             $scope.errorMsgList.push("The user's location can not be empty!");
-        }   
+        }
     }
     
     $scope.setRating = function(itemId, rating){
@@ -168,15 +168,18 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
                     }
                 });
                 
-                $scope.percentageSum+=20;
-                $scope.percentage=String($scope.percentageSum)+"%";
+                $timeout(function() {
+                    $scope.percentageSum+=20;
+                    $scope.percentage=String($scope.percentageSum)+"%";
+
+                    if($scope.percentageSum==100){
+                        $scope.hideLoadBar = $scope.hideLoadBar || true;
+                        $scope.simulationDataLoaded = $scope.simulationDataLoaded || true; 
+                    }
+                    
+                    socket.emit('sincronize map', data);
+                }, 3000);
                 
-                if($scope.percentageSum==100){
-                    $scope.hideLoadBar = $scope.hideLoadBar || true;
-                    $scope.simulationDataLoaded = $scope.simulationDataLoaded || true; 
-                }
-                
-                socket.emit('sincronize map', data);
             }
         }, function(err){
             $scope.errorMsgList.push(err);
@@ -346,7 +349,7 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
         
         return r;
     }
-    
+
     /*
     * Hide error message
     */    

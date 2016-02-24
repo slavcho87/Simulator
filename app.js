@@ -100,21 +100,48 @@ app.use(function(err, req, res, next) {
     });
 });
 
+var users = {};
+var reqUsers = {};
+var sceneList = [];
+
+function getUserToSincronize(mapID, sceneId, socketId){    
+    for(var index in users){
+        if(index!=socketId && users[index].mapId==mapID && users[index].sceneId==sceneId){
+            return users[index];
+        }
+    }
+    return null;
+}
+
 var io = require('socket.io')(server);
 
 io.on('connection', function(socket){
     console.log("user connected");
+    users[socket.id] = {socket:socket, mapId: "", sceneId: ""};
     
     socket.on('user change position', function(data){
         socket.broadcast.emit('user change position', data);
     });
     
-    socket.on('sincronize map', function(data){ 
-        socket.broadcast.emit('sincronize map', data);
+    socket.on('sincronize map', function(data){
+        var user = users[socket.id];
+        users[socket.id] = {socket: user.socket, mapId: data.mapId, sceneId: data.sceneId};
+        
+        var userToReq = getUserToSincronize(data.mapId, data.sceneId, socket.id);
+        
+        if(userToReq != null){
+            reqUsers[userToReq.socket.id] = socket; 
+            userToReq.socket.emit('sincronize map', data);
+        }
     });
     
     socket.on('sincronize map result', function(data){
-        socket.broadcast.emit('sincronize map result', data);
+        var user = reqUsers[socket.id];
+        
+        if(user){
+            user.emit('sincronize map result', data);
+            delete reqUsers[socket.id];
+        }
     });
     
     socket.on('start-pause', function(data){ 
@@ -147,6 +174,7 @@ io.on('connection', function(socket){
     
     socket.on('disconnect', function(){
         console.log('user disconnected');
+        delete users[socket.id];
     });
 });
 
