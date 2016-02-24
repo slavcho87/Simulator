@@ -10,7 +10,7 @@ Lo primero que tenemos que hacer es instalar mongodb. Los pasos para la instalac
 
 ## Paso 2: instalar Nodejs y NPM
 
-Vamos en la web oficial de nodejs (https://nodejs.org) y descargamos e instalamos el ejecutable. En el caso de Windows la instalación es igual que la de cualquier otro programa. Para más información visite https://nodejs.org/en/download/. 
+Vamos en la web oficial de nodejs (https://nodejs.org) y descargamos e instalamos la version v0.12.4. En el caso de Windows la instalación es igual que la de cualquier otro programa. Para más información visite https://nodejs.org/en/download/. 
 
 A continuación tenemos que instalar el gestor de paquetes NPM. En el caso de Windows vamos en la web oficial (https://nodejs.org/en/download/) y nos descargamos e instalamos el ejecutable. En el caso de Linux ejecutamos el siguiente comando en la consola:
 
