@@ -2,6 +2,7 @@ node_modules/
 \.brackets.json
 npm-debug.txt
 .metadata
+Recommender/target
 RemoteSystemsTempFiles
 .recommenders
 Servers
