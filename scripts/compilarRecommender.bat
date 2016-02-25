@@ -2,4 +2,4 @@
 cd ..
 cd Recommender
 mvn clean install
-cd ..
+pause
