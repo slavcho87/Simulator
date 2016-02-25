@@ -536,6 +536,25 @@
                             function userExit(){
                                 socket.emit('user exit', {id: getUser()._id});
                                 stopMoveDynamicItems('event');
+                                $scope.errorMsgList = [];
+                                $scope.userImg;
+                                $scope.simulationDataLoaded = false;
+                                $scope.hideLoadBar = true;
+                                $scope.info = "";
+                                $scope.mapId = DataFactory.data.mapId;
+                                $scope.sceneList = [];
+                                $scope.sceneListEmpty = false;
+                                $scope.mapCenter = [0, 0];
+                                $scope.staticItemList = [];
+                                $scope.dynamiItemsList = [];
+                                $scope.recommendedItemList = [];
+                                $scope.itemTypeList = [];
+                                $scope.itemTypesToRecommend = [];
+                                $scope.showPlay = true;
+                                $scope.token = $localStorage.token;
+                                $scope.resultTypeShow = "emptyList";
+                                $scope.percentage = "0%";
+                                $scope.percentageSum = 0;
                                 
                             }
                             

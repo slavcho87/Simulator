@@ -169,6 +169,8 @@ io.on('connection', function(socket){
     });
     
     socket.on('user exit', function(data){
+        users[socket.id].mapId = "";
+        users[socket.id].sceneId = "";
         socket.broadcast.emit('user exit', data); 
     });
     
