@@ -68,7 +68,9 @@ public class UserBasedStrategy implements Strategy {
 			
 		} catch (TasteException e) {
 			e.printStackTrace();
-		} 
+		} catch (Exception e1){
+			e1.printStackTrace();
+		}
 		
 		return recommendedItemIdList;
 	}

@@ -153,7 +153,11 @@ public class Recommender{
 			numElements++;
 		}
 		
-		return totalRating/numElements;
+		if(numElements!=0){
+			return totalRating/numElements;
+		}else{
+			return 0;
+		}
 	}
 
 	/**
