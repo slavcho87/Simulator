@@ -358,7 +358,7 @@
                             
                             $(document).keypress(function(e)
                             { 
-                                if(e.timeStamp != userTimeStamp){y
+                                if(e.timeStamp != userTimeStamp){
                                     if(window.location.hash=="#/simulator"){
                                             switch(e.which){
                                                 case 119: //es la w. Significa arriba
@@ -541,7 +541,6 @@
                                 $scope.simulationDataLoaded = false;
                                 $scope.hideLoadBar = true;
                                 $scope.info = "";
-                                $scope.mapId = DataFactory.data.mapId;
                                 $scope.sceneList = [];
                                 $scope.sceneListEmpty = false;
                                 $scope.mapCenter = [0, 0];
