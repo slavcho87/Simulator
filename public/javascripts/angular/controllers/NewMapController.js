@@ -219,6 +219,10 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
             
             $scope.msgList.push("Dynamic item inserted!");
             
+            dynamicItemsMap.getOverlays().getArray().slice(0).forEach(function(overlay) {
+                dynamicItemsMap.removeOverlay(overlay);
+            });
+             
             $scope.newDynamicItem.type = "";
             $scope.newDynamicItem.dynamicItemName = "";
             $scope.newDynamicItem.itemSpeed = "",
@@ -237,6 +241,7 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
         
         if(index>=0){
             $scope.newDynamicItem.route.splice(index, 1);
+            dynamicItemsMap.removeOverlay(dynamicItemsMap.getOverlays().getArray()[index]); 
         }else{
             $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
         }
@@ -266,7 +271,7 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
         var index = $scope.dynamicItemListInScene.indexOf($scope.selectDynamicItemToDeleteValue);
         
         if(index>=0){
-            $scope.dynamicItemListInScene.splice(index, 1);    
+            $scope.dynamicItemListInScene.splice(index, 1);
         }else{
             $scope.errorMsgList.push(ERROR_HAS_OCCURRED);
         }

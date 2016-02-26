@@ -548,6 +548,14 @@
                                             var $scope = angular.element(appElement).scope();
                                             $scope = $scope.$$childHead; 
                                             
+                                            var pointMap = new ol.Overlay({
+                                                position: evt.coordinate,
+                                                element: $('<img src="images/map-pin-md.png" class="img-circle" id="'+pos+'">')
+                                                .css({marginTop: '-150%', marginLeft: '-50%', width: '40px', height: '40px', cursor: 'pointer'})    
+                                            });
+                                            
+                                            dynamicItemsMap.addOverlay(pointMap);
+                                            
                                             $scope.$apply(function () {
                                                 $scope.newDynamicItem.route.push({
                                                     long: pos[1],  
