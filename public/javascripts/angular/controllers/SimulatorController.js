@@ -281,6 +281,7 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
             map.addOverlay(overlay);
                             
             var info = {
+                _id: res._id,
                 overlay: overlay,
                 speed: speed,
                 route: res.route,
@@ -292,7 +293,7 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
         }, function(err){
             $scope.errorMsgList.push("The dynamic objects could not be saved!");
             $scope.errorMsgList.push(err);
-        });    
+        }); 
     }
     
     //Calculo de rumbo entre dos coordenadas geograficas

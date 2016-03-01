@@ -94,14 +94,32 @@
                                 }    
                             }
                             
+                            
+                            socket.on('get dynamic item positions', function(data){
+                                var data = [];
+                                
+                                for(index in $scope.dynamiItemsList){
+                                    var pos = $scope.dynamiItemsList[index].overlay.getPosition();
+                                    pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326');
+                                    
+                                    var item = {
+                                        _id: $scope.dynamiItemsList[index]._id,
+                                        position: pos
+                                    };
+                                    
+                                    data.push(item);
+                                }
+                                
+                                socket.emit('get dynamic item positions result', data);
+                            });
+                            
                             socket.on('sincronize map', function(data){
-                                //alert("sincronize map");
                                 if(data.sceneId==$scope.selectedScene._id && data.mapId==$scope.selectedScene.mapId){
                                     var dynamicItemListPositions = []
                                     for(index in $scope.dynamiItemsList){
                                         dynamicItemListPositions[index] = $scope.dynamiItemsList[index].overlay.getPosition();    
                                     }
-                                
+                                    
                                     var data = {
                                         state: state,
                                         sceneId: $scope.selectedScene._id, 
@@ -114,10 +132,7 @@
                                 }
                             });
                     
-                            socket.on('sincronize map result', function(data){                                
-                                //alert("sincronize map result");
-                                
-                                console.log($scope);
+                            socket.on('sincronize map result', function(data){  
                                 if(data.sceneId==$scope.selectedScene._id && data.mapId==$scope.selectedScene.mapId){
                                     if(data.dynamicItemList.length!=0){
                                         for(index in data.dynamicItemList){

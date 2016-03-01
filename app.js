@@ -166,6 +166,17 @@ io.on('connection', function(socket){
     //Evento que ejecuta el servidor para dejar los resultados al navegador 
     socket.on('recommended items', function(data){
         socket.broadcast.emit('recommended items', data); //este evento lo tiene el navegador
+    }); 
+    
+    //este evento lo invoca el recomendador para recuperar las posiciones de los items dinamicos
+    socket.on('get dynamic item positions', function(data){
+        var userToReq = getUserToSincronize(data.mapId, data.sceneId, socket.id);
+        userToReq.emit('get dynamic item positions', null); //este evento lo tiene el navegador
+    });
+    
+    //evento que ejecuta el cliente para dejar los datos de las posiciones de los items dinamicos en el recomendador
+    socket.on('get dynamic item positions result', function(data){
+        socket.broadcast.emit('get dynamic item positions result', data); //este evento lo tiene el recomendador
     });
     
     socket.on('user exit', function(data){
