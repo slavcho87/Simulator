@@ -204,7 +204,7 @@
                                 pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326');
                                 pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 90);
                                 setUserPos(pos);
-                                $scope.userMove();
+                                //$scope.userMove();
                                 var data = {
                                     user: getImg(),
                                     pos: pos,
@@ -218,7 +218,7 @@
                                 pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326');
                                 pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 270);
                                 setUserPos(pos);
-                                $scope.userMove();
+                                //$scope.userMove();
                                 var data = {
                                     user: getImg(),
                                     pos: pos,
@@ -232,7 +232,7 @@
                                 pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326');
                                 pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 180);
                                 setUserPos(pos);
-                                $scope.userMove();
+                                //$scope.userMove();
                                 var data = {
                                     user: getImg(),
                                     pos: pos,
@@ -246,7 +246,7 @@
                                 pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326');
                                 pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 0);
                                 setUserPos(pos);
-                                $scope.userMove();
+                                //$scope.userMove();
                                 var data = {
                                     user: getImg(),
                                     pos: pos,
@@ -351,7 +351,7 @@
                                     id: getUser()._id
                                 };
                                 
-                                $scope.userMove();
+                                //$scope.userMove();
                                 
                                 socket.emit('user change position', data);
                             });      
@@ -572,8 +572,8 @@
                         <button type="button" ng-hide="showPlay" class="btn btn-default fa fa-pause" onclick="stopMoveDynamicItems()">
                         </button>
                         
-                        <button type="button" class="btn btn-default fa fa-download">                         
-                        </button>
+                        <!--<button type="button" class="btn btn-default fa fa-download">                         
+                        </button>-->
                             
                         <button type="button" class="btn btn-default fa fa-arrow-up" onclick="up()">                         
                         </button>
