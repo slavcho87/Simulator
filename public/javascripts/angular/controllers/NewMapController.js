@@ -196,7 +196,7 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
                 latitude: $scope.newStaticItem.latitude
             });
             
-            $scope.msgList.push("Static item inserted!");
+            //$scope.msgList.push("Static item inserted!");
             
             $scope.newStaticItem.name = "";
             $scope.newStaticItem.type = "";
@@ -324,8 +324,35 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
         return ($scope.scene.defineForm!="setManually");
     }
     
-    $scope.loadStaticItemsFromFile = function(){
-        console.log($scope.scene.staticItemFile);
+    $scope.loadStaticItemsFromFile = function(){ 
+        var reader = new FileReader();
+        
+        reader.onload = function (e) {
+            var data = e.target.result; 
+            data = JSON.parse(data);
+            
+            for(i=0;i<data.length;i++){
+                $scope.newStaticItem = {
+                    type: JSON.stringify(getStaticItemById(data[i].staticItemType)),
+                    name: data[i].itemName,
+                    longitude: data[i].longitude,
+                    latitude: data[i].latitude
+                };
+                $scope.saveStaticItemInScene();
+            }
+        };
+        
+        var fileInputElement = document.getElementById("staticItemFile");
+        reader.readAsText(fileInputElement.files[0]);
+    }
+    
+    function getStaticItemById(id) {
+        for(index in $scope.staticItemList){
+            if($scope.staticItemList[index]._id==id){
+                return $scope.staticItemList[index];
+            }
+        }
+        return null;
     }
     
     $scope.loadDynamicItemsFromFile = function(){

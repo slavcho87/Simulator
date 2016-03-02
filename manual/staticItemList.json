@@ -1,0 +1,20 @@
+[
+	{
+        "staticItemType": "56a9fea4140762b8144a3201",
+        "itemName": "bar de jose",
+        "longitude": "40.42260202053336", 
+		"latitude": "-3.703711146032716"
+    },
+	{
+        "staticItemType": "56a9fea4140762b8144a3201",
+        "itemName": "bar de mario",
+        "longitude": "40.419596248623805", 
+		"latitude": "-3.7047840296386734"
+    },
+	{
+        "staticItemType": "56a9fea4140762b8144a3201",
+        "itemName": "bar de pepe",
+        "longitude": "40.41688440438355", 
+		"latitude": "-3.6987329661010753"
+    }
+]
