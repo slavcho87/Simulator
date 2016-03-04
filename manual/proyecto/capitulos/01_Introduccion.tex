@@ -1,0 +1,101 @@
+\chapter{Introducción}
+\thispagestyle{empty}
+
+En este capítulo se mostrará la motivación existente para la realización de este Trabajo Fin de Grado, los objetivos que han sido marcados por el proyecto, las librerías y herramientas utilizadas para su elaboración, el modelo de trabajo seleccionado y también se analizará el trabajo relacionado. Finalmente se mostrará la estructura seguida en este documento.
+
+\section{Motivación del proyecto}
+\thispagestyle{empty}
+
+       %\vspace{1cm}
+
+Han sido varias las razones que me llevaron a elegir desarrollar este Trabajo Fin de Grado. La primera y principal ha sido el interés personal en los sistemas de recomendaciones y su amplia aplicación en sistemas comerciales. Por otro lado, realizar un proyecto complejo, partiendo desde cero y sin tener ningún conocimiento particular de este ámbito, suponía un gran reto que deseaba afrontar porque me permitiría ampliar mis conocimientos en campos diversos como Ingeniería del Software, Arquitecturas de Software etc., de las que poseía unos conocimientos limitados. Además, consideré que la experiencia y conocimientos que adquiriría en este proyecto aumentarian mis posibilidades de desarrollar mi carrera profesional en este ámbito.
+
+\section{Objetivos}
+\thispagestyle{empty}
+
+       %\vspace{1cm}
+
+El Trabajo Fin de Grado que se describe en este documento tiene los siguientes objetivos:
+
+\begin{itemize}
+	\item Desarrollar un simulador de escenarios con usuarios móviles, que cuente con mapas de ciudades con objetos móviles y estáticos.
+	\item Desarrollar lo necesario para que se permita que los mapas de ciudades sean reales de tal forma que estos sean obtenidos de un sistema que proporcione mapas.
+       \item Desarrollar lo necesario para que los usuarios puedan crear, editar, borrar y configurar los mapas y escenarios del simulador.
+       \item Desarrollar lo necesario para que todas las configuraciones de mapas y escenarios sean parametrizables desde la interfaz de usuario.
+       \item Desarrollar lo necesario para que la simulación de escenas funcione en tiempo real de tal forma que los eventos de una escena se reflejen en los dispositivos de los usuarios conectados al mismo mapa y escena.
+       \item Desarrollar una interfaz que permita la integración con un recomendador externo de tal forma que exista una comunición bidireccional basada en eventos entre el simulador y el recomendador.
+\end{itemize}
+
+Además de los objetivos marcados por la propuesta del Trabajo Fin de Grado, también se han tenido en cuenta como objetivos lograr que el simulador utilize los recursos hardware minimos, permitir que este sea facilmente escalable y que pueda desplegarse en un entorno distribuido. De esta forma logramos ahorar costes de infraestructura y futuros desarrollos.
+
+\section{Herramientas utilizadas}
+\thispagestyle{empty}
+
+       %\vspace{1cm}
+
+En esta sección se listan las tecnologias, libererías externas y herramientas utilizadas para el desarrollo del proyecto acompañada de una breve descripción del porqué de su uso.
+
+       \vspace{0.7cm}
+\noindent{\textbf{Librerías usadas}}\\
+\thispagestyle{empty}
+
+Para el desarrollo del proyecto se ha hecho uso de diversas librerías externas que han permitido la implementación en un tiempo razonable de ciertas funciones necesarias que no formaban parte de los objetivos del proyecto:
+
+\begin{itemize}
+       \item {\bfseries Openlayers}: framework de OpenStreetMap que nos permite el uso libre de mapas.
+       \item {\bfseries Node.js}: entorno Javascript del lado del servidor basado en el motor V8 de Google. 
+       \item {\bfseries Express}: framework de Node.js destinado a la creación de APIs Rest
+       \item {\bfseries Angular.js}: framework javascript que facilita la creación de aplicaciones en una sola página. 
+       \item {\bfseries Mongoose}: framework de Node.js destinado al modelado de objetos para MongoDB.
+       \item {\bfseries jwt.io}: framework destinado a la creación y distribución de web tokens. 
+       \item {\bfseries socket.io}: framework de Node.js destinado a la creación de comunicaciones bidirecionales basadas en eventos
+       \item {\bfseries Apache mahout}: framework de Java destinado al aprendizaje automático.
+       \item {\bfseries socket.io-client}: cliente Java para socket.io desarrollado por Naoyuki Kanezawa
+\end{itemize}
+
+       \vspace{0.7cm}
+\noindent{\textbf{Herramienta de desarrollo}}\\
+\thispagestyle{empty}
+
+Poner las herramientas de desarrollo
+
+
+       \vspace{0.7cm}
+\noindent{\textbf{Herramienta de documentación}}\\
+\thispagestyle{empty}
+
+Se han usado las siguientes herramientas para la elaboración de la documentación del proyecto:
+
+\begin{itemize}
+       \item {\bfseries Latex}: lenguaje usado para la elaboración de este documento
+       \item {\bfseries GanttProject}: editor de diagramas de Gantt
+\end{itemize}
+
+
+\section{Modelo de proceso seleccionado}
+\thispagestyle{empty}
+
+       %\vspace{1cm}
+
+El modelo de trabajo seleccionado está basado en el modelo de espiral. Las actividades de este modelo forman una espiral de tal forma que cada iteración representa un conjunto de actividades. Se ha elegido este modelo de trabajo porque nos permitiría integrar el desarrollo con el mantenimiento y evaluar en cada iteración si dichos requisitos siguen encajando de lo que se esperaba de la aplicación para conseguir los objetivos propuestos. De esta forma se reduce el riesgo del proyecto y se incorporan objetivos de calidad.
+
+
+\section{Trabajos relacionados}
+\thispagestyle{empty}
+
+       %\vspace{1cm}
+
+Poner los trabajos relacionados
+
+
+\section{Estructura de la memoria}
+\thispagestyle{empty}
+       %\vspace{1cm}
+
+El contenido de la memoría está distribuido de la siguiente forma:
+
+\begin{itemize}
+	\item En el capítulo 2 se expone el trabajo desarrollado para la elaboración del simulador
+	\item En el capítulo 3 se analiza la posible explotación del simulador como método para probar diferentes tipos de algoritmos de recomendaciones, También se muestra el rendimiento obtenido del simulador
+	\item En l capítulo 4 se muestran las conclusione del proyecto y el posible trabajo futuro de cada a mejorar el simulador 
+\end{itemize}
