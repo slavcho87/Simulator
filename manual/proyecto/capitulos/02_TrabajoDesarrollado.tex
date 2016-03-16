@@ -52,15 +52,55 @@ La arquitectura del front end está basada en el patrón Modelo-Vista-Controllad
 \subsection{Arquitectura del back end}
 \thispagestyle{empty}
 
-Para el desarrollo del back end se han utilizado Node.js\footnote{javascript al lado del servidor}, Express\footnote{modulo de Node.js que nos ofrece la posiblidad de desarrollar una REST API}, socket.io\footnote{sistema bidireccional dirigido por eventos} y mongoose \footnote{modelado de objetos sobre mongoDB}. Se ha decidido utilizar estas tecnología por que nos ofrecen las siguientes ventajas:
+Para el desarrollo del back end se han utilizado Node.js\footnote{javascript al lado del servidor}, Express\footnote{modulo de Node.js que nos ofrece la posiblidad de desarrollar una REST API}, socket.io\footnote{sistema bidireccional dirigido por eventos} y mongoose \footnote{modelado de objetos sobre mongoDB}. Se ha decidido utilizar estas tecnología por que nos ofrecen las siguientes ventajas: mejora la productividad a la hora de desarrollar el back end, nos permite desarrollar un back end ligero que consuma pocos recursos y el modulo sockets.io nos ofrece la posibilidad de desarrollar un sistema bidireccional dirigido por eventos.
 
+La arquitectura del back end se basa en la filosofía de desarrollo de aplicaciones con Node.js y Express y consiste de la siguiente estructura de directorios:
+
+\dirtree{%
+.1 Simulator.
+.2 app.js.
+.2 package.json.
+.2 bin.
+.3 www.
+.2 models.
+.2 public.
+.3 images.
+.3 javascript.
+.4 angular.
+.4 bootstrap.
+.4 jquery.
+.4 openlayers.
+.4 socketIO.
+.3 stylesheets.
+.3 views.
+.4 configurations.
+.4 maps.
+.4 settings.
+.4 index.html.
+.4 register.html.
+.3 index.html.
+.2 routes.
+.3 configuratios.js.
+.3 maps.js.
+.3 simulation.js.
+.3 user.js.
+}
+
+\newpage
+
+A continuación vamos a ver más detalladamente cual es la funcion de cada elemento de este directorio:
 \begin{itemize}
-	\item mejora la productividad a la hora de desarrollar nuestro propio back end.
-	\item nos permite desarrollar un back end ligero que consuma pocos recursos.
-	\item el modulo sockets.io nos ofrece la posibilidad de desarrollar un sistema bidireccional dirigido por eventos. De esta forma podemos comunicarnos con un navegador web y enviarle datos sin que este los haya solicitado.
+	\item app.js: centraliza las configuraciones de nuestra aplicación como por ejemplo en que puerto arranca el servidor, establecer conexiones con la base de datos, configuraciones del router\footnote{el router de Node.js es el encargado del direccionamiento de las peticiones y hace referencia a la definición de puntos finales de aplicación (URI) y cómo responden a las solicitudes de cliente} etc.
+	\item package.json: es un gestor de paquetes y contiene los modulos que se están utilizando en nuestra aplicación.
+	\item public: es un directorio que contiene la parte visual, es decir el front end. Podemos ver que este contiene varios subdirectorios:
+	\begin{itemize}
+	\item en images se ubican las imagenes o iconos usados en la aplicación.
+	\item en javascript se ubican los frameworks Javascript usados en en el front end como Angular.js, Bootstrap, OpenLayers etc. En el subdirectorio angular podemos encontrar las configuraciones de Angular.js, los controladores de las vistas, los Servicios etc.
+	\item en views se ubican las vistas del front end.
+	\item en stylesheets están ubicadas las hojas de estilos
+	\end{itemize}
+	\item en routes se ubican las distinas rutas de Express. En nuestro caso tenemos una para cada menú de la aplicación. Por ejemplo todas las operaciones referentes al menú Maps se encuentra en el fichero maps.js etc.
 \end{itemize}
-
-La arquitectura del back end se basa en la filosofía de desarrollo de aplicaciones con Node.js y Express. 
 
 \subsection{Arquitectura de recomendador}
 \thispagestyle{empty}
