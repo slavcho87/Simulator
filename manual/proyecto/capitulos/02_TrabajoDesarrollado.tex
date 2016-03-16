@@ -39,9 +39,9 @@ El sistema bidireccional dirigido por eventos es utilizado por una parte durante
 \subsection{Arquitectura del front end}
 \thispagestyle{empty}
 
-Para el desarrollo del front end se han utilizado los frameworks Angular.js y bootstrap. Angular.js es un framework que nos permite desarrollar aplicaciones de una sola página. Se ha decidido utilizar esta tecnología porque nos ofrece varias ventajas: ahorro de recursos\footnote{angular.js va transmitiendo las vistas de la interfaz gráfica y las cáchea al lado del cliente para ser reutilizadas posteriormete. Vuelve a solicitar una vista si y solo si esta ha sufrido algún cambio en el servidor} y mejora de la productividad.
+Para el desarrollo del front end se han utilizado los frameworks Angular.js\footnote{framework que nos permite desarrollar aplicaciones de una sola página} y bootstrap\footnote{framework que nos ofrece un sistema de componentes reutilizables y adaptables a la pantalla del dispositivo}. Se ha decidido utilizar estas tecnologias porque nos ofrece varias ventajas: ahorro de recursos\footnote{angular.js va transmitiendo las vistas de la interfaz gráfica y las cachea al lado del cliente para ser reutilizadas posteriormete. Vuelve a solicitar una vista si y solo si esta ha sufrido algún cambio en el servidor}, mejora de la productividad y la posibilidad de realizar una simulación sobre dispositivos móviles\footnote{esto nos da la oportunidad de utilizar la posición geográfica del usuario para obtener recomendaciones en el entorno de una cuidad real. De está manera obtenemos datos reales y muchas más precisión a la hora de evaluar los algoritmos de recomendaciones} con el mismo código fuente.
 
-Bootstrap es un framework que nos ofrece un sistema de componentes reutilizables y adaptables a la pantalla del dispositivo. De está manera obtenemos una interfaz gráfica que funcione sobre dispositivos móviles. Esto nos da la oportunidad de realizar una simulación sobre un dispositivo móvil y de utilizar la posición geográfica del usuario para obtener recomendaciones en el entorno de una cuidad real. De está manera obtenemos datos reales y muchas más precisión a la hora de evaluar los algoritmos de recomendaciones. 
+La arquitectura del front end está basada en el patrón Modelo-Vista-Controllador de tal forma que para cada vista existe un controlador que contiene la lógica de negocio de esta. El controlador tambien es el encargado de establecer comunicación con el back end. Esta comunicación se realiza mediante los llamados Servicios\footnote{es pequeña fabrica de funciones y objetos inyectada en los controladores} de Angular.js y la REST API del back end. Los Servicios de Angular.js son muy necesarios y útiles ya que nos permiten crear un envoltorio sobre la REST API que nos ofrece el back end y de esta forma centralizar las llamas a la API.
 
 \begin{figure}[H]
 \centering\includegraphics[scale=0.6]{imagenes/arquitectura-front-end.png}
@@ -52,14 +52,17 @@ Bootstrap es un framework que nos ofrece un sistema de componentes reutilizables
 \subsection{Arquitectura del back end}
 \thispagestyle{empty}
 
-Poner la arquitectura del back end.
+Para el desarrollo del back end se han utilizado Node.js\footnote{javascript al lado del servidor}, Express\footnote{modulo de Node.js que nos ofrece la posiblidad de desarrollar una REST API}, socket.io\footnote{sistema bidireccional dirigido por eventos} y mongoose \footnote{modelado de objetos sobre mongoDB}. Se ha decidido utilizar estas tecnología por que nos ofrecen las siguientes ventajas:
+
+\begin{itemize}
+	\item mejora la productividad a la hora de desarrollar nuestro propio back end.
+	\item nos permite desarrollar un back end ligero que consuma pocos recursos.
+	\item el modulo sockets.io nos ofrece la posibilidad de desarrollar un sistema bidireccional dirigido por eventos. De esta forma podemos comunicarnos con un navegador web y enviarle datos sin que este los haya solicitado.
+\end{itemize}
+
+La arquitectura del back end se basa en la filosofía de desarrollo de aplicaciones con Node.js y Express. 
 
 \subsection{Arquitectura de recomendador}
 \thispagestyle{empty}
 
 Poner la arquitectura del recomendador
-
-\subsection{Modelo de la base de datos}
-\thispagestyle{empty}
-
-Poner el esquema relacional de la base de datos
