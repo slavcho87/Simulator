@@ -28,7 +28,7 @@ La arquitectura del sistema consta de cliente o navegador web, servidor web Node
 
 El la figura \ref{arquitecturaComponentes} observamos que el navegador web se conecta al servidor Node.js mediante dos maneras: la primera es HTTP y la segunda es un sistema bidireccional dirigido por eventos. Las funcionalidades como creación de escenas, busqueda de mapas etc. están desarrollados sobre una REST API y el intercambio de mensajes JSON.
 
-El sistema bidireccional dirigido por eventos es utilizado por una parte durante la simulación, para reflejar los eventos generados por un usuario al resto de usuarios, y por otra para integrar el navegador, el servidor Node.js y el recomendador. De esta manera conseguimos compartir informácion entre los distintos componentes sin que estos los hayan solicitado y evitamos muchas peticiones innecesarias.
+El sistema bidireccional dirigido por eventos es utilizado por una parte durante la simulación, para reflejar los eventos generados por un usuario al resto de usuarios, y por otra para integrar el navegador, el servidor Node.js y el recomendador. De esta manera conseguimos compartir informácion entre los distintos componentes sin que estos los hayan solicitado evitando muchas peticiones innecesarias.
 
 \begin{figure}[H]
 \centering\includegraphics[scale=0.4]{imagenes/arquitectura-componentes.png}
@@ -105,4 +105,35 @@ A continuación vamos a ver más detalladamente cual es la funcion de cada eleme
 \subsection{Arquitectura de recomendador}
 \thispagestyle{empty}
 
-Poner la arquitectura del recomendador
+El desarrollo del recomendador está realizado con Java 7, la librería Apache Mahout y socket.io-client. El recomendador desarrollado es un recomendador pull\footnote{tipo de recomendador en el cual los usuarios solicitan recomendaciones} de ejemplo basado en los usuarios (User based recommender). 
+
+Aunque sea un recomendador de ejemplo este está pensado para se expandido, tanto para otro tipo de recomendadores (como pueden ser los recomendadores de tipo push\footnote{tipo de recomendador que realiza recomendaciones sin que el usuario los haya solicitado}) como para la implementación de nuevos tipos de estrategias para el recomendador de tipo pull.
+
+Durante el arranque el servidor del recomendador lanza un hilo por cada tipo de recomendador. En nuestro caso solo lanza un hilo que se corresponde al servidor de tipo pull. Este hilo es el que contiene los eventos que invoca el simulador de escenarios. En la figura \ref{diagramaEventos} observamos que tenemos solo dos eventos: uno para recuperar los tipos de implementaciones\footnote{en nuestro caso es User based recommender pero existen otros tipos como Item based recommender} y otro para realizar las recomendaciones.
+
+\begin{figure}[H]
+\centering\includegraphics[scale=0.6]{imagenes/diagrama-de-eventos.png}
+\caption{Diagrama de eventos}
+\label{diagramaEventos}
+\end{figure}
+
+El evento recommend es el que se dispara cuando unos de los usuarios solicita una recomendación. Para que se puedan utilizar distintos tipos de implementaciones del recomendador de tipo pull se ha implementado un patrón de diseño de tipo Strategy. Este patrón de diseños nos permite cambiar de estrategia de recomendación en tiempo de ejecución:
+
+\begin{figure}[H]
+\includegraphics[scale=0.7]{imagenes/uml.png}
+\caption{Diagrama uml del patrón de diseño de tipo Strategy}
+\label{diagramaUMLStrategy}
+\end{figure}
+
+\section{Menús del simulador de escenarios}
+
+Poner el diagrama de navegación
+
+\section{Elementos del simulador de escenarios}
+
+Explicar los objetos dinamicos y estaticos
+
+\section{Comportamiento de los objetos dinámicos}
+
+Explicar como se ha desarrollado el tema del movimientos de los objetos dinámicos
+
