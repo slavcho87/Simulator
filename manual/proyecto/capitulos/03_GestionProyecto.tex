@@ -1,0 +1,96 @@
+\chapter{Gestión del proyecto}
+\thispagestyle{empty}
+
+En este capítulo se explican el modelo de proceso seleccionado y las distintas etapas por las que ha pasado el este Trabajo Fin de Grado centradose únicamente en los aspectos más importantes. Para profundizar más sobre estos aspectos debe acudir a los anexos.
+
+\section{Modelo de proceso seleccionado}
+\thispagestyle{empty}
+
+Este Trabajo Fin de Grado ha surgido una importante evolución desde el primer planteamiento hasta la obteneción del sistema final. La primera idea para la evaluación de los algoritmos de recomendaciones era la utilización de un videojuego ya que este podría recolectar datos de forma transparente mientras los usuarios se divertian. El videojuego consistiría en el cumplimiento de misiones en una cuidad basandose en algún videojuego de aventuras como el videojuego Paperboy del año 1985 donde un chico reparte periodicos en una cuidad.
+
+Por esto se ha planteado usar el motor gráfico Unity 5 para el desarrollo del videojuego ya que no tenía sentido desarrollar un videojuego usando simplemente un lenguaje de programación. Pero existía la incertidumbre si todos los requisitos podrian ser implementados. Esto era debido porque por una parte no se conocian de antemano todos los requisitos y por otra no se conocía si el motor gráfico tenía algún tipo de limite. 
+
+Para solucionar estos problemas se ha tomado la decisión de elegir el modelo en espiral como modelo de trabajo. Las actividades de este modelo forman una espiral de tal forma que cada iteración representa un conjunto de actividades. Esto nos permitiría segmentar el trabajo en tareas más pequeñas e ir definiedo los requisitos mientras se desarrollaba el videojuego. De esta manera podriamos evaluar si los requisitos propuestos podrian o no ser implementados con Unity 5. En caso de que el motor gráfico tuviese algún límite tendriamos la capacidad de reorientar el proyecto.
+
+\section{Etapa 1}
+\thispagestyle{empty}
+
+Esta primera etapa consiste en aprender a utilizar el motor gráfico Unity 5. Esto es importante ya por una parte nunca habia usado ninguna herramienta parecida y no conocia la filosofía de uso de estas y por otra parte habia que familiarizarse por lo menos con las funciones basicas de este motor gráfico.
+
+\section{Etapa 2}
+\thispagestyle{empty}
+
+En la tabla \ref{tabla:requisitosEtapa2} podemos encontrar las tareas que han sido definidas para esta etapa:
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{p{1.5cm}| p{10.5cm}}
+\hline 
+Código & Descripción \\
+\hline \hline
+RQ-1  & Establecer puntos en el mapa para que el jugador pueda ir a buscarlos. \\ \hline
+RQ-2  & Los puntos establecidos en el requisitos RQ-1 deben de ser extraibles desde un servidor externo\\ \hline
+RQ-3  & Establecer una conexión HTTP/JSON entre Unity 5 y un servidor externo. \\ \hline
+RQ-4  & Sacar el modelado geométrico de un servidor externo \\ \hline
+RQ-5  & El videojugo debe de tener un menú principal \\ \hline
+RQ-6  & Investigar si se puede usar Longitud y Latitud con Unity 5 \\ \hline
+RQ-7  & Investigar si los edificio generados con CityEngine 2014 son reales o no \\ \hline
+RQ-8  & Permitir que el juego se realice sobre mapas de cuidades reales \\ \hline
+RQ-9  & Investigar si es posible el desarrollo de videojuego en 3D \\ \hline
+\end{tabular}
+\caption{Tareas etapa 2}
+\label{tabla:requisitosEtapa2}
+\end{center}
+\end{table}
+
+Como conclusión de esta etapa obtenemos el siguiente resultado:
+\begin{itemize}
+	\item puede establecerse una conexión con un servidor externo mediante HTTP/JSON (RQ-3). 
+	\item pueden establecerse puntos en el mapa para que el jugador pueda ir a buscarlos(RQ-1). 
+	\item pueden extraerse puntos desde un servidor externo para que el usuarios pueda ir a buscarlos (RQ-1 y RQ-3).
+	\item la realizacion del menú principal del videojuego ha sido posible.
+	\item Unity 5 utiliza eje de abscisas. Por lo tanto si queremos usar coordenadas geográficas tenemos que calcular la Longitud y Latitud a partir del eje de coordenadas (x, y, z).
+	\item los datos sobre los edificios de OpenStreetMap no están completos.
+	\item se ha decido de dejar atras el modelado 3D ya que se han detectado los siguientes problemas: coste en cuanto a tiempo demasiado grande para el deseño de una ciudad, CityEngine 2014 no interpreta correctamente los datos exportados además no existe ninguna otra herramienta que nos permita la correcta interpretación de los datos (por lo menos yo no podido encontrarla).
+\end{itemize}
+
+\section{Etapa 3}
+\thispagestyle{empty}
+
+En la tabla \ref{tabla:requisitosEtapa3} podemos encontrar las tareas que han sido definidas para esta etapa:
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{p{1.5cm}| p{10.5cm}}
+\hline 
+Código & Descripción \\
+\hline \hline
+RQ-10  & Investigar como se desarrollan grafos en Unity para la posterior implementación de la IA sobre estos para el movimiento de los vehiculos etc. \\ \hline
+\end{tabular}
+\caption{Tareas etapa 3}
+\label{tabla:requisitosEtapa3}
+\end{center}
+\end{table}
+
+Como conclusión de esta etapa obtenemos el siguiente resultado:
+\begin{itemize}
+	\item 
+	\item 
+\end{itemize}
+
+
+\section{Etapa 4}
+\thispagestyle{empty}
+
+
+\section{Etapa 5}
+\thispagestyle{empty}
+
+
+
+\section{Etapa 6}
+\thispagestyle{empty}
+
+
+\section{Tiempo dedicado}
+\thispagestyle{empty}
