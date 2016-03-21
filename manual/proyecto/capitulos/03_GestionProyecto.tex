@@ -1,10 +1,10 @@
 \chapter{Gestión del proyecto}
-\thispagestyle{empty}
+
 
 En este capítulo se explican el modelo de proceso seleccionado y las distintas etapas por las que ha pasado el este Trabajo Fin de Grado centradose únicamente en los aspectos más importantes. Para profundizar más sobre estos aspectos debe acudir a los anexos.
 
 \section{Modelo de proceso seleccionado}
-\thispagestyle{empty}
+
 
 Este Trabajo Fin de Grado ha surgido una importante evolución desde el primer planteamiento hasta la obteneción del sistema final. La primera idea para la evaluación de los algoritmos de recomendaciones era la utilización de un videojuego ya que este podría recolectar datos de forma transparente mientras los usuarios se divertian. El videojuego consistiría en el cumplimiento de misiones en una cuidad basandose en algún videojuego de aventuras como el videojuego Paperboy del año 1985 donde un chico reparte periodicos en una cuidad.
 
@@ -13,18 +13,18 @@ Por esto se ha planteado usar el motor gráfico Unity 5 para el desarrollo del v
 Para solucionar estos problemas se ha tomado la decisión de elegir el modelo en espiral como modelo de trabajo. Las actividades de este modelo forman una espiral de tal forma que cada iteración representa un conjunto de actividades. Esto nos permitiría segmentar el trabajo en tareas más pequeñas e ir definiedo los requisitos mientras se desarrollaba el videojuego. De esta manera podriamos evaluar si los requisitos propuestos podrian o no ser implementados con Unity 5. En caso de que el motor gráfico tuviese algún límite tendriamos la capacidad de reorientar el proyecto.
 
 \section{Etapa 1}
-\thispagestyle{empty}
+
 
 Esta primera etapa consiste en aprender a utilizar el motor gráfico Unity 5. Esto es importante ya por una parte nunca habia usado ninguna herramienta parecida y no conocia la filosofía de uso de estas y por otra parte habia que familiarizarse por lo menos con las funciones basicas de este motor gráfico.
 
 \section{Etapa 2}
-\thispagestyle{empty}
+
 
 En la tabla \ref{tabla:requisitosEtapa2} podemos encontrar las tareas que han sido definidas para esta etapa:
 
 \begin{table}[H]
 \begin{center}
-\begin{tabular}{p{1.5cm}| p{10.5cm}}
+\begin{tabular}{|p{1.5cm}| p{10.5cm}|}
 \hline 
 Código & Descripción \\
 \hline \hline
@@ -55,17 +55,17 @@ Como conclusión de esta etapa obtenemos el siguiente resultado:
 \end{itemize}
 
 \section{Etapa 3}
-\thispagestyle{empty}
 
 En la tabla \ref{tabla:requisitosEtapa3} podemos encontrar las tareas que han sido definidas para esta etapa:
 
 \begin{table}[H]
 \begin{center}
-\begin{tabular}{p{1.5cm}| p{10.5cm}}
+\begin{tabular}{|p{1.5cm}| p{10.5cm}|}
 \hline 
 Código & Descripción \\
 \hline \hline
-RQ-10  & Investigar como se desarrollan grafos en Unity para la posterior implementación de la IA sobre estos para el movimiento de los vehiculos etc. \\ \hline
+RQ-10 & Investigar como se desarrollan grafos en Unity para la posterior implementación de la IA sobre estos para el movimiento de los vehiculos etc. \\ \hline
+RQ-11 & El videojuego permitirá al jugador elegir cualquier cuidad del mundo para jugar. Los mapas deberian ser sacados del servicio de mapa OpenStreetMap \\ \hline
 \end{tabular}
 \caption{Tareas etapa 3}
 \label{tabla:requisitosEtapa3}
@@ -74,23 +74,75 @@ RQ-10  & Investigar como se desarrollan grafos en Unity para la posterior implem
 
 Como conclusión de esta etapa obtenemos el siguiente resultado:
 \begin{itemize}
-	\item 
-	\item 
+	\item Unity 5 dispone de su propio modulo de IA y por lo tanto no hace falta implementar algoritmos de IA para el comportamiento de los objetos dinámicos.
+	\item Unity 5 no puede ser integrado con OpenStreetMap y no es capaza renderizar mapas a partir sus datos (ficheros OSM). 
+	\item en esta etapa se ha decido reorientar el proyecto por las siguientes razones: Unity 5 no puede ser integrado con OpenStreetMap por lo tanto la unica opción para desarrollar un videojuego sobre mapas reales es desarrollando el videojuego desde cero con algún lenguaje como Java y el incoveniente que esto representa es que es demasiado costoso en cuanto a tiempo y dificultad.  
+\end{itemize}
+
+\section{Etapa 4}
+
+En la tabla \ref{tabla:requisitosEtapa4} podemos encontrar las tareas que han sido definidas para esta etapa:
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{|p{1.5cm}| p{10.5cm}|}
+\hline 
+Código & Descripción \\
+\hline \hline
+RQ-12 & instalar mongoDB\\ \hline
+RQ-13 & instalar Node.js y NPM\\ \hline
+RQ-14 & instalar git\\ \hline
+RQ-14 & instalar Java y Apache maven\\ \hline
+RQ-16 & Desarrollar y configurar la base de la aplicación con Node.js\\ \hline
+RQ-17 & Instalar y configurar Angular.js\\ \hline
+RQ-18 & Instalar y configurar OpenLayers.js\\ \hline
+RQ-19 & Instalar y configurar Bootstrap\\ \hline
+\end{tabular}
+\caption{Tareas etapa 4}
+\label{tabla:requisitosEtapa4}
+\end{center}
+\end{table}
+
+Como conclusión de esta etapa obtenemos el siguiente resultado:
+\begin{itemize}
+	\item se han instalado y configurado todas las herramientas y frameworks necesarios para el desarrollo de la aplicación.
+\end{itemize}
+
+\section{Etapa 5}
+
+En la tabla \ref{tabla:requisitosEtapa5} podemos encontrar las tareas que han sido definidas para esta etapa:
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{|p{1.5cm}| p{10.5cm}|}
+\hline 
+Código & Descripción \\
+\hline \hline
+RQ-20 & Definir lo requisitos funcionales y no funcionales de la aplicación\\ \hline
+RQ-21 & Desarrollar el front-end\\ \hline
+RQ-22 & Deseñar la base de datos\\ \hline
+RQ-23 & Diseñar y desarrollar el back-end\\ \hline
+RQ-24 & Diseñar y desarrollar el recomendador\\ \hline
+RQ-25 & Realizar pruebas funcionales de la aplicación\\ \hline
+\end{tabular}
+\caption{Tareas etapa 5}
+\label{tabla:requisitosEtapa5}
+\end{center}
+\end{table}
+
+Como conclusión de esta etapa obtenemos el siguiente resultado:
+\begin{itemize}
+	\item la parte mas costosa de esta etapa ha sido la definición de los requisitos de la aplicación.
+	\item una vez definidos los requisitos el resto del trabajo ha sido puramente técnico. 
 \end{itemize}
 
 
-\section{Etapa 4}
-\thispagestyle{empty}
-
-
-\section{Etapa 5}
-\thispagestyle{empty}
-
-
-
 \section{Etapa 6}
-\thispagestyle{empty}
 
+La última etapa consiste en documentar el trabajo realizado en este Trabajo Fin de Grado y preparar la defensa de este.
 
 \section{Tiempo dedicado}
-\thispagestyle{empty}
+
+Como ya se ha comentado anteriormente, el desarrollo del proyecto se ha realizado siguiendo el modelo en espiral. En esta sección se analizará el tiempo dedicado y tambien se mostrará un cronograma de las diferenes etapas.
+
+  

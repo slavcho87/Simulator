@@ -1,10 +1,10 @@
 \chapter{Trabajo desarrollado}
-\thispagestyle{empty}
+
 
 En este capítulo se explican las funcionalidades básicas del simulador desarrollado centradose únicamente en los aspectos más importantes. Para profundizar más sobre estos aspectos debe acudir a los anexos.
 
 \section{Resumen del simulador}
-\thispagestyle{empty}
+
 
 Se trata de un sistema de colaboración abierta distribuida que permite configurar distintos escenarios con objetos móviles y estáticos sobre mapas de ciudades reales obtenidos a partir del servicio de mapas de OpenStreetMap. 
 
@@ -21,55 +21,98 @@ Puede ser usado a través de cualquier dispositovo (PC, tablet, móvil etc.) con
 Para realizar una simulación el usuario tiene que buscar y seleccionar el mapa y escenario donde moverse tanto para obtener recomendaciones como para realizar votaciones sobre los distintos objetos de este entorno.
 
 \section{Análisis de requisitos}
-\thispagestyle{empty}
-
-\subsection{Requisitos funcionales}
-\thispagestyle{empty}
-
-\begin{table}[htbp]
-\begin{center}
-\begin{tabular}{|l|l|}
-\hline
-Código de requisito & Descripción \\
-\hline \hline
-RF-1  & Descripcion \\ \hline
-RF-1  & Descripcion \\ \hline
-RF-1  & Descripcion \\ \hline
-RF-1  & Descripcion \\ \hline
-RF-1  & Descripcion \\ \hline
-RF-1  & Descripcion \\ \hline
-RF-1  & Descripcion \\ \hline
-\end{tabular}
-\caption{Requisitos funcionales}
-\label{tabla:requisitosFuncionales}
-\end{center}
-\end{table}
 
 
 \subsection{Requisitos no funcionales}
-\thispagestyle{empty}
 
-\begin{table}[htbp]
+
+\begin{table}[H]
 \begin{center}
-\begin{tabular}{|l|l|}
+\begin{tabular}{|p{1.5cm}| p{10.5cm}|}
 \hline
-Código de requisito & Descripción \\
-\hline \hline
-RNF-1  & Descripcion \\ \hline
-RNF-1  & Descripcion \\ \hline
-RNF-1  & Descripcion \\ \hline
-RNF-1  & Descripcion \\ \hline
-RNF-1  & Descripcion \\ \hline
-RNF-1  & Descripcion \\ \hline
-RNF-1  & Descripcion \\ \hline
+Código & Descripción \\
+\hline
+RNF-1  & La aplicación tratara de un simulador. Dicha simulación se realizara sobre mapas online\\ \hline
+RNF-2  & La navegación por los menús de la aplicación se realizara mediante una interfaz gráfica\\ \hline
+RNF-3  & Los textos por defecto de la aplicación serán en inglés\\ \hline
+RNF-4  & La autenfiticación de usuarios se realizará mediante web tokens\\ \hline
+RNF-5  & La interfaz gráfica debe ser responsive desarrollada con bootstrap\\ \hline
+RNF-6  & El back-end debe ser desarrollado con node.js, sockets.io y express \\ \hline
+RNF-7  & El front-end debe ser desarrollado con Angular.js\\ \hline
 \end{tabular}
 \caption{Requisitos no funcionales}
 \label{tabla:requisitosNoFuncionales}
 \end{center}
 \end{table}
 
+\newpage
+
+\subsection{Requisitos funcionales}
+
+
+\begin{longtable}[H]{|c|p{10cm}|}
+% aquí añadimos el encabezado de la primera hoja.
+\hline
+Código & Descripción \\
+\hline \hline
+\endfirsthead
+
+% aquí añadimos el encabezado del resto de hojas.
+\hline
+Código & Descripción \\
+\hline \hline
+\endhead
+
+% aquí añadimos el fondo de todas las hojas, excepto de la última.
+\multicolumn{2}{c}{}
+\endfoot
+
+% aquí añadimos el fondo de la última hoja.
+\endlastfoot
+
+% aquí añadimos el cuerpo de la tabla.
+RF-1  & La aplicación permitirá crear un nuevo usuario\\ \hline
+RF-2  & La aplicación permitirá al usuario buscar mapas por su nombre, tipo, estado, cuidad y fecha de creación\\ \hline
+RF-3  & La aplicación permitirá al usuario crear un nuevo mapa\\ \hline
+RF-4  & La aplicación permitirá al usuario crear una nueva escena asociada a un mapa existente\\ \hline
+RF-5  & La aplicación listara todas las escenas de un mapa\\ \hline
+RF-6  & La aplicación permitirá al usuario editar un mapa existente\\ \hline
+RF-7  & La aplicación permitirá al usuario editar las escenas de un mapa existente\\ \hline
+RF-8  & La aplicación permitirá al usuario crear un nuevo tipo de objeto estático\\ \hline
+RF-9  & La aplicación permitirá al usuario crear un nuevo tipo de objeto dinámico\\ \hline
+RF-10 & La aplicación listará todos los tipos de objetos estáticos creados\\ \hline
+RF-11 & La aplicación listará todos los tipos de objetos dinámicos creados\\ \hline
+RF-12 & La aplicación permitirá al usuario editar los objetos estáticos credos\\ \hline
+RF-13 & La aplicación permitirá al usuario editar los objetos dinámicos creados\\ \hline
+RF-14 & La aplicación permitirá al usuario cambiar el nombre\\ \hline
+RF-15 & La aplicación permitirá al usuario cambiar su contraseña\\ \hline
+RF-16 & La aplicación permitirá al usuario cambiar la imagen asociada a un usuario\\ \hline
+RF-17 & La aplicación permitirá al usuario configurar un nuevo tipo de recomendador\\ \hline
+RF-18 & La aplicación permitirá al usuario editar la configuración de recomendador existente\\ \hline
+RF-18 & La aplicación permitirá al usuario asociar un recomendador existente a una escena\\ \hline
+RF-19 & La aplicación permitirá al usuario definir los limites de una escena\\ \hline
+RF-20 & La aplicación permitirá al usuario asociar un objeto estático a una escena\\ \hline
+RF-21 & La aplicación permitirá al usuario cargar todos los objetos estáticos desde un fichero JSON\\ \hline
+RF-22 & La aplicación permitirá asociar un objeto dinámico y su definir su ruta en una escena\\ \hline
+RF-23 & La aplicación permitirá al usuario cargar todos los objetos dinámicos y sus rutas desde un fichero JSON\\ \hline
+RF-24 & La aplicación listará todos objetos estáticos asociados a una escena \\ \hline
+RF-25 & La aplicación listará todos los objetos dinámicos asociados a una escena \\ \hline
+RF-26 & La aplicación permitirá borrar un objeto estático asociado a una escena\\ \hline
+RF-27 & La aplicación permitirá borrar un objeto dinámico asociado a una escena\\ \hline
+RF-28 & La aplicación permitirá al usuario elegir un si mapa es colaborativo o no\\ \hline
+RF-29 & La aplicación permitirá al usuario ejecuta una simulación sobre la escena de un mapa\\ \hline
+RF-30 & La aplicación permitirá al usuario solicitar recomendaciones mientras se está ejecutando una simulación siempre y cuando el recomendador asociado a la escena es de tipo pull\\ \hline
+RF-31 & El usuario recibirá recomendaciones sin haberlas solicitado siempre y cuando el recomendador asociado a la escena de es tipo push\\ \hline
+RF-32 & El usuario puede arrancar/pausar una simulación\\ \hline
+\caption{Requisitos funcionales}
+\label{tabla:requisitosFuncionales}
+\end{longtable}
+
+\newpage
+
+
 \section{Arquictura del sistema}
-\thispagestyle{empty}
+
 
 La arquitectura del sistema consta de cliente o navegador web, servidor web Node.js, servidor de recomendaciones y base de datos mongoDB (figura \ref{arquitecturaComponentes}).
 
@@ -78,30 +121,33 @@ El la figura \ref{arquitecturaComponentes} observamos que el navegador web se co
 El sistema bidireccional dirigido por eventos es utilizado por una parte durante la simulación, para reflejar los eventos generados por un usuario al resto de usuarios, y por otra para integrar el navegador, el servidor Node.js y el recomendador. De esta manera conseguimos compartir informácion entre los distintos componentes sin que estos los hayan solicitado evitando muchas peticiones innecesarias.
 
 \begin{figure}[H]
-\centering\includegraphics[scale=0.4]{imagenes/arquitectura-componentes.png}
+\centering\includegraphics[scale=0.55]{imagenes/arquitectura-componentes.png}
 \caption{Arquitectura de componentes del sistema}
 \label{arquitecturaComponentes}
 \end{figure}
 
-\subsection{Arquitectura del front end}
-\thispagestyle{empty}
+\newpage
 
-Para el desarrollo del front end se han utilizado los frameworks Angular.js\footnote{framework que nos permite desarrollar aplicaciones de una sola página} y bootstrap\footnote{framework que nos ofrece un sistema de componentes reutilizables y adaptables a la pantalla del dispositivo}. Se ha decidido utilizar estas tecnologias porque nos ofrece varias ventajas: ahorro de recursos\footnote{angular.js va transmitiendo las vistas de la interfaz gráfica y las cachea al lado del cliente para ser reutilizadas posteriormete. Vuelve a solicitar una vista si y solo si esta ha sufrido algún cambio en el servidor}, mejora de la productividad y la posibilidad de realizar una simulación sobre dispositivos móviles\footnote{esto nos da la oportunidad de utilizar la posición geográfica del usuario para obtener recomendaciones en el entorno de una cuidad real. De está manera obtenemos datos reales y muchas más precisión a la hora de evaluar los algoritmos de recomendaciones} con el mismo código fuente.
 
-La arquitectura del front end está basada en el patrón Modelo-Vista-Controllador de tal forma que para cada vista existe un controlador que contiene la lógica de negocio de esta. El controlador tambien es el encargado de establecer comunicación con el back end. Esta comunicación se realiza mediante los llamados Servicios\footnote{es pequeña fabrica de funciones y objetos inyectada en los controladores} de Angular.js y la REST API del back end. Los Servicios de Angular.js son muy necesarios y útiles ya que nos permiten crear un envoltorio sobre la REST API que nos ofrece el back end y de esta forma centralizar las llamas a la API.
+\subsection{Arquitectura del front-end}
+
+
+Para el desarrollo del front-end se han utilizado los frameworks Angular.js\footnote{framework que nos permite desarrollar aplicaciones de una sola página} y bootstrap\footnote{framework que nos ofrece un sistema de componentes reutilizables y adaptables a la pantalla del dispositivo}. Se ha decidido utilizar estas tecnologias porque nos ofrece varias ventajas: ahorro de recursos\footnote{angular.js va transmitiendo las vistas de la interfaz gráfica y las cachea al lado del cliente para ser reutilizadas posteriormete. Vuelve a solicitar una vista si y solo si esta ha sufrido algún cambio en el servidor}, mejora de la productividad y la posibilidad de realizar una simulación sobre dispositivos móviles\footnote{esto nos da la oportunidad de utilizar la posición geográfica del usuario para obtener recomendaciones en el entorno de una cuidad real. De está manera obtenemos datos reales y muchas más precisión a la hora de evaluar los algoritmos de recomendaciones} con el mismo código fuente.
+
+La arquitectura del front-end está basada en el patrón Modelo-Vista-Controllador de tal forma que para cada vista existe un controlador que contiene la lógica de negocio de esta. El controlador tambien es el encargado de establecer comunicación con el back end. Esta comunicación se realiza mediante los llamados Servicios\footnote{es pequeña fabrica de funciones y objetos inyectada en los controladores} de Angular.js y la REST API del back end. Los Servicios de Angular.js son muy necesarios y útiles ya que nos permiten crear un envoltorio sobre la REST API que nos ofrece el back end y de esta forma centralizar las llamas a la API.
 
 \begin{figure}[H]
-\centering\includegraphics[scale=0.6]{imagenes/arquitectura-front-end.png}
-\caption{Arquitectura del front end}
+\centering\includegraphics[scale=0.7]{imagenes/arquitectura-front-end.png}
+\caption{Arquitectura del front-end}
 \label{arquitecturaFrontEnd}
 \end{figure}
 
-\subsection{Arquitectura del back end}
-\thispagestyle{empty}
+\subsection{Arquitectura del back-end}
 
-Para el desarrollo del back end se han utilizado Node.js\footnote{javascript al lado del servidor}, Express\footnote{modulo de Node.js que nos ofrece la posiblidad de desarrollar una REST API}, socket.io\footnote{sistema bidireccional dirigido por eventos} y mongoose \footnote{modelado de objetos sobre mongoDB}. Se ha decidido utilizar estas tecnología por que nos ofrecen las siguientes ventajas: mejora la productividad a la hora de desarrollar el back end, nos permite desarrollar un back end ligero que consuma pocos recursos y el modulo sockets.io nos ofrece la posibilidad de desarrollar un sistema bidireccional dirigido por eventos.
 
-La arquitectura del back end se basa en la filosofía de desarrollo de aplicaciones con Node.js y Express y consiste de la siguiente estructura de directorios:
+Para el desarrollo del back-end se han utilizado Node.js\footnote{javascript al lado del servidor}, Express\footnote{modulo de Node.js que nos ofrece la posiblidad de desarrollar una REST API}, socket.io\footnote{sistema bidireccional dirigido por eventos} y mongoose \footnote{modelado de objetos sobre mongoDB}. Se ha decidido utilizar estas tecnología por que nos ofrecen las siguientes ventajas: mejora la productividad a la hora de desarrollar el back-end, nos permite desarrollar un back-end ligero que consuma pocos recursos y el modulo sockets.io nos ofrece la posibilidad de desarrollar un sistema bidireccional dirigido por eventos.
+
+La arquitectura del back-end se basa en la filosofía de desarrollo de aplicaciones con Node.js y Express y consiste de la siguiente estructura de directorios:
 
 \dirtree{%
 .1 Simulator.
@@ -150,7 +196,7 @@ A continuación vamos a ver más detalladamente cual es la funcion de cada eleme
 \end{itemize}
 
 \subsection{Arquitectura de recomendador}
-\thispagestyle{empty}
+
 
 El desarrollo del recomendador está realizado con Java 7, la librería Apache Mahout y socket.io-client. El recomendador desarrollado es un recomendador pull\footnote{tipo de recomendador en el cual los usuarios solicitan recomendaciones} de ejemplo basado en los usuarios (User based recommender). 
 
@@ -173,7 +219,7 @@ El evento recommend es el que se dispara cuando uno de los usuarios solicita una
 \end{figure}
 
 \section{Menús del simulador de escenarios}
-\thispagestyle{empty}
+
 
 Como en todas las aplicaciones, el simulador de escenarios cuenta con un sistema de menús que dan acceso a las distintas opciones del simulador. En este caso se ha seguido la paradigma WIMP para la organización de los menús y distinas opciones (figura \ref{mapaNavegacion}). Existen 4 tipos de caminos organizados en forma de árbol:
 
@@ -193,11 +239,42 @@ Como en todas las aplicaciones, el simulador de escenarios cuenta con un sistema
 \newpage
 
 \section{Navegación por estima}
-\thispagestyle{empty}
+
 
 La navegación por estima es una técnica que se aplica en el cliente. Consiste en procesar en cada ciclo el estado de los objetos móviles. Se trata de una técnica análitica utilizada en la náutica para la navegación y situación de los barcos y se tienen en cuenta los siguientes elementos: la situación actual, rumbo y velocidad. Es decir, sabiendo la velocidad, el rumbo de la nave y el tiempo transcurido se puede estimar la posición de la misma al cabo del tiempo. 
 
 Con este método conseguimos calcular cual es la siguiente posición geográfica donde tenemos que colocar un objeto móvil al acabo de un tiempo (el tiempo de refresco de la pántalla). Como ventaja conseguimos disminuir el error en el cálculo de las posiciones de los objetos móviles. Así obtenemos movimientos muy precisos incluso en grafos de movimientos con nodos muy cercanos. Para evitar problemas en estos casos se han puesto tiempos bajos de refresco de la pántalla.
 
 \section{Diseño final}
-\thispagestyle{empty}
+
+En esta sección se dejan solo algunas de las pantallas más relevantes de la aplicación. Para ver más pantallas debe acudir al manual de usuario en los anexos.
+
+\begin{figure}[H]
+ \centering
+  \subfloat[Autentificación de un usuario]{
+   \label{f:login}
+    \includegraphics[width=0.6\textwidth]{imagenes/login.jpg}}
+  \subfloat[Crear un nuevo usuario]{
+   \label{f:register}
+    \includegraphics[width=0.6\textwidth]{imagenes/register.jpg}}
+ \caption{Registro y autentificación de un usuario}
+ \label{f:LoginRegister}
+\end{figure}
+
+\begin{figure}[H]
+\centering\includegraphics[scale=0.25]{imagenes/busqueda-de-mapas.jpg}
+\caption{Busqueda de mapas}
+\label{BusquedaMapas}
+\end{figure}
+
+\begin{figure}[H]
+\centering\includegraphics[scale=0.35]{imagenes/resumen-simulador.jpg}
+\caption{Simulación en Actur, Zaragoza}
+\label{simulacionActur}
+\end{figure}
+
+\begin{figure}[H]
+\centering\includegraphics[scale=0.25]{imagenes/config-objetos-estaticos.jpg}
+\caption{Configuración de los objetos estáticos}
+\label{ConfigStaticItem}
+\end{figure}
