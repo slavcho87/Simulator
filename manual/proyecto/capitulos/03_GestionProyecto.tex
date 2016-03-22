@@ -12,15 +12,9 @@ Por esto se ha planteado usar el motor gráfico Unity 5 para el desarrollo del v
 
 Para solucionar estos problemas se ha tomado la decisión de elegir el modelo en espiral como modelo de trabajo. Las actividades de este modelo forman una espiral de tal forma que cada iteración representa un conjunto de actividades. Esto nos permitiría segmentar el trabajo en tareas más pequeñas e ir definiedo los requisitos mientras se desarrollaba el videojuego. De esta manera podriamos evaluar si los requisitos propuestos podrian o no ser implementados con Unity 5. En caso de que el motor gráfico tuviese algún límite tendriamos la capacidad de reorientar el proyecto.
 
-\section{Etapa 1}
+\subsection{Etapa 1}
 
-
-Esta primera etapa consiste en aprender a utilizar el motor gráfico Unity 5. Esto es importante ya por una parte nunca habia usado ninguna herramienta parecida y no conocia la filosofía de uso de estas y por otra parte habia que familiarizarse por lo menos con las funciones basicas de este motor gráfico.
-
-\section{Etapa 2}
-
-
-En la tabla \ref{tabla:requisitosEtapa2} podemos encontrar las tareas que han sido definidas para esta etapa:
+En la tabla \ref{tabla:requisitosEtapa1} podemos encontrar las tareas que han sido definidas para esta etapa:
 
 \begin{table}[H]
 \begin{center}
@@ -28,6 +22,7 @@ En la tabla \ref{tabla:requisitosEtapa2} podemos encontrar las tareas que han si
 \hline 
 Código & Descripción \\
 \hline \hline
+RQ-0  & Formación basica con Unity 5\\ \hline
 RQ-1  & Establecer puntos en el mapa para que el jugador pueda ir a buscarlos. \\ \hline
 RQ-2  & Los puntos establecidos en el requisitos RQ-1 deben de ser extraibles desde un servidor externo\\ \hline
 RQ-3  & Establecer una conexión HTTP/JSON entre Unity 5 y un servidor externo. \\ \hline
@@ -38,8 +33,8 @@ RQ-7  & Investigar si los edificio generados con CityEngine 2014 son reales o no
 RQ-8  & Permitir que el juego se realice sobre mapas de cuidades reales \\ \hline
 RQ-9  & Investigar si es posible el desarrollo de videojuego en 3D \\ \hline
 \end{tabular}
-\caption{Tareas etapa 2}
-\label{tabla:requisitosEtapa2}
+\caption{Tareas etapa 1}
+\label{tabla:requisitosEtapa1}
 \end{center}
 \end{table}
 
@@ -54,7 +49,33 @@ Como conclusión de esta etapa obtenemos el siguiente resultado:
 	\item se ha decido de dejar atras el modelado 3D ya que se han detectado los siguientes problemas: coste en cuanto a tiempo demasiado grande para el deseño de una ciudad, CityEngine 2014 no interpreta correctamente los datos exportados además no existe ninguna otra herramienta que nos permita la correcta interpretación de los datos (por lo menos yo no podido encontrarla).
 \end{itemize}
 
-\section{Etapa 3}
+\subsection{Etapa 2}
+
+En la tabla \ref{tabla:requisitosEtapa2} podemos encontrar las tareas que han sido definidas para esta etapa:
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{|p{1.5cm}| p{10.5cm}|}
+\hline 
+Código & Descripción \\
+\hline \hline
+RQ-10 & Investigar como se desarrollan grafos en Unity para la posterior implementación de la IA sobre estos para el movimiento de los vehiculos etc. \\ \hline
+RQ-11 & Diseñar y desarrollar un mapa del juego\\ \hline
+\end{tabular}
+\caption{Tareas etapa 2}
+\label{tabla:requisitosEtapa2}
+\end{center}
+\end{table}
+
+Como conclusión de esta etapa obtenemos el siguiente resultado:
+\begin{itemize}
+	\item Unity 5 dispone de su propio modulo de IA y por lo tanto no hace falta implementar algoritmos de IA para el comportamiento de los objetos dinámicos.
+	\item en esta etapa se ha definido el requisito que el juego tiene que funcionar sobre cualquier mapa del mundo. Por lo tanto en la siguiente etapa hay que investigar si es posible la integración de Unity 5 con OpenStreetMap.
+\end{itemize}
+
+\newpage
+
+\subsection{Etapa 3}
 
 En la tabla \ref{tabla:requisitosEtapa3} podemos encontrar las tareas que han sido definidas para esta etapa:
 
@@ -64,8 +85,8 @@ En la tabla \ref{tabla:requisitosEtapa3} podemos encontrar las tareas que han si
 \hline 
 Código & Descripción \\
 \hline \hline
-RQ-10 & Investigar como se desarrollan grafos en Unity para la posterior implementación de la IA sobre estos para el movimiento de los vehiculos etc. \\ \hline
-RQ-11 & El videojuego permitirá al jugador elegir cualquier cuidad del mundo para jugar. Los mapas deberian ser sacados del servicio de mapa OpenStreetMap \\ \hline
+RQ-11 & Investigar en que consiste el formato OSM\\ \hline
+RQ-12 & Investigar si es posible la integración de OpenStreetMap con Unity\\ \hline
 \end{tabular}
 \caption{Tareas etapa 3}
 \label{tabla:requisitosEtapa3}
@@ -74,12 +95,11 @@ RQ-11 & El videojuego permitirá al jugador elegir cualquier cuidad del mundo pa
 
 Como conclusión de esta etapa obtenemos el siguiente resultado:
 \begin{itemize}
-	\item Unity 5 dispone de su propio modulo de IA y por lo tanto no hace falta implementar algoritmos de IA para el comportamiento de los objetos dinámicos.
 	\item Unity 5 no puede ser integrado con OpenStreetMap y no es capaza renderizar mapas a partir sus datos (ficheros OSM). 
 	\item en esta etapa se ha decido reorientar el proyecto por las siguientes razones: Unity 5 no puede ser integrado con OpenStreetMap por lo tanto la unica opción para desarrollar un videojuego sobre mapas reales es desarrollando el videojuego desde cero con algún lenguaje como Java y el incoveniente que esto representa es que es demasiado costoso en cuanto a tiempo y dificultad.  
 \end{itemize}
 
-\section{Etapa 4}
+\subsection{Etapa 4}
 
 En la tabla \ref{tabla:requisitosEtapa4} podemos encontrar las tareas que han sido definidas para esta etapa:
 
@@ -103,12 +123,14 @@ RQ-19 & Instalar y configurar Bootstrap\\ \hline
 \end{center}
 \end{table}
 
+\newpage
+
 Como conclusión de esta etapa obtenemos el siguiente resultado:
 \begin{itemize}
 	\item se han instalado y configurado todas las herramientas y frameworks necesarios para el desarrollo de la aplicación.
 \end{itemize}
 
-\section{Etapa 5}
+\subsection{Etapa 5}
 
 En la tabla \ref{tabla:requisitosEtapa5} podemos encontrar las tareas que han sido definidas para esta etapa:
 
@@ -137,12 +159,40 @@ Como conclusión de esta etapa obtenemos el siguiente resultado:
 \end{itemize}
 
 
-\section{Etapa 6}
+\subsection{Etapa 6}
 
-La última etapa consiste en documentar el trabajo realizado en este Trabajo Fin de Grado y preparar la defensa de este.
+La última etapa consiste en documentar el trabajo realizado en este Trabajo Fin de Grado.
+
+\newpage
 
 \section{Tiempo dedicado}
 
-Como ya se ha comentado anteriormente, el desarrollo del proyecto se ha realizado siguiendo el modelo en espiral. En esta sección se analizará el tiempo dedicado y tambien se mostrará un cronograma de las diferenes etapas.
+Como ya se ha comentado anteriormente, el desarrollo del proyecto se ha realizado siguiendo el modelo en espiral. En esta sección se mostrará el tiempo dedicado y tambien un cronograma de las diferenes etapas.
 
-  
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{|p{2cm}| p{5cm}|}
+\hline 
+\noindent{\textbf{Fase}} & \noindent{\textbf{Horas}} \\
+\hline \hline
+Fase 1 & 54\\ \hline
+Fase 2 & 6.5\\ \hline
+Fase 3 & 38\\ \hline
+Fase 4 & 3.5\\ \hline
+Fase 5 & 247\\ \hline
+Fase 6 & 42.5\\ \hline
+Reuniones & 7\\ 
+\hline \hline
+\noindent{\textbf{Total}} & 398.5\\ \hline
+\end{tabular}
+\caption{Separación por horas de las distintas fases}
+\label{tabla:requisitosEtapa5}
+\end{center}
+\end{table}
+ 
+
+\begin{figure}[H]
+\centering\includegraphics[scale=0.8]{imagenes/gantt.jpg}
+\caption{Diagrama de Gantt de las distintas fases del proyecto}
+\label{gantt}
+\end{figure}
