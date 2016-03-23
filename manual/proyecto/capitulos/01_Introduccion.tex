@@ -4,34 +4,34 @@ En este capítulo se mostrará la motivación existente para la realización de 
 
 \section{Motivación del proyecto}
 
-Han sido varias las razones que me llevaron a elegir desarrollar este Trabajo Fin de Grado. La primera y principal ha sido el interés personal en los sistemas de recomendaciones y su amplia aplicación en sistemas comerciales y la web. Por otro lado, realizar un proyecto complejo, partiendo desde cero y sin tener ningún conocimiento particular de este ámbito, suponía un gran reto que deseaba afrontar porque me permitiría ampliar mis conocimientos en campos diversos como Ingeniería del Software, Arquitecturas de Software etc., de las que poseía unos conocimientos limitados. Además, consideré que la experiencia y conocimientos que adquiriría en este proyecto aumentarian mis posibilidades de desarrollar mi carrera profesional en este ámbito.
+Han sido varias las razones que me llevaron a elegir desarrollar este Trabajo Fin de Grado. La primera y principal ha sido el interés personal en los sistemas de recomendaciones y su amplia aplicación en sistemas comerciales y la web. Por otro lado, realizar un proyecto complejo, partiendo desde cero y sin tener ningún conocimiento particular de este ámbito, suponía un gran reto que deseaba afrontar porque me permitiría ampliar mis conocimientos en campos diversos como Ingeniería del Software, Arquitecturas de Software etc., de las que poseía unos conocimientos limitados. Además, consideré que la experiencia y conocimientos que adquiriría en este proyecto aumentarían mis posibilidades de desarrollar mi carrera profesional en este ámbito.
 
 \section{Objetivos}
 
 El Trabajo Fin de Grado que se describe en este documento tiene los siguientes objetivos:
 
 \begin{itemize}
-	\item Desarrollar un simulador de escenarios con usuarios móviles, que cuente con mapas de ciudades con objetos móviles y estáticos.
-	\item Desarrollar lo necesario para que se permita que los mapas de ciudades sean reales de tal forma que estos sean obtenidos de un sistema que proporcione mapas.
+       \item Desarrollar un simulador de escenarios con usuarios móviles, que cuente con mapas de ciudades con objetos móviles y estáticos.
+       \item Desarrollar lo necesario para que se permita que los mapas de ciudades sean reales de tal forma que estos sean obtenidos de un sistema que proporcione mapas.
        \item Desarrollar lo necesario para que los usuarios puedan crear, editar, borrar y configurar los mapas y escenarios del simulador.
        \item Desarrollar lo necesario para que todas las configuraciones de mapas y escenarios sean parametrizables desde la interfaz de usuario.
        \item Desarrollar lo necesario para que la simulación de escenas funcione en tiempo real de tal forma que los eventos de una escena se reflejen en los dispositivos de los usuarios conectados al mismo mapa y escena.
-       \item Desarrollar una interfaz que permita la integración con un recomendador externo de tal forma que exista una comunición bidireccional basada en eventos entre el simulador y el recomendador.
+       \item Desarrollar una interfaz que permita la integración con un recomendador externo de tal forma que exista una comunicación bidireccional basada en eventos entre el simulador y el recomendador.
 \end{itemize}
 
-Además de los objetivos marcados por la propuesta del Trabajo Fin de Grado, también se han tenido en cuenta como objetivos lograr que el simulador utilize los recursos hardware minimos, permitir que este sea facilmente escalable y que pueda desplegarse en un entorno distribuido. De esta forma logramos ahorar costes de infraestructura y futuros desarrollos.
+Además de los objetivos marcados por la propuesta del Trabajo Fin de Grado, también se han tenido en cuenta como objetivos lograr que el simulador utilice los recursos hardware mínimos, permitir que este sea fácilmente escalable y que pueda desplegarse en un entorno distribuido. De esta forma logramos ahorrar costes de infraestructura y futuros desarrollos.
 
 \section{Contexto Tecnológico}
 
-Habitualmente los sistemas de recomendación se evalúan con conjuntos de datos estáticos clásicos. El incoveniente que esto conlleva es que si ejecutamos el mismo algoritmo sobre un conjunto de datos estáticos varias veces siempre obtenemos el mismo resultado. Con el fin de evitar este incoveniente surge la necesidad de evaluar los algoritmos de recomendaciones con conjuntos de datos dinámicos. 
+Habitualmente los sistemas de recomendación se evalúan con conjuntos de datos estáticos clásicos. El inconveniente que esto conlleva es que si ejecutamos el mismo algoritmo sobre un conjunto de datos estáticos varias veces siempre obtenemos el mismo resultado. Con el fin de evitar este inconveniente surge la necesidad de evaluar los algoritmos de recomendaciones con conjuntos de datos dinámicos. 
 
-Una de las formas de recolectar y proveer conjuntos de datos dinámicos es mediante el crowdsourcing. El crowdsourcing, tambien conocido como colaboración abierta distribuida, consiste en delegar tareas a un grupo de personas o comunidad a través de una convocatoria abierta. 
+Una de las formas de recolectar y proveer conjuntos de datos dinámicos es mediante el crowdsourcing. El crowdsourcing, también conocido como colaboración abierta distribuida, consiste en delegar tareas a un grupo de personas o comunidad a través de una convocatoria abierta. 
 
-Así que a medida que el grupo de personas o comunidad vayan realizando las tareas asignadas el sistema va recolectado y suministrando datos sobre las acciones que realizan estos para llevar a cabo sus tareas. Esto nos da la oportunidad para suministrar datos a los algoritmos de recomendaciones en tiempo real, es decir, suministrar datos a medida que el grupo de personas vayan cumpliendo con sus tareas.   
+Así que a medida que el grupo de personas o comunidad vayan realizando las tareas asignadas el sistema va recolectado y suministrando datos sobre las acciones que realizan estos para llevar a cabo sus tareas. Esto nos da la oportunidad para suministrar datos a los algoritmos de recomendaciones en tiempo real, es decir, suministrar datos a medida que el grupo de personas vayan cumpliendo con sus tareas.
 
 \section{Herramientas utilizadas}
 
-En esta sección se listan las tecnologias, libererías externas y herramientas utilizadas para el desarrollo del proyecto acompañada de una breve descripción.
+En esta sección se listan las tecnologías, liberarías externas y herramientas utilizadas para el desarrollo del proyecto acompañada de una breve descripción.
 
 \noindent{\textbf{Librerías usadas}}\\
 
@@ -55,14 +55,14 @@ Para el desarrollo del proyecto se ha hecho uso de diversas librerías externas 
 Durante el desarrollo de este Trabajo Fin de Grado se han utilizado las siguientes herramientas:
 
 \begin{itemize}
-       \item {\bfseries Eclipse Java EE IDE}: editor de código Java version Mars 4.5.1
+       \item {\bfseries Eclipse Java EE IDE}: editor de código Java versión Mars 4.5.1
        \item {\bfseries Maven v3.2.5}: gestor de paquetes para desarrollos Java
        \item {\bfseries Brackets.io v1.6.0}: editor de código para desarrollos web
        \item {\bfseries Git v1.9.4}: sistema de control de versiones
        \item {\bfseries GitHub}: repositorio de código
        \item {\bfseries Cmder}: emulador cmd de Windows 
        \item {\bfseries Sublime text 2}: editor de texto avanzado
-       \item {\bfseries CityEngine 2014}: software de modelado de cuidades
+       \item {\bfseries CityEngine 2014}: software de modelado de ciudades
        \item {\bfseries Unity 5}: motor gráfico para la creación de videojuegos
        \item {\bfseries OSM2Word}: visualizador de datos con formato OSM
 \end{itemize}
@@ -74,7 +74,7 @@ Se han usado las siguientes herramientas para la elaboración de la documentaci�
 \begin{itemize}
        \item {\bfseries Latex}: lenguaje usado para la elaboración de este documento
        \item {\bfseries GanttProject}: editor de diagramas de Gantt
-       \item {\bfseries Gliffy Diagrams}: editor de multiples tipos de diagramas (daigramas de flujos, UML, etc.)
+       \item {\bfseries Gliffy Diagrams}: editor de múltiples tipos de diagramas (diagramas de flujos, UML, etc.)
 \end{itemize}
 
 
@@ -84,10 +84,10 @@ El modelo de trabajo seleccionado está basado en el modelo de espiral. Las acti
 
 \section{Estructura de la memoria}
 
-El contenido de la memoría está distribuido de la siguiente forma:
+El contenido de la memoria está distribuido de la siguiente forma:
 
 \begin{itemize}
-	\item En el capítulo 2 se expone el trabajo desarrollado para la elaboración de este simulador
-	\item En el capítulo 3 se expone la gestión del proyecto y las distintas etapas por las que ha pasado este proyecto
-	\item En el capítulo 4 se muestran las conclusione del proyecto y el posible trabajo futuro de cara a mejorar el simulador 
+       \item En el capítulo 2 se expone el trabajo desarrollado para la elaboración de este simulador
+       \item En el capítulo 3 se expone la gestión del proyecto y las distintas etapas por las que ha pasado este proyecto
+       \item En el capítulo 4 se muestran las conclusiones del proyecto y el posible trabajo futuro de cara a mejorar el simulador 
 \end{itemize}

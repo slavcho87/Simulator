@@ -8,7 +8,7 @@ En este capítulo se explican las funcionalidades básicas del simulador desarro
 
 Se trata de un sistema de colaboración abierta distribuida que permite configurar distintos escenarios con objetos móviles y estáticos sobre mapas de ciudades reales obtenidos a partir del servicio de mapas de OpenStreetMap. 
 
-El simulador de escenarios está basado en el simulador Mavsim desarrollado por el Grupo de Sistemas de Información Distribuidos de la Universidad de Zaragoza utilizado para la simulación de VANETs en el cual hay muchos vehículos distribuidos en una amplia zona geografica.
+El simulador de escenarios está basado en el simulador Mavsim desarrollado por el Grupo de Sistemas de Información Distribuidos de la Universidad de Zaragoza utilizado para la simulación de VANETs en el cual hay muchos vehículos distribuidos en una amplia zona geográfica.
 
 \begin{figure}[H]
 \centering\includegraphics[scale=0.3]{imagenes/resumen-simulador.jpg}
@@ -16,7 +16,7 @@ El simulador de escenarios está basado en el simulador Mavsim desarrollado por 
 \label{c2_trama}
 \end{figure}
 
-Puede ser usado a través de cualquier dispositovo (PC, tablet, móvil etc.) con conexión a Internet y un navegador web. Permite a los usuarios crear sus propios mapas y escenarios. Durante la creación de una escena el usuario elige cual es la cuidad donde se realiza la simulación, el recomendador a utilizar, si el mapa es colaborativo o no, introducir los objetos estáticos y configurar cuales son los objetos móviles y sus rutas. 
+Puede ser usado a través de cualquier dispositivo (PC, tablet, móvil etc.) con conexión a Internet y un navegador web. Permite a los usuarios crear sus propios mapas y escenarios. Durante la creación de una escena el usuario elige cual es la cuidad donde se realiza la simulación, el recomendador a utilizar, si el mapa es colaborativo o no, introducir los objetos estáticos y configurar cuales son los objetos móviles y sus rutas. 
 
 Para realizar una simulación el usuario tiene que buscar y seleccionar el mapa y escenario donde moverse tanto para obtener recomendaciones como para realizar votaciones sobre los distintos objetos de este entorno.
 
@@ -111,14 +111,14 @@ RF-32 & El usuario puede arrancar/pausar una simulación\\ \hline
 \newpage
 
 
-\section{Arquictura del sistema}
+\section{Arquitectura del sistema}
 
 
 La arquitectura del sistema consta de cliente o navegador web, servidor web Node.js, servidor de recomendaciones y base de datos mongoDB (figura \ref{arquitecturaComponentes}).
 
-El la figura \ref{arquitecturaComponentes} observamos que el navegador web se conecta al servidor Node.js mediante dos maneras: la primera es HTTP y la segunda es un sistema bidireccional dirigido por eventos. Las funcionalidades como creación de escenas, busqueda de mapas etc. están desarrollados sobre una REST API y el intercambio de mensajes JSON.
+El la figura \ref{arquitecturaComponentes} observamos que el navegador web se conecta al servidor Node.js mediante dos maneras: la primera es HTTP y la segunda es un sistema bidireccional dirigido por eventos. Las funcionalidades como creación de escenas, búsqueda de mapas etc. están desarrollados sobre una REST API y el intercambio de mensajes JSON.
 
-El sistema bidireccional dirigido por eventos es utilizado por una parte durante la simulación, para reflejar los eventos generados por un usuario al resto de usuarios, y por otra para integrar el navegador, el servidor Node.js y el recomendador. De esta manera conseguimos compartir informácion entre los distintos componentes sin que estos los hayan solicitado evitando muchas peticiones innecesarias.
+El sistema bidireccional dirigido por eventos es utilizado  durante la simulación por una parte para reflejar los eventos generados por un usuario al resto de usuarios, y por otra para integrar el navegador, el servidor Node.js y el recomendador. De esta manera conseguimos compartir información entre los distintos componentes sin que estos los hayan solicitado evitando muchas peticiones innecesarias.
 
 \begin{figure}[H]
 \centering\includegraphics[scale=0.55]{imagenes/arquitectura-componentes.png}
@@ -132,9 +132,9 @@ El sistema bidireccional dirigido por eventos es utilizado por una parte durante
 \subsection{Arquitectura del front-end}
 
 
-Para el desarrollo del front-end se han utilizado los frameworks Angular.js\footnote{framework que nos permite desarrollar aplicaciones de una sola página} y bootstrap\footnote{framework que nos ofrece un sistema de componentes reutilizables y adaptables a la pantalla del dispositivo}. Se ha decidido utilizar estas tecnologias porque nos ofrece varias ventajas: ahorro de recursos\footnote{angular.js va transmitiendo las vistas de la interfaz gráfica y las cachea al lado del cliente para ser reutilizadas posteriormete. Vuelve a solicitar una vista si y solo si esta ha sufrido algún cambio en el servidor}, mejora de la productividad y la posibilidad de realizar una simulación sobre dispositivos móviles\footnote{esto nos da la oportunidad de utilizar la posición geográfica del usuario para obtener recomendaciones en el entorno de una cuidad real. De está manera obtenemos datos reales y muchas más precisión a la hora de evaluar los algoritmos de recomendaciones} con el mismo código fuente.
+Para el desarrollo del front-end se han utilizado los frameworks Angular.js\footnote{framework que nos permite desarrollar aplicaciones de una sola página} y bootstrap\footnote{framework que nos ofrece un sistema de componentes reutilizables y adaptables a la pantalla del dispositivo}. Se ha decidido utilizar estas tecnologías porque nos ofrece varias ventajas: ahorro de recursos\footnote{angular.js va transmitiendo las vistas de la interfaz gráfica y las cachea al lado del cliente para ser reutilizadas posteriormente. Vuelve a solicitar una vista si y solo si esta ha sufrido algún cambio en el servidor}, mejora de la productividad y la posibilidad de realizar una simulación sobre dispositivos móviles\footnote{esto nos da la oportunidad de utilizar la posición geográfica del usuario para obtener recomendaciones en el entorno de una cuidad real. De está manera obtenemos datos reales y muchas más precisión a la hora de evaluar los algoritmos de recomendaciones} con el mismo código fuente.
 
-La arquitectura del front-end está basada en el patrón Modelo-Vista-Controllador de tal forma que para cada vista existe un controlador que contiene la lógica de negocio de esta. El controlador tambien es el encargado de establecer comunicación con el back end. Esta comunicación se realiza mediante los llamados Servicios\footnote{es pequeña fabrica de funciones y objetos inyectada en los controladores} de Angular.js y la REST API del back end. Los Servicios de Angular.js son muy necesarios y útiles ya que nos permiten crear un envoltorio sobre la REST API que nos ofrece el back end y de esta forma centralizar las llamas a la API.
+La arquitectura del front-end está basada en el patrón Modelo-Vista-Controllador de tal forma que para cada vista existe un controlador que contiene la lógica de negocio de esta. El controlador también es el encargado de establecer comunicación con el back end. Esta comunicación se realiza entre los llamados Servicios\footnote{es pequeña fabrica de funciones y objetos inyectada en los controladores} de Angular.js y la REST API del back end. Los Servicios de Angular.js son muy necesarios y útiles ya que nos permiten crear un envoltorio sobre la REST API que nos ofrece el back end y de esta forma centralizar las llamas a la API.
 
 \begin{figure}[H]
 \centering\includegraphics[scale=0.7]{imagenes/arquitectura-front-end.png}
@@ -145,7 +145,7 @@ La arquitectura del front-end está basada en el patrón Modelo-Vista-Controllad
 \subsection{Arquitectura del back-end}
 
 
-Para el desarrollo del back-end se han utilizado Node.js\footnote{javascript al lado del servidor}, Express\footnote{modulo de Node.js que nos ofrece la posiblidad de desarrollar una REST API}, socket.io\footnote{sistema bidireccional dirigido por eventos} y mongoose \footnote{modelado de objetos sobre mongoDB}. Se ha decidido utilizar estas tecnología por que nos ofrecen las siguientes ventajas: mejora la productividad a la hora de desarrollar el back-end, nos permite desarrollar un back-end ligero que consuma pocos recursos y el modulo sockets.io nos ofrece la posibilidad de desarrollar un sistema bidireccional dirigido por eventos.
+Para el desarrollo del back-end se han utilizado Node.js\footnote{javascript al lado del servidor}, Express\footnote{modulo de Node.js que nos ofrece la posibilidad de desarrollar una REST API}, socket.io\footnote{sistema bidireccional dirigido por eventos} y mongoose \footnote{modelado de objetos sobre mongoDB}. Se ha decidido utilizar estas tecnología por que nos ofrecen las siguientes ventajas: mejora la productividad a la hora de desarrollar el back-end, nos permite desarrollar un back-end ligero que consuma pocos recursos y el modulo sockets.io nos ofrece la posibilidad de desarrollar un sistema bidireccional dirigido por eventos.
 
 La arquitectura del back-end se basa en la filosofía de desarrollo de aplicaciones con Node.js y Express y consiste de la siguiente estructura de directorios:
 
@@ -181,18 +181,18 @@ La arquitectura del back-end se basa en la filosofía de desarrollo de aplicacio
 
 \newpage
 
-A continuación vamos a ver más detalladamente cual es la funcion de cada elemento de este directorio:
+A continuación vamos a ver más detalladamente cual es la función de cada elemento de este directorio:
 \begin{itemize}
 	\item app.js: centraliza las configuraciones de nuestra aplicación como por ejemplo en que puerto arranca el servidor, establecer conexiones con la base de datos, configuraciones del router\footnote{el router de Node.js es el encargado del direccionamiento de las peticiones y hace referencia a la definición de puntos finales de aplicación (URI) y cómo responden a las solicitudes de cliente} etc.
-	\item package.json: es un gestor de paquetes y contiene los modulos que se están utilizando en nuestra aplicación.
-	\item public: es un directorio que contiene la parte visual, es decir el front end. Podemos ver que este contiene varios subdirectorios:
+	\item package.json: es un gestor de paquetes y contiene los módulos que se están utilizando en nuestra aplicación.
+	\item public: es un directorio que contiene la parte visual, es decir el front-end. Podemos ver que este contiene varios subdirectorios:
 	\begin{itemize}
-	\item en images se ubican las imagenes o iconos usados en la aplicación.
-	\item en javascript se ubican los frameworks Javascript usados en en el front end como Angular.js, Bootstrap, OpenLayers etc. En el subdirectorio angular podemos encontrar las configuraciones de Angular.js, los controladores de las vistas, los Servicios etc.
-	\item en views se ubican las vistas del front end.
+	\item en images se ubican las imágenes o iconos usados en la aplicación.
+	\item en javascript se ubican los frameworks Javascript usados en en el front-end como Angular.js, Bootstrap, OpenLayers etc. En el subdirectorio angular podemos encontrar las configuraciones de Angular.js, los controladores de las vistas, los Servicios etc.
+	\item en views se ubican las vistas del front-end.
 	\item en stylesheets están ubicadas las hojas de estilos
 	\end{itemize}
-	\item en routes se ubican las distinas rutas de Express. En nuestro caso tenemos una para cada menú de la aplicación. Por ejemplo todas las operaciones referentes al menú Maps se encuentra en el fichero maps.js etc.
+	\item en routes se ubican las distintas rutas de Express. En nuestro caso tenemos una para cada menú de la aplicación. Por ejemplo todas las operaciones referentes al menú Maps se encuentra en el fichero maps.js etc.
 \end{itemize}
 
 \subsection{Arquitectura de recomendador}
@@ -221,12 +221,12 @@ El evento recommend es el que se dispara cuando uno de los usuarios solicita una
 \section{Menús del simulador de escenarios}
 
 
-Como en todas las aplicaciones, el simulador de escenarios cuenta con un sistema de menús que dan acceso a las distintas opciones del simulador. En este caso se ha seguido la paradigma WIMP para la organización de los menús y distinas opciones (figura \ref{mapaNavegacion}). Existen 4 tipos de caminos organizados en forma de árbol:
+Como en todas las aplicaciones, el simulador de escenarios cuenta con un sistema de menús que dan acceso a las distintas opciones del simulador. En este caso se ha seguido la paradigma WIMP para la organización de los menús y distintas opciones (figura \ref{mapaNavegacion}). Existen 4 tipos de caminos organizados en forma de árbol:
 
 \begin{itemize}
 	\item busqueda y gestión (creación, edición y borrados) de mapas y escenas
 	\item simulación de un mapa y escena
-	\item gestión de tipos de recomendadores, objetos estáticos\footnote{objetos que no cambian de posición a medida que pasa el tiempo} y dinámicos\footnote{objetos que cambian de posición a medida que pasa el tiempo. Tienen una ruta difinida durante la creación de la escena}
+	\item gestión de tipos de recomendadores, objetos estáticos\footnote{objetos que no cambian de posición a medida que pasa el tiempo} y dinámicos\footnote{objetos que cambian de posición a medida que pasa el tiempo. Tienen una ruta definida durante la creación de la escena}
 	\item configuraciones del perfil del usuario
 \end{itemize} 
 
@@ -241,9 +241,9 @@ Como en todas las aplicaciones, el simulador de escenarios cuenta con un sistema
 \section{Navegación por estima}
 
 
-La navegación por estima es una técnica que se aplica en el cliente. Consiste en procesar en cada ciclo el estado de los objetos móviles. Se trata de una técnica análitica utilizada en la náutica para la navegación y situación de los barcos y se tienen en cuenta los siguientes elementos: la situación actual, rumbo y velocidad. Es decir, sabiendo la velocidad, el rumbo de la nave y el tiempo transcurido se puede estimar la posición de la misma al cabo del tiempo. 
+La navegación por estima es una técnica que se aplica en el cliente. Consiste en procesar en cada ciclo el estado de los objetos móviles. Se trata de una técnica analítica utilizada en la náutica para la navegación y situación de los barcos y se tienen en cuenta los siguientes elementos: la situación actual, rumbo y velocidad. Es decir, sabiendo la velocidad, el rumbo de la nave y el tiempo transcurrido se puede estimar la posición de la misma al cabo del tiempo. 
 
-Con este método conseguimos calcular cual es la siguiente posición geográfica donde tenemos que colocar un objeto móvil al acabo de un tiempo (el tiempo de refresco de la pántalla). Como ventaja conseguimos disminuir el error en el cálculo de las posiciones de los objetos móviles. Así obtenemos movimientos muy precisos incluso en grafos de movimientos con nodos muy cercanos. Para evitar problemas en estos casos se han puesto tiempos bajos de refresco de la pántalla.
+Con este método conseguimos calcular cual es la siguiente posición geográfica donde tenemos que colocar un objeto móvil al acabo de un tiempo (el tiempo de refresco de la pantalla). Como ventaja conseguimos disminuir el error en el cálculo de las posiciones de los objetos móviles. Así obtenemos movimientos muy precisos incluso en grafos de movimientos con nodos muy cercanos. Para evitar problemas en estos casos se han puesto tiempos bajos de refresco de la pantalla.
 
 \section{Diseño final}
 

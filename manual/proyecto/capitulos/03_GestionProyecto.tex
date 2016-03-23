@@ -6,11 +6,11 @@ En este capítulo se explican el modelo de proceso seleccionado y las distintas 
 \section{Modelo de proceso seleccionado}
 
 
-Este Trabajo Fin de Grado ha surgido una importante evolución desde el primer planteamiento hasta la obteneción del sistema final. La primera idea para la evaluación de los algoritmos de recomendaciones era la utilización de un videojuego ya que este podría recolectar datos de forma transparente mientras los usuarios se divertian. El videojuego consistiría en el cumplimiento de misiones en una cuidad basandose en algún videojuego de aventuras como el videojuego Paperboy del año 1985 donde un chico reparte periodicos en una cuidad.
+Este Trabajo Fin de Grado ha surgido una importante evolución desde el primer planteamiento hasta la obtención del sistema final. La primera idea para la evaluación de los algoritmos de recomendaciones era la utilización de un videojuego ya que este podría recolectar datos de forma transparente mientras los usuarios se divertian. El videojuego consistiría en el cumplimiento de misiones en una cuidad basandose en algún videojuego de aventuras como el videojuego Paperboy del año 1985 donde un chico reparte periódicos en una cuidad.
 
-Por esto se ha planteado usar el motor gráfico Unity 5 para el desarrollo del videojuego ya que no tenía sentido desarrollar un videojuego usando simplemente un lenguaje de programación. Pero existía la incertidumbre si todos los requisitos podrian ser implementados. Esto era debido porque por una parte no se conocian de antemano todos los requisitos y por otra no se conocía si el motor gráfico tenía algún tipo de limite. 
+Por esto se ha planteado usar el motor gráfico Unity 5 para el desarrollo del videojuego ya que no tenía sentido desarrollar un videojuego usando simplemente un lenguaje de programación. Pero existía la incertidumbre si todos los requisitos podrían ser implementados. Esto era debido porque por una parte no se conocían de antemano todos los requisitos y por otra no se conocía si el motor gráfico tenía algún tipo de limite. 
 
-Para solucionar estos problemas se ha tomado la decisión de elegir el modelo en espiral como modelo de trabajo. Las actividades de este modelo forman una espiral de tal forma que cada iteración representa un conjunto de actividades. Esto nos permitiría segmentar el trabajo en tareas más pequeñas e ir definiedo los requisitos mientras se desarrollaba el videojuego. De esta manera podriamos evaluar si los requisitos propuestos podrian o no ser implementados con Unity 5. En caso de que el motor gráfico tuviese algún límite tendriamos la capacidad de reorientar el proyecto.
+Para solucionar estos problemas se ha tomado la decisión de elegir el modelo en espiral como modelo de trabajo. Las actividades de este modelo forman una espiral de tal forma que cada iteración representa un conjunto de actividades. Esto nos permitiría segmentar el trabajo en tareas más pequeñas e ir definiendo los requisitos mientras se desarrollaba el videojuego. De esta manera podríamos evaluar si los requisitos propuestos podrían o no ser implementados con Unity 5. En caso de que el motor gráfico tuviese algún límite tendríamos la capacidad de reorientar el proyecto.
 
 \subsection{Etapa 1}
 
@@ -22,7 +22,7 @@ En la tabla \ref{tabla:requisitosEtapa1} podemos encontrar las tareas que han si
 \hline 
 Código & Descripción \\
 \hline \hline
-RQ-0  & Formación basica con Unity 5\\ \hline
+RQ-0  & Formación básica con Unity 5\\ \hline
 RQ-1  & Establecer puntos en el mapa para que el jugador pueda ir a buscarlos. \\ \hline
 RQ-2  & Los puntos establecidos en el requisitos RQ-1 deben de ser extraibles desde un servidor externo\\ \hline
 RQ-3  & Establecer una conexión HTTP/JSON entre Unity 5 y un servidor externo. \\ \hline
@@ -30,7 +30,7 @@ RQ-4  & Sacar el modelado geométrico de un servidor externo \\ \hline
 RQ-5  & El videojugo debe de tener un menú principal \\ \hline
 RQ-6  & Investigar si se puede usar Longitud y Latitud con Unity 5 \\ \hline
 RQ-7  & Investigar si los edificio generados con CityEngine 2014 son reales o no \\ \hline
-RQ-8  & Permitir que el juego se realice sobre mapas de cuidades reales \\ \hline
+RQ-8  & Permitir que el juego se realice sobre mapas de ciudades reales \\ \hline
 RQ-9  & Investigar si es posible el desarrollo de videojuego en 3D \\ \hline
 \end{tabular}
 \caption{Tareas etapa 1}
@@ -46,7 +46,7 @@ Como conclusión de esta etapa obtenemos el siguiente resultado:
 	\item la realizacion del menú principal del videojuego ha sido posible.
 	\item Unity 5 utiliza eje de abscisas. Por lo tanto si queremos usar coordenadas geográficas tenemos que calcular la Longitud y Latitud a partir del eje de coordenadas (x, y, z).
 	\item los datos sobre los edificios de OpenStreetMap no están completos.
-	\item se ha decido de dejar atras el modelado 3D ya que se han detectado los siguientes problemas: coste en cuanto a tiempo demasiado grande para el deseño de una ciudad, CityEngine 2014 no interpreta correctamente los datos exportados además no existe ninguna otra herramienta que nos permita la correcta interpretación de los datos (por lo menos yo no podido encontrarla).
+	\item se ha decido de dejar atrás el modelado 3D ya que se han detectado los siguientes problemas: coste en cuanto a tiempo demasiado grande para el diseño de una ciudad, CityEngine 2014 no interpreta correctamente los datos exportados además no existe ninguna otra herramienta que nos permita la correcta interpretación de los datos (por lo menos yo no podido encontrarla).
 \end{itemize}
 
 \subsection{Etapa 2}
@@ -59,7 +59,7 @@ En la tabla \ref{tabla:requisitosEtapa2} podemos encontrar las tareas que han si
 \hline 
 Código & Descripción \\
 \hline \hline
-RQ-10 & Investigar como se desarrollan grafos en Unity para la posterior implementación de la IA sobre estos para el movimiento de los vehiculos etc. \\ \hline
+RQ-10 & Investigar como se desarrollan grafos en Unity para la posterior implementación de la IA sobre estos para el movimiento de los vehículos etc. \\ \hline
 RQ-11 & Diseñar y desarrollar un mapa del juego\\ \hline
 \end{tabular}
 \caption{Tareas etapa 2}
@@ -95,8 +95,8 @@ RQ-12 & Investigar si es posible la integración de OpenStreetMap con Unity\\ \h
 
 Como conclusión de esta etapa obtenemos el siguiente resultado:
 \begin{itemize}
-	\item Unity 5 no puede ser integrado con OpenStreetMap y no es capaza renderizar mapas a partir sus datos (ficheros OSM). 
-	\item en esta etapa se ha decido reorientar el proyecto por las siguientes razones: Unity 5 no puede ser integrado con OpenStreetMap por lo tanto la unica opción para desarrollar un videojuego sobre mapas reales es desarrollando el videojuego desde cero con algún lenguaje como Java y el incoveniente que esto representa es que es demasiado costoso en cuanto a tiempo y dificultad.  
+	\item Unity 5 no puede ser integrado con OpenStreetMap y no es capaz de renderizar mapas a partir sus datos (ficheros OSM). 
+	\item en esta etapa se ha decido reorientar el proyecto por las siguientes razones: Unity 5 no puede ser integrado con OpenStreetMap por lo tanto la única opción para desarrollar un videojuego sobre mapas reales es desarrollando el videojuego desde cero con algún lenguaje como Java y el inconveniente que esto representa es que es demasiado costoso en cuanto a tiempo y dificultad.  
 \end{itemize}
 
 \subsection{Etapa 4}
@@ -167,7 +167,7 @@ La última etapa consiste en documentar el trabajo realizado en este Trabajo Fin
 
 \section{Tiempo dedicado}
 
-Como ya se ha comentado anteriormente, el desarrollo del proyecto se ha realizado siguiendo el modelo en espiral. En esta sección se mostrará el tiempo dedicado y tambien un cronograma de las diferenes etapas.
+Como ya se ha comentado anteriormente, el desarrollo del proyecto se ha realizado siguiendo el modelo en espiral. En esta sección se mostrará el tiempo dedicado y también un cronograma de las diferentes etapas.
 
 \begin{table}[H]
 \begin{center}
