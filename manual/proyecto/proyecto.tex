@@ -1,14 +1,16 @@
 \documentclass[a4paper,11pt]{book}
 %\documentclass[a4paper,twoside,11pt,titlepage]{book}
 \usepackage{array}
+\usepackage{cite}
 \usepackage{dirtree}
 \usepackage{listings}
 \usepackage{longtable}
 \usepackage{float}
 \usepackage{subfig}
+\usepackage{url}
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
-
+\usepackage[sort&compress]{natbib}
 % \usepackage[style=list, number=none]{glossary} %
 %\usepackage{titlesec}
 %\usepackage{pailatino}
@@ -40,7 +42,6 @@
 \newcommand{\TFG}{TRABAJO FIN DE GRADO}
 \newcommand{\myName}{Slavcho Georgiev Ivanov}
 \newcommand{\myProf}{Sergio Ilarri Artigas}
-%\newcommand{\mySupervisor}{Put name here\xspace}
 \newcommand{\myFaculty}{Escuela de Ingeniería y Arquitectura}
 \newcommand{\myFacultyShort}{EINA}
 \newcommand{\myArea}{Área de Lenguajes y Sistemas Informáticos}
@@ -60,23 +61,9 @@ pdfcreator = {LaTeX con el paquete ....},
 pdfproducer = {pdflatex}
 }
 
-%\hyphenation{}
-
-
-%\usepackage{doxygen/doxygen}
-%\usepackage{pdfpages}
 \usepackage{url}
 \usepackage{colortbl,longtable}
 \usepackage[stable]{footmisc}
-%\usepackage{index}
-
-%\makeindex
-%\usepackage[style=long, cols=2,border=plain,toc=true,number=none]{glossary}
-% \makeglossary
-
-% Definición de comandos que me son tiles:
-%\renewcommand{\indexname}{Índice alfabético}
-%\renewcommand{\glossaryname}{Glosario}
 
 \pagestyle{fancy}
 \fancyhf{}
@@ -182,6 +169,7 @@ pdfproducer = {pdflatex}
 \tableofcontents
 \listoffigures
 \listoftables
+
 %
 \mainmatter
 \setlength{\parskip}{5pt}
@@ -189,25 +177,14 @@ pdfproducer = {pdflatex}
 \input{capitulos/01_Introduccion}
 %
 \input{capitulos/02_TrabajoDesarrollado}
-%
+%w
 \input{capitulos/03_GestionProyecto}
 %
 \input{capitulos/04_Conclusiones}
-%
-%\input{capitulos/05_Bibliografia}
-%
-%\input{capitulos/06_Implementacion}
-%
-%\input{capitulos/07_Pruebas}
-%
-%\input{capitulos/08_Conclusiones}
-%
-%%\chapter{Conclusiones y Trabajos Futuros}
-%
-%
-%%\nocite{*}
-%\bibliography{bibliografia/bibliografia}\addcontentsline{toc}{chapter}{Bibliografía}
-%\bibliographystyle{miunsrturl}
+
+\nocite{*}
+\bibliography{bibliografia/bibliografia}\addcontentsline{toc}{chapter}{Bibliografía}
+\bibliographystyle{unsrt}
 %
 %\appendix
 %\input{apendices/manual_usuario/manual_usuario}
