@@ -1,6 +1,6 @@
 \chapter{Conclusiones}
 
-En este capítulo se explican los resultados que se han obtenido de este Trabajo Fin de Grado, el trabajo futuro y una valoración personal.
+En este capítulo se explican los resultados que se han obtenido de este Trabajo Fin de Grado, los rendimientos del simulador, el trabajo futuro y una valoración personal.
 
 \section{Resultados}
 
@@ -13,6 +13,61 @@ Como se puede comprobar a continuación, se han cumplido todos los objetivos mar
 	\item Los usuarios puedan crear, editar, borrar y configurar los mapas y escenarios del simulador.
 	\item Se ha desarrollado un sistema bidireccional basada en eventos que permite integrar un recomendador externo y realizar simulaciones en tiempo real de tal forma que los eventos de los usuarios se reflejen en los dispositivos conectados al mismo mapa y escena.
 \end{itemize}
+
+\section{Rendimientos del simulador}
+
+El limite teórico máximo de peticiones de las aplicaciones desarrolladas con Node.js es igual al número máximo de sockets que se puedan crear en el servidor, es decir, un servidor con un Sistema Operativo Linux puede crear 65535 sockets. Pero hay que tener en cuenta que una parte esta reservada para el Sistema Operativo. Esto nos deja entre 30.000 - 45.000 sockets que podemos usar.
+
+Tenemos que comprobar como se comporta el simulador por lo tanto hemos realizado unas pruebas de stress. A continuación podemos ver los datos del servidor y los resultados obtenidos:
+
+\begin{itemize}
+	\item Sistema Operativo: Linux v15.10 64 bits
+	\item RAM: 3.3 GB
+	\item CPU: Intel i3 1.8 GHz
+\end{itemize}
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|}\hline
+			Peticiones & CPU & Memoria & Kbytes/sec & Peticiones/seg & Segundos por petición \\ \hline
+			50.000 & 24.8 & 134MB & 1593,86 & 508,76 & 0,196555 \\ \hline
+			100.000 & 30.2 & 133 MB & 1716,46 & 547,89 & 0,182517 \\ \hline
+			500.000 & 45.4 & 138MB & 1199,38 & 382,84 & 0,261204 \\ \hline
+		\end{tabular}
+		\caption{Pruebas de carga con 100 usuarios concurrentes}
+		\label{tabla:CienteUsuarios}
+	\end{center}
+\end{table}
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|} 	\hline
+			Peticiones & CPU & Memoria & Kbytes/sec & Peticiones/seg & Segundos por petición \\ \hline
+			50.000 & 25.9 & 147MB & 1196,85 & 382,04 & 1,308774 \\ \hline
+			100.000 & 40.6 & 160MB & 1286,86 & 410,78 & 1,2172 \\ \hline
+			500.000 & 44.6 & 162 MB & n/d & n/d & n/d \\ \hline
+		\end{tabular}
+		\caption{Pruebas de carga con 500 usuarios concurrentes}
+		\label{tabla:QuinientosUsuarios}
+	\end{center}
+\end{table}
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|} \hline
+			Peticiones & CPU & Memoria & Kbytes/sec & Peticiones/seg & Segundos por petición \\ \hline
+			50.000 & 24.3 & 160 MB & 1408,94 & 449,74 & 2,223517 \\ \hline
+			100.000 & 26.3 & 167MB & n/d & n/d & n/d \\ \hline
+			500.000 & n/d & n/d & n/d & n/d & n/d \\ \hline
+		\end{tabular}
+		\caption{Pruebas de carga con 1000 usuarios concurrentes}
+		\label{tabla:MilUsuarios}
+	\end{center}
+\end{table}
+
+En el caso de la pruebas con 500 usuarios concurrentes nos da dado el error apr socket recv Connection timed out (110) y se han completado 105.195 peticiones en la prueba con 500.000 peticiones. En el caso de la prueba con 1000 usuarios concurrentes nos ha dado el mismo fallo que en el caso de los 500 usuarios concurrentes y se han completado 54.599 peticiones en la prueba con 100.000 peticiones. 
+
+En el resto de casos las pruebas de carga han sido satisfactorias. Observamos que el peor de los casos se ha obtenido una media de 2,2 segundos por petición en el caso que tenemos 1000 usuarios concurrentes que han generado 50.000 peticiones.
 
 \section{Trabajos futuros}
 
