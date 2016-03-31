@@ -1,6 +1,7 @@
 \documentclass[a4paper,11pt]{book}
 %\documentclass[a4paper,twoside,11pt,titlepage]{book}
 \usepackage{array}
+\usepackage{appendix}
 \usepackage{cite}
 \usepackage{dirtree}
 \usepackage{listings}
@@ -185,13 +186,23 @@ pdfproducer = {pdflatex}
 \nocite{*}
 \bibliography{bibliografia/bibliografia}\addcontentsline{toc}{chapter}{Bibliografía}
 \bibliographystyle{unsrt}
-%
-%\appendix
-%\input{apendices/manual_usuario/manual_usuario}
-%%\input{apendices/paper/paper}
-%\input{glosario/entradas_glosario}
-% \addcontentsline{toc}{chapter}{Glosario}
-% \printglossary
+
+\renewcommand{\appendixname}{Anexos}
+\renewcommand{\appendixtocname}{Anexos}
+\renewcommand{\appendixpagename}{Anexos}
+
+\appendix
+\clearpage
+\addappheadtotoc
+\appendixpage
+
+\input{anexos/01_Manual_Usuario}
+\input{anexos/02_Trabajo_Desarrollado}
+\input{anexos/03_Implementacion_Front_End}
+\input{anexos/04_Implementacion_Back_End}
+\input{anexos/05_Pruebas_stress}
+\input{anexos/06_Integracion_Recomendador}
+
 \chapter*{}
 \thispagestyle{empty}
 
