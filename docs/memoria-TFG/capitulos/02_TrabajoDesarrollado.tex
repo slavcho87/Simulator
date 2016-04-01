@@ -1,7 +1,7 @@
 \chapter{Trabajo desarrollado}
 
 
-En este capítulo se explican las funcionalidades básicas del simulador desarrollado centradose únicamente en los aspectos más importantes. Para profundizar más sobre estos aspectos debe acudir a los anexos.
+En este capítulo se explican las funcionalidades básicas del simulador desarrollado centradose únicamente en los aspectos más importantes.
 
 \section{Resumen del simulador}
 
@@ -22,27 +22,25 @@ Para realizar una simulación el usuario tiene que buscar y seleccionar el mapa 
 
 \section{Análisis de requisitos}
 
-
 \subsection{Requisitos no funcionales}
 
-
 \begin{table}[H]
-\begin{center}
-\begin{tabular}{|p{1.5cm}| p{10.5cm}|}
-\hline
-Código & Descripción \\
-\hline
-RNF-1  & La aplicación tratara de un simulador. Dicha simulación se realizara sobre mapas online\\ \hline
-RNF-2  & La navegación por los menús de la aplicación se realizara mediante una interfaz gráfica\\ \hline
-RNF-3  & Los textos por defecto de la aplicación serán en inglés\\ \hline
-RNF-4  & La autenfiticación de usuarios se realizará mediante web tokens\\ \hline
-RNF-5  & La interfaz gráfica debe ser responsive desarrollada con bootstrap\\ \hline
-RNF-6  & El back-end debe ser desarrollado con node.js, sockets.io y express \\ \hline
-RNF-7  & El front-end debe ser desarrollado con Angular.js\\ \hline
-\end{tabular}
-\caption{Requisitos no funcionales}
-\label{tabla:requisitosNoFuncionales}
-\end{center}
+	\begin{center}
+		\begin{tabular}{|p{1.5cm}| p{10.5cm}|}
+			\hline
+			Código & Descripción \\
+			\hline
+			RNF-1  & La aplicación tratara de un simulador. Dicha simulación se realizara sobre mapas online\\ \hline
+			RNF-2  & La navegación por los menús de la aplicación se realizara mediante una interfaz gráfica\\ \hline
+			RNF-3  & Los textos por defecto de la aplicación serán en inglés\\ \hline
+			RNF-4  & La autenfiticación de usuarios se realizará mediante web tokens\\ \hline
+			RNF-5  & La interfaz gráfica debe ser responsive desarrollada con bootstrap\\ \hline
+			RNF-6  & El back-end debe ser desarrollado con node.js, sockets.io y express \\ \hline
+			RNF-7  & El front-end debe ser desarrollado con Angular.js\\ \hline
+		\end{tabular}
+		\caption{Requisitos no funcionales}
+		\label{tabla:requisitosNoFuncionales}
+	\end{center}
 \end{table}
 
 \newpage
@@ -51,68 +49,66 @@ RNF-7  & El front-end debe ser desarrollado con Angular.js\\ \hline
 
 
 \begin{longtable}[H]{|c|p{10cm}|}
-% aquí añadimos el encabezado de la primera hoja.
-\hline
-Código & Descripción \\
-\hline \hline
-\endfirsthead
-
-% aquí añadimos el encabezado del resto de hojas.
-\hline
-Código & Descripción \\
-\hline \hline
-\endhead
-
-% aquí añadimos el fondo de todas las hojas, excepto de la última.
-\multicolumn{2}{c}{}
-\endfoot
-
-% aquí añadimos el fondo de la última hoja.
-\endlastfoot
-
-% aquí añadimos el cuerpo de la tabla.
-RF-1  & La aplicación permitirá crear un nuevo usuario\\ \hline
-RF-2  & La aplicación permitirá al usuario buscar mapas por su nombre, tipo, estado, cuidad y fecha de creación\\ \hline
-RF-3  & La aplicación permitirá al usuario crear un nuevo mapa\\ \hline
-RF-4  & La aplicación permitirá al usuario crear una nueva escena asociada a un mapa existente\\ \hline
-RF-5  & La aplicación listara todas las escenas de un mapa\\ \hline
-RF-6  & La aplicación permitirá al usuario editar un mapa existente\\ \hline
-RF-7  & La aplicación permitirá al usuario editar las escenas de un mapa existente\\ \hline
-RF-8  & La aplicación permitirá al usuario crear un nuevo tipo de objeto estático\\ \hline
-RF-9  & La aplicación permitirá al usuario crear un nuevo tipo de objeto dinámico\\ \hline
-RF-10 & La aplicación listará todos los tipos de objetos estáticos creados\\ \hline
-RF-11 & La aplicación listará todos los tipos de objetos dinámicos creados\\ \hline
-RF-12 & La aplicación permitirá al usuario editar los objetos estáticos credos\\ \hline
-RF-13 & La aplicación permitirá al usuario editar los objetos dinámicos creados\\ \hline
-RF-14 & La aplicación permitirá al usuario cambiar el nombre\\ \hline
-RF-15 & La aplicación permitirá al usuario cambiar su contraseña\\ \hline
-RF-16 & La aplicación permitirá al usuario cambiar la imagen asociada a un usuario\\ \hline
-RF-17 & La aplicación permitirá al usuario configurar un nuevo tipo de recomendador\\ \hline
-RF-18 & La aplicación permitirá al usuario editar la configuración de recomendador existente\\ \hline
-RF-18 & La aplicación permitirá al usuario asociar un recomendador existente a una escena\\ \hline
-RF-19 & La aplicación permitirá al usuario definir los limites de una escena\\ \hline
-RF-20 & La aplicación permitirá al usuario asociar un objeto estático a una escena\\ \hline
-RF-21 & La aplicación permitirá al usuario cargar todos los objetos estáticos desde un fichero JSON\\ \hline
-RF-22 & La aplicación permitirá asociar un objeto dinámico y su definir su ruta en una escena\\ \hline
-RF-23 & La aplicación permitirá al usuario cargar todos los objetos dinámicos y sus rutas desde un fichero JSON\\ \hline
-RF-24 & La aplicación listará todos objetos estáticos asociados a una escena \\ \hline
-RF-25 & La aplicación listará todos los objetos dinámicos asociados a una escena \\ \hline
-RF-26 & La aplicación permitirá borrar un objeto estático asociado a una escena\\ \hline
-RF-27 & La aplicación permitirá borrar un objeto dinámico asociado a una escena\\ \hline
-RF-28 & La aplicación permitirá al usuario elegir un si mapa es colaborativo o no\\ \hline
-RF-29 & La aplicación permitirá al usuario ejecuta una simulación sobre la escena de un mapa\\ \hline
-RF-30 & La aplicación permitirá al usuario solicitar recomendaciones mientras se está ejecutando una simulación siempre y cuando el recomendador asociado a la escena es de tipo pull\\ \hline
-RF-31 & El usuario recibirá recomendaciones sin haberlas solicitado siempre y cuando el recomendador asociado a la escena de es tipo push\\ \hline
-RF-32 & El usuario puede arrancar/pausar una simulación\\ \hline
-\caption{Requisitos funcionales}
-\label{tabla:requisitosFuncionales}
+	% aquí añadimos el encabezado de la primera hoja.
+	\hline
+	Código & Descripción \\
+	\hline \hline
+	\endfirsthead
+	
+	% aquí añadimos el encabezado del resto de hojas.
+	\hline
+	Código & Descripción \\
+	\hline \hline
+	\endhead
+	
+	% aquí añadimos el fondo de todas las hojas, excepto de la última.
+	\multicolumn{2}{c}{}
+	\endfoot
+	
+	% aquí añadimos el fondo de la última hoja.
+	\endlastfoot
+	
+	% aquí añadimos el cuerpo de la tabla.
+	RF-1  & La aplicación permitirá crear un nuevo usuario\\ \hline
+	RF-2  & La aplicación permitirá al usuario buscar mapas por su nombre, tipo, estado, cuidad y fecha de creación\\ \hline
+	RF-3  & La aplicación permitirá al usuario crear un nuevo mapa\\ \hline
+	RF-4  & La aplicación permitirá al usuario crear una nueva escena asociada a un mapa existente\\ \hline
+	RF-5  & La aplicación listara todas las escenas de un mapa\\ \hline
+	RF-6  & La aplicación permitirá al usuario editar un mapa existente\\ \hline
+	RF-7  & La aplicación permitirá al usuario editar las escenas de un mapa existente\\ \hline
+	RF-8  & La aplicación permitirá al usuario crear un nuevo tipo de objeto estático\\ \hline
+	RF-9  & La aplicación permitirá al usuario crear un nuevo tipo de objeto dinámico\\ \hline
+	RF-10 & La aplicación listará todos los tipos de objetos estáticos creados\\ \hline
+	RF-11 & La aplicación listará todos los tipos de objetos dinámicos creados\\ \hline
+	RF-12 & La aplicación permitirá al usuario editar los objetos estáticos credos\\ \hline
+	RF-13 & La aplicación permitirá al usuario editar los objetos dinámicos creados\\ \hline
+	RF-14 & La aplicación permitirá al usuario cambiar el nombre\\ \hline
+	RF-15 & La aplicación permitirá al usuario cambiar su contraseña\\ \hline
+	RF-16 & La aplicación permitirá al usuario cambiar la imagen asociada a un usuario\\ \hline
+	RF-17 & La aplicación permitirá al usuario configurar un nuevo tipo de recomendador\\ \hline
+	RF-18 & La aplicación permitirá al usuario editar la configuración de recomendador existente\\ \hline
+	RF-18 & La aplicación permitirá al usuario asociar un recomendador existente a una escena\\ \hline
+	RF-19 & La aplicación permitirá al usuario definir los limites de una escena\\ \hline
+	RF-20 & La aplicación permitirá al usuario asociar un objeto estático a una escena\\ \hline
+	RF-21 & La aplicación permitirá al usuario cargar todos los objetos estáticos desde un fichero JSON\\ \hline
+	RF-22 & La aplicación permitirá asociar un objeto dinámico y su definir su ruta en una escena\\ \hline
+	RF-23 & La aplicación permitirá al usuario cargar todos los objetos dinámicos y sus rutas desde un fichero JSON\\ \hline
+	RF-24 & La aplicación listará todos objetos estáticos asociados a una escena \\ \hline
+	RF-25 & La aplicación listará todos los objetos dinámicos asociados a una escena \\ \hline
+	RF-26 & La aplicación permitirá borrar un objeto estático asociado a una escena\\ \hline
+	RF-27 & La aplicación permitirá borrar un objeto dinámico asociado a una escena\\ \hline
+	RF-28 & La aplicación permitirá al usuario elegir un si mapa es colaborativo o no\\ \hline
+	RF-29 & La aplicación permitirá al usuario ejecuta una simulación sobre la escena de un mapa\\ \hline
+	RF-30 & La aplicación permitirá al usuario solicitar recomendaciones mientras se está ejecutando una simulación siempre y cuando el recomendador asociado a la escena es de tipo pull\\ \hline
+	RF-31 & El usuario recibirá recomendaciones sin haberlas solicitado siempre y cuando el recomendador asociado a la escena de es tipo push\\ \hline
+	RF-32 & El usuario puede arrancar/pausar una simulación\\ \hline
+	\caption{Requisitos funcionales}
+	\label{tabla:requisitosFuncionales}
 \end{longtable}
 
 \newpage
 
-
 \section{Arquitectura del sistema}
-
 
 La arquitectura del sistema consta de cliente o navegador web, servidor web Node.js, servidor de recomendaciones y base de datos mongoDB (figura \ref{arquitecturaComponentes}).
 
@@ -126,11 +122,7 @@ El sistema bidireccional dirigido por eventos es utilizado  durante la simulaci�
 \label{arquitecturaComponentes}
 \end{figure}
 
-\newpage
-
-
 \subsection{Arquitectura del front-end}
-
 
 Para el desarrollo del front-end se han utilizado los frameworks Angular.js\footnote{framework que nos permite desarrollar aplicaciones de una sola página} y bootstrap\footnote{framework que nos ofrece un sistema de componentes reutilizables y adaptables a la pantalla del dispositivo}. Se ha decidido utilizar estas tecnologías porque nos ofrece varias ventajas: ahorro de recursos\footnote{angular.js va transmitiendo las vistas de la interfaz gráfica y las cachea al lado del cliente para ser reutilizadas posteriormente. Vuelve a solicitar una vista si y solo si esta ha sufrido algún cambio en el servidor}, mejora de la productividad y la posibilidad de realizar una simulación sobre dispositivos móviles\footnote{esto nos da la oportunidad de utilizar la posición geográfica del usuario para obtener recomendaciones en el entorno de una cuidad real. De está manera obtenemos datos reales y muchas más precisión a la hora de evaluar los algoritmos de recomendaciones} con el mismo código fuente.
 
@@ -253,10 +245,10 @@ En esta sección se dejan solo algunas de las pantallas más relevantes de la ap
  \centering
   \subfloat[Autentificación de un usuario]{
    \label{f:login}
-    \includegraphics[width=0.6\textwidth]{imagenes/login.jpg}}
+    \includegraphics[width=0.5\textwidth]{imagenes/login.jpg}}
   \subfloat[Crear un nuevo usuario]{
    \label{f:register}
-    \includegraphics[width=0.6\textwidth]{imagenes/register.jpg}}
+    \includegraphics[width=0.5\textwidth]{imagenes/register.jpg}}
  \caption{Registro y autentificación de un usuario}
  \label{f:LoginRegister}
 \end{figure}
