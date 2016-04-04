@@ -75,9 +75,7 @@ router.post('/saveScene', function(req, resp){
     scene.latitudeULC = req.body.latitudeULC;
     scene.longitudeULC  = req.body.longitudeULC;
     scene.latitudeLRC  = req.body.latitudeLRC;
-    scene.longitudeLRC = req.body.longitudeLRC;
-    scene.maxStaticItems = req.body.maximumStaticItemsToDisplay; 
-    scene.maxDynamicItems = req.body.maximumStaticItemsToDisplay;
+    scene.longitudeLRC = req.body.longitudeLRC; 
     scene.mapId = req.body.mapId;
     scene.recommender = req.body.recommenderSettings;
     scene.zoomLevel = req.body.zoom;
@@ -424,8 +422,6 @@ router.post('/updateScene', function(req, res){
         longitudeULC: req.body.longitudeULC,
         latitudeLRC: req.body.latitudeLRC,
         longitudeLRC: req.body.longitudeLRC,
-        maxStaticItems: req.body.maximumStaticItemsToDisplay,
-        maxDynamicItems: req.body.maximumDynamicItemsToDisplay,
         mapId: req.body.mapId,
         recommender: req.body.recommenderSettings,
         zoomLevel: req.body.zoom,

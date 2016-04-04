@@ -8,8 +8,6 @@ var SceneSchema   = new Schema({
     longitudeULC: Number,
     latitudeLRC: Number,
     longitudeLRC: Number,
-    maxStaticItems: Number,
-    maxDynamicItems: Number,
     mapId: String,
     recommender: String,
     zoomLevel: Number,

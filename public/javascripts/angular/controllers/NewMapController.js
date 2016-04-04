@@ -11,8 +11,6 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
     $scope.dynamicItemList = [];
     $scope.scene = {
         defineFormFileDynamicItem: "",
-        maximumStaticItemsToDisplay: 50,
-        maximumDynamicItemsToDisplay: 50
     };
     $scope.staticItemListInScene = [];
     $scope.dynamicItemListInScene = [];
@@ -150,8 +148,6 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
                     $scope.scene.longitudeULC = "";
                     $scope.scene.latitudeLRC = "";
                     $scope.scene.longitudeLRC = "";
-                    $scope.scene.maximumStaticItemsToDisplay = "";
-                    $scope.scene.maximumStaticItemsToDisplay = "";
                     $scope.scene.mapId = "";
                     $scope.scene.recommenderSettings = "";
                     $scope.scene.zoom = "";
@@ -187,7 +183,6 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
     }
     
     $scope.saveStaticItemInScene = function(){
-        if($scope.staticItemListInScene.length < $scope.scene.maximumStaticItemsToDisplay){
             $scope.newStaticItem.type = JSON.parse($scope.newStaticItem.type);
             $scope.staticItemListInScene.push({
                 name: $scope.newStaticItem.name,
@@ -202,13 +197,9 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
             $scope.newStaticItem.type = "";
             $scope.newStaticItem.longitude = "";
             $scope.newStaticItem.latitude = "";
-        }else{
-            $scope.errorMsgList.push("Element limit reached!");
-        }
     }
     
     $scope.saveDynamicItemInScene = function(){
-        if($scope.dynamicItemListInScene.length < $scope.scene.maximumDynamicItemsToDisplay){
             $scope.newDynamicItem.type = JSON.parse($scope.newDynamicItem.type);
             $scope.dynamicItemListInScene.push({
                 type: $scope.newDynamicItem.type,
@@ -227,9 +218,6 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
             $scope.newDynamicItem.dynamicItemName = "";
             $scope.newDynamicItem.itemSpeed = "",
             $scope.newDynamicItem.route = [];
-        }else{
-            $scope.errorMsgList.push("Element limit reached!");
-        }
     }
     
     $scope.selectPointToDelete = function(point){

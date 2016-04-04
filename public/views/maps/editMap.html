@@ -87,7 +87,11 @@
 
                     <div class="panel-body">
                         <div class="row">
-                            <div ng-hide="isStepActivate(1)">
+                            <div ng-hide="isStepActivate(1)">        
+                                <div class="col-xs-12">
+                                    <h3>Step 1: Set scene name and select Recommender settings</h3>
+                                </div>  
+                                
                                 <div class="col-xs-6">
                                     <label>Scene name</label>
                                     <input class="form-control" ng-model="scene.name" />
@@ -104,7 +108,7 @@
                             
                             <div ng-hide="isStepActivate(2)">
                                 <div class="col-xs-12">
-                                    <h3>Limitations of the scene</h3>
+                                    <h3>Step 2: Limitations of the scene</h3>
                                 </div>    
 
                                 <div class="col-xs-6">
@@ -228,20 +232,15 @@
 
                             <div ng-hide="isStepActivate(3)">
                                 <div class="col-xs-12">
-                                    <h3>Static items settings</h3>
+                                    <h3>Step 3: Static items settings</h3>
                                 </div>
                                 
-                                <div class="col-xs-6">
+                                <div class="col-xs-12">
                                     <label>Define items form ...</label>
                                     <select ng-model="scene.defineForm" class="form-control">
                                         <option value="loadFromFile">Load from file</option>
                                         <option value="setManually">Set manually</option>
                                     </select>
-                                </div>
-                                
-                                <div class="col-xs-6">
-                                    <label>Maximum number of items to display</label>
-                                    <input ng-model="scene.maximumStaticItemsToDisplay" class="form-control"/>
                                 </div>
                                 
                                 <div ng-hide="loadFromFileSelected()">
@@ -421,20 +420,15 @@
                             
                             <div ng-hide="isStepActivate(4)">
                                 <div class="col-xs-12">
-                                    <h3>Dynamic items settings</h3>
+                                    <h3>Step 4: Dynamic items settings</h3>
                                 </div>
                                 
-                                <div class="col-xs-6">
+                                <div class="col-xs-12">
                                     <label>Define items form ...</label>
                                     <select ng-model="scene.defineFormFileDynamicItem" class="form-control">
                                         <option value="loadFromFileDynamicItem">Load from file</option>
                                         <option value="setManuallyDynamicItem">Set manually</option>
                                     </select>
-                                </div>
-                                
-                                <div class="col-xs-6">
-                                    <label>Maximum number of items to display</label>
-                                    <input ng-model="scene.maximumDynamicItemsToDisplay" class="form-control"/>
                                 </div>
                                 
                                 <div ng-hide="loadFromFileSelectedDynamicItem()">

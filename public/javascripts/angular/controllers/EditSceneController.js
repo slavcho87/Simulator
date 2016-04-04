@@ -6,8 +6,6 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
     $scope.recommenderList = [];
     $scope.scene = {
         defineFormFileDynamicItem: "",
-        maximumStaticItemsToDisplay: DataFactory.data.scene.maxStaticItems,
-        maximumDynamicItemsToDisplay: DataFactory.data.scene.maxDynamicItems,
         _id: DataFactory.data.scene._id, 
         city: DataFactory.data.scene.city,
         creationDate: DataFactory.data.scene.creationDate,
@@ -154,7 +152,6 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
     }
     
     $scope.saveDynamicItemInScene = function(){
-        if($scope.dynamicItemListInScene.length < $scope.scene.maximumDynamicItemsToDisplay){
             $scope.newDynamicItem.type = JSON.parse($scope.newDynamicItem.type);
             $scope.dynamicItemListInScene.push({
                 type: $scope.newDynamicItem.type,
@@ -169,9 +166,6 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
             $scope.newDynamicItem.dynamicItemName = "";
             $scope.newDynamicItem.itemSpeed = "",
             $scope.newDynamicItem.route = [];
-        }else{
-            $scope.errorMsgList.push("Element limit reached!");
-        }
     }
       
     $scope.selectPointToDelete = function(point){
@@ -259,7 +253,6 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
     } 
      
     $scope.saveStaticItemInScene = function(){
-        if($scope.staticItemListInScene.length < $scope.scene.maximumStaticItemsToDisplay){
             $scope.newStaticItem.type = JSON.parse($scope.newStaticItem.type);
             $scope.staticItemListInScene.push({
                 name: $scope.newStaticItem.name,
@@ -274,9 +267,6 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
             $scope.newStaticItem.type = "";
             $scope.newStaticItem.longitude = "";
             $scope.newStaticItem.latitude = "";
-        }else{
-            $scope.errorMsgList.push("Element limit reached!");
-        }
     }
     
     /*

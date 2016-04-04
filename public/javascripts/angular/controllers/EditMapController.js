@@ -6,8 +6,6 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
     $scope.recommenderList = [];
     $scope.scene = {
         defineFormFileDynamicItem: "",
-        maximumStaticItemsToDisplay: 50,
-        maximumDynamicItemsToDisplay: 50
     };
     $scope.cityList = [];
     $scope.staticItemList = [];
@@ -125,7 +123,6 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
     }
      
    $scope.saveStaticItemInScene = function(){
-        if($scope.staticItemListInScene.length < $scope.scene.maximumStaticItemsToDisplay){
             $scope.newStaticItem.type = JSON.parse($scope.newStaticItem.type);
             $scope.staticItemListInScene.push({
                 name: $scope.newStaticItem.name,
@@ -140,9 +137,6 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
             $scope.newStaticItem.type = "";
             $scope.newStaticItem.longitude = "";
             $scope.newStaticItem.latitude = "";
-        }else{
-            $scope.errorMsgList.push("Element limit reached!");
-        }
     }
   
    $scope.selectStaticItemToDeleteFromScene = function(item, index){
@@ -162,7 +156,6 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
     }
    
     $scope.saveDynamicItemInScene = function(){
-        if($scope.dynamicItemListInScene.length < $scope.scene.maximumDynamicItemsToDisplay){
             $scope.newDynamicItem.type = JSON.parse($scope.newDynamicItem.type);
             $scope.dynamicItemListInScene.push({
                 type: $scope.newDynamicItem.type,
@@ -177,9 +170,6 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
             $scope.newDynamicItem.dynamicItemName = "";
             $scope.newDynamicItem.itemSpeed = "",
             $scope.newDynamicItem.route = [];
-        }else{
-            $scope.errorMsgList.push("Element limit reached!");
-        }
     }   
    
     $scope.selectPointToDelete = function(point){
@@ -311,8 +301,6 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
                     $scope.scene.longitudeULC = "";
                     $scope.scene.latitudeLRC = "";
                     $scope.scene.longitudeLRC = "";
-                    $scope.scene.maximumStaticItemsToDisplay = "";
-                    $scope.scene.maximumStaticItemsToDisplay = "";
                     $scope.scene.mapId = "";
                     $scope.scene.recommenderSettings = "";
                     $scope.scene.zoom = "";
