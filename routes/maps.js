@@ -540,4 +540,24 @@ function updateDynamicItems(mapId, sceneId, dynamicItemList, scene1){
     }
 }
 
+router.post('/generateRandomWay', function(req, res){//req.body.
+    var url = req.body.latitudeULC+','+req.body.longitudeLRC+','+req.body.latitudeLRC+','+req.body.longitudeULC;
+    
+    request('http://api.openstreetmap.org/api/0.6/map?bbox='+url, function (error, response, body) {
+        var DOMParser = require('xmldom').DOMParser;
+        var parser = new DOMParser();
+        var xmlDoc = parser.parseFromString(body, "text/xml");
+        
+        //xmlDoc.getElementsByTagName("node")
+        /*
+        xmlDoc.getElementsByTagName("node").getAttribute
+        */
+        res.json({
+            result: "OK",
+            msg: "Way successfully generated!"
+        }); 
+    });
+})
+    
+
 module.exports = router;

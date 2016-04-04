@@ -312,6 +312,31 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
         return ($scope.scene.defineForm!="setManually");
     }
     
+    /*
+     *
+     */
+    $scope.setRandomWay = function(){
+        return ($scope.scene.defineFormFileDynamicItem!="setRandom");
+    }
+    
+    $scope.generateRandomWay = function(){
+        var data = {
+            numberDynamicItems: $scope.randomWay.numberDynamicItems,
+            wayType: $scope.randomWay.wayType,
+            itemTypeId: $scope.newDynamicItem.type._id,
+            latitudeULC: $scope.scene.latitudeULC,
+            longitudeULC: $scope.scene.longitudeULC,
+            latitudeLRC: $scope.scene.latitudeLRC,
+            longitudeLRC: $scope.scene.longitudeLRC,
+        }
+        
+        Services.generateRandomWay(data, function(res){
+            console.log(res);
+        }, function(err){
+            $scope.errorMsgList.push(err);
+        });
+    }
+    
     $scope.loadStaticItemsFromFile = function(){ 
         var reader = new FileReader();
         

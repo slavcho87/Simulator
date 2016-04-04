@@ -139,6 +139,9 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
         userMove: function(data, success, error){
             $http.post('/user/userMove', data).error(error);
         },
+        generateRandomWay: function(data, success, error){
+            $http.post('/maps/generateRandomWay', data).success(success).error(error);
+        },
         logout: function() {
             changeUser({});
             delete $localStorage.token;
