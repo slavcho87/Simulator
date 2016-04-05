@@ -18,6 +18,7 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
         route: []
     };
     $scope.sceneList = [];
+    $scope.loadRandomWay = true;
         
     $scope.mapSave = function(){
         var error = false;
@@ -320,21 +321,37 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
     }
     
     $scope.generateRandomWay = function(){
-        var data = {
-            numberDynamicItems: $scope.randomWay.numberDynamicItems,
-            wayType: $scope.randomWay.wayType,
-            itemTypeId: $scope.newDynamicItem.type._id,
-            latitudeULC: $scope.scene.latitudeULC,
-            longitudeULC: $scope.scene.longitudeULC,
-            latitudeLRC: $scope.scene.latitudeLRC,
-            longitudeLRC: $scope.scene.longitudeLRC,
+        var error = false;
+        
+        if(!$scope.scene.latitudeULC && !$scope.scene.longitudeULC){
+            $scope.errorMsgList.push("The upper left corner can not be empty!");
+            error = true;
         }
         
-        Services.generateRandomWay(data, function(res){
-            console.log(res);
-        }, function(err){
-            $scope.errorMsgList.push(err);
-        });
+        if(!$scope.scene.latitudeLRC && !$scope.scene.longitudeLRC){
+            $scope.errorMsgList.push("The lower right corner can not be empty!");
+            error = true;
+        }
+        
+        if(!error){
+            var data = {
+                numberDynamicItems: $scope.randomWay.numberDynamicItems,
+                wayType: $scope.randomWay.wayType,
+                itemTypeId: $scope.newDynamicItem.type._id,
+                latitudeULC: $scope.scene.latitudeULC,
+                longitudeULC: $scope.scene.longitudeULC,
+                latitudeLRC: $scope.scene.latitudeLRC,
+                longitudeLRC: $scope.scene.longitudeLRC,
+            }
+            
+            $scope.loadRandomWay = false;
+            
+            Services.generateRandomWay(data, function(res){
+                $scope.loadRandomWay = true;
+            }, function(err){
+                $scope.errorMsgList.push(err);
+            });            
+        }
     }
     
     $scope.loadStaticItemsFromFile = function(){ 

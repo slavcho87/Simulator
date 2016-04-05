@@ -544,14 +544,115 @@ router.post('/generateRandomWay', function(req, res){//req.body.
     var url = req.body.latitudeULC+','+req.body.longitudeLRC+','+req.body.latitudeLRC+','+req.body.longitudeULC;
     
     request('http://api.openstreetmap.org/api/0.6/map?bbox='+url, function (error, response, body) {
+        var nodes = [];
+        var motorway = [];
+        var trunk = [];
+        var primary = [];
+        var secondary = [];
+        var tertiary = [];
+        var unclassified = [];
+        var residential = [];
+        var service = [];
+
         var DOMParser = require('xmldom').DOMParser;
         var parser = new DOMParser();
         var xmlDoc = parser.parseFromString(body, "text/xml");
         
-        //xmlDoc.getElementsByTagName("node")
-        /*
-        xmlDoc.getElementsByTagName("node").getAttribute
-        */
+        for(index in xmlDoc.getElementsByTagName("way")){
+            var way = xmlDoc.getElementsByTagName("way")[index];
+            var childNodes = way.childNodes;
+            
+            for(i in way.childNodes){
+                var childNode = way.childNodes[i];
+                
+                if(childNode.nodeName == "tag"){
+                    var k = childNode.getAttribute("k");
+                    var v = childNode.getAttribute("v");
+                    
+                    if(k == "highway"){
+                        switch(v) {
+                            case "motorway":
+                                motorway.push(way);
+                                break;
+                            case "trunk":
+                                trunk.push(way);
+                                break;
+                            case "primary":
+                                primary.push(way);
+                                break;
+                            case "secondary":
+                                secondary.push(way);
+                                break;
+                            case "tertiary":
+                                tertiary.push(way);
+                                break;
+                            case "unclassified":
+                                unclassified.push(way);
+                                break;
+                            case "residential":
+                                residential.push(way);
+                                break;
+                            case "service":
+                                service.push(way);
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+        
+        for (index = 0; index < req.body.numberDynamicItems; index++) {
+            var speed = Math.round(Math.random()*50);
+            var wayIndex;
+            var way;
+            
+            switch(req.body.wayType) {
+                case "motorway":
+                    wayIndex = Math.round(Math.random()*motorway.length);
+                    way = motorway[wayIndex];                    
+                    break;
+                case "trunk":
+                    wayIndex = Math.round(Math.random()*trunk.length); 
+                    way = trunk[wayIndex];
+                    break;
+                case "primary":
+                    wayIndex = Math.round(Math.random()*primary.length); 
+                    way = primary[wayIndex];
+                    break;
+                case "secondary":
+                    wayIndex = Math.round(Math.random()*secondary.length); 
+                    way = secondary[wayIndex];
+                    break;
+                case "tertiary":
+                    wayIndex = Math.round(Math.random()*tertiary.length); 
+                    way = tertiary[wayIndex];
+                    break;                    
+                case "unclassified":
+                    wayIndex = Math.round(Math.random()*unclassified.length); 
+                    way = unclassified[wayIndex];
+                    break;
+                case "residential":
+                    wayIndex = Math.round(Math.random()*residential.length); 
+                    way = residential[wayIndex];
+                    break;
+                case "service":
+                    wayIndex = Math.round(Math.random()*service.length); 
+                    way = service[wayIndex];
+                    break;        
+            }
+            
+            for(i in way.childNodes){ 
+                var childNode = way.childNodes[i];
+                
+                if(childNode.nodeName == "nd"){
+                    var ref = childNode.getAttribute("ref");
+                    console.log("lat -> "+xmlDoc.getElementById(ref).getAttribute("lat"));
+                    console.log("lon -> "+xmlDoc.getElementById(ref).getAttribute("lon"));
+                    console.log("--------------");
+                }
+            }
+        }
+        
         res.json({
             result: "OK",
             msg: "Way successfully generated!"

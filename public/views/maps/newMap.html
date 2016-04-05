@@ -548,7 +548,12 @@
                                     
                                      <div class="col-sm-12">
                                          </br>
-                                        <button type="button" class="btn btn-primary btn-block" ng-click="generateRandomWay()">Generate random way</button>
+                                        <button ng-show="loadRandomWay" type="button" class="btn btn-primary btn-block" ng-click="generateRandomWay()">Generate random way</button>
+                                        
+                                        <div ng-show="!loadRandomWay">
+                                            <img src="/images/loader.gif">
+                                            <label>Generating trajectory. This process can take several minutes. Please wait ...</label>     
+                                        </div>
                                     </div>
                                 </div>
 
