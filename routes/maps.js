@@ -161,7 +161,7 @@ router.post('/saveScene', function(req, resp){
     });    
 })
 
-function formattDate(date){console.log(date);
+function formattDate(date){
     var d = date,
     month = '' + (d.getMonth() + 1),
     day = '' + d.getDate(),
@@ -601,6 +601,7 @@ router.post('/generateRandomWay', function(req, res){//req.body.
             }
         }
         
+        var itemList = [];
         for (index = 0; index < req.body.numberDynamicItems; index++) {
             var speed = Math.round(Math.random()*50);
             var wayIndex;
@@ -641,21 +642,31 @@ router.post('/generateRandomWay', function(req, res){//req.body.
                     break;        
             }
             
+            var route = [];
             for(i in way.childNodes){ 
                 var childNode = way.childNodes[i];
                 
                 if(childNode.nodeName == "nd"){
                     var ref = childNode.getAttribute("ref");
-                    console.log("lat -> "+xmlDoc.getElementById(ref).getAttribute("lat"));
-                    console.log("lon -> "+xmlDoc.getElementById(ref).getAttribute("lon"));
-                    console.log("--------------");
+                    var lat = xmlDoc.getElementById(ref).getAttribute("lat");
+                    var long = xmlDoc.getElementById(ref).getAttribute("lon");
+                    
+                    route.push({
+                        long: lat,                             
+                        lat: long
+                    });
                 }
             }
+            
+            itemList.push({      
+                speed: speed,
+                route: route   
+            });
         }
         
         res.json({
             result: "OK",
-            msg: "Way successfully generated!"
+            itemList: itemList
         }); 
     });
 })

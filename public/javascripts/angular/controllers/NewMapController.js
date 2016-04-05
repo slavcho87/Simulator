@@ -348,6 +348,19 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
             
             Services.generateRandomWay(data, function(res){
                 $scope.loadRandomWay = true;
+                
+                $scope.newDynamicItem.type = JSON.parse($scope.newDynamicItem.type);
+                for(index in res.itemList){
+                    var item = res.itemList[index];
+                    
+                    $scope.dynamicItemListInScene.push({
+                        type: $scope.newDynamicItem.type,
+                        name: "item "+index,
+                        speed: item.speed, 
+                        route: item.route
+                    });
+                }
+                console.log($scope.dynamicItemListInScene);
             }, function(err){
                 $scope.errorMsgList.push(err);
             });            
