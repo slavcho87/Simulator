@@ -12,6 +12,7 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
     $scope.mapCenter = [0, 0];
     $scope.staticItemList = [];
     $scope.dynamiItemsList = [];
+    $scope.dynamiItemsListOriginal = [];
     $scope.recommendedItemList = [];
     $scope.itemTypeList = [];
     $scope.itemTypesToRecommend = [];
@@ -288,8 +289,18 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
                 course: course,
                 icon: value.itemType.icon    
             };
-                            
+            
+            var info2 = {
+                _id: res._id,
+                overlay: overlay,
+                speed: speed,
+                route: res.route,
+                course: course,
+                icon: value.itemType.icon    
+            };
+            
             $scope.dynamiItemsList.push(info);
+            $scope.dynamiItemsListOriginal.push(info2);
         }, function(err){
             $scope.errorMsgList.push("The dynamic objects could not be saved!");
             $scope.errorMsgList.push(err);

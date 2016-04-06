@@ -485,21 +485,57 @@
                                     if(disToRec < disAct){
                                         newPos = getNewPos(pos, distance(list[index].speed, dynamicItemRefreshInterval),
                                                        list[index].course[i]);
+                                        
+                                        map.removeOverlay(overlay);
+
+                                        list[index].overlay = new ol.Overlay({
+                                            position: ol.proj.transform(newPos, 'EPSG:4326', 'EPSG:3857'),
+                                            element: overlay.getElement()
+                                        });
+
+                                        map.addOverlay(list[index].overlay);   
                                     }else{
-                                        newPos = [parseFloat(list[index].route[i+1].routeId.latitude), 
+                                            newPos = [parseFloat(list[index].route[i+1].routeId.latitude), 
                                                  parseFloat(list[index].route[i+1].routeId.longitude)];
                                         
-                                        artists[index] = artists[index]+1;
+                                            artists[index] = artists[index]+1;
+                                        
+                                            map.removeOverlay(overlay);
+
+                                            list[index].overlay = new ol.Overlay({
+                                                position: ol.proj.transform(newPos, 'EPSG:4326', 'EPSG:3857'),
+                                                element: overlay.getElement()
+                                            });
+
+                                            map.addOverlay(list[index].overlay);
+
+                                            if((i+1) == (list[index].route.length-1)){
+                                                var info3 = {
+                                                    _id: $scope.dynamiItemsListOriginal[index]._id,
+                                                    overlay: $scope.dynamiItemsListOriginal[index].overlay,
+                                                    speed: $scope.dynamiItemsListOriginal[index].speed,
+                                                    route: $scope.dynamiItemsListOriginal[index].route,
+                                                    course: $scope.dynamiItemsListOriginal[index].course,
+                                                    icon: $scope.dynamiItemsListOriginal[index].icon  
+                                                };
+                                                $scope.dynamiItemsList[index] = info3;
+                                                artists[index] = 0;
+                                            }
+
+                                        /*newPos = [parseFloat(list[index].route[i+1].routeId.latitude), 
+                                                 parseFloat(list[index].route[i+1].routeId.longitude)];
+                                        
+                                        artists[index] = artists[index]+1;*/
                                     }
                                     
-                                    map.removeOverlay(overlay);
+                                    /*map.removeOverlay(overlay);
 
                                     list[index].overlay = new ol.Overlay({
                                         position: ol.proj.transform(newPos, 'EPSG:4326', 'EPSG:3857'),
                                         element: overlay.getElement()
                                     });
 
-                                    map.addOverlay(list[index].overlay);   
+                                    map.addOverlay(list[index].overlay);*/   
                                 }
                             }
                             
