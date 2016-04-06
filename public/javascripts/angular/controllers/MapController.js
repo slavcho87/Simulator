@@ -5,6 +5,38 @@ app.controller("MapController", ['$scope', '$http', '$location', '$localStorage'
     $scope.msgList = [];
     $scope.mapList = [];
     $scope.findMap = {};
+    $scope.currentPage = 0;
+    $scope.pageSize = 10;
+    
+    $scope.pages = function() {
+        var input = [];
+        
+        for (var i = 0; i < $scope.numberOfPages(); i += 1) {
+            input.push(i);
+        }
+        
+        return input;
+    };
+
+    $scope.numberOfPages=function(){
+        return Math.ceil($scope.mapList.length/$scope.pageSize);                
+    }
+    
+    $scope.setCurrentPage = function(page){
+        $scope.currentPage = page;
+    }
+    
+    $scope.previous = function(){
+        if($scope.currentPage != 0){
+            $scope.currentPage=$scope.currentPage-1;
+        }
+    }
+    
+    $scope.next = function(){
+        if($scope.currentPage < $scope.mapList.length/$scope.pageSize - 1){
+            $scope.currentPage=$scope.currentPage+1;
+        }
+    }
     
     $scope.map = {
         name: "", 

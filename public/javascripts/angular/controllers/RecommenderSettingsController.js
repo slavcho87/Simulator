@@ -4,6 +4,39 @@ app.controller("RecommenderSettingsController", ['$scope', '$http','Services', f
     $scope.errorMsgList = [];
     $scope.msgList = [];
     $scope.recommenderList = [];
+    $scope.currentPage = 0;
+    $scope.pageSize = 10;
+    
+    $scope.pages = function() {
+        var input = [];
+        
+        for (var i = 0; i < $scope.numberOfPages(); i += 1) {
+            input.push(i);
+        }
+        
+        return input;
+    };
+
+    $scope.numberOfPages=function(){
+        return Math.ceil($scope.recommenderList.length/$scope.pageSize);                
+    }
+    
+    $scope.setCurrentPage = function(page){
+        $scope.currentPage = page;
+    }
+    
+    $scope.previous = function(){
+        if($scope.currentPage != 0){
+            $scope.currentPage=$scope.currentPage-1;
+        }
+    }
+    
+    $scope.next = function(){
+        if($scope.currentPage < $scope.recommenderList.length/$scope.pageSize - 1){
+            $scope.currentPage=$scope.currentPage+1;
+        }
+    }
+    
     
     /*
      * Save new recommeder settings

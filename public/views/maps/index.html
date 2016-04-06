@@ -126,7 +126,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="map in mapList">
+                                <tr ng-repeat="map in mapList | startFrom:currentPage*pageSize | limitTo:pageSize">
                                     <td>{{map.name}}</td>
                                     <td>{{map.type}}</td>
                                     <td>{{map.state}}</td>
@@ -152,21 +152,29 @@
                             </tbody>
                         </table>
                     
-                    <!--<nav align="center">
+                    <nav align="center">
                         <ul class="pagination">
-                            <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
+                            <li ng-disabled="currentPage == 0">
+                                <a href="#/map" 
+                                   ng-click="previous()"
+                                   aria-label="Previous">
+                                   <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            
+                            <li ng-repeat="pag in pages()" ng-class="{active:pag==currentPage}">
+                                <a href="#/map" ng-click="setCurrentPage(pag)">{{pag+1}}</a>
+                            </li>
+                            
                             <li>
-                              <a href="#" aria-label="Next">
+                              <a href="#/map" 
+                                 ng-click="next()"
+                                 aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                               </a>
                             </li>
                         </ul>
-                    </nav>-->
+                    </nav>
                 </div>
             </div>    
         </div>

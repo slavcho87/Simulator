@@ -90,7 +90,7 @@
                         </thead>
                             
                         <tbody>
-                            <tr ng-repeat="dynamicItem in dynamicItemList">
+                            <tr ng-repeat="dynamicItem in dynamicItemList | startFrom:currentPage*pageSize | limitTo:pageSize">
                                 <td>{{dynamicItem.name}}</td>
                                 <td><img id="img" width="16" height="16" src="{{dynamicItem.icon}}" /></td>
                                 <td>
@@ -119,16 +119,24 @@
                         </tbody>
                     </table>                    
 
-                    <nav align="center" ng-hide="dynamicItemList.length==0">
+                    <nav align="center" ng-hide="staticItemList.length==0">
                         <ul class="pagination">
-                            <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
+                            <li ng-disabled="currentPage == 0">
+                                <a href="#/settings/dynamicItemSettings" 
+                                   ng-click="previous()"
+                                   aria-label="Previous">
+                                   <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            
+                            <li ng-repeat="pag in pages()" ng-class="{active:pag==currentPage}">
+                                <a href="#/settings/dynamicItemSettings" ng-click="setCurrentPage(pag)">{{pag+1}}</a>
+                            </li>
+                            
                             <li>
-                              <a href="#" aria-label="Next">
+                              <a href="#/settings/dynamicItemSettings" 
+                                 ng-click="next()"
+                                 aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                               </a>
                             </li>
