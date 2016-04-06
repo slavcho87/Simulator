@@ -392,6 +392,7 @@
                                     <select ng-model="scene.defineFormFileDynamicItem" class="form-control">
                                         <option value="loadFromFileDynamicItem">Load from file</option>
                                         <option value="setManuallyDynamicItem">Set manually</option>
+                                        <option value="setRandom">Random trajectory</option>
                                     </select>
                                 </div>
                                 
@@ -472,6 +473,50 @@
                                     <div class="col-xs-12">
                                         </br>
                                         <button type="button" class="btn btn-success" ng-click="saveDynamicItemInScene()">Save item</button>
+                                    </div>
+                                </div>
+
+                                <div ng-hide="setRandomWay()">
+                                    </br>
+                                    <div class="col-xs-4">
+                                        </br>
+                                        <label>Dynamic item type</label>
+                                        <select class="form-control" ng-model="newDynamicItem.type">
+                                            <option ng-repeat="dynamicItem in dynamicItemList" value="{{dynamicItem}}">
+                                                {{dynamicItem.name}}
+                                             </option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-xs-4">
+                                        </br>
+                                        <label>Number of items</label>
+                                         <input ng-model="randomWay.numberDynamicItems" class="form-control"/>
+                                    </div>  
+
+                                    <div class="col-xs-4">
+                                        </br>
+                                        <label>Way type</label>
+                                        <select class="form-control" ng-model="randomWay.wayType">
+                                            <option value="motorway">motorway</option>
+                                            <option value="trunk">trunk</option>
+                                            <option value="primary">primary</option>
+                                            <option value="secondary">secondary</option>
+                                            <option value="tertiary">tertiary</option>
+                                            <option value="unclassified">unclassified</option>
+                                            <option value="residential">residential</option>
+                                            <option value="service">service</option>
+                                        </select>                                         
+                                    </div>
+                                    
+                                     <div class="col-sm-12">
+                                         </br>
+                                        <button ng-show="loadRandomWay" type="button" class="btn btn-primary btn-block" ng-click="generateRandomWay()">Generate random way</button>
+                                        
+                                        <div ng-show="!loadRandomWay">
+                                            <img src="/images/loader.gif">
+                                            <label>Generating trajectory. This process can take several minutes. Please wait ...</label>     
+                                        </div>
                                     </div>
                                 </div>
 

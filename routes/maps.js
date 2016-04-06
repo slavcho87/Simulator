@@ -603,7 +603,7 @@ router.post('/generateRandomWay', function(req, res){//req.body.
         
         var itemList = [];
         for (index = 0; index < req.body.numberDynamicItems; index++) {
-            var speed = Math.round(Math.random()*50);
+            var speed = Math.random() * (50 - 10) + 10;
             var wayIndex;
             var way;
             

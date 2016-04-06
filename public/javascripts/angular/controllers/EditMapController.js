@@ -17,6 +17,7 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
         route: []
     };
     $scope.sceneList = [];
+    $scope.loadRandomWay = true;
     
    /*
     * 
@@ -200,6 +201,60 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
         }
     }    
    
+    /*
+     *
+     */
+    $scope.setRandomWay = function(){
+        return ($scope.scene.defineFormFileDynamicItem!="setRandom");
+    }
+    
+    $scope.generateRandomWay = function(){
+        var error = false;
+        
+        if(!$scope.scene.latitudeULC && !$scope.scene.longitudeULC){
+            $scope.errorMsgList.push("The upper left corner can not be empty!");
+            error = true;
+        }
+        
+        if(!$scope.scene.latitudeLRC && !$scope.scene.longitudeLRC){
+            $scope.errorMsgList.push("The lower right corner can not be empty!");
+            error = true;
+        }
+        
+        if(!error){
+            var data = {
+                numberDynamicItems: $scope.randomWay.numberDynamicItems,
+                wayType: $scope.randomWay.wayType,
+                itemTypeId: $scope.newDynamicItem.type._id,
+                latitudeULC: $scope.scene.latitudeULC,
+                longitudeULC: $scope.scene.longitudeULC,
+                latitudeLRC: $scope.scene.latitudeLRC,
+                longitudeLRC: $scope.scene.longitudeLRC,
+            }
+            
+            $scope.loadRandomWay = false;
+            
+            Services.generateRandomWay(data, function(res){
+                $scope.loadRandomWay = true;
+                
+                $scope.newDynamicItem.type = JSON.parse($scope.newDynamicItem.type);
+                for(index in res.itemList){
+                    var item = res.itemList[index];
+                    
+                    $scope.dynamicItemListInScene.push({
+                        type: $scope.newDynamicItem.type,
+                        name: "item "+index,
+                        speed: item.speed, 
+                        route: item.route
+                    });
+                }
+                console.log($scope.dynamicItemListInScene);
+            }, function(err){
+                $scope.errorMsgList.push(err);
+            });            
+        }
+    }
+    
    /*
     * Hide error message
     */
