@@ -12,20 +12,21 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
     $scope.dynamicItemList = [];
     $scope.staticItemListInScene = [];
     $scope.dynamicItemListInScene = [];
-    $scope.msgList = [];  
+    $scope.msgList = [];
     $scope.newDynamicItem = {
         route: []
     };
     $scope.sceneList = [];
     $scope.loadRandomWay = true;
         $scope.currentPageStaticItems = 0;
-    $scope.pageSizeStaticItems = 5; 
+    $scope.pageSizeStaticItems = 5;
     $scope.currentPageDynaicItemsMan = 0;
     $scope.pageSizeDynaicItemsMan = 5;
     $scope.currentPageDynaicItems = 0;
     $scope.pageSizeDynaicItems = 5;
     $scope.currentPage = 0;
     $scope.pageSize = 5;
+
     
     $scope.pages = function() {
         var input = [];
@@ -600,4 +601,6 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
     $scope.exit = function(){
         Services.logout();
     }
-}]);
+}]).run(function(editableOptions) {
+  editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
+});

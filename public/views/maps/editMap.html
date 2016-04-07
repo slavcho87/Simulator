@@ -321,7 +321,14 @@
                                                                       | limitTo:pageSizeStaticItems">
                                                         <tr>
                                                             <td>{{staticItemElement.name}}</td>
-                                                            <td>{{staticItemElement.type.name}}</td>
+                                                            <td>
+                                                            <a href="#/map/editMap" 
+                                                               editable-select="staticItemElement.type" 
+                                                               e-ng-options="staticItem as staticItem.name for staticItem in staticItemList">
+                                                                {{staticItemElement.type.name || "empty"}}
+                                                              </a>
+                                                            </td>
+                                                            
                                                             <td><img src="{{staticItemElement.type.icon}}" height="16" width="16"/></td>
                                                             <td>
                                                                 <button class="btn btn-danger fa fa-trash-o" 
@@ -745,7 +752,7 @@
                                                 data-toggle="modal" 
                                                 data-target="#deleteSceneModal"
                                                 ng-click="selectSceneToDelete(scene)"></button>
-                                    </td> 
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
