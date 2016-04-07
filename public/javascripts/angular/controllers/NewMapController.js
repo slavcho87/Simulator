@@ -509,7 +509,10 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
                     longitude: data[i].longitude,
                     latitude: data[i].latitude
                 };
-                $scope.saveStaticItemInScene();
+                
+                $scope.$apply(function () {
+                    $scope.saveStaticItemInScene();
+                });
             }
         };
         
