@@ -70,73 +70,76 @@
                                 </div>                            
                             </div>
                             
+
                             <div ng-hide="isStepActivate(2)">
-                                <div class="col-xs-12">
-                                    <h3>Step 2: Limitations of the scene</h3>
-                                </div>    
+                                <div class="col-xs-8">
+                                    <div class="col-xs-12">
+                                        <h3>Step 2: Limitations of the scene</h3>
+                                    </div>    
 
-                                <div class="col-xs-6">
-                                    </br>
-                                    <label>Upper left corner: latitude</label>
-                                    <input id="initPosLat" class="form-control" ng-model="scene.latitudeULC" disabled/>
-                                </div>
-
-                                <div class="col-xs-6">
-                                    </br>
-                                    <label>Upper left corner: longitude</label>
-                                     <input id="initPosLong" class="form-control" ng-model="scene.longitudeULC" disabled/>
-                                </div>        
-
-                                <div class="col-xs-6">
-                                    </br>
-                                    <label>Lower right corner: latitude</label>
-                                    <input id="endPosLat" class="form-control" ng-model="scene.latitudeLRC" disabled/>
-                                </div>
-
-                                <div class="col-xs-6">
-                                    </br>
-                                    <label>Lower right corner: longitude</label>
-                                     <input id="endPosLong" class="form-control" ng-model="scene.latitudeLRC" disabled/>
-                                </div>                
-
-                                <div class="col-xs-6">
-                                    <div class="radio">
-                                        <input type="radio" name="opciones" id="upperLeftCorner" value="upperLeftCorner" checked>
-                                        select upper left corner
-                                        </input>
+                                    <div class="col-xs-6">
+                                        <br/>
+                                        <label>Upper left corner: latitude</label>
+                                        <input id="initPosLat" class="form-control" ng-model="scene.latitudeULC" disabled/>
                                     </div>
-                                </div>
 
-                                <div class="col-xs-6">
-                                    <div class="radio">
-                                        <input type="radio" name="opciones" id="lowerRightCorner" value="lowerRightCorner">
-                                        select lower right corner
-                                        </input>
-                                    </div>                                    
-                                </div>
+                                    <div class="col-xs-6">
+                                        <br/>
+                                        <label>Upper left corner: longitude</label>
+                                         <input id="initPosLong" class="form-control" ng-model="scene.longitudeULC" disabled/>
+                                    </div>        
 
-                                <div class="col-xs-6">       
-                                    </br>         
-                                    <label>City</label>  
-                                    <div class="input-group">
-                                        <input ng-model="scene.citySearchValue" type="text" class="form-control" placeholder="Search for...">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default" type="button" ng-click="citySearch()">Go!</button>
-                                        </span>
+                                    <div class="col-xs-6">
+                                        <br/>
+                                        <label>Lower right corner: latitude</label>
+                                        <input id="endPosLat" class="form-control" ng-model="scene.latitudeLRC" disabled/>
                                     </div>
-                                </div>
 
-                                <div ng-hide="cityList.length==0" class="col-xs-6">
-                                    </br>
-                                    <label>Places: </label>    
-                                    <select ng-model="scene.selectedCity" name="selectedCity" class="form-control">
-                                        <option ng-repeat="city in cityList" value={{city}}>{{city.display_name}}</option>
-                                    </select>
-                                </div>
+                                    <div class="col-xs-6">
+                                        <br/>
+                                        <label>Lower right corner: longitude</label>
+                                         <input id="endPosLong" class="form-control" ng-model="scene.latitudeLRC" disabled/>
+                                    </div>                
 
-                                <div class="col-xs-12"> 
+                                    <div class="col-xs-6">
+                                        <div class="radio">
+                                            <input type="radio" name="opciones" id="upperLeftCorner" value="upperLeftCorner" checked>
+                                            select upper left corner
+                                            </input>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-6">
+                                        <div class="radio">
+                                            <input type="radio" name="opciones" id="lowerRightCorner" value="lowerRightCorner">
+                                            select lower right corner
+                                            </input>
+                                        </div>                                    
+                                    </div>
+
+                                    <div class="col-xs-6">       
+                                        <br/>         
+                                        <label>City</label>  
+                                        <div class="input-group">
+                                            <input ng-model="scene.citySearchValue" type="text" class="form-control" placeholder="Search for...">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button" ng-click="citySearch()">Go!</button>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div ng-hide="cityList.length==0" class="col-xs-6">
+                                        <br/>
+                                        <label>Places: </label>    
+                                        <select ng-model="scene.selectedCity" name="selectedCity" class="form-control">
+                                            <option ng-repeat="city in cityList" value={{city}}>{{city.display_name}}</option>
+                                        </select>
+                                    </div>                                
+                                </div>
+                                
+                                <div class="col-xs-4">
                                     <br/>
-                                    <div id="crearMapa" >
+                                    <div id="crearMapa" class="littleMap">
                                     </div>
                                     
                                     <script type="text/javascript">
@@ -190,339 +193,419 @@
                                             }
                                         });
                                     </script>    
-                                    
-                                </div>                                    
+                                         
+                                </div>                       
                             </div>                            
 
                             <div ng-hide="isStepActivate(3)">
-                                <div class="col-xs-12">
-                                    <h3>Step 3: Static items settings</h3>
-                                </div>
-                                
-                                <div class="col-xs-12">
-                                    <label>Define items form ...</label>
-                                    <select ng-model="scene.defineForm" class="form-control">
-                                        <option value="loadFromFile">Load from file</option>
-                                        <option value="setManually">Set manually</option>
-                                    </select>
-                                </div>
-                                
-                                <div ng-hide="loadFromFileSelected()">
-                                    <!-- cuando cargamos los objetos desde un fichero de texto -->
-                                    
+                                <div class="col-xs-8">
                                     <div class="col-xs-12">
-                                        </br>
-                                        <label>Static items</label>    
-                                        <input type="file" name='staticItemFile' ng-model="scene.staticItemFile">     
-                                        <b>
-                                            <i>* File containing these static objects on the map, that is, don't 
-                                                changing geographical position during the simulation
-                                            </i>
-                                        </b>    
+                                        <h3>Step 3: Static items settings</h3>
                                     </div>
-                                
+
                                     <div class="col-xs-12">
-                                        </br>
-                                        <button type="button" 
-                                                class="btn btn-success" 
-                                                ng-click="loadStaticItemsFromFile()">
-                                            Load static items
-                                        </button>
-                                    </div>
-                                </div>
-                                
-                                <div ng-hide="setManuallySelected()">
-                                    <!-- cuando tenemos que definir los objetos de forma manual en el mapa -->
-                                    
-                                    <div class="col-xs-3">
-                                        </br> 
-                                         <label>Static item type</label>
-                                         <select class="form-control" ng-model="newStaticItem.type">
-                                            <option ng-repeat="staticItem in staticItemList" value="{{staticItem}}">
-                                                {{staticItem.name}}
-                                             </option>
+                                        <label>Define items form ...</label>
+                                        <select ng-model="scene.defineForm" class="form-control">
+                                            <option value="loadFromFile">Load from file</option>
+                                            <option value="setManually">Set manually</option>
                                         </select>
                                     </div>
-                                    
-                                    <div class="col-xs-3">
-                                        </br>
-                                        <label>Item name</label>
-                                        <input ng-model="newStaticItem.name" class="form-control"/>
-                                    </div>    
-                                    
-                                    <div class="col-xs-3">
-                                        </br>
-                                        <label>Longitude</label>
-                                        <input id="staticItemLong" class="form-control" ng-model="newStaticItem.longitude" disabled/>
-                                    </div>
-                                    
-                                    <div class="col-xs-3">
-                                        </br>
-                                        <label>Latitude</label>
-                                        <input id="staticItemLat" class="form-control" ng-model="newStaticItem.latitude" disabled/>
-                                    </div>
-                                    
-                                    <div class="col-xs-12">
-                                        </br>
-                                        <button type="button" class="btn btn-success" onclick="saveStaticItem()" ng-click="saveStaticItemInScene()">Save item</button>
-                                    </div>    
-                                </div>
-     
-                                <div class="col-xs-12">
-                                        </br>
-                                        <div id="staticItemsMap">
+
+                                    <div ng-hide="loadFromFileSelected()">
+                                        <!-- cuando cargamos los objetos desde un fichero de texto -->
+
+                                        <div class="col-xs-12">
+                                            <br/>
+                                            <label>Static items</label>    
+                                            <input type="file" name="staticItemFile" id="staticItemFile" ng-model="scene.staticItemFile">     
+                                            <b>
+                                                <i>* File containing these static objects on the map, that is, don't 
+                                                    changing geographical position during the simulation
+                                                </i>
+                                            </b>
                                         </div>
 
-                                        <script type="text/javascript">
-                                            var overlayList = {};
-                                            var index = 0;
-                                            
-                                            var staticItemsMap = new ol.Map({
-                                                target: 'staticItemsMap',
-                                                layers: [
-                                                    new ol.layer.Tile({
-                                                        source: new ol.source.MapQuest({layer: 'osm'})
-                                                    })   
-                                                ],      
-                                                view: new ol.View({            
-                                                    center: ol.proj.transform([-0.88824, 41.66991], 'EPSG:4326', 'EPSG:3857'),        
-                                                    zoom: 15           
-                                                }),       
-                                                controls: ol.control.defaults().extend([      
-                                                    new ol.control.FullScreen() 
-                                                ])        
-                                            });
-                                            
-                                            staticItemsMap.on('singleclick', function(evt) { 
-                                                var position = ol.proj.transform(evt.coordinate,'EPSG:3857', 'EPSG:4326');
-                                                var appElement = document.querySelector('[ng-app=app]');
-                                                var $scope = angular.element(appElement).scope();
-                                                $scope = $scope.$$childHead; 
-                                                
-                                                if(overlayList[index]){
-                                                    staticItemsMap.removeOverlay(overlayList[index]); 
+                                        <div class="col-xs-12">
+                                            <br/>
+                                            <button type="button" 
+                                                    class="btn btn-success" 
+                                                    ng-click="loadStaticItemsFromFile()">
+                                                Load static items
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div ng-hide="setManuallySelected()">
+                                        <!-- cuando tenemos que definir los objetos de forma manual en el mapa -->
+                                        <div class="col-xs-3">
+                                            <br/>
+                                             <label>Static item type</label>
+                                             <select class="form-control" ng-model="newStaticItem.type">
+                                                <option ng-repeat="staticItem in staticItemList" value="{{staticItem}}">
+                                                    {{staticItem.name}}
+                                                 </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-xs-3">
+                                            <br/>
+                                            <label>Item name</label>
+                                            <input ng-model="newStaticItem.name" class="form-control"/>
+                                        </div>    
+
+                                        <div class="col-xs-3">
+                                            <br/>
+                                            <label>Longitude</label>
+                                            <input id="staticItemLong" class="form-control" ng-model="newStaticItem.longitude" disabled/>
+                                        </div>
+
+                                        <div class="col-xs-3">
+                                            <br/>
+                                            <label>Latitude</label>
+                                            <input id="staticItemLat" class="form-control" ng-model="newStaticItem.latitude" disabled/>
+                                        </div>
+
+                                        <div class="col-xs-12">
+                                            <br/>
+                                            <button type="button" class="btn btn-success" onclick="saveStaticItem()" ng-click="saveStaticItemInScene()">Save item</button>
+                                        </div>    
+                                    </div>                       
+                                </div>
+                                    
+                                <div class="col-xs-4">
+                                    <br/>
+                                    <div id="staticItemsMap" class="littleMap">
+                                    </div>
+
+                                    <script type="text/javascript">
+                                                var overlayList = {};
+                                                var index = 0;
+
+                                                var staticItemsMap = new ol.Map({
+                                                    target: 'staticItemsMap',
+                                                    layers: [
+                                                        new ol.layer.Tile({
+                                                            source: new ol.source.MapQuest({layer: 'osm'})
+                                                        })   
+                                                    ],      
+                                                    view: new ol.View({            
+                                                        center: ol.proj.transform([-0.88824, 41.66991], 'EPSG:4326', 'EPSG:3857'),        
+                                                        zoom: 15           
+                                                    }),       
+                                                    controls: ol.control.defaults().extend([      
+                                                        new ol.control.FullScreen() 
+                                                    ])        
+                                                });
+
+                                                staticItemsMap.on('singleclick', function(evt) { 
+                                                    var position = ol.proj.transform(evt.coordinate,'EPSG:3857', 'EPSG:4326');
+                                                    var appElement = document.querySelector('[ng-app=app]');
+                                                    var $scope = angular.element(appElement).scope();
+                                                    $scope = $scope.$$childHead; 
+
+                                                    if(overlayList[index]){
+                                                        staticItemsMap.removeOverlay(overlayList[index]); 
+                                                    }
+
+                                                    var staticItemType = JSON.parse($scope.newStaticItem.type);
+                                                    overlayList[index] = new ol.Overlay({
+                                                        position: evt.coordinate,
+                                                        element: $('<img src="'+staticItemType.icon+'" class="img-circle">')
+                                                        .css({marginTop: '-50%', marginLeft: '-50%', width: '40px', height: '40px', cursor: 'pointer'})
+                                                    });
+
+                                                    $('#staticItemLat').val(position[0]);
+                                                    $('#staticItemLong').val(position[1]);
+
+                                                    staticItemsMap.addOverlay(overlayList[index]);
+
+                                                    $scope.$apply(function () {
+                                                        $scope.newStaticItem.latitude = position[0];    
+                                                        $scope.newStaticItem.longitude = position[1];
+                                                    });
+                                                });
+
+                                                function saveStaticItem(){
+                                                    index++;
                                                 }
-                                                
-                                                var staticItemType = JSON.parse($scope.newStaticItem.type);
-                                                overlayList[index] = new ol.Overlay({
-                                                    position: evt.coordinate,
-                                                    element: $('<img src="'+staticItemType.icon+'" class="img-circle">')
-                                                    .css({marginTop: '-50%', marginLeft: '-50%', width: '40px', height: '40px', cursor: 'pointer'})
-                                                });
-                                                
-                                                $('#staticItemLat').val(position[0]);
-                                                $('#staticItemLong').val(position[1]);
-                                                
-                                                staticItemsMap.addOverlay(overlayList[index]);
-                                                
-                                                $scope.$apply(function () {
-                                                    $scope.newStaticItem.latitude = position[0];    
-                                                    $scope.newStaticItem.longitude = position[1];
-                                                });
-                                            });
-                                            
-                                            function saveStaticItem(){
-                                                index++;
-                                            }
-                                        </script>                                      
+                                    </script>                            
                                 </div>
                                 
-     
-                                <table class="table table-striped" ng-show="staticItemListInScene.length>0">
-                                    <thead>
-                                        <tr>
-                                            <th>Item name</th>
-                                            <th>Item type</th>
-                                            <th>Icon</th>
-                                            <th>Options</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody ng-repeat="staticItemElement in staticItemListInScene">
-                                        <tr>
-                                            <td>{{staticItemElement.name}}</td>
-                                            <td>{{staticItemElement.type.name}}</td>
-                                            <td><img src="{{staticItemElement.type.icon}}" height="16" width="16"/></td>
-                                            <td>
-                                                <button class="btn btn-danger fa fa-trash-o" 
-                                                        data-toggle="modal" data-target="#deleteStaticItemModal"
-                                                        ng-click="selectStaticItemToDeleteFromScene(staticItemElement, $index)"></button>
-                                            </td> 
-                                        </tr>
-                                    </tbody>
-                                </table>    
-     
-                                <nav align="center" ng-show="staticItemListInScene.length>0">
-                                    <ul class="pagination">
-                                        <li class="disabled"><a href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span></a>
-                                        </li>
-                                        <li class="active">
-                                            <a href="#">1</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">2</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">3</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">4</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">5</a>
-                                        </li>
-                                        <li>
-                                          <a href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                          </a>
-                                        </li>
-                                    </ul>
-                                </nav>
+                                <div class="col-xs-12" ng-show="staticItemListInScene.length>0">
+                                    <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Item name</th>
+                                                    <th>Item type</th>
+                                                    <th>Icon</th>
+                                                    <th>Options</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody ng-repeat="staticItemElement in staticItemListInScene 
+                                                              | startFrom:currentPageStaticItems*pageSizeStaticItems 
+                                                              | limitTo:pageSizeStaticItems">
+                                                <tr>
+                                                    <td>{{staticItemElement.name}}</td>
+                                                    <td>{{staticItemElement.type.name}}</td>
+                                                    <td><img src="{{staticItemElement.type.icon}}" height="16" width="16"/></td>
+                                                    <td>
+                                                        <button class="btn btn-danger fa fa-trash-o" 
+                                                                data-toggle="modal" data-target="#deleteStaticItemModal"
+                                                                ng-click="selectStaticItemToDeleteFromScene(staticItemElement, $index)"></button>
+                                                    </td> 
+                                                </tr>
+                                            </tbody>
+                                    </table>
 
-     
+                                    <nav align="center">
+                                        <ul class="pagination">
+                                            <li ng-disabled="currentPageStaticItems == 0">
+                                                <a href="#/map/editScene" 
+                                                   ng-click="previousStaticItems()"
+                                                   aria-label="Previous">
+                                                   <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </li>
+
+                                            <li ng-repeat="pag in pagesStaticItems()" ng-class="{active:pag==currentPageStaticItems}">
+                                                <a href="#/map/editScene" ng-click="setCurrentPageStaticItems(pag)">{{pag+1}}</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#/map/editScene"    
+                                                  ng-click="nextStaticItems()"
+                                                  aria-label="Next">  
+                                                  <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>                                          
+                                </div>
                             </div>
                             
                             <div ng-hide="isStepActivate(4)">
-                                <div class="col-xs-12">
-                                    <h3>Step 4: Dynamic items settings</h3>
-                                </div>
-                                
-                                <div class="col-xs-12">
-                                    <label>Define items form ...</label>
-                                    <select ng-model="scene.defineFormFileDynamicItem" class="form-control">
-                                        <option value="loadFromFileDynamicItem">Load from file</option>
-                                        <option value="setManuallyDynamicItem">Set manually</option>
-                                        <option value="setRandom">Random trajectory</option>
-                                    </select>
-                                </div>
-                                
-                                <div ng-hide="loadFromFileSelectedDynamicItem()">
-                                    <!-- cuando cargamos los objetos desde un fichero de texto -->
-                                    
-                                    <div class="col-xs-12">           
-                                        </br>      
-                                        <label>Dynamic items</label>
-                                        <input type="file" ng-model='scene.dynamicItemFile'>      
-                                        <b>
-                                            <i>* File containing dynamic objects of the map, that is, the changing 
-                                            geographic position during the simulation such as automobiles
-                                            </i>
-                                        </b>   
-                                    </div>
+                                <div class="col-xs-8">
                                     <div class="col-xs-12">
-                                        </br>
-                                        <button type="button" 
-                                                class="btn btn-success" 
-                                                ng-click="loadDynamicItemsFromFile()">
-                                            Load dynamic items
-                                        </button>
-                                    </div>                                
-                                
-                                </div>
-                                
-                                <div ng-hide="setManuallySelectedDynamicItem()">                                
-                                    </br>
-                                    <div class="col-xs-4">
-                                        </br>
-                                        <label>Dynamic item type</label>
-                                        <select class="form-control" ng-model="newDynamicItem.type">
-                                            <option ng-repeat="dynamicItem in dynamicItemList" value="{{dynamicItem}}">
-                                                {{dynamicItem.name}}
-                                             </option>
+                                        <h3>Step 4: Dynamic items settings</h3>
+                                    </div>
+
+                                    <div class="col-xs-12">
+                                        <label>Define items form ...</label>
+                                        <select ng-model="scene.defineFormFileDynamicItem" class="form-control">
+                                            <option value="loadFromFileDynamicItem">Load from file</option>
+                                            <option value="setManuallyDynamicItem">Set manually</option>
+                                            <option value="setRandom">Random trajectory</option>
                                         </select>
                                     </div>
-                                    
-                                    <div class="col-xs-4">
-                                        </br>
-                                        <label>Item name</label>
-                                        <input ng-model="newDynamicItem.dynamicItemName" class="form-control"/>
+
+                                    <div ng-hide="loadFromFileSelectedDynamicItem()">
+                                        <!-- cuando cargamos los objetos desde un fichero de texto -->
+
+                                        <div class="col-xs-12">           
+                                            <br/>      
+                                            <label>Dynamic items</label>
+                                            <input type="file" ng-model='scene.dynamicItemFile'>      
+                                            <b>
+                                                <i>* File containing dynamic objects of the map, that is, the changing 
+                                                geographic position during the simulation such as automobiles
+                                                </i>
+                                            </b>   
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <br/>
+                                            <button type="button" 
+                                                    class="btn btn-success" 
+                                                    ng-click="loadDynamicItemsFromFile()">
+                                                Load dynamic items
+                                            </button>
+                                        </div>
                                     </div>
 
-                                    <div class="col-xs-4">
-                                        </br>
-                                        <label>Item speed (km/h)</label>
-                                        <input ng-model="newDynamicItem.itemSpeed" class="form-control"/>
+                                    <div ng-hide="setManuallySelectedDynamicItem()">                                
+                                        <br/>
+                                        <div class="col-xs-3">
+                                            <br/>
+                                            <label>Dynamic item type</label>
+                                            <select class="form-control" ng-model="newDynamicItem.type">
+                                                <option ng-repeat="dynamicItem in dynamicItemList" value="{{dynamicItem}}">
+                                                    {{dynamicItem.name}}
+                                                 </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-xs-3">
+                                            <br/>
+                                            <label>Item name</label>
+                                            <input ng-model="newDynamicItem.dynamicItemName" class="form-control"/>
+                                        </div>
+
+                                        <div class="col-xs-3">
+                                            <br/>
+                                            <label>Item speed (km/h)</label>
+                                            <input ng-model="newDynamicItem.itemSpeed" class="form-control"/>
+                                        </div>
+                                        
+                                        <div class="col-xs-3">
+                                            <br/><br/>
+                                            <button type="button" class="btn btn-success" ng-click="saveDynamicItemInScene()">Save item</button>
+                                        </div>
+
+                                        <div class="col-xs-12" ng-show="newDynamicItem.route.length>0">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Order</th>
+                                                        <th>Longitude</th>
+                                                        <th>Latitude</th>
+                                                        <th>Optiones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="point in newDynamicItem.route
+                                                                    | startFrom:currentPageDynaicItemsMan*pageSizeDynaicItemsMan 
+                                                                    | limitTo:pageSizeDynaicItemsMan">
+                                                        <td>{{newDynamicItem.route.indexOf(point)+1}}</td>
+                                                        <td>{{point.long}}</td>
+                                                        <td>{{point.lat}}</td>
+                                                        <td>
+                                                            <button class="btn btn-danger fa fa-trash-o" 
+                                                                    data-toggle="modal" data-target="#deletePointFromRouteModal"
+                                                                    ng-click="selectPointToDelete(point)"></button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            
+                                            <nav align="center">
+                                                <ul class="pagination">
+                                                    <li ng-disabled="currentPageDynaicItemsMan == 0">
+                                                        <a href="#/map/editScene" 
+                                                           ng-click="previousDynaicItemsMan()"
+                                                           aria-label="Previous">
+                                                           <span aria-hidden="true">&laquo;</span>
+                                                        </a>
+                                                    </li>
+
+                                                    <li ng-repeat="pag in pagesDynaicItemsMan()" ng-class="{active:pag==currentPageDynaicItemsMan}">
+                                                        <a href="#/map/editScene" ng-click="setCurrentPageDynaicItemsMan(pag)">{{pag+1}}</a>
+                                                    </li>
+
+                                                    <li>
+                                                        <a href="#/map/editScene"    
+                                                          ng-click="nextDynaicItemsMan()"
+                                                          aria-label="Next">  
+                                                          <span aria-hidden="true">&raquo;</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
                                     </div>
 
-                                    <div class="col-xs-12">
-                                        <table class="table table-striped" ng-show="newDynamicItem.route.length>0">
+                                    <div ng-hide="setRandomWay()">
+                                        <br/>
+                                        <div class="col-xs-3">
+                                            <br/>
+                                            <label>Dynamic item type</label>
+                                            <select class="form-control" ng-model="newDynamicItem.type">
+                                                <option ng-repeat="dynamicItem in dynamicItemList" value="{{dynamicItem}}">
+                                                    {{dynamicItem.name}}
+                                                 </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-xs-3">
+                                            <br/>
+                                            <label>Number of items</label>
+                                             <input ng-model="randomWay.numberDynamicItems" class="form-control"/>
+                                        </div>  
+
+                                        <div class="col-xs-3">
+                                            <br/>
+                                            <label>Way type</label>
+                                            <select class="form-control" ng-model="randomWay.wayType">
+                                                <option value="motorway">motorway</option>
+                                                <option value="trunk">trunk</option>
+                                                <option value="primary">primary</option>
+                                                <option value="secondary">secondary</option>
+                                                <option value="tertiary">tertiary</option>
+                                                <option value="unclassified">unclassified</option>
+                                                <option value="residential">residential</option>
+                                                <option value="service">service</option>
+                                            </select>                                         
+                                        </div>
+
+                                         <div class="col-sm-3">
+                                             <br/><br/>
+                                             <button ng-show="loadRandomWay" type="button" class="btn btn-primary btn-block" ng-click="generateRandomWay()">Generate random way</button>
+                                        </div>
+                                                                        
+                                        <div class="col-sm-12">
+                                            <div ng-show="!loadRandomWay">
+                                                <img src="/images/loader.gif">
+                                                <label>Generating trajectory. This process can take several minutes. Please wait ...</label>
+                                            </div>
+                                        </div>
+                                    </div> 
+
+                                    <div class="col-sm-12" ng-show="dynamicItemListInScene.length>0">
+                                        <br/>
+                                        <table class="table table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>Order</th>
-                                                    <th>Longitude</th>
-                                                    <th>Latitude</th>
-                                                    <th>Optiones</th>
+                                                    <th>Item name</th>
+                                                    <th>Item type</th>
+                                                    <th>Speed</th>
+                                                    <th>Icon</th>
+                                                    <th>Options</th>
                                                 </tr>
                                             </thead>
-                                            
-                                            <tbody>
-                                                <tr ng-repeat="point in newDynamicItem.route track by $index">
-                                                    <td>{{$index}}</td>
-                                                    <td>{{point.long}}</td>
-                                                    <td>{{point.lat}}</td>
+                                            <tbody ng-repeat="dynamicItem in dynamicItemListInScene 
+                                                              | startFrom:currentPageDynaicItems*pageSizeDynaicItems  
+                                                              | limitTo:pageSizeDynaicItems">
+                                                <tr>
+                                                    <td>{{dynamicItem.name}}</td>
+                                                    <td>{{dynamicItem.type.name}}</td>
+                                                    <td>{{dynamicItem.speed}}</td>
+                                                    <td><img src="{{dynamicItem.type.icon}}" height="16" width="16"/></td>
                                                     <td>
                                                         <button class="btn btn-danger fa fa-trash-o" 
-                                                                data-toggle="modal" data-target="#deletePointFromRouteModal"
-                                                                ng-click="selectPointToDelete(point)"></button>
-                                                    </td>
+                                                                data-toggle="modal" data-target="#deleteDynamicItemModal"
+                                                                ng-click="selectDynamicItemToDelete(dynamicItem)"></button>
+                                                    </td> 
                                                 </tr>
                                             </tbody>
                                         </table>
-                                    </div>    
-
-                                    <div class="col-xs-12">
-                                        </br>
-                                        <button type="button" class="btn btn-success" ng-click="saveDynamicItemInScene()">Save item</button>
-                                    </div>
-                                </div>
-
-                                <div ng-hide="setRandomWay()">
-                                    </br>
-                                    <div class="col-xs-4">
-                                        </br>
-                                        <label>Dynamic item type</label>
-                                        <select class="form-control" ng-model="newDynamicItem.type">
-                                            <option ng-repeat="dynamicItem in dynamicItemList" value="{{dynamicItem}}">
-                                                {{dynamicItem.name}}
-                                             </option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-xs-4">
-                                        </br>
-                                        <label>Number of items</label>
-                                         <input ng-model="randomWay.numberDynamicItems" class="form-control"/>
-                                    </div>  
-
-                                    <div class="col-xs-4">
-                                        </br>
-                                        <label>Way type</label>
-                                        <select class="form-control" ng-model="randomWay.wayType">
-                                            <option value="motorway">motorway</option>
-                                            <option value="trunk">trunk</option>
-                                            <option value="primary">primary</option>
-                                            <option value="secondary">secondary</option>
-                                            <option value="tertiary">tertiary</option>
-                                            <option value="unclassified">unclassified</option>
-                                            <option value="residential">residential</option>
-                                            <option value="service">service</option>
-                                        </select>                                         
-                                    </div>
-                                    
-                                     <div class="col-sm-12">
-                                         </br>
-                                        <button ng-show="loadRandomWay" type="button" class="btn btn-primary btn-block" ng-click="generateRandomWay()">Generate random way</button>
                                         
-                                        <div ng-show="!loadRandomWay">
-                                            <img src="/images/loader.gif">
-                                            <label>Generating trajectory. This process can take several minutes. Please wait ...</label>     
-                                        </div>
+                                        <nav align="center">
+                                                <ul class="pagination">
+                                                    <li ng-disabled="currentPageDynaicItems == 0">
+                                                        <a href="#/map/editScene" 
+                                                           ng-click="previousDynaicItems()"
+                                                           aria-label="Previous">
+                                                           <span aria-hidden="true">&laquo;</span>
+                                                        </a>
+                                                    </li>
+
+                                                    <li ng-repeat="pag in pagesDynaicItems()" ng-class="{active:pag==currentPageDynaicItems}">
+                                                        <a href="#/map/editScene" ng-click="setCurrentPageDynaicItems(pag)">{{pag+1}}</a>
+                                                    </li>
+
+                                                    <li>
+                                                        <a href="#/map/editScene"    
+                                                          ng-click="nextDynaicItems()"
+                                                          aria-label="Next">  
+                                                          <span aria-hidden="true">&raquo;</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
                                     </div>
                                 </div>
-
-                                <div class="col-sm-12">
-                                    </br>
-                                    <div id="dynamicItemsMap">
+                                
+                                <div class="col-xs-4">
+                                    <br/>
+                                    <div id="dynamicItemsMap" class="littleMap">
                                     </div>
 
                                     <script type="text/javascript">
@@ -548,6 +631,14 @@
                                             var $scope = angular.element(appElement).scope();
                                             $scope = $scope.$$childHead; 
                                             
+                                            var pointMap = new ol.Overlay({
+                                                position: evt.coordinate,
+                                                element: $('<img src="images/map-pin-md.png" class="img-circle" id="'+pos+'">')
+                                                .css({marginTop: '-150%', marginLeft: '-50%', width: '40px', height: '40px', cursor: 'pointer'})    
+                                            });
+                                            
+                                            dynamicItemsMap.addOverlay(pointMap);
+                                            
                                             $scope.$apply(function () {
                                                 $scope.newDynamicItem.route.push({
                                                     long: pos[1],  
@@ -559,37 +650,11 @@
                                 </div>
                     
                                 <div class="col-sm-12">
-                                    <table class="table table-striped" ng-show="dynamicItemListInScene.length>0">
-                                        <thead>
-                                            <tr>
-                                                <th>Item name</th>
-                                                <th>Item type</th>
-                                                <th>Speed</th>
-                                                <th>Icon</th>
-                                                <th>Options</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody ng-repeat="dynamicItem in dynamicItemListInScene">
-                                            <tr>
-                                                <td>{{dynamicItem.name}}</td>
-                                                <td>{{dynamicItem.type.name}}</td>
-                                                <td>{{dynamicItem.speed}}</td>
-                                                <td><img src="{{dynamicItem.type.icon}}" height="16" width="16"/></td>
-                                                <td>
-                                                    <button class="btn btn-danger fa fa-trash-o" 
-                                                            data-toggle="modal" data-target="#deleteDynamicItemModal"
-                                                            ng-click="selectDynamicItemToDelete(dynamicItem)"></button>
-                                                </td> 
-                                            </tr>
-                                        </tbody>
-                                    </table>                                    
-                                </div>
-                                    
-                                    
-                                <div class="col-sm-12">
+                                    <br/>
                                     <button type="button" class="btn btn-primary btn-block" ng-click="saveScene()">Save</button>
                                 </div>
                             </div>                            
+                                                        
                             
                             <div class="col-xs-12">
                                 <nav align="center">

@@ -25,6 +25,38 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
     $scope.pageSizeDynaicItemsMan = 5;
     $scope.currentPageDynaicItems = 0;
     $scope.pageSizeDynaicItems = 5;
+    $scope.currentPage = 0;
+    $scope.pageSize = 5;
+    
+    $scope.pages = function() {
+        var input = [];
+        
+        for (var i = 0; i < $scope.numberOfPages(); i += 1) {
+            input.push(i);
+        }
+        
+        return input;
+    };
+
+    $scope.numberOfPages=function(){
+        return Math.ceil($scope.sceneList.length/$scope.pageSize);                
+    }
+    
+    $scope.setCurrentPage = function(page){
+        $scope.currentPage = page;
+    }
+    
+    $scope.previous = function(){
+        if($scope.currentPage != 0){
+            $scope.currentPage=$scope.currentPage-1;
+        }
+    }
+    
+    $scope.next = function(){
+        if($scope.currentPage < $scope.sceneList.length/$scope.pageSize - 1){
+            $scope.currentPage=$scope.currentPage+1;
+        }
+    }
     
     $scope.pagesStaticItems = function() {
         var input = [];

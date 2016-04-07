@@ -18,6 +18,134 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
     };
     $scope.sceneList = [];
     $scope.loadRandomWay = true;
+        $scope.currentPageStaticItems = 0;
+    $scope.pageSizeStaticItems = 5; 
+    $scope.currentPageDynaicItemsMan = 0;
+    $scope.pageSizeDynaicItemsMan = 5;
+    $scope.currentPageDynaicItems = 0;
+    $scope.pageSizeDynaicItems = 5;
+    $scope.currentPage = 0;
+    $scope.pageSize = 5;
+    
+    $scope.pages = function() {
+        var input = [];
+        
+        for (var i = 0; i < $scope.numberOfPages(); i += 1) {
+            input.push(i);
+        }
+        
+        return input;
+    };
+
+    $scope.numberOfPages=function(){
+        return Math.ceil($scope.sceneList.length/$scope.pageSize);                
+    }
+    
+    $scope.setCurrentPage = function(page){
+        $scope.currentPage = page;
+    }
+    
+    $scope.previous = function(){
+        if($scope.currentPage != 0){
+            $scope.currentPage=$scope.currentPage-1;
+        }
+    }
+    
+    $scope.next = function(){
+        if($scope.currentPage < $scope.sceneList.length/$scope.pageSize - 1){
+            $scope.currentPage=$scope.currentPage+1;
+        }
+    }
+    
+    $scope.pagesStaticItems = function() {
+        var input = [];
+        
+        for (var i = 0; i < $scope.numberOfPagesStaticItems(); i += 1) {
+            input.push(i);
+        }
+        
+        return input;
+    };
+
+    $scope.numberOfPagesStaticItems=function(){
+        return Math.ceil($scope.staticItemListInScene.length/$scope.pageSizeStaticItems);                
+    }
+    
+    $scope.setCurrentPageStaticItems = function(page){
+        $scope.currentPageStaticItems = page;
+    }
+    
+    $scope.previousStaticItems = function(){
+        if($scope.currentPageStaticItems != 0){
+            $scope.currentPageStaticItems=$scope.currentPageStaticItems-1;
+        }
+    }
+    
+    $scope.nextStaticItems = function(){
+        if($scope.currentPageStaticItems < $scope.staticItemListInScene.length/$scope.pageSizeStaticItems - 1){
+            $scope.currentPageStaticItems=$scope.currentPageStaticItems+1;
+        }
+    }
+    
+    $scope.pagesDynaicItemsMan = function() {
+        var input = [];
+        
+        for (var i = 0; i < $scope.numberOfPagesDynaicItemsMan(); i += 1) {
+            input.push(i);
+        }
+        
+        return input;
+    };
+
+    $scope.numberOfPagesDynaicItemsMan=function(){
+        return Math.ceil($scope.newDynamicItem.route.length/$scope.pageSizeDynaicItemsMan);                
+    }
+    
+    $scope.setCurrentPageDynaicItemsMan = function(page){
+        $scope.currentPageDynaicItemsMan = page;
+    }
+    
+    $scope.previousDynaicItemsMan = function(){
+        if($scope.currentPageDynaicItemsMan != 0){
+            $scope.currentPageDynaicItemsMan=$scope.currentPageDynaicItemsMan-1;
+        }
+    }
+    
+    $scope.nextDynaicItemsMan = function(){
+        if($scope.currentPageDynaicItemsMan < $scope.newDynamicItem.route.length/$scope.pageSizeDynaicItemsMan - 1){
+            $scope.currentPageDynaicItemsMan=$scope.currentPageDynaicItemsMan+1;
+        }
+    }
+    
+    $scope.pagesDynaicItems = function() {
+        var input = [];
+        
+        for (var i = 0; i < $scope.numberOfPagesDynaicItems(); i += 1) {
+            input.push(i);
+        }
+        
+        return input;
+    };
+
+    $scope.numberOfPagesDynaicItems=function(){
+        return Math.ceil($scope.dynamicItemListInScene.length/$scope.pageSizeDynaicItems);                
+    }
+    
+    $scope.setCurrentPageDynaicItems = function(page){
+        $scope.currentPageDynaicItems = page;
+    }
+    
+    $scope.previousDynaicItems = function(){
+        if($scope.currentPageDynaicItems != 0){
+            $scope.currentPageDynaicItems=$scope.currentPageDynaicItems-1;
+        }
+    }
+    
+    $scope.nextDynaicItems = function(){
+        if($scope.currentPageDynaicItems < $scope.dynamicItemListInScene.length/$scope.pageSizeDynaicItems - 1){
+            $scope.currentPageDynaicItems=$scope.currentPageDynaicItems+1;
+        }
+    }    
     
    /*
     * 

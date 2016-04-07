@@ -735,7 +735,7 @@
                             </thead>
                             
                             <tbody>
-                                <tr ng-repeat="scene in sceneList">
+                                <tr ng-repeat="scene in sceneList | startFrom:currentPage*pageSize | limitTo:pageSize">
                                     <td>{{scene.sceneName}}</td>
                                     <td>{{scene.creationDate}}</td>
                                     <td>{{scene.recommenderSettings}}</td>
@@ -754,22 +754,29 @@
                             </tbody>
                         </table>
                     
-                        
-                    <!--<nav align="center">
-                        <ul class="pagination">
-                            <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li>
-                              <a href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                              </a>
-                            </li>
-                        </ul>
-                    </nav>-->
+                        <nav align="center">
+                            <ul class="pagination">
+                                <li ng-disabled="currentPage == 0">
+                                    <a href="#/map/newMap" 
+                                       ng-click="previous()"
+                                       aria-label="Previous">
+                                       <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+
+                                <li ng-repeat="pag in pages()" ng-class="{active:pag==currentPage}">
+                                    <a href="#/map/newMap" ng-click="setCurrentPage(pag)">{{pag+1}}</a>
+                                </li>
+
+                                <li>
+                                  <a href="#/map/newMap" 
+                                     ng-click="next()"
+                                     aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                  </a>
+                                </li>
+                            </ul>
+                        </nav>
                 </div>
             </div>
 		</div>
