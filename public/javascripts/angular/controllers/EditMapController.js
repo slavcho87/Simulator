@@ -590,7 +590,25 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
     }
     
     $scope.loadDynamicItemsFromFile = function(){
-        console.log($scope.scene.dynamicItemFile);
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            var data = e.target.result;
+            data = JSON.parse(data);
+            
+            for(i=0;i<data.length;i++){
+                $scope.$apply(function () {
+                    $scope.dynamicItemListInScene.push({
+                        name: data[i].itemName,
+                        speed: data[i].speed,
+                        route: data[i].route
+                    });
+                });
+            }
+        };
+        
+        var fileInputElement = document.getElementById("dynamicItemFile");
+        reader.readAsText(fileInputElement.files[0]);
     }    
     
     $scope.editScene = function(scene){
