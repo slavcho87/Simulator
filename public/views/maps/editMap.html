@@ -122,7 +122,7 @@
                                         <br/>
                                         <label>Upper left corner: longitude</label>
                                          <input id="initPosLong" class="form-control" ng-model="scene.longitudeULC" disabled/>
-                                    </div>        
+                                    </div>
 
                                     <div class="col-xs-6">
                                         <br/>
@@ -305,7 +305,57 @@
                                             <br/>
                                             <button type="button" class="btn btn-success" onclick="saveStaticItem()" ng-click="saveStaticItemInScene()">Save item</button>
                                         </div>    
-                                    </div>                       
+                                    </div>  
+                                        <div class="col-xs-12" ng-show="staticItemListInScene.length>0">
+                                            <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Item name</th>
+                                                            <th>Item type</th>
+                                                            <th>Icon</th>
+                                                            <th>Options</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody ng-repeat="staticItemElement in staticItemListInScene 
+                                                                      | startFrom:currentPageStaticItems*pageSizeStaticItems 
+                                                                      | limitTo:pageSizeStaticItems">
+                                                        <tr>
+                                                            <td>{{staticItemElement.name}}</td>
+                                                            <td>{{staticItemElement.type.name}}</td>
+                                                            <td><img src="{{staticItemElement.type.icon}}" height="16" width="16"/></td>
+                                                            <td>
+                                                                <button class="btn btn-danger fa fa-trash-o" 
+                                                                        data-toggle="modal" data-target="#deleteStaticItemModal"
+                                                                        ng-click="selectStaticItemToDeleteFromScene(staticItemElement, $index)"></button>
+                                                            </td> 
+                                                        </tr>
+                                                    </tbody>
+                                            </table>
+
+                                            <nav align="center">
+                                                <ul class="pagination">
+                                                    <li ng-disabled="currentPageStaticItems == 0">
+                                                        <a href="#/map/editMap" 
+                                                           ng-click="previousStaticItems()"
+                                                           aria-label="Previous">
+                                                           <span aria-hidden="true">&laquo;</span>
+                                                        </a>
+                                                    </li>
+
+                                                    <li ng-repeat="pag in pagesStaticItems()" ng-class="{active:pag==currentPageStaticItems}">
+                                                        <a href="#/map/editMap" ng-click="setCurrentPageStaticItems(pag)">{{pag+1}}</a>
+                                                    </li>
+
+                                                    <li>
+                                                        <a href="#/map/editMap"    
+                                                          ng-click="nextStaticItems()"
+                                                          aria-label="Next">  
+                                                          <span aria-hidden="true">&raquo;</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </nav>                                          
+                                    </div>                                    
                                 </div>
                                     
                                 <div class="col-xs-4">
@@ -365,57 +415,6 @@
                                                     index++;
                                                 }
                                     </script>                            
-                                </div>
-                                
-                                <div class="col-xs-12" ng-show="staticItemListInScene.length>0">
-                                    <table class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Item name</th>
-                                                    <th>Item type</th>
-                                                    <th>Icon</th>
-                                                    <th>Options</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody ng-repeat="staticItemElement in staticItemListInScene 
-                                                              | startFrom:currentPageStaticItems*pageSizeStaticItems 
-                                                              | limitTo:pageSizeStaticItems">
-                                                <tr>
-                                                    <td>{{staticItemElement.name}}</td>
-                                                    <td>{{staticItemElement.type.name}}</td>
-                                                    <td><img src="{{staticItemElement.type.icon}}" height="16" width="16"/></td>
-                                                    <td>
-                                                        <button class="btn btn-danger fa fa-trash-o" 
-                                                                data-toggle="modal" data-target="#deleteStaticItemModal"
-                                                                ng-click="selectStaticItemToDeleteFromScene(staticItemElement, $index)"></button>
-                                                    </td> 
-                                                </tr>
-                                            </tbody>
-                                    </table>
-
-                                    <nav align="center">
-                                        <ul class="pagination">
-                                            <li ng-disabled="currentPageStaticItems == 0">
-                                                <a href="#/map/editMap" 
-                                                   ng-click="previousStaticItems()"
-                                                   aria-label="Previous">
-                                                   <span aria-hidden="true">&laquo;</span>
-                                                </a>
-                                            </li>
-
-                                            <li ng-repeat="pag in pagesStaticItems()" ng-class="{active:pag==currentPageStaticItems}">
-                                                <a href="#/map/editMap" ng-click="setCurrentPageStaticItems(pag)">{{pag+1}}</a>
-                                            </li>
-
-                                            <li>
-                                                <a href="#/map/editMap"    
-                                                  ng-click="nextStaticItems()"
-                                                  aria-label="Next">  
-                                                  <span aria-hidden="true">&raquo;</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </nav>                                          
                                 </div>
                             </div>
                             
@@ -751,7 +750,7 @@
                             </tbody>
                         </table>
                                             
-                     <nav align="center">
+                        <nav align="center">
                             <ul class="pagination">
                                 <li ng-disabled="currentPage == 0">
                                     <a href="#/map/editMap" 
