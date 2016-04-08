@@ -21,17 +21,8 @@
                     </ul>
                 </div>
             </nav>
-            
+    
             <div id="page-wrapper" ng-show="sceneList.length>0">
-                <div class="alert alert-dismissable alert-danger" ng-repeat="errorMsg in errorMsgList">
-                    <button type="button" 
-                            class="close" 
-                            data-dismiss="alert" 
-                            aria-hidden="true" 
-                            ng-click="msgHide(errorMsg)">&times;</button>
-                    {{errorMsg}}
-                </div>   
-                
                 <div class="row">
                     <div class="col-sm-4">
                         <label>Select scene: </label>
@@ -66,7 +57,16 @@
                 </div>
             </div>
             
-            <div id="page-wrapper" ng-show="simulationDataLoaded">		                
+            <div id="page-wrapper" ng-show="simulationDataLoaded">	
+                <div class="alert alert-dismissable alert-danger" ng-repeat="errorMsg in errorMsgList">
+                    <button type="button" 
+                            class="close" 
+                            data-dismiss="alert" 
+                            aria-hidden="true" 
+                            ng-click="msgHide(errorMsg)">&times;</button>
+                    {{errorMsg}}
+                </div>   
+                
                 <div class="row">    
                     <div id="mapa" class="mapa col-sm-8">
                     </div>
@@ -87,6 +87,67 @@
                             var dynamicItemRefreshInterval = 100;
                             var artists = [];
                             var state = 'stop';
+                            var watchId;
+                            var options = {
+                              enableHighAccuracy: false,
+                              timeout: 1000,
+                              maximumAge: 75000
+                            };
+                            var gpsInterval;
+                            var refreshGPSInterval = 1000;
+                            
+                            $("select[name=userMovement]").change(function(){
+                                var userMovement = $("select[name=userMovement]").val();
+                                if(userMovement == "GPSmovement"){
+                                    navigator.geolocation.getCurrentPosition(myPosition);
+                                    
+                                    if(userMoveTemporizador){
+                                        userMoveTemporizador= window.clearInterval(userMoveTemporizador);
+                                    }
+                                    
+                                    gpsInterval = window.setInterval('GPSMove()',refreshGPSInterval);
+                                }else{
+                                    if(!userMoveTemporizador){
+                                        userMoveTemporizador = window.setInterval('userMove()',userMoveRefreshInterval);
+                                    }
+                                    
+                                    gpsInterval = window.clearInterval(gpsInterval);
+                                    
+                                    dirMove = "";
+                                }
+                            });
+                            
+                            function GPSMove(){
+                                navigator.geolocation.getCurrentPosition(myPosition);
+                            }
+                            
+                            function error(err) {
+                              console.warn('ERROR(' + err.code + '): ' + err.message);
+                            };
+                            
+                            function myPosition(position){
+                                if(overlayList['user']){
+                                    map.removeOverlay(overlayList['user']);         
+                               }
+                                
+                                var position = [position.coords.longitude, position.coords.latitude];
+                                
+                                overlayList['user'] = new ol.Overlay({
+                                    position: ol.proj.transform(position, 'EPSG:4326', 'EPSG:3857'),
+                                    element: $('<img src="'+getImg()+'" class="img-circle" name="'+getUser()._id+'">')
+                                    .css({marginTop: '-50%', marginLeft: '-50%', width: '40px', height: '40px', cursor: 'pointer'})
+                                });
+                                
+                                map.addOverlay(overlayList['user']);
+                                
+                                var data = {
+                                    user: getImg(),
+                                    pos: position,
+                                    id: getUser()._id
+                                };
+                                
+                                socket.emit('user change position', data);
+                            }
                             
                             if(artists.length == 0){
                                 for(index in $scope.dynamiItemsList){
@@ -521,21 +582,7 @@
                                                 $scope.dynamiItemsList[index] = info3;
                                                 artists[index] = 0;
                                             }
-
-                                        /*newPos = [parseFloat(list[index].route[i+1].routeId.latitude), 
-                                                 parseFloat(list[index].route[i+1].routeId.longitude)];
-                                        
-                                        artists[index] = artists[index]+1;*/
                                     }
-                                    
-                                    /*map.removeOverlay(overlay);
-
-                                    list[index].overlay = new ol.Overlay({
-                                        position: ol.proj.transform(newPos, 'EPSG:4326', 'EPSG:3857'),
-                                        element: overlay.getElement()
-                                    });
-
-                                    map.addOverlay(list[index].overlay);*/   
                                 }
                             }
                             
@@ -604,7 +651,8 @@
                                 $scope.resultTypeShow = "emptyList";
                                 $scope.percentage = "0%";
                                 $scope.percentageSum = 0;
-                                
+                                gpsInterval = window.clearInterval(gpsInterval);
+                                dirMove = "";
                             }
                             
                             function setRating(itemId){
@@ -666,9 +714,17 @@
                        
                         <div class="row">
                             <div class="">
-                                <div class="col-xs-6">
+                                <div class="col-xs-6" ng-show="userMovement=='simuledMovement'">
                                     <label>User speed (km/h)</label>
                                     <input id="userSpeed" class="form-control" value="5"/>
+                                </div>
+                                
+                                <div class="col-xs-6">
+                                    <label>User movement</label>
+                                    <select name="userMovement" class="form-control" ng-model="userMovement">
+                                        <option value="simuledMovement">Simulated movement</option>
+                                        <option value="GPSmovement">GPS positioning</option>
+                                    </select>
                                 </div>
                                 
                                 <div class="col-xs-12">
@@ -695,9 +751,9 @@
                                 </div>
                                 
                                 <div class="col-xs-12">
-                                    <br/><br/>
+                                    <br/>
                                     <label>Legend:</label>
-                                    <ul>
+                                    <ul ng-show="userMovement=='simuledMovement'">
                                         <li>To position the user have to click on the map</li>
                                         <li>w: move up</li>
                                         <li>s: move down</li>
@@ -705,6 +761,10 @@
                                         <li>d: move right</li>
                                         <li>space bar: start/pause the movement of the user</li>
                                     </ul>
+                                    <ul ng-show="userMovement!='simuledMovement'">
+                                        <li>GPS position of the device is used to position the user</li>
+                                        <li>moving the device the user's position is changed</li>
+                                    </ul>    
                                 </div>
                             </div>
                         </div>

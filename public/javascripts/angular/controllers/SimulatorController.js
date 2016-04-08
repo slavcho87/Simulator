@@ -21,6 +21,7 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
     $scope.resultTypeShow = "emptyList";
     $scope.percentage = "0%";
     $scope.percentageSum = 0;
+    $scope.userMovement = "simuledMovement";
     
     $scope.recomend = function(){
         $scope.recommendedItemList = [];
@@ -365,7 +366,7 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
     /*
     * Hide error message
     */    
-    $scope.msgHide = function(msg){
+    $scope.msgHide = function(msg){console.log("");
         var msgIndex = $scope.errorMsgList.indexOf(msg);
         
         if(msgIndex>=0){
