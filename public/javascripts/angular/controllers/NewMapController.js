@@ -27,6 +27,24 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
     $scope.pageSizeDynaicItems = 5;
     $scope.currentPage = 0;
     $scope.pageSize = 5;
+    $scope.staticItemSelected = [];
+    $scope.dynamicItemSelected = [];
+    
+    $scope.addItemType=function(){
+        for(index in $scope.staticItemSelected){
+            $scope.staticItemSelected[index].type = JSON.parse($scope.newStaticItem.type);
+        }
+        
+        $scope.staticItemSelected = [];
+    }
+    
+    $scope.addDynacmiItemType=function(){
+        for(index in $scope.dynamicItemSelected){
+            $scope.dynamicItemSelected[index].type = JSON.parse($scope.newDynamicItem.type);
+        }
+        
+        $scope.dynamicItemSelected = [];
+    }
     
     $scope.pages = function() {
         var input = [];

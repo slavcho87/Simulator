@@ -141,7 +141,7 @@ router.post('/saveScene', function(req, resp){
                     itemRoute.push(route);
                 }
                 routeToSave.push(itemRoute);
-            }
+             }
             
             if(routeToSave && routeToSave.length>0){    
                 Item.create(dynamicItemToSave, function(err, items){
@@ -517,7 +517,7 @@ function updateDynamicItems(mapId, sceneId, dynamicItemList, scene1){
         item.mapId = scene1.mapId;
         item.itemType = dynamicItemList[index].type._id;
         dynamicItemToSave.push(item);
-                
+        
         var itemRoute = [];
         for (i = 0; i < dynamicItemList[index].route.length; i++) {
             var route = new Route();
@@ -533,10 +533,11 @@ function updateDynamicItems(mapId, sceneId, dynamicItemList, scene1){
             
     if(dynamicItemToSave && dynamicItemToSave.length>0){
         Item.create(dynamicItemToSave, function(err, items){
+            var miLista = [];
                 for(index=0; index<items.length; index++){
                     saveRoute(routeToSave[index], items[index], scene1);
                 }
-        });        
+        });
     }
 }
 

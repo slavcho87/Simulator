@@ -35,6 +35,24 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
     $scope.pageSizeDynaicItemsMan = 5;
     $scope.currentPageDynaicItems = 0;
     $scope.pageSizeDynaicItems = 5;
+    $scope.staticItemSelected = [];
+    $scope.dynamicItemSelected = [];
+    
+    $scope.addItemType=function(){
+        for(index in $scope.staticItemSelected){
+            $scope.staticItemSelected[index].type = JSON.parse($scope.newStaticItem.type);
+        }
+        
+        $scope.staticItemSelected = [];
+    }
+    
+    $scope.addDynacmiItemType=function(){
+        for(index in $scope.dynamicItemSelected){
+            $scope.dynamicItemSelected[index].type = JSON.parse($scope.newDynamicItem.type);
+        }
+        
+        $scope.dynamicItemSelected = [];
+    }
     
     $scope.pagesStaticItems = function() {
         var input = [];
@@ -435,7 +453,37 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
     }
     
     $scope.loadStaticItemsFromFile = function(){
-        console.log($scope.scene.staticItemFile);
+        var reader = new FileReader();
+        
+        reader.onload = function (e) {
+            var data = e.target.result; 
+            data = JSON.parse(data);
+            
+            for(i=0;i<data.length;i++){
+                $scope.newStaticItem = {
+                    type: JSON.stringify(getStaticItemById(data[i].staticItemType)),
+                    name: data[i].itemName,
+                    longitude: data[i].longitude,
+                    latitude: data[i].latitude
+                };
+                
+                $scope.$apply(function () {
+                    $scope.saveStaticItemInScene();
+                });
+            }
+        };
+        
+        var fileInputElement = document.getElementById("staticItemFile");
+        reader.readAsText(fileInputElement.files[0]);
+    }
+    
+    function getStaticItemById(id) {
+        for(index in $scope.staticItemList){
+            if($scope.staticItemList[index]._id==id){
+                return $scope.staticItemList[index];
+            }
+        }
+        return null;
     }
     
     $scope.loadDynamicItemsFromFile = function(){

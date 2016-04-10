@@ -311,9 +311,25 @@
                                     </div>  
                                     
                                     <div class="col-xs-12" ng-show="staticItemListInScene.length>0">
+                                        <br/>
+                                        <div class="col-xs-6" ng-show="staticItemSelected.length>0">
+                                           <label>Static item type</label>
+                                             <select class="form-control" ng-model="newStaticItem.type">
+                                                <option ng-repeat="staticItem in staticItemList" value="{{staticItem}}">
+                                                    {{staticItem.name}}
+                                                 </option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="col-xs-6" ng-show="staticItemSelected.length>0">
+                                            <br/>
+                                            <button type="button" class="btn btn-success" ng-click="addItemType()">Save item type</button>
+                                        </div>
+                                        
                                         <table class="table table-striped">
                                                 <thead>
                                                     <tr>
+                                                        <th></th>
                                                         <th>Item name</th>
                                                         <th>Item type</th>
                                                         <th>Icon</th>
@@ -324,6 +340,7 @@
                                                                   | startFrom:currentPageStaticItems*pageSizeStaticItems 
                                                                   | limitTo:pageSizeStaticItems">
                                                     <tr>
+                                                        <td><input type="checkbox" checklist-model="staticItemSelected" checklist-value="staticItemElement"></td>
                                                         <td>{{staticItemElement.name}}</td>
                                                         <td>
                                                             <a href="#/map/editMap" 
@@ -596,9 +613,24 @@
 
                                     <div class="col-sm-12" ng-show="dynamicItemListInScene.length>0">
                                         <br/>
+                                        <div class="col-xs-6" ng-show="dynamicItemSelected.length>0">
+                                            <label>Dynamic item type</label>
+                                            <select class="form-control" ng-model="newDynamicItem.type">
+                                                <option ng-repeat="dynamicItem in dynamicItemList" value="{{dynamicItem}}">
+                                                    {{dynamicItem.name}}
+                                                 </option>
+                                            </select>   
+                                        </div>
+
+                                         <div class="col-xs-6" ng-show="dynamicItemSelected.length>0">
+                                            <br/>
+                                            <button type="button" class="btn btn-success" ng-click="addDynacmiItemType()">Save item type</button>
+                                         </div>
+                                        
                                         <table class="table table-striped">
                                             <thead>
                                                 <tr>
+                                                    <th></th>
                                                     <th>Item name</th>
                                                     <th>Item type</th>
                                                     <th>Speed</th>
@@ -610,6 +642,7 @@
                                                               | startFrom:currentPageDynaicItems*pageSizeDynaicItems  
                                                               | limitTo:pageSizeDynaicItems">
                                                 <tr>
+                                                     <td><input type="checkbox" checklist-model="dynamicItemSelected" checklist-value="dynamicItem"></td>
                                                     <td>{{dynamicItem.name}}</td>
                                                     <td>    
                                                         <a href="#/map/newMap"

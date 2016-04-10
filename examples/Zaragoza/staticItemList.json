@@ -1,17 +1,287 @@
 [
-	{
-        "itemName": "bar de jose",
-        "longitude": "40.42260202053336", 
-		"latitude": "-3.703711146032716"
-    },
-	{
-        "itemName": "bar de mario",
-        "longitude": "40.419596248623805", 
-		"latitude": "-3.7047840296386734"
-    },
-	{
-        "itemName": "bar de pepe",
-        "longitude": "40.41688440438355", 
-		"latitude": "-3.6987329661010753"
-    }
+	{ 
+		"itemName": "NH Ciudad de Zaragoza",
+		"longitude": 41.6571363132135,
+		"latitude": -0.8827502953601838 
+	},
+    { 
+		"itemName": "Hispania",
+		"longitude": 41.65594994970854,
+		"latitude": -0.8839948403430938 
+	},
+    { 
+		"itemName": "Catalonia El Pilar",
+		"longitude": 41.65508421119688,
+		"latitude": -0.8824928032947541 
+	},
+    { 
+		"itemName": "Oriente",
+		"longitude": 41.65508421119688,
+		"latitude": -0.8865268456531524 
+	},
+    { 
+		"itemName": "Avenida",
+		"longitude": 41.65399400540673,
+		"latitude": -0.8849604355884557 
+	},
+    { 
+		"itemName": "Habitat Center Los Girasoles",
+		"longitude": 41.65381764685378,
+		"latitude": -0.8886511551929486 
+	},
+    { 
+		"itemName": "Habitat Center Los Girasoles",
+		"longitude": 41.65190973709528,
+		"latitude": -0.8846385705066693 
+	},
+    { 
+		"itemName": "Inca",
+		"longitude": 41.651845604693165,
+		"latitude": -0.8820207345081338 
+	},
+    { 
+		"itemName": "Sabinas Alfonso",
+		"longitude": 41.6513325431774,
+		"latitude": -0.8801324593616495 
+	},
+    { 
+		"itemName": "Sabinas Alfonso",
+		"longitude": 41.65370541843228,
+		"latitude": -0.8792741524768835 },
+    { 
+		"itemName": "Plaza",
+		"longitude": 41.652807584021076,
+		"latitude": -0.8773000466419225 
+	},
+    { 
+		"itemName": "Apartamentos Sabinas Don Jaime",  
+		"longitude": 41.65174940597018,
+		"latitude": -0.8745105492664338 
+	},
+    { 
+		"itemName": "Sauce",  
+		"longitude": 41.65001780439107,
+		"latitude": -0.8858402001453409 
+	},
+    { 
+		"itemName": "San Jorge",
+		"longitude": 41.64876717430295,
+		"latitude": -0.8876426446033487 
+	},
+    { 
+		"itemName": "Apartamentos Albaida",  
+		"longitude": 41.657456948247244,
+		"latitude": -0.8917625176502242 },
+    { 
+		"itemName": "Comendador",
+		"longitude": 41.6592524749376,
+		"latitude": -0.8946807610584271 
+	},
+    { 
+		"itemName": "ibis Zaragoza Centro",
+		"longitude": 41.6600860036755,
+		"latitude": -0.8764762437530939 
+	},
+    { 
+		"itemName": "Cumbre",
+		"longitude": 41.66034250008195,
+		"latitude": -0.8727855241486016 
+	},
+    { 
+		"itemName": "Estancias del Ebro",
+		"longitude": 41.66149672126832,
+		"latitude": -0.8702106034943049 
+	},
+    { 
+		"itemName": "Hiberus",
+		"longitude": 41.66832866195986,
+		"latitude": -0.9077437535851839 
+	},
+    { 
+		"itemName": "Eurostars Plaza Delicias",  
+		"longitude": 41.659576230228055,
+		"latitude": -0.9118636266320602 
+	},
+    { 
+		"itemName": "Roma",
+		"longitude": 41.64216952323363,
+		"latitude": -0.8968935477657886 
+	},
+    { 
+		"itemName": "Reina Petronila",
+		"longitude": 41.64050180792174,
+		"latitude": -0.9207544791622729 
+	},
+    { 
+		"itemName": "Gran vía",
+		"longitude": 41.64511999074651,
+		"latitude": -0.8826456534786796 
+	},
+    { 
+		"itemName": "Eurostars Boston", 
+		"longitude": 41.64524826887799,
+		"latitude": -0.8690844046993828 
+	},
+    { 
+		"itemName": "100 montaditos",
+		"longitude": 41.671619844417364,
+		"latitude": -0.8888140083608272 
+	},
+    { 
+		"itemName": "Canterburi",
+		"longitude": 41.67000097729712,
+		"latitude": -0.8887067200002314 
+	},
+    { 
+		"itemName": "Bar Kiko",
+		"longitude": 41.6681416341373,
+		"latitude": -0.890122926360095 
+	},
+    { 
+		"itemName": "Antiguo Bar la Jota",
+		"longitude": 41.675210057908544,
+		"latitude": -0.8923545242604858 
+	},
+    { 
+		"itemName": "Flaherty\"s Irish Bar Zaragoza",
+		"longitude": 41.67155573164223,
+		"latitude": -0.8927836777028688 },
+    { 
+		"itemName": "Cafe Pub Alcatraz",
+		"longitude": 41.65356341086098,
+		"latitude": -0.8820119262990601 
+	},
+    { 
+		"itemName": "Bar Taberna Fausto",
+		"longitude": 41.65316259259012,
+		"latitude": -0.8841362358388553 
+	},
+    { 
+		"itemName": "Pub MYTHOS",
+		"longitude": 41.65070953043207,
+		"latitude": -0.8818617225942265 
+	},
+    { 
+		"itemName": "Marisquería Bar Belanche",
+		"longitude": 41.65096606418177,
+		"latitude": -0.8782997490224491 
+	},
+    { 
+		"itemName": "bar el 38 zaragoza",  
+		"longitude": 41.65011629222309,
+		"latitude": -0.878879106169666 },
+    { 
+		"itemName": "Restaurante Casa Juanico",
+		"longitude": 41.64984372148456,
+		"latitude": -0.8806815506276738 
+	},
+    { 
+		"itemName": "El Bedel",
+		"longitude": 41.65470172114996,
+		"latitude": -0.8790722252187378 
+	},
+    { 
+		"itemName": "Cafe Belice",
+		"longitude": 41.656785899118745,
+		"latitude": -0.8845439316091189 },
+    { 
+		"itemName": "Taberna El Lince",
+		"longitude": 41.65518269128262,
+		"latitude": -0.8846297622975954 
+	},
+    { 
+		"itemName": "Bar Cervino",  
+		"longitude": 41.65202425510057,
+		"latitude": -0.9024396301564835 
+	},
+    { 
+		"itemName": "Restaurante Durán5",
+		"longitude": 41.64955511591609,
+		"latitude": -0.9018817306813869 },
+    { 
+		"itemName": "La Mafia se sienta a la mesa",
+		"longitude": 41.651414995785444,
+		"latitude": -0.9052291275319727 
+	},
+    { 
+		"itemName": "La Mafia se sienta a la mesa",
+		"longitude": 41.6561650281418,
+		"latitude": -0.8882271220021328 
+	},
+    { 
+		"itemName": "Restaurante La Paz",
+		"longitude": 41.650874239836924,
+		"latitude": -0.8910595347218598 },
+    { 
+		"itemName": "Restaurante la Matilde",  
+		"longitude": 41.65286234459268,
+		"latitude": -0.8867250849537938 
+	},
+    { 
+		"itemName": "Restaurante El Allar",  
+		"longitude": 41.649527424334025,
+		"latitude": -0.8825622965626795 
+	},
+    { 
+		"itemName": "Restaurante El Rincón de Talamantes",
+		"longitude": 41.65438544785266,
+		"latitude": -0.8804239054255564 
+	},
+    { 
+		"itemName": "Restaurante Sakura",
+		"longitude": 41.673950194498246,
+		"latitude": -0.8949608555487194 
+	},
+    { 
+		"itemName": "Sakura",
+		"longitude": 41.64695404808086,
+		"latitude": -0.8994240513495007 
+	},
+    { 
+		"itemName": "Sakura",
+		"longitude": 41.651122837949515,
+		"latitude": -0.8964199772528209 
+	},
+    { 
+		"itemName": "Aura Restaurante",
+		"longitude": 41.64868573201156,
+		"latitude": -0.884103273456434 },
+    { 
+		"itemName": "Restaurante Ciclón",
+		"longitude": 41.65134730359614,
+		"latitude": -0.8874077549627819 
+	},
+    { 
+		"itemName": "Restaurante Las Palomas",
+		"longitude": 41.65541961593249,
+		"latitude": -0.8916992893866094 },
+    { 
+		"itemName": "La Comidilla",
+		"longitude": 41.65308421338784,
+		"latitude": -0.8912367576257383 
+	},
+    { 
+		"itemName": "BAR ENTALTO",
+		"longitude": 41.64686318651957,
+		"latitude": -0.8917946571008359 },
+    { 
+		"itemName": "El Trujas",
+		"longitude": 41.642501696090875,
+		"latitude": -0.891108011593024 
+	},
+    { 
+		"itemName": "Café Praga",
+		"longitude": 41.645003175236894,
+		"latitude": -0.8965153449670473 
+	},
+    { 
+		"itemName": "Bodegas Almau",
+		"longitude": 41.64436177958561,
+		"latitude": -0.8875031226770081 
+	},
+    { 
+		"itemName": "La Pascualilla",  
+		"longitude": 41.6447786874852,
+		"latitude": -0.8936118537084261 
+	 }
 ]
