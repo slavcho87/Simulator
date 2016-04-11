@@ -11,7 +11,7 @@ Se trata de un sistema de colaboración abierta distribuida que permite configur
 El simulador de escenarios está basado en el simulador Mavsim desarrollado por el Grupo de Sistemas de Información Distribuidos de la Universidad de Zaragoza utilizado para la simulación de VANETs en el cual hay muchos vehículos distribuidos en una amplia zona geográfica.
 
 \begin{figure}[H]
-\centering\includegraphics[scale=0.3]{imagenes/resumen-simulador.jpg}
+\centering\includegraphics[scale=0.35]{imagenes/resumen-simulador.jpg}
 \caption{Simulación en Actur, Zaragoza con un solo usuario}
 \label{c2_trama}
 \end{figure}
@@ -102,6 +102,7 @@ Para realizar una simulación el usuario tiene que buscar y seleccionar el mapa 
 	RF-30 & La aplicación permitirá al usuario solicitar recomendaciones mientras se está ejecutando una simulación siempre y cuando el recomendador asociado a la escena es de tipo pull\\ \hline
 	RF-31 & El usuario recibirá recomendaciones sin haberlas solicitado siempre y cuando el recomendador asociado a la escena de es tipo push\\ \hline
 	RF-32 & El usuario puede arrancar/pausar una simulación\\ \hline
+	RF-33 & La aplicación permitirá al usuario generar de forma aleatoria los grafos de movimiento de los vehículos \\ \hline	
 	\caption{Requisitos funcionales}
 	\label{tabla:requisitosFuncionales}
 \end{longtable}
@@ -117,7 +118,7 @@ El la figura \ref{arquitecturaComponentes} observamos que el navegador web se co
 El sistema bidireccional dirigido por eventos es utilizado  durante la simulación por una parte para reflejar los eventos generados por un usuario al resto de usuarios, y por otra para integrar el navegador, el servidor Node.js y el recomendador. De esta manera conseguimos compartir información entre los distintos componentes sin que estos los hayan solicitado evitando muchas peticiones innecesarias.
 
 \begin{figure}[H]
-\centering\includegraphics[scale=0.55]{imagenes/arquitectura-componentes.png}
+\centering\includegraphics[scale=0.6]{imagenes/arquitectura-componentes.png}
 \caption{Arquitectura de componentes del sistema}
 \label{arquitecturaComponentes}
 \end{figure}
@@ -254,19 +255,19 @@ En esta sección se dejan solo algunas de las pantallas más relevantes de la ap
 \end{figure}
 
 \begin{figure}[H]
-\centering\includegraphics[scale=0.25]{imagenes/busqueda-de-mapas.jpg}
+\centering\includegraphics[scale=0.3]{imagenes/busqueda-de-mapas.jpg}
 \caption{Busqueda de mapas}
 \label{BusquedaMapas}
 \end{figure}
 
 \begin{figure}[H]
-\centering\includegraphics[scale=0.35]{imagenes/resumen-simulador.jpg}
+\centering\includegraphics[scale=0.3]{imagenes/resumen-simulador.jpg}
 \caption{Simulación en Actur, Zaragoza}
 \label{simulacionActur}
 \end{figure}
 
 \begin{figure}[H]
-\centering\includegraphics[scale=0.25]{imagenes/config-objetos-estaticos.jpg}
+\centering\includegraphics[scale=0.3]{imagenes/config-objetos-estaticos.jpg}
 \caption{Configuración de los objetos estáticos}
 \label{ConfigStaticItem}
 \end{figure}

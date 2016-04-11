@@ -157,7 +157,7 @@ Se trata de crear nuevas configuraciones para el recomendador y crear los tipos 
 Para configurar los parámetros del recomendador primero tenemos que estar autentificados con nuestros usuario. Una vez autentificados vamos en Settings $\rightarrow$ Recommender settings y vemos la siguiente pantalla:
 
 \begin{figure}[H]
-	\centering\includegraphics[scale=0.25]{imagenes/capitulo2/configuracion-recomendador.jpg}
+	\centering\includegraphics[scale=0.35]{imagenes/capitulo2/configuracion-recomendador.jpg}
 	\caption{Configuración del recomendador}
 	\label{img:ConfiguracionRecomendador}
 \end{figure}
@@ -181,7 +181,7 @@ En este formulario tenemos que introducir los siguientes datos:
 Para crear un nuevo tipo de objeto estático primero tenemos que estar autentificados con nuestros usuario. Una vez autentificados vamos en Settings $\rightarrow$ Static item type y vemos la siguiente pantalla:
 
 \begin{figure}[H]
-	\centering\includegraphics[scale=0.25]{imagenes/capitulo3/config-objetos-estaticos.jpg}
+	\centering\includegraphics[scale=0.35]{imagenes/capitulo3/config-objetos-estaticos.jpg}
 	\caption{Configuración de los objetos estáticos}
 	\label{img:ConfiguracionObjetosEstaticos}
 \end{figure}
@@ -200,7 +200,7 @@ Por debajo del formulario de creación nuevos tipos de objetos estáticos aparec
 Para crear un nuevo tipo de objeto dinámicos primero tenemos que estar autentificados con nuestros usuario. Una vez autentificados vamos en Settings $\rightarrow$ Dynamic item type y vemos la siguiente pantalla:
 
 \begin{figure}[H]
-	\centering\includegraphics[scale=0.25]{imagenes/capitulo4/config-objetos-dinamicos.jpg}
+	\centering\includegraphics[scale=0.35]{imagenes/capitulo4/config-objetos-dinamicos.jpg}
 	\caption{Configuración de los objetos dinámicos}
 	\label{img:ConfiguracionObjetosDinamicos}
 \end{figure}
@@ -231,7 +231,7 @@ En este formulario tenemos que añadir el nombre del usuario, su contraseña y s
 Para realizar cambios en el nombre del usuario, cambiar la imagen del perfil o cambiar la contraseña tenemos que ir en el menú Perfil:
 
 \begin{figure}[H]
-	\centering\includegraphics[scale=0.25]{imagenes/capitulo6/perfil-del-usuario.jpg}
+	\centering\includegraphics[scale=0.35]{imagenes/capitulo6/perfil-del-usuario.jpg}
 	\caption{Actualizar el perfil de un usuario}
 	\label{img:UpdateUser}
 \end{figure}
@@ -251,7 +251,7 @@ Al realizar cualquier cambio el el sistema nos informara si la acción ha salido
 La opción Maps $\rightarrow$ map search nos permite buscar mapas a los cuales queremos conectarnos para realizar alguna simulación:
 
 \begin{figure}[H]
-	\centering\includegraphics[scale=0.25]{imagenes/capitulo7/busqueda-de-mapas.jpg}
+	\centering\includegraphics[scale=0.35]{imagenes/capitulo7/busqueda-de-mapas.jpg}
 	\caption{Búsqueda de mapas}
 	\label{img:BuscarMapas}
 \end{figure}
@@ -263,7 +263,7 @@ En la imagen vemos que disponemos de distintos tipos de filtros para la búsqued
 Para crear un nuevo mapa vamos en Maps $\rightarrow$ new map y vemos el siguiente formulario:
 
 \begin{figure}[H]
-	\centering\includegraphics[scale=0.25]{imagenes/capitulo8/crear-un-nuevo-mapa.jpg}
+	\centering\includegraphics[scale=0.35]{imagenes/capitulo8/crear-un-nuevo-mapa.jpg}
 	\caption{Crear un nuevo mapa}
 	\label{img:AddMapa}
 \end{figure}
@@ -279,15 +279,113 @@ Tenemos que rellenar los siguientes datos:
 Una vez que hayamos rellenado el formulario pulsamos en el botón Save y el sistema nos informara si el guardado ha salido con éxito o no. Si se ha guardado con éxito por debajo de este formulario aparece el formulario de creaciones de escenas y una lista de las escenas actuales. Lo normales es que la lista de escenas creadas aparezca vacía ya que todavía no hemos creado ninguna escena. Para ver los detalles de como crear una escena consultar el capítulo \ref{sec:crearEscena}.
 
 \section{Crear una nueva escena}\label{sec:crearEscena}
+Una vez que hayamos creado el mapa podemos empezar a crear las escenas. La creación de escenas se realiza en 4 pasos que vamos a ver a continuación.
+
+\subsection{Paso 1: Elegir el nombre de la escena y el recomendador a utilizar}
+
+En el primer paso tenemos que escoge un nombre para la escena que estamos configurando y elegir el tipo de recomendador que queremos usar el esta escena.
+
+\begin{figure}[H]
+	\centering\includegraphics[scale=0.35]{imagenes/capitulo9/crear-escena-1.JPG}
+	\caption{Paso 1: elegir nombre de la escena y el recomendador}
+	\label{img:paso1}
+\end{figure}
+
+\subsection{Paso 2: Limites de la escena}
+
+En este paso tenemos que buscar la ciudad donde se va a realizar la simulación y cuales son los limites de la escena.
+
+\begin{figure}[H]
+	\centering\includegraphics[scale=0.35]{imagenes/capitulo9/crear-escena-2.JPG}
+	\caption{Paso 2: Limites de la escena}
+	\label{img:paso2}
+\end{figure}
+
+Para buscar la cuidad donde se va a realizar la simulación tenemos poner cual es su nombre en la casilla City y pulsar el botón Go!. Vemos que al lado nos aparece un desplegable con una lista de resultados. Elegimos uno de ellos y vemos que el mapa que aparece al lado se actualiza.
+
+Para definir los limites de la escena tenemos que establece cual es la esquina superior izquierda y la esquina inferior derecha. Para definir la esquina superior izquierda seleccionamos el select button select upper left corner y hacemos click en el mapa para definir donde estará dicha esquina. Veremos que las cajas de texto Upper left corner: latitude y Upper left corner: longitude aparecerán las coordenadas geográficas de dicha esquina (longitud y latitud).
+
+Para definir la esquina inferior derecha seleccionamos la opción select lower right corner y hacemos click en el mapa para definir donde estará dicha esquina. Cuando hayamos seleccionado la esquina inferior derecha vemos que en las cajas de texto Lower right corner: latitude y Lower right corner: longitude aparecerán las coordenadas geográficas de dicha escena.
 
 
+\subsection{Paso 3: Configurar los objetos estáticos}
+
+Este paso consiste en definir cuales son los objetos estáticos y sus posiciones. Para definirlos disponemos de dos opciones: importarlos desde un fichero con formato JSON y deninirlos manualmente.
+
+\subsubsection{Paso 3.1: importar los objetos estáticos}
+
+Para importa los objetos estáticos seleccionamos la opciones load from file y nos aparecerá un formulario donde podemos elegir cual es el fichero que queremos importar. Una vez importados los objetos nos aparecerá un table con todos los objetos importados.
+
+\begin{figure}[H]
+	\centering\includegraphics[scale=0.35]{imagenes/capitulo9/crear-escena-3.JPG}
+	\caption{Paso 3.1: importar los objetos estáticos desde un fichero}
+	\label{img:paso3-1}
+\end{figure}
+
+Observamos que los objetos que acabamos de importar no tienen ningún tipo definido. Esto es debido ya que no sabemos de antelación cuales son los tipos de objetos estáticos ya que estos se configuran desde el simulador. Por esto el simulador nos permite dos maneras de definir cuales son los tipos de los objetos importados.
+
+La primera manera consiste en pulsar directamente sobre el tipo del item que queremos modificar y nos aparece un select con todos los tipos disponibles.
+
+El inconveniente que genera esta manera es que si tenemos muchos objetos es demasiado lento y laborioso definir muchos items. Por esto el simulador nos permite seleccionar una lista de items y asignarles un tipo estático.
+
+\subsubsection{Paso 3.2: definir los objetos estáticos manualmente}
+
+Para definirlos de forma manual tenemos que seleccionar la opción set manually y nos aparecer un formulario con el tipo de item que queremos definir, el nombre que queremos asignarle. Para definir cuales son sus coordenadas geográficas tenemos que seleccionar la posiciones directamente sobre el mapa. A continuación pulsamos sobre el botón Save Item y nos aparecerá la misma tabla que el en paso 3.1:
+
+\begin{figure}[H]
+	\centering\includegraphics[scale=0.35]{imagenes/capitulo9/crear-escena-4.JPG}
+	\caption{Paso 3.2:  definir los objetos estáticos manualmente}
+	\label{img:paso3-2}
+\end{figure}
+
+\subsection{Paso 4: Configurar los objetos dinámicos}
+
+El últimos paso consiste en definir los objetos dinámicos y sus rutas. Disponemos de 3 posibles maneras para definirlos: importándolos desde un fichero con formato JSON, definirlos manualmente, generarlos aleatoriamente.
+
+\subsubsection{Paso 4.1: importar los objetos dinámicos}
+
+Para importarlos objetos dinámicos desde un fichero tenemos que seleccionar la opción load from file y nos aparecerá un formulario que nos permite seleccionar el fichero a importar. Una vez importados los objetos nos aparecerá una tabla parecida que la tabla del paso 3.1 que nos permite asignar los tipos de objetos dinámicos a cada item.
+
+\begin{figure}[H]
+	\centering\includegraphics[scale=0.35]{imagenes/capitulo9/crear-escena-8.JPG}
+	\caption{Paso 4.1: importar los objetos dinámicos}
+	\label{img:paso4-1}
+\end{figure}
+
+\subsubsection{Paso 4.2: definir los objetos dinámicos manualmente}
+
+Para definir los objetos dinámicos manualmente seleccionamos la opción set manually nos aparecer un formulario en el cual tenemos que elegir el tipo de objeto dinámico, el nombre que queremos asignarle y su velocidad. Para definir la trayectoria de este tenemos que seleccionar los nodos del grafo de movimiento directamente en el mapa y nos aparecerá una tabla que contiene dichos nodos:
+
+\begin{figure}[H]
+	\centering\includegraphics[scale=0.35]{imagenes/capitulo9/crear-escena-6.JPG}
+	\caption{Paso 4.2: definir los objetos dinámicos manualmente}
+	\label{img:paso4-2-1}
+\end{figure}
+
+Una vez que hayamos definido el trayecto pulsamos sobre el botón Save item y nos saldrá la lista con todos los objetos dinámicos en la escena:
+
+\begin{figure}[H]
+	\centering\includegraphics[scale=0.35]{imagenes/capitulo9/crear-escena-7.JPG}
+	\caption{Paso 4.2: definir los objetos dinámicos manualmente}
+	\label{img:paso4-2-2}
+\end{figure}
+
+\subsubsection{Paso 4.3: generar los objetos dinámicos aleatoriamente}
+
+Para generar los trayectos de forma aleatoria tenemos que seleccionar la opción Random trajectory y aparecerá un formulario donde tenemos que indicar el tipo de objeto dinámico que queremos generar, la cantidad de objetos que queremos generar y el tipo de vía en la que queremos que aparezcan. A continuación pulsamos sobre el botón Generate random way y tenemos que esperar que se generen las rutas. Este proceso puede ser bastante costoso y tenemos que ser pacientes. Esto es debido porque se baja el grafo de la escena y este pesa algunos cuantos megas.
+
+\begin{figure}[H]
+	\centering\includegraphics[scale=0.35]{imagenes/capitulo9/crear-escena-5.JPG}
+	\caption{Paso 4.3: generar los objetos dinámicos aleatoriamente}
+	\label{img:paso4-3}
+\end{figure}
 
 \section{Edición de mapas y escenas}
 
 Para modificar un mapa o escena primero tenemos que realizar una busque de mapas en Maps $\rightarrow$ maps search y en la lista de resultados pulsamos sobre el icono de editar imagen. Solo podemos editar un mapa si la hayamos creado nosotros. De lo contrario el icono de editar imagen no aparecerá. Una vez que hayamos pulsado el icono de editar imagen entonces veremos la siguiente pantalla:
 
 \begin{figure}[H]
-	\centering\includegraphics[scale=0.25]{imagenes/capitulo10/capitulo10.jpg}
+	\centering\includegraphics[scale=0.35]{imagenes/capitulo10/capitulo10.jpg}
 	\caption{Edición de mapas y escenas}
 	\label{img:UpdateMapScene}
 \end{figure}
@@ -299,7 +397,7 @@ En esta pantalla disponemos de distintos tipos de opciones entre los cuales modi
 Para ejecutar una simulación lo primero que tenemos que hacer es realizar la búsqueda de un mapa explicado en el capítulo \ref{sec:BuscarMapas}. Una vez que hayamos realizado la búsqueda pulsamos el botón "Play" y a continuación se nos muestra una pantalla en la cual tenemos que elegir la escena a la cual queremos conectarnos.
 
 \begin{figure}[H]
-	\centering\includegraphics[scale=0.25]{imagenes/capitulo11/capitulo11.jpg}
+	\centering\includegraphics[scale=0.35]{imagenes/capitulo11/capitulo11.jpg}
 	\caption{Simulación}
 	\label{img:Simulation}
 \end{figure}
@@ -308,7 +406,15 @@ Para iniciar la simulación y que todos los items empiecen a moverse tenemos que
 
 \subsection{Controles del usuario}
 
-Una vez que este cargada la escena tenemos que elegir donde queremos situarnos en el mapa. Por esto tenemos que hacer click en mapa para situar el usuario. A continuación podemos empezar a movernos por el mapa con los siguientes controles:
+Una vez cargada la escena podemos elegir entre usar la posición GPS del dispositivo con el cual nos estamos conectado y simular los movimientos del usuario.
+
+\subsubsection{Coordenadas GPS}
+
+Para usar el posicionamiento por GPS tenemos que elegir GPS positioning en el select con nombre User movement y nuestro icono aparecerá en el mapa. A medida que nos vamos moviendo vemos que nuestra posición se va actualizando.
+
+\subsubsection{Movimiento simulado}
+
+Para usar el movimiento simulado tenemos que elegir Simulated movement en el select con nombre User movement y a continuación tenemos que elegir donde queremos situarnos en el mapa haciendo click en el mapa. A continuación podemos empezar a movernos por el mapa con los siguientes controles:s
 
 \begin{itemize}
 	\item tecla w: movimiento hacia arriba
