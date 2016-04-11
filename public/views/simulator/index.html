@@ -187,12 +187,12 @@
                                         artists: artists,
                                         dynamicItemList: dynamicItemListPositions
                                     };
-                                    
+                                    console.log(data);
                                     socket.emit('sincronize map result', data);    
                                 }
                             });
                     
-                            socket.on('sincronize map result', function(data){  
+                            socket.on('sincronize map result', function(data){
                                 if(data.sceneId==$scope.selectedScene._id && data.mapId==$scope.selectedScene.mapId){
                                     if(data.dynamicItemList.length!=0){
                                         for(index in data.dynamicItemList){
@@ -207,7 +207,7 @@
                                         }
                                         
                                         artists = data.artists;
-                                        ItemsMove();
+                                        
                                     }
                                     state = data.state;
                                     
@@ -524,52 +524,53 @@
                             
                             function ItemsMove(){
                                 var list = $scope.dynamiItemsList;
-                                
-                                for(index in list){
+                                console.log(list);
+                                for(index in list){console.log(index);
                                     var overlay = list[index].overlay;
                                     var i = artists[index];
-                        
-                                    var lon2 = toRad(parseFloat(list[index].route[i+1].routeId.longitude));
-                                    var lat2 = toRad(parseFloat(list[index].route[i+1].routeId.latitude));
-                                    
+                                       
+                                    var lon2 = toRad(parseFloat(list[index].route[i+1].routeId.longitude)); 
+                                    var lat2 = toRad(parseFloat(list[index].route[i+1].routeId.latitude)); 
+                                        
                                     //calculamos la distancia entre el punto actual y el final
                                     var pos = ol.proj.transform(overlay.getPosition(), 'EPSG:3857', 'EPSG:4326'); 
-                                   
+                                        
                                     var disAct = distanceBetween(toRad(pos[1]), toRad(pos[0]), lon2, lat2);
-                                    
+                                        
                                     //calculamos la distancia a recorrer
                                     var disToRec = distance(list[0].speed, dynamicItemRefreshInterval);
-                                    
+                                        
                                     var newPos;
                                     var difDist = disAct - disToRec; 
-                                    
+                                        
                                     if(disToRec < disAct){
                                         newPos = getNewPos(pos, distance(list[index].speed, dynamicItemRefreshInterval),
                                                        list[index].course[i]);
-                                        
+                                            
                                         map.removeOverlay(overlay);
-
+                                            
                                         list[index].overlay = new ol.Overlay({
                                             position: ol.proj.transform(newPos, 'EPSG:4326', 'EPSG:3857'),
                                             element: overlay.getElement()
                                         });
-
-                                        map.addOverlay(list[index].overlay);   
+                                                
+                                        map.addOverlay(list[index].overlay);
+                                           
                                     }else{
                                             newPos = [parseFloat(list[index].route[i+1].routeId.latitude), 
                                                  parseFloat(list[index].route[i+1].routeId.longitude)];
-                                        
+                                               
                                             artists[index] = artists[index]+1;
-                                        
+                                                
                                             map.removeOverlay(overlay);
-
+                                               
                                             list[index].overlay = new ol.Overlay({
                                                 position: ol.proj.transform(newPos, 'EPSG:4326', 'EPSG:3857'),
                                                 element: overlay.getElement()
                                             });
-
+                                                
                                             map.addOverlay(list[index].overlay);
-
+                                                
                                             if((i+1) == (list[index].route.length-1)){
                                                 var info3 = {
                                                     _id: $scope.dynamiItemsListOriginal[index]._id,
