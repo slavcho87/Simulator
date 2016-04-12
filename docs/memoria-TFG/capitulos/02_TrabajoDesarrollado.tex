@@ -190,7 +190,6 @@ A continuación vamos a ver más detalladamente cual es la función de cada elem
 
 \subsection{Arquitectura de recomendador}
 
-
 El desarrollo del recomendador está realizado con Java 7, la librería Apache Mahout y socket.io-client. El recomendador desarrollado es un recomendador pull\footnote{tipo de recomendador en el cual los usuarios solicitan recomendaciones} de ejemplo basado en los usuarios (User based recommender). 
 
 Aunque sea un recomendador de ejemplo este está pensado para se expandido, tanto para otro tipo de recomendadores (como pueden ser los recomendadores de tipo push\footnote{tipo de recomendador que realiza recomendaciones sin que el usuario los haya solicitado}) como para la implementación de nuevos tipos de estrategias para el recomendador de tipo pull.
@@ -211,8 +210,40 @@ El evento recommend es el que se dispara cuando uno de los usuarios solicita una
 \label{diagramaUMLStrategy}
 \end{figure}
 
-\section{Menús del simulador de escenarios}
+\subsection{Autentificación Basada en Token}
 
+La autentificación es una de las partes más importantes de un sistema. En este desarrollo se ha optado por una autentificación basada en token. En la autentificación basada en token, las cookies y las sesiones no se utilizan. Se emplea un token para autentificar al usuario en cada petición que se hace al servidor. El flujo de control es el siguiente:
+\begin{enumerate}[1.]
+	\item el usuario provee un nombre de usuario y contraseña en el formulario de login.
+	\item una vez hecha la petición, se valida el usuario en el back-end mediante una consulta a la base de datos. Si la petición es válida, se crea un token utilizando la información de usuario brindada por la base de datos, y luego se retorna esa información en el encabezado de la respuesta, para así guardar el token en almacenamiento local.
+	\item se provee la información del token en el encabezado de cada petición para acceder a endpoints restringidos de la aplicación.
+	\item si el token tomado del encabezado de la petición es válido, se permite al usuario acceder al endpoint especificado, y se responde con JSON o HTML.
+\end{enumerate}
+
+\begin{figure}[H]
+	\centering\includegraphics[scale=0.7]{imagenes/token.png}
+	\caption{Autentificación Basada en Token}
+	\label{token}
+\end{figure}
+
+\newpage
+
+\subsubsection{Estructura de un token}
+
+Un token consiste de tres partes:
+\begin{itemize}
+	\item encabezado: es la parte del token que almacena el tipo de token y el método de encriptación, que a su vez está encriptado en base-64.
+	\item carga útil: incluye la información que queremos encriptar.
+	\item firma: consiste de combinaciones del encabezado, carga útil, y clave secreta. La clave secreta debe ser almacenada del lado servidor.
+\end{itemize}
+
+\begin{figure}[H]
+	\centering\includegraphics[scale=0.5]{imagenes/jwt.png}
+	\caption{Formato del Token}
+	\label{formatoToken}
+\end{figure}
+
+\section{Menús del simulador de escenarios}
 
 Como en todas las aplicaciones, el simulador de escenarios cuenta con un sistema de menús que dan acceso a las distintas opciones del simulador. En este caso se ha seguido la paradigma WIMP para la organización de los menús y distintas opciones (figura \ref{mapaNavegacion}). Existen 4 tipos de caminos organizados en forma de árbol:
 
@@ -232,7 +263,6 @@ Como en todas las aplicaciones, el simulador de escenarios cuenta con un sistema
 \newpage
 
 \section{Navegación por estima}
-
 
 La navegación por estima es una técnica que se aplica en el cliente. Consiste en procesar en cada ciclo el estado de los objetos móviles. Se trata de una técnica analítica utilizada en la náutica para la navegación y situación de los barcos y se tienen en cuenta los siguientes elementos: la situación actual, rumbo y velocidad. Es decir, sabiendo la velocidad, el rumbo de la nave y el tiempo transcurrido se puede estimar la posición de la misma al cabo del tiempo. 
 
