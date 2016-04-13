@@ -1,4 +1,4 @@
-<div ng-init="getSceneList()">    
+<div ng-init="getSceneList()">   
         <div id="wrapper" >
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
                 <div class="navbar-header">
@@ -15,6 +15,7 @@
                     <ul class="nav navbar-nav side-nav">
                         <li><a href="#/map" onclick="userExit()"><i class="fa fa-map-marker"></i> Maps</a></li>
                         <li class="active"><a href="#/simulator" onclick="userExit()"><i class="fa fa-globe"></i> Simulation</a></li>
+                        <li><a href="#/evaluations"><i class="fa fa-bar-chart-o"></i> Evaluations</a></li>
                         <li><a href="#/settings" onclick="userExit()"><i class="fa fa-cog"></i> Settings</a></li>
                         <li><a href="#/profile" onclick="userExit()"><i class="fa fa-edit"></i> Profile</a></li>
                         <li><a href="#/" ng-click="exit()" onclick="userExit()"><i class="fa fa-power-off"></i> Exit</a></li>
@@ -70,9 +71,7 @@
                 <div class="row">    
                     <div id="mapa" class="mapa col-sm-8">
                     </div>
-                        <script src="javascripts/socketsIO/socket.io.js"></script>
                         <script type="text/javascript">
-                            var socket = io();
                             var dirMove;
                             var appElement = document.querySelector('[ng-app=app]');
                             var $scope = angular.element(appElement).scope();
@@ -187,7 +186,7 @@
                                         artists: artists,
                                         dynamicItemList: dynamicItemListPositions
                                     };
-                                    console.log(data);
+                        
                                     socket.emit('sincronize map result', data);    
                                 }
                             });
@@ -217,7 +216,7 @@
                                 }
                             });
                             
-                            socket.on('recommended items', function(data){
+                            socket.on('recommended items client', function(data){ console.log(data);
                                 var appElement = document.querySelector('[ng-app=app]');
                                 var $scope = angular.element(appElement).scope();
                                 $scope = $scope.$$childHead;
@@ -225,7 +224,7 @@
                                 var index = data.userList.indexOf($scope.token);
                                 if(index>=0){
                                     $scope.$apply(function(){
-                                        $scope.recommendedItemList = data.itemList;
+                                       $scope.recommendedItemList = data.itemList;
                                     });    
                                 }
                             });
@@ -524,8 +523,8 @@
                             
                             function ItemsMove(){
                                 var list = $scope.dynamiItemsList;
-                                console.log(list);
-                                for(index in list){console.log(index);
+                                
+                                for(index in list){
                                     var overlay = list[index].overlay;
                                     var i = artists[index];
                                        
@@ -648,7 +647,7 @@
                                 $scope.itemTypeList = [];
                                 $scope.itemTypesToRecommend = [];
                                 $scope.showPlay = true;
-                                $scope.token = $localStorage.token;
+                                $scope.token = $scope.token;
                                 $scope.resultTypeShow = "emptyList";
                                 $scope.percentage = "0%";
                                 $scope.percentageSum = 0;
@@ -656,7 +655,7 @@
                                 dirMove = "";
                             }
                             
-                            function setRating(itemId){
+                            function setRating(itemId){console.log($('#'+itemId));
                                 var rating = $('#'+itemId).val();
                                 if(rating>0){
                                     $scope.setRating(itemId, rating);    
@@ -701,7 +700,7 @@
                                     <td>{{item.itemName}}</td>
                                     <td>{{item.rating}}</td>
                                     <td>
-                                        <select ng-change="setRating(item.id, rating)" ng-model="rating">
+                                        <select ng-change="setRating(item.id, rating, {{item.rating}})" ng-model="rating">
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>

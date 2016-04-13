@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var multipart = require('connect-multiparty');
 var mongoose = require('mongoose');
 var fs = require('fs');
+var utf8 = require('utf8');
 
 var configurations = require('./routes/configurations');
 var maps = require('./routes/maps');
@@ -116,7 +117,7 @@ function getUserToSincronize(mapID, sceneId, socketId){
 var io = require('socket.io')(server);
 
 io.on('connection', function(socket){
-    console.log("user connected");
+    console.log("user connected: "+socket.id);
     users[socket.id] = {socket:socket, mapId: "", sceneId: ""};
     
     socket.on('user change position', function(data){
@@ -165,7 +166,24 @@ io.on('connection', function(socket){
     
     //Evento que ejecuta el servidor para dejar los resultados al navegador 
     socket.on('recommended items', function(data){
-        socket.broadcast.emit('recommended items', data); //este evento lo tiene el navegador
+        var itemList = new Array();
+        
+        for(index in data.itemList){
+            itemList[index] = {
+                id: data.itemList[index].id,
+                location: data.itemList[index].location,
+                rating: data.itemList[index].rating,
+                itemName: utf8.encode(data.itemList[index].itemName)
+            };   
+            console.log(data.itemList[index].itemName);
+        }
+        
+        var sendData = {
+            itemList: itemList,
+            userList: data.userList
+        };
+        
+        socket.broadcast.emit('recommended items client', sendData); //este evento lo tiene el navegador
     }); 
     
     //este evento lo invoca el recomendador para recuperar las posiciones de los items dinamicos
@@ -182,11 +200,18 @@ io.on('connection', function(socket){
     socket.on('user exit', function(data){
         users[socket.id].mapId = "";
         users[socket.id].sceneId = "";
+        
         socket.broadcast.emit('user exit', data); 
+    });
+
+     socket.on('error', function(err) {
+        //here i change options
+        console.log('Error!', err);
     });
     
     socket.on('disconnect', function(){
-        console.log('user disconnected');
+        console.log('user disconnected: '+socket.id);
+        
         delete users[socket.id];
     });
 });

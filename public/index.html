@@ -47,6 +47,7 @@
         <script src="javascripts/angular/controllers/RegisterController.js"></script>
         <script src="javascripts/angular/controllers/StaticItemSettingsController.js"></script>
         <script src="javascripts/angular/controllers/DymanicItemSettingsController.js"></script>
+        <script src="javascripts/angular/controllers/EvaluationController.js"></script>
         
         <!-- Map stylesheet -->
         <link href="stylesheets/ol.css" rel="stylesheet" />
@@ -54,9 +55,17 @@
         <link href="stylesheets/xeditable.min.css"/>
         
         <script src="javascripts/openlayers/ol.js"></script>
+        
+        <!-- Google charts -->
+        <script src="javascripts/google-charts/loader.js"></script>
+        
+        <script src="javascripts/socketsIO/socket.io.js"></script>
     </head>
 
     <body>
+        <script type="text/javascript">
+            var socket = io();
+        </script>
         <div ng-view></div>
     </body>
 </html>

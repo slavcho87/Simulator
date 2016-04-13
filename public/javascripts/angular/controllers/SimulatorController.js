@@ -54,9 +54,10 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
         }
     }
     
-    $scope.setRating = function(itemId, rating){
+    $scope.setRating = function(itemId, rating, valueForecast){
         var data = {
             rating: rating,
+            valueForecast: valueForecast,
             itemId: itemId
         };
         

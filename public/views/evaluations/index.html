@@ -1,0 +1,123 @@
+<div>    
+    <div id="wrapper" ng-init="getMapList()">
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">    
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">           
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <label class="navbar-brand" >Simulator</label>
+            </div>
+
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li><a href="#/map"><i class="fa fa-map-marker"></i> Maps</a></li>
+                    <li><a href="#/simulator"><i class="fa fa-globe"></i> Simulation</a></li>
+                    <li class="active"><a href="#/evaluations"><i class="fa fa-bar-chart-o"></i> Evaluations</a></li>
+                    <li><a href="#/settings"><i class="fa fa-cog"></i> Settings</a></li>
+                    <li><a href="#/profile"><i class="fa fa-edit"></i> Profile</a></li>
+                    <li><a href="#/" ng-click="exit()"><i class="fa fa-power-off"></i> Exit</a></li>
+                </ul>
+            </div>
+        </nav>
+        
+        <div id="page-wrapper">
+            <div class="alert alert-dismissable alert-danger" ng-repeat="errorMsg in errorMsgList">
+                <button type="button" 
+                        class="close" 
+                        data-dismiss="alert" 
+                        aria-hidden="true" 
+                        ng-click="msgHide(errorMsg)">&times;</button>
+                {{errorMsg}}
+            </div>
+            
+            <div class="alert alert-dismissable alert-success" ng-repeat="msg in msgList">
+                <button type="button" 
+                        class="close" 
+                        data-dismiss="alert" 
+                        aria-hidden="true" 
+                        ng-click="msgSuccessHide(msg)">&times;</button>
+                {{msg}}
+            </div>
+            
+            <div class="panel-body">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-search"></i> Generate statistics</h3>                        
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label>Map name</label>
+                                
+                                <select class="form-control" ng-model="selectedMap"
+                                        ng-change="getSceneListFromMapId(map)"
+                                        data-ng-options="map as map.name for map in mapList">           
+                                </select>
+                            </div>
+                            
+                            <div class="col-sm-4">
+                                <label>Scene name</label>
+                                <select class="form-control" ng-model="selectedScene" 
+                                         data-ng-options="scene as scene.sceneName for scene in sceneList">
+                                </select>
+                            </div>
+                            
+                            <div class="col-sm-4">
+                                <label>Select static items</label><br/>
+                                <select class="form-control" multiple ng-multiple="true" ng-model="selectedItems"
+                                        ng-options="item.name for item in staticItemList"></select>
+                            </div>
+                            
+                            <div class="col-sm-4">
+                                <br/>
+                                <button type="button" class="btn btn-primary" ng-click="loadGraphics()">Load graphics</button>
+                            </div>
+                        </div>    
+                        
+                    </div>
+                </div>
+            </div>  
+            
+            
+            <div class="panel-body">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Graphics</h3>                        
+                    </div>
+
+                    <div class="panel-body"> 
+                        <script type="text/javascript">
+                              google.charts.load('current', {'packages':['corechart']});
+                              google.charts.setOnLoadCallback(drawChart);
+
+                              function drawChart() {
+                                var data = google.visualization.arrayToDataTable([
+                                  ['Year', 'Sales', 'Expenses'],
+                                  ['2004',  1000,      400],
+                                  ['2005',  1170,      460],
+                                  ['2006',  660,       1120],
+                                  ['2007',  1030,      540]
+                                ]);
+
+                                var options = {
+                                  title: 'Evaluation of recommender',
+                                  curveType: 'function',
+                                  legend: { position: 'bottom' }
+                                };
+
+                                var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+                                chart.draw(data, options);
+                              }
+                            </script>
+                       <div id="curve_chart" style="width: 900px; height: 500px"></div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </div>
+</div>

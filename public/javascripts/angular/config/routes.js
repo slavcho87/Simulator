@@ -34,6 +34,9 @@ app.config(['$routeProvider', '$httpProvider' ,function($routeProvider, $httpPro
     }).when('/profile', {
 		templateUrl: 'views/configurations/index.html',
 		controller: 'ConfigurationController'
+    }).when('/evaluations', {
+		templateUrl: 'views/evaluations/index.html',
+		controller: 'EvaluationController'
 	}).otherwise({
         redirectTo: '/'
     }); 

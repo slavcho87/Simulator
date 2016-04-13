@@ -115,6 +115,9 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
         staticItemInfo: function(data, success, error){
             $http.get('/maps/staticItemInfo/'+data).success(success).error(error);
         },
+        mapList: function(success, error){
+            $http.get('/maps/mapList/').success(success).error(error);
+        },
         dynamicItemRoute: function(data, success, error){
             $http.post('/maps/dynamicItemRoute', data).success(success).error(error);
         },

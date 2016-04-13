@@ -541,7 +541,7 @@ function updateDynamicItems(mapId, sceneId, dynamicItemList, scene1){
     }
 }
 
-router.post('/generateRandomWay', function(req, res){//req.body.
+router.post('/generateRandomWay', function(req, res){
     var url = req.body.latitudeULC+','+req.body.longitudeLRC+','+req.body.latitudeLRC+','+req.body.longitudeULC;
     
     request('http://api.openstreetmap.org/api/0.6/map?bbox='+url, function (error, response, body) {
@@ -671,6 +671,23 @@ router.post('/generateRandomWay', function(req, res){//req.body.
         }); 
     });
 })
+
+router.get('/mapList', function(req, res){
+    Map.find({}, function(err, list){
+        if(err){
+            res.json({
+                result: "NOK",
+                msg: err
+            });    
+        }else{
+           res.json({
+               result : "OK",
+               list: list
+            }); 
+        }
+    });
+})
+
     
 
 module.exports = router;
