@@ -335,15 +335,15 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
                 name: $scope.newStaticItem.name,
                 type: $scope.newStaticItem.type,
                 longitude: $scope.newStaticItem.longitude,
-                latitude: $scope.newStaticItem.latitude
+                latitude: $scope.newStaticItem.latitude,
+                description: $scope.newStaticItem.description
             });
-            
-            //$scope.msgList.push("Static item inserted!");
             
             $scope.newStaticItem.name = "";
             $scope.newStaticItem.type = "";
             $scope.newStaticItem.longitude = "";
             $scope.newStaticItem.latitude = "";
+            $scope.newStaticItem.description = "";
     }
     
     $scope.saveDynamicItemInScene = function(){
@@ -352,11 +352,11 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
                 type: $scope.newDynamicItem.type,
                 name: $scope.newDynamicItem.dynamicItemName,
                 speed: $scope.newDynamicItem.itemSpeed,
-                route: $scope.newDynamicItem.route
+                route: $scope.newDynamicItem.route,
+                description: $scope.newDynamicItem.description
             });
             
-            $scope.msgList.push("Dynamic item inserted!");
-            
+           
             dynamicItemsMap.getOverlays().getArray().slice(0).forEach(function(overlay) {
                 dynamicItemsMap.removeOverlay(overlay);
             });
@@ -365,6 +365,7 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
             $scope.newDynamicItem.dynamicItemName = "";
             $scope.newDynamicItem.itemSpeed = "",
             $scope.newDynamicItem.route = [];
+            $scope.newDynamicItem.description = "";
     }
     
     $scope.selectPointToDelete = function(point){

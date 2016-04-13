@@ -114,7 +114,8 @@ router.post('/saveScene', function(req, resp){
                         item.mapId = scene1.mapId;
                         item.itemType = staticItemList[index].type._id;
                         item.location = locations[index]._id;
-
+                        item.description = staticItemList[index].description;
+                        
                         item.save();
                     }
                 });    
@@ -128,6 +129,7 @@ router.post('/saveScene', function(req, resp){
                 item.sceneId = scene1._id;
                 item.mapId = scene1.mapId;
                 item.itemType = dynamicItemList[index].type._id;
+                item.description = dynamicItemList[index].description;
                 dynamicItemToSave.push(item);
                 
                 var itemRoute = [];
@@ -495,6 +497,7 @@ function updateStaticItems(mapId, sceneId, staticItemList, scene1){
                 item.mapId = scene1.mapId;
                 item.itemType = staticItemList[index].type._id;
                 item.location = locations[index]._id;
+                item.description = staticItemList[index].description;
 
                 item.save();    
             }
@@ -516,6 +519,7 @@ function updateDynamicItems(mapId, sceneId, dynamicItemList, scene1){
         item.sceneId = scene1._id;
         item.mapId = scene1.mapId;
         item.itemType = dynamicItemList[index].type._id;
+        item.description = dynamicItemList[index].description;
         dynamicItemToSave.push(item);
         
         var itemRoute = [];

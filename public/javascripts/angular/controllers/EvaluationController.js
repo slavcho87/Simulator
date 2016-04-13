@@ -60,7 +60,6 @@ app.controller("EvaluationController", ['$scope','Services', function ($scope, S
         
         for(index in $scope.selectedItems){
             data.staticItem = $scope.selectedItems[index]._id;
-            console.log(data);
         }
     }
     

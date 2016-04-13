@@ -304,6 +304,11 @@
                                             <label>Latitude</label>
                                             <input id="staticItemLat" class="form-control" ng-model="newStaticItem.latitude" disabled/>
                                         </div>
+                                        
+                                        <div class="col-xs-12">
+                                            <label>Description: </label>
+                                            <textarea class="form-control" ng-model="newStaticItem.description" rows="3"></textarea>
+                                        </div>
 
                                         <div class="col-xs-12">
                                             <br/>
@@ -334,6 +339,7 @@
                                                         <th>Item name</th>
                                                         <th>Item type</th>
                                                         <th>Icon</th>
+                                                        <th>Description</th>
                                                         <th>Options</th>
                                                     </tr>
                                                 </thead>
@@ -351,6 +357,7 @@
                                                               </a>
                                                         </td>
                                                         <td><img src="{{staticItemElement.type.icon}}" height="16" width="16"/></td>
+                                                        <td>{{staticItemElement.description}}</td>
                                                         <td>
                                                             <button class="btn btn-danger fa fa-trash-o" 
                                                                     data-toggle="modal" data-target="#deleteStaticItemModal"
@@ -509,6 +516,11 @@
                                             <input ng-model="newDynamicItem.itemSpeed" class="form-control"/>
                                         </div>
                                         
+                                        <div class="col-xs-12">
+                                            <label>Description: </label>
+                                            <textarea class="form-control" ng-model="newDynamicItem.description" rows="3"></textarea>
+                                        </div>
+                                        
                                         <div class="col-xs-3">
                                             <br/><br/>
                                             <button type="button" class="btn btn-success" ng-click="saveDynamicItemInScene()">Save item</button>
@@ -636,6 +648,7 @@
                                                     <th>Item type</th>
                                                     <th>Speed</th>
                                                     <th>Icon</th>
+                                                    <th>Description</th>
                                                     <th>Options</th>
                                                 </tr>
                                             </thead>
@@ -654,6 +667,7 @@
                                                     </td>
                                                     <td>{{dynamicItem.speed}}</td>
                                                     <td><img src="{{dynamicItem.type.icon}}" height="16" width="16"/></td>
+                                                    <td>{{dynamicItem.description}}</td>
                                                     <td>
                                                         <button class="btn btn-danger fa fa-trash-o" 
                                                                 data-toggle="modal" data-target="#deleteDynamicItemModal"

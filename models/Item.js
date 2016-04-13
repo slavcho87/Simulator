@@ -5,6 +5,7 @@ var ItemSchema   = new Schema({
     itemName: String,
     sceneId: String,
     mapId: String,
+    description: String,
     itemType: { type: Schema.Types.ObjectId, ref: 'ItemType' },
     location: { type: Schema.Types.ObjectId, ref: 'Location' },
 });

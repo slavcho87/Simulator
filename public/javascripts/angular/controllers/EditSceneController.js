@@ -191,7 +191,8 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
                          var data2 = {
                              sceneId: data.sceneId, 
                              mapId: data.mapId,
-                             itemId: value._id
+                             itemId: value._id,
+                             description: value.description
                         };
                         
                         getDynamicItem(value, data2);
@@ -204,7 +205,8 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
                                 _id: value.itemType._id
                             },
                             longitude: value.location.longitude,
-                            latitude: value.location.latitude
+                            latitude: value.location.latitude,
+                            description: value.description
                         };
                         
                         $scope.staticItemListInScene.push(staticItem);
@@ -245,7 +247,8 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
                     _id: value.itemType._id
                 },
                 speed: res.route[0].routeId.speed,
-                route: route
+                route: route,
+                description: value.description
             };
             
             $scope.dynamicItemListInScene.push(dynamicItem);
@@ -272,7 +275,8 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
                 type: $scope.newDynamicItem.type,
                 name: $scope.newDynamicItem.dynamicItemName,
                 speed: $scope.newDynamicItem.itemSpeed,
-                route: $scope.newDynamicItem.route
+                route: $scope.newDynamicItem.route,
+                description: $scope.newDynamicItem.description
             });
             
             $scope.msgList.push("Dynamic item inserted!");
@@ -281,6 +285,7 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
             $scope.newDynamicItem.dynamicItemName = "";
             $scope.newDynamicItem.itemSpeed = "",
             $scope.newDynamicItem.route = [];
+            $scope.newDynamicItem.description = "";
     }
       
     $scope.selectPointToDelete = function(point){
@@ -373,7 +378,8 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
                 name: $scope.newStaticItem.name,
                 type: $scope.newStaticItem.type,
                 longitude: $scope.newStaticItem.longitude,
-                latitude: $scope.newStaticItem.latitude
+                latitude: $scope.newStaticItem.latitude,
+                description: $scope.newStaticItem.description
             });
             
             $scope.msgList.push("Static item inserted!");
@@ -382,6 +388,7 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
             $scope.newStaticItem.type = "";
             $scope.newStaticItem.longitude = "";
             $scope.newStaticItem.latitude = "";
+            $scope.newStaticItem.description = "";
     }
     
     /*

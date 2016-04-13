@@ -275,7 +275,8 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
                 name: $scope.newStaticItem.name,
                 type: $scope.newStaticItem.type,
                 longitude: $scope.newStaticItem.longitude,
-                latitude: $scope.newStaticItem.latitude
+                latitude: $scope.newStaticItem.latitude,
+                description: $scope.newStaticItem.description                
             });
             
             $scope.msgList.push("Static item inserted!");
@@ -284,6 +285,7 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
             $scope.newStaticItem.type = "";
             $scope.newStaticItem.longitude = "";
             $scope.newStaticItem.latitude = "";
+            $scope.newStaticItem.description = "";
     }
   
    $scope.selectStaticItemToDeleteFromScene = function(item, index){
@@ -308,15 +310,15 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
                 type: $scope.newDynamicItem.type,
                 name: $scope.newDynamicItem.dynamicItemName,
                 speed: $scope.newDynamicItem.itemSpeed,
-                route: $scope.newDynamicItem.route
+                route: $scope.newDynamicItem.route,
+                description: $scope.newDynamicItem.description
             });
-            
-            $scope.msgList.push("Dynamic item inserted!");
             
             $scope.newDynamicItem.type = "";
             $scope.newDynamicItem.dynamicItemName = "";
             $scope.newDynamicItem.itemSpeed = "",
             $scope.newDynamicItem.route = [];
+            $scope.newDynamicItem.description = "";
     }   
    
     $scope.selectPointToDelete = function(point){
