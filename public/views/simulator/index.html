@@ -135,6 +135,7 @@
                                     position: ol.proj.transform(position, 'EPSG:4326', 'EPSG:3857'),
                                     element: $('<img src="'+getImg()+'" class="img-circle" name="'+getUser()._id+'">')
                                     .css({marginTop: '-50%', marginLeft: '-50%', width: '40px', height: '40px', cursor: 'pointer'})
+                                    .tooltip({title: getUser().name, trigger: 'click'})
                                 });
                                 
                                 map.addOverlay(overlayList['user']);
@@ -411,6 +412,7 @@
                                     position: evt.coordinate,
                                     element: $('<img src="'+getImg()+'" class="img-circle" name="'+getUser()._id+'">')
                                     .css({marginTop: '-50%', marginLeft: '-50%', width: '40px', height: '40px', cursor: 'pointer'})
+                                    .tooltip({title: getUser().name, trigger: 'click'})
                                 });
                                                                
                                 map.addOverlay(overlayList['user']);

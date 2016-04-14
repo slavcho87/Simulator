@@ -230,11 +230,13 @@
                                             <br/>
                                             <button type="button" 
                                                     class="btn btn-success" 
-                                                    ng-click="loadStaticItemsFromFile()">
+                                                    ng-click="loadStaticItemsFromFile()"
+                                                    data-toggle="modal" data-target="#viewStaticItemModal">
                                                 Load static items
                                             </button>
-                                        </div>
+                                        </div>    
                                     </div>
+                                    
 
                                     <div ng-hide="setManuallySelected()">
                                         <!-- cuando tenemos que definir los objetos de forma manual en el mapa -->
@@ -267,7 +269,7 @@
                                         </div>
                                         
                                         <div class="col-xs-12">
-                                            <label>Description: </label>
+                                            <label>Description</label>
                                             <textarea class="form-control" ng-model="newStaticItem.description" rows="3"></textarea>
                                         </div>
 
@@ -355,7 +357,7 @@
                                     <table class="table table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th></th>
+                                                    <th><button ng-click="checkAll()">+</button></th>
                                                     <th>Item name</th>
                                                     <th>Item type</th>
                                                     <th>Icon</th>
@@ -445,10 +447,11 @@
                                             <br/>
                                             <button type="button" 
                                                     class="btn btn-success" 
-                                                    ng-click="loadDynamicItemsFromFile()">
+                                                    ng-click="loadDynamicItemsFromFile()"
+                                                    data-toggle="modal" data-target="#viewDynamicItemModal">
                                                 Load dynamic items
                                             </button>
-                                        </div>
+                                        </div> 
                                     </div>
 
                                     <div ng-hide="setManuallySelectedDynamicItem()">                                
@@ -788,3 +791,175 @@
 
           </div>
         </div>
+
+        <div class="modal fade" role="dialog" id="viewDynamicItemModal">
+          <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content2">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Data Preview</h4>
+              </div>
+                
+              <div class="modal-body">  
+                  <div class="row">      
+                      <div class="col-sm-6">
+                          <label>Delimiter</label>
+                          <select class="form-control" ng-model="dataPreviewDynamicItemDelimiter" ng-change="setDelimiter()">
+                            <option value="tab">Tab</option>
+                            <option value="comma">Comma</option>
+                            <option value="space">Space</option>
+                          </select>
+                      </div>
+                      
+                      <div class="col-sm-6">
+                          <label>Item name</label>
+                          <select class="form-control" ng-model="dataPreviewDynamicItemItemName">
+                                <option ng-repeat="column in previewDynamicItemColumnSplit" 
+                                                value="{{column}}">{{column}}</option>
+                          </select>
+                      </div>
+                      
+                      <div class="col-sm-6">
+                          <label>Item speed (km/h)</label>
+                          <select class="form-control" ng-model="dataPreviewDynamicItemItemSpeed">
+                                <option ng-repeat="column in previewDynamicItemColumnSplit" 
+                                                value="{{column}}">{{column}}</option>
+                          </select>
+                      </div>
+                      
+                      <div class="col-sm-6">
+                          <label>Description</label>
+                          <select class="form-control" ng-model="dataPreviewDynamicItemDescription">
+                                <option ng-repeat="column in previewDynamicItemColumnSplit" 
+                                                value="{{column}}">{{column}}</option>
+                          </select>
+                      </div>
+                      
+                      <div class="col-sm-12">
+                          <br/>
+                          <table class="table table-striped">
+                                  <thead>
+                                        <tr>
+                                            <th ng-repeat="column in previewDynamicItemColumnSplit">{{column}}</th>
+                                        </tr>
+                                   </thead>
+                                    <tbody>
+                                        <tr ng-repeat="rows in previewDynamicItemRowsSplit track by $index">
+                                            <td ng-repeat="row in rows track by $index">{{row}}</td>
+                                        </tr>
+                                    </tbody>
+                          </table>
+                          
+                          <nav align="center">
+                              <ul class="pagination">
+                                  <li ng-repeat="pag in pages()" ng-class="{active:pag==currentPage}">
+                                      <a href="#/map/editScene" ng-click="setCurrentPage(pag)">{{pag+1}}</a>    
+                                  </li>                
+                              </ul>
+                          </nav>                          
+                      </div>
+                  </div>
+              </div>
+                
+              <div class="modal-footer">  
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="importDynamicData()">Import</button>  
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="modal fade" role="dialog" id="viewStaticItemModal">
+          <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content2">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Data Preview</h4>
+              </div>
+                
+              <div class="modal-body">  
+                  <div class="row">      
+                      <div class="col-sm-6">
+                          <label>Delimiter</label>
+                          <select class="form-control" ng-model="dataPreviewDynamicItemDelimiter" ng-change="setDelimiter()">
+                            <option value="tab">Tab</option>
+                            <option value="comma">Comma</option>
+                            <option value="space">Space</option>
+                          </select>
+                      </div>
+                      
+                      <div class="col-sm-6">
+                          <label>Item name</label>
+                          <select class="form-control" ng-model="dataPreviewStaticItemName">
+                                <option ng-repeat="column in previewDynamicItemColumnSplit" 
+                                                value="{{column}}">{{column}}</option>
+                          </select>
+                      </div>
+                      
+                       <div class="col-sm-6">
+                          <label>Longitude</label>
+                          <select class="form-control" ng-model="dataPreviewStaticItemLong">
+                                <option ng-repeat="column in previewDynamicItemColumnSplit" 
+                                                value="{{column}}">{{column}}</option>
+                          </select>
+                      </div>
+                      
+                      <div class="col-sm-6">
+                          <label>Latitude</label>
+                          <select class="form-control" ng-model="dataPreviewStaticItemLat">
+                                <option ng-repeat="column in previewDynamicItemColumnSplit" 
+                                                value="{{column}}">{{column}}</option>
+                          </select>
+                      </div>
+                      
+                      <div class="col-sm-6">
+                          <label>Description</label>
+                          <select class="form-control" ng-model="dataPreviewStaticItemDesc">
+                                <option ng-repeat="column in previewDynamicItemColumnSplit" 
+                                                value="{{column}}">{{column}}</option>
+                          </select>
+                      </div>
+                      
+                      <div class="col-sm-12">
+                          <br/>
+                          <table class="table table-striped">
+                                  <thead>
+                                        <tr>
+                                            <th ng-repeat="column in previewDynamicItemColumnSplit">{{column}}</th>
+                                        </tr>
+                                   </thead>
+                                    <tbody>
+                                        <tr ng-repeat="rows in previewDynamicItemRowsSplit track by $index">
+                                            <td ng-repeat="row in rows track by $index">{{row}}</td>
+                                        </tr>
+                                    </tbody>
+                          </table>
+                          
+                          <nav align="center">
+                              <ul class="pagination">
+                                  <li ng-repeat="pag in pages()" ng-class="{active:pag==currentPage}">
+                                      <a href="#/map/editScene" ng-click="setCurrentPage(pag)">{{pag+1}}</a>    
+                                  </li>                
+                              </ul>
+                          </nav>                          
+                      </div>
+                  </div>
+              </div>
+                
+              <div class="modal-footer">  
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="importStaticData()">Import</button>  
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+

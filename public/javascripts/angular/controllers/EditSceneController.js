@@ -37,6 +37,14 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
     $scope.pageSizeDynaicItems = 5;
     $scope.staticItemSelected = [];
     $scope.dynamicItemSelected = [];
+    $scope.dataPreviewDynamicItemDelimiter = "comma";
+    $scope.previewDynamicItemData;
+    $scope.previewDynamicItemColumns = [];
+    $scope.previewDynamicItemRows = [];
+    $scope.previewDynamicItemColumnSplit = [];        
+    $scope.previewDynamicItemRowsSplit = [];
+    $scope.currentPage = 0;
+    $scope.pageSize = 10;
     
     $scope.addItemType=function(){
         for(index in $scope.staticItemSelected){
@@ -463,57 +471,106 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
         var reader = new FileReader();
         
         reader.onload = function (e) {
-            var data = e.target.result; 
-            data = JSON.parse(data);
-            
-            for(i=0;i<data.length;i++){
-                $scope.newStaticItem = {
-                    type: JSON.stringify(getStaticItemById(data[i].staticItemType)),
-                    name: data[i].itemName,
-                    longitude: data[i].longitude,
-                    latitude: data[i].latitude
-                };
-                
-                $scope.$apply(function () {
-                    $scope.saveStaticItemInScene();
-                });
-            }
+            $scope.$apply(function () {
+                var data = e.target.result;
+                $scope.previewDynamicItemData = data;
+                var datos = data.split(/\r\n|\n/);
+                $scope.previewDynamicItemColumns = datos[0];
+                $scope.previewDynamicItemRows = datos.slice(1, datos.length); 
+                $scope.setDelimiter();
+            });
         };
         
         var fileInputElement = document.getElementById("staticItemFile");
         reader.readAsText(fileInputElement.files[0]);
     }
     
-    function getStaticItemById(id) {
-        for(index in $scope.staticItemList){
-            if($scope.staticItemList[index]._id==id){
-                return $scope.staticItemList[index];
-            }
+    $scope.importStaticData = function(){
+        var itemNameIndex = $scope.previewDynamicItemColumnSplit.indexOf($scope.dataPreviewStaticItemName);
+        var longIndex = $scope.previewDynamicItemColumnSplit.indexOf($scope.dataPreviewStaticItemLong);
+        var latIndex = $scope.previewDynamicItemColumnSplit.indexOf($scope.dataPreviewStaticItemLat);
+        var descIndex = $scope.previewDynamicItemColumnSplit.indexOf($scope.dataPreviewStaticItemDesc);        
+        
+        for(index in $scope.previewDynamicItemRowsSplit){
+            var rows = $scope.previewDynamicItemRowsSplit[index];
+            
+            $scope.staticItemListInScene.push({
+                name: rows[itemNameIndex], 
+                longitude: rows[longIndex],
+                latitude: rows[latIndex],
+                description: rows[descIndex]
+            });
         }
-        return null;
+    }
+    
+    $scope.setDelimiter = function(){
+        var data = $scope.previewDynamicItemData.split(/\r\n|\n/);
+        $scope.previewDynamicItemColumns = data[0];
+        $scope.previewDynamicItemRows = data.slice(1, data.length);
+        
+        switch($scope.dataPreviewDynamicItemDelimiter) {
+            case "tab":    
+                $scope.previewDynamicItemColumnSplit = $scope.previewDynamicItemColumns.split('/\t');
+        
+                for(index in $scope.previewDynamicItemRows){
+                    $scope.previewDynamicItemRowsSplit[index] = $scope.previewDynamicItemRows[index].split('/\t');
+                }
+                break;
+            case "comma":
+                $scope.previewDynamicItemColumnSplit = $scope.previewDynamicItemColumns.split(',');
+        
+                for(index in $scope.previewDynamicItemRows){
+                    $scope.previewDynamicItemRowsSplit[index] = $scope.previewDynamicItemRows[index].split(',');
+                }
+                break;
+            case "space":
+                $scope.previewDynamicItemColumnSplit = $scope.previewDynamicItemColumns.split(' ');
+        
+                for(index in $scope.previewDynamicItemRows){
+                    $scope.previewDynamicItemRowsSplit[index] = $scope.previewDynamicItemRows[index].split(' ');
+                }
+                break;
+        }
+    }
+    
+    $scope.importDynamicData = function(){
+        var itemNameIndex = $scope.previewDynamicItemColumnSplit.indexOf($scope.dataPreviewDynamicItemItemName);
+        var itemSpeedIndex = $scope.previewDynamicItemColumnSplit.indexOf($scope.dataPreviewDynamicItemItemSpeed);
+        var itemDescriptionIndex = $scope.previewDynamicItemColumnSplit.indexOf($scope.dataPreviewDynamicItemDescription);
+                
+        for(index in $scope.previewDynamicItemRowsSplit){
+            var rows = $scope.previewDynamicItemRowsSplit[index];
+    
+            $scope.dynamicItemListInScene.push({
+                name: rows[itemNameIndex],
+                speed: rows[itemSpeedIndex],
+                description: rows[itemDescriptionIndex]
+                //route
+            });
+        }
     }
     
     $scope.loadDynamicItemsFromFile = function(){
         var reader = new FileReader();
-
+        
         reader.onload = function (e) {
-            var data = e.target.result;
-            data = JSON.parse(data);
-            
-            for(i=0;i<data.length;i++){
-                $scope.$apply(function () {
-                    $scope.dynamicItemListInScene.push({
-                        name: data[i].itemName,
-                        speed: data[i].speed,
-                        route: data[i].route
-                    });
-                });
-            }
+            $scope.$apply(function () {
+                var data = e.target.result;
+                $scope.previewDynamicItemData = data;
+                var datos = data.split(/\r\n|\n/);
+                $scope.previewDynamicItemColumns = datos[0];
+                $scope.previewDynamicItemRows = datos.slice(1, datos.length); 
+                $scope.setDelimiter();
+            });
         };
         
         var fileInputElement = document.getElementById("dynamicItemFile");
         reader.readAsText(fileInputElement.files[0]);
     }
+    
+    $scope.checkAll = function() {
+        $scope.staticItemSelected = angular.copy($scope.staticItemListInScene);
+    };
     
     /*
      *
