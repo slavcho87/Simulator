@@ -56,11 +56,51 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
     
     $scope.setRating = function(itemId, rating, valueForecast){
         var data = {
+            userId: $scope.token,
+            strategyType: $scope.recommender.strategyType,
+            mapId: $scope.selectedScene.mapId,
+            sceneId: $scope.selectedScene._id,
             rating: rating,
-            valueForecast: valueForecast,
-            itemId: itemId
+            itemId: itemId,
+            recommenderId: $scope.recommender._id
         };
         
+         var index = map.getOverlays().getArray().indexOf(overlayList['user']);
+                                
+        if(index>=0){
+            var location = map.getOverlays().getArray()[index].getPosition();
+            location = ol.proj.transform(location, 'EPSG:3857', 'EPSG:4326');
+            
+            var loc = {
+                latitude: location[0],
+                longitude: location[1]
+            };
+            
+            data.location = loc; console.log(data);
+            socket.emit('get value forecast', data);
+        }else{
+            $scope.errorMsgList.push("The user's location can not be empty!");
+        }
+    }
+    
+    $scope.setRatingWithForecas = function(itemId, rating, valueForecast){
+        var data = {
+            rating: rating,
+            valueForecast: valueForecast,
+            itemId: itemId,
+            recommenderId: $scope.recommender._id
+        };
+        
+        Services.setRating(data, function(res){
+            if(res.result == "NOK"){
+                $scope.errorMsgList.push(res.msg);
+            }
+        }, function(err){
+            $scope.errorMsgList.push(err);
+        });
+    }
+    
+    $scope.assignRating = function(data){
         Services.setRating(data, function(res){
             if(res.result == "NOK"){
                 $scope.errorMsgList.push(res.msg);
@@ -286,7 +326,7 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
                 position: ol.proj.transform(location, 'EPSG:4326', 'EPSG:3857'),
                 element: $('<img src="'+value.itemType.icon+'">')
                 .css({marginTop: '-50%', marginLeft: '-50%', width: '16px', height: '16px', cursor: 'pointer'})
-                .tooltip({title: '<label style=\"text-align: left\">Name: </labe><label>'+value.itemName+'</label>Description: <label><br/></label>'+value.description+'<label></label><br/><label>Rating: </label><select style=\"background-color: black\" id='+id+' onchange="setRating('+id+')"><option value="0"></option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>', trigger: 'click', html: true})
+                .tooltip({title: '<label style=\"text-align: left\">Name: </labe><label>'+value.itemName+'</label><br/><label>Description: </label><label>'+value.description+'</label><br/><label>Rating: </label><select style=\"background-color: black\" id='+id+' onchange="setRating('+id+')"><option value="0"></option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>', trigger: 'click', html: true})
             });
                             
             map.addOverlay(overlay);

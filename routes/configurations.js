@@ -216,10 +216,11 @@ router.get('/recommenderTypes', function(req, res){
 
 router.post('/setRating', function(req, res){
     var rating = new Rating();    
-    rating.userId=req.token;  
+    rating.userId=req.token;
     rating.itemId=req.body.itemId; 
     rating.value=req.body.rating;
     rating.valueForecast = req.body.valueForecast; 
+    rating.recommenderId = req.body.recommenderId;
     
     rating.save(function(err){
         if(err){

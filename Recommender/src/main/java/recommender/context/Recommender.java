@@ -55,7 +55,7 @@ public class Recommender{
 		//cogemos las configuraciones del recomendador
 		RecommenderConfig recommenderConfig = getRecommenderConfigById(recommenderId);
 		
-		//cogemos todos los objeros de los tipos de items seleccionados
+		//cogemos todos los objetos de los tipos de items seleccionados
 		List<Item> itemList = new ArrayList<Item>();
 		for(int index=0; index<array.length(); index++){
 			String itemType = (String) array.get(index);
@@ -249,6 +249,39 @@ public class Recommender{
 		return itemList;
 	}
 	
+	private List<Item> getItemList(String mapId, String sceneId){
+		List<Item> itemList = new ArrayList<Item>();
+		
+		try{
+	        DBCollection coll = db.getCollection("items");
+	        
+	        BasicDBObject query = new BasicDBObject();
+	        query.append("mapId", new BasicDBObject("$eq", mapId));
+	        query.append("sceneId", new BasicDBObject("$eq", sceneId));
+	        
+	        DBCursor cursor = coll.find(query);
+	        while(cursor.hasNext()){
+	        	 Item item = new Item();
+	        	 DBObject obj = cursor.next();
+	        	 ObjectId id = (ObjectId) obj.get("_id");
+	        	 item.setId(id.toString());
+	        	 item.setItemName((String) obj.get("itemName"));
+	        	 
+	        	 ObjectId locationId = (ObjectId) obj.get("location");
+	        	 if(locationId!=null){
+	        		 item.setLocation(getLocation(locationId));
+	        	 }
+	        	 
+	        	 itemList.add(item);
+	        }
+		}catch(Exception e){
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		}
+		
+		return itemList;
+	}
+	
+	
 	private double radians(double num){
 		return num * Math.PI / 180;
 	}
@@ -267,5 +300,35 @@ public class Recommender{
 		double a = (Math.sin(difLat/2)*Math.sin(difLat/2))+Math.cos(radians(location1.getLatitude()))*Math.cos(radians(location2.getLatitude()))*Math.sin(difLon/2)*Math.sin(difLon/2);
 		double c = 2*Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 		return R*c;
+	}
+	
+	public float itemForecas(JSONObject data){
+		String recommenderId = (String) data.get("recommenderId");
+		String mapId = (String) data.get("mapId");
+		String sceneId = (String) data.get("sceneId");
+		Location userLocation = new Location();
+		userLocation.setLatitude((Double) data.getJSONObject("location").get("latitude"));
+		userLocation.setLongitude((Double) data.getJSONObject("location").get("longitude"));
+		
+		//cogemos las configuraciones del recomendador
+		RecommenderConfig recommenderConfig = getRecommenderConfigById(recommenderId);
+		
+		List<Item> itemList = getItemList(mapId, sceneId);
+		
+		//filtramos las lista de items teniendo en cuenta la distancia maxima que está dispuesto a recorrer el usuario
+		List<Item> filterItemList = new ArrayList<Item>();
+		for(Item item: itemList){
+			if(item.getLocation()!=null){
+				double distance = distanceBetween(userLocation, item.getLocation());
+				if(distance <= recommenderConfig.getMaximuDistanteToGo()){
+					filterItemList.add(item);
+				}
+			}
+		}
+				
+		//cogemos los datos de las valoraciones de los usuarios
+		List<Ratings> ratingList = getRatings(filterItemList);
+		
+		return strategy.itemForecas(data, itemList, ratingList, recommenderConfig);
 	}
 }

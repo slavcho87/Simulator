@@ -191,6 +191,12 @@
                                     socket.emit('sincronize map result', data);    
                                 }
                             });
+                            
+                            socket.on('set value forecast', function(data){
+                                if(data.userId == $scope.token){
+                                    $scope.assignRating(data);
+                                }
+                            });
                     
                             socket.on('sincronize map result', function(data){
                                 if(data.sceneId==$scope.selectedScene._id && data.mapId==$scope.selectedScene.mapId){
@@ -657,7 +663,7 @@
                                 dirMove = "";
                             }
                             
-                            function setRating(itemId){console.log($('#'+itemId));
+                            function setRating(itemId){
                                 var rating = $('#'+itemId).val();
                                 if(rating>0){
                                     $scope.setRating(itemId, rating);    
@@ -702,7 +708,7 @@
                                     <td>{{item.itemName}}</td>
                                     <td>{{item.rating}}</td>
                                     <td>
-                                        <select ng-change="setRating(item.id, rating, {{item.rating}})" ng-model="rating">
+                                        <select ng-change="setRatingWithForecas(item.id, rating, {{item.rating}})" ng-model="rating">
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>

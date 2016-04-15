@@ -8,4 +8,5 @@ import recommender.models.RecommenderConfig;
 
 public interface Strategy {
 	public List<Item> recommend(JSONObject data, List<Item> itemList, List<Ratings> ratingList, RecommenderConfig recommenderConfig);
+	public float itemForecas(JSONObject data, List<Item> itemList, List<Ratings> ratingList, RecommenderConfig recommenderConfig);
 }

@@ -175,7 +175,6 @@ io.on('connection', function(socket){
                 rating: data.itemList[index].rating,
                 itemName: utf8.encode(data.itemList[index].itemName)
             };   
-            console.log(data.itemList[index].itemName);
         }
         
         var sendData = {
@@ -204,6 +203,15 @@ io.on('connection', function(socket){
         socket.broadcast.emit('user exit', data); 
     });
 
+    //este evento se ejecuta para obtener una predicción de la valoración de un item para un usuario
+    socket.on('get value forecast', function(data){
+         socket.broadcast.emit('get value forecast', data); //este evento lo tiene el recomendador
+    });
+    
+    socket.on('set value forecast', function(data){
+        socket.broadcast.emit('set value forecast', data);
+    });
+    
      socket.on('error', function(err) {
         //here i change options
         console.log('Error!', err);

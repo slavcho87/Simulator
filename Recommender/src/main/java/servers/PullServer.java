@@ -10,7 +10,7 @@ import recommender.models.Item;
 import recommender.models.StrategyType;
 import recommender.strategy.Strategy;
 import recommender.strategy.StrategyFactory;
-import utils.Configurations; 
+import utils.Configurations;
 
 public class PullServer implements Runnable{
 	private Socket socket;
@@ -72,6 +72,21 @@ public class PullServer implements Runnable{
         		result.put("itemList", itemList);
         		result.put("userList", userList);
         		socket.emit("recommended items", result);
+            }
+        });
+		
+		socket.on("get value forecast", new Emitter.Listener() {
+            public void call(Object... args) {
+            	JSONObject data = (JSONObject) args[0];System.out.println("-->");
+                strategy = StrategyFactory.createStrategy(StrategyType.fromString(data.getString("strategyType")));
+                recommender.setStrategy(strategy);
+            	
+            	float forecast = recommender.itemForecas(data);
+            	if(Float.compare(forecast, (float) Double.NaN) != 0){
+            		data.put("valueForecast", forecast);
+            	}
+            	
+            	socket.emit("set value forecast", data);
             }
         });
 		
