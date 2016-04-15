@@ -28,6 +28,15 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
     $scope.pageSize = 5;
     $scope.staticItemSelected = [];
     $scope.dynamicItemSelected = [];
+    $scope.dataPreviewDynamicItemDelimiter = "comma";
+    $scope.previewDynamicItemData;
+    $scope.previewDynamicItemColumns = [];
+    $scope.previewDynamicItemRows = [];
+    $scope.previewDynamicItemColumnSplit = [];        
+    $scope.previewDynamicItemRowsSplit = [];
+    $scope.currentPage = 0;
+    $scope.pageSize = 10;
+    $scope.importTrajectorySelected;
     
     $scope.addItemType=function(){
         for(index in $scope.staticItemSelected){
@@ -575,60 +584,226 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
     }
     
     $scope.loadStaticItemsFromFile = function(){
+        $scope.previewDynamicItemData = "";
+        $scope.previewDynamicItemColumns = [];
+        $scope.previewDynamicItemRows = [];
+        $scope.previewDynamicItemColumnSplit = [];        
+        $scope.previewDynamicItemRowsSplit = [];
+        
         var reader = new FileReader();
         
         reader.onload = function (e) {
-            var data = e.target.result; 
-            data = JSON.parse(data);
-            
-            for(i=0;i<data.length;i++){
-                $scope.newStaticItem = {
-                    type: JSON.stringify(getStaticItemById(data[i].staticItemType)),
-                    name: data[i].itemName,
-                    longitude: data[i].longitude,
-                    latitude: data[i].latitude
-                };
-                
-                $scope.$apply(function () {
-                    $scope.saveStaticItemInScene();
-                });
-            }
+            $scope.$apply(function () {
+                var data = e.target.result;
+                $scope.previewDynamicItemData = data;
+                var datos = data.split(/\r\n|\n/);
+                $scope.previewDynamicItemColumns = datos[0];
+                $scope.previewDynamicItemRows = datos.slice(1, datos.length); 
+                $scope.setDelimiter();
+            });
         };
         
         var fileInputElement = document.getElementById("staticItemFile");
         reader.readAsText(fileInputElement.files[0]);
     }
     
-    function getStaticItemById(id) {
-        for(index in $scope.staticItemList){
-            if($scope.staticItemList[index]._id==id){
-                return $scope.staticItemList[index];
-            }
+    $scope.importStaticData = function(){
+        var itemNameIndex = $scope.previewDynamicItemColumnSplit.indexOf($scope.dataPreviewStaticItemName);
+        var longIndex = $scope.previewDynamicItemColumnSplit.indexOf($scope.dataPreviewStaticItemLong);
+        var latIndex = $scope.previewDynamicItemColumnSplit.indexOf($scope.dataPreviewStaticItemLat);
+        var descIndex = $scope.previewDynamicItemColumnSplit.indexOf($scope.dataPreviewStaticItemDesc);        
+        $scope.newStaticItem.type = JSON.parse($scope.newStaticItem.type);
+        
+        for(index in $scope.previewDynamicItemRowsSplit){
+            var rows = $scope.previewDynamicItemRowsSplit[index];
+            
+            $scope.staticItemListInScene.push({
+                name: rows[itemNameIndex], 
+                longitude: rows[longIndex],
+                latitude: rows[latIndex],
+                description: rows[descIndex],
+                type: $scope.newStaticItem.type
+            });
         }
-        return null;
     }
     
+    $scope.setDelimiter = function(){
+        var data = $scope.previewDynamicItemData.split(/\r\n|\n/);
+        $scope.previewDynamicItemColumns = data[0];
+        $scope.previewDynamicItemRows = data.slice(1, data.length);
+        
+        switch($scope.dataPreviewDynamicItemDelimiter) {
+            case "tab":    
+                $scope.previewDynamicItemColumnSplit = $scope.previewDynamicItemColumns.split('/\t');
+        
+                for(index in $scope.previewDynamicItemRows){
+                    $scope.previewDynamicItemRowsSplit[index] = $scope.previewDynamicItemRows[index].split('/\t');
+                }
+                break;
+            case "comma":
+                $scope.previewDynamicItemColumnSplit = $scope.previewDynamicItemColumns.split(',');
+        
+                for(index in $scope.previewDynamicItemRows){
+                    $scope.previewDynamicItemRowsSplit[index] = $scope.previewDynamicItemRows[index].split(',');
+                }
+                break;
+            case "space":
+                $scope.previewDynamicItemColumnSplit = $scope.previewDynamicItemColumns.split(' ');
+        
+                for(index in $scope.previewDynamicItemRows){
+                    $scope.previewDynamicItemRowsSplit[index] = $scope.previewDynamicItemRows[index].split(' ');
+                }
+                break;
+        }
+    }
+    
+    $scope.importDynamicData = function(){
+        var itemNameIndex = $scope.previewDynamicItemColumnSplit.indexOf($scope.dataPreviewDynamicItemItemName);
+        var itemSpeedIndex = $scope.previewDynamicItemColumnSplit.indexOf($scope.dataPreviewDynamicItemItemSpeed);
+        var itemDescriptionIndex = $scope.previewDynamicItemColumnSplit.indexOf($scope.dataPreviewDynamicItemDescription);
+        $scope.newDynamicItem.type = JSON.parse($scope.newDynamicItem.type);        
+        
+        for(index in $scope.previewDynamicItemRowsSplit){
+            var rows = $scope.previewDynamicItemRowsSplit[index];
+    
+            $scope.dynamicItemListInScene.push({
+                name: rows[itemNameIndex],
+                speed: rows[itemSpeedIndex],
+                description: rows[itemDescriptionIndex],
+                type: $scope.newDynamicItem.type
+            });
+        }
+    }    
+    
     $scope.loadDynamicItemsFromFile = function(){
+        $scope.previewDynamicItemData = "";
+        $scope.previewDynamicItemColumns = [];
+        $scope.previewDynamicItemRows = [];
+        $scope.previewDynamicItemColumnSplit = [];        
+        $scope.previewDynamicItemRowsSplit = [];
+        
         var reader = new FileReader();
-
+        
         reader.onload = function (e) {
-            var data = e.target.result;
-            data = JSON.parse(data);
-            
-            for(i=0;i<data.length;i++){
-                $scope.$apply(function () {
-                    $scope.dynamicItemListInScene.push({
-                        name: data[i].itemName,
-                        speed: data[i].speed,
-                        route: data[i].route
-                    });
-                });
-            }
+            $scope.$apply(function () {
+                var data = e.target.result;
+                $scope.previewDynamicItemData = data;
+                var datos = data.split(/\r\n|\n/);
+                $scope.previewDynamicItemColumns = datos[0];
+                $scope.previewDynamicItemRows = datos.slice(1, datos.length); 
+                $scope.setDelimiter();
+            });
         };
         
         var fileInputElement = document.getElementById("dynamicItemFile");
         reader.readAsText(fileInputElement.files[0]);
+    }   
+    
+    $scope.checkAll = function() {
+        $scope.staticItemSelected = $scope.staticItemListInScene;
+    };
+    
+    $scope.uncheckAll = function(){
+        $scope.staticItemSelected = [];
+    }
+    
+    $scope.checkAllDynamicItem = function() {
+        $scope.dynamicItemSelected = $scope.dynamicItemListInScene;
+    };
+    
+    $scope.uncheckAllDynamicItem = function(){
+        $scope.dynamicItemSelected = [];
+        $scope.moreOptions = "";
+    }
+    
+    $scope.setImportTrajectorySelected = function(item){
+        $scope.importTrajectorySelected = item; 
+        
+        $scope.previewDynamicItemData = "";
+        $scope.previewDynamicItemColumns = [];
+        $scope.previewDynamicItemRows = [];
+        $scope.previewDynamicItemColumnSplit = [];        
+        $scope.previewDynamicItemRowsSplit = [];
+    }
+    
+    $scope.importTrajectory = function(){
+        var indexLong = $scope.previewDynamicItemColumnSplit.indexOf($scope.dataPreviewDynamicItemLong);
+        var indexLat = $scope.previewDynamicItemColumnSplit.indexOf($scope.dataPreviewDynamicItemLat);
+        
+        var route = [];
+        for(index in $scope.previewDynamicItemRowsSplit){
+            var rows = $scope.previewDynamicItemRowsSplit[index];
+            
+            route.push({
+                long: rows[indexLong],
+                lat: rows[indexLat]
+            });
+        }
+        
+        $scope.importTrajectorySelected.route = route;
+        console.log($scope.importTrajectorySelected);
+    }
+    
+    $scope.loadFileTrajectory = function(){
+        var reader = new FileReader();
+        
+        reader.onload = function (e) {
+            $scope.$apply(function () {
+                var data = e.target.result;
+                $scope.previewDynamicItemData = data;
+                var datos = data.split(/\r\n|\n/);
+                $scope.previewDynamicItemColumns = datos[0];
+                $scope.previewDynamicItemRows = datos.slice(1, datos.length); 
+                $scope.setDelimiter();
+            });
+        };
+        
+        var fileInputElement = document.getElementById("trajectoryFile");
+        reader.readAsText(fileInputElement.files[0]);
+    }
+    
+    $scope.generateRandomWayToSet = function(){
+        var error = false;
+        
+        if(!$scope.scene.latitudeULC && !$scope.scene.longitudeULC){
+            $scope.errorMsgList.push("The upper left corner can not be empty!");
+            error = true;
+        }
+        
+        if(!$scope.scene.latitudeLRC && !$scope.scene.longitudeLRC){
+            $scope.errorMsgList.push("The lower right corner can not be empty!");
+            error = true;
+        }
+        
+        if(!error){
+            var data = {
+                numberDynamicItems: $scope.dynamicItemSelected.length,
+                wayType: $scope.randomWay.wayType,
+                latitudeULC: $scope.scene.latitudeULC,
+                longitudeULC: $scope.scene.longitudeULC,
+                latitudeLRC: $scope.scene.latitudeLRC,
+                longitudeLRC: $scope.scene.longitudeLRC,
+            }
+            
+            $scope.loadRandomWay = false;
+            
+            Services.generateRandomWay(data, function(res){
+                $scope.loadRandomWay = true;
+                
+                $scope.newDynamicItem.type = JSON.parse($scope.newDynamicItem.type);
+                for(index in res.itemList){
+                    var item = res.itemList[index];
+                    
+                    $scope.dynamicItemSelected[index].speed=item.speed;
+                    $scope.dynamicItemSelected[index].route=item.route;
+                }
+                
+            }, function(err){
+                $scope.errorMsgList.push(err);
+            });            
+        }
     }    
+    
     
     $scope.editScene = function(scene){
         DataFactory.data.scene = scene.allData;
@@ -639,5 +814,5 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
         Services.logout();
     }
 }]).run(function(editableOptions) {
-  editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
+  editableOptions.theme = 'bs3'; 
 });
