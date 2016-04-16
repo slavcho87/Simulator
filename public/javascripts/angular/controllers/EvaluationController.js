@@ -121,35 +121,29 @@ app.controller("EvaluationController", ['$scope','Services', function ($scope, S
                 user: $scope.selectedUser.token
             }
             
-            Services.getRatingData(data, function(res){
+            Services.getRatingData(data, function(res){ 
                 google.charts.load('current', {'packages':['corechart']});
                 google.charts.setOnLoadCallback(drawVisualization);
                 
-                function drawVisualization() {
-                    var data = [
-                        ['Item name', 'User rating',   'Error']
-                    ]
-                    
-                    for(index in res.itemList[index]){
-                        var error = '';
+                
+                function drawVisualization() {    
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Item name');
+                    data.addColumn('number', 'User rating');
+                    data.addColumn('number', 'Error');
+
+                    for(indexi in res.itemList){
+                        var itemName = res.itemList[index].itemId.itemName;
+                        var rating = res.itemList[index].value;
+
+                        var error = 0;
                         if(res.itemList[index].valueForecast){
                             error = res.itemList[index].value - res.itemList[index].valueForecast;
-                        }
-                        
-                        data.push([
-                            res.itemList[index].itemId.itemName,
-                            res.itemList[index].value,
-                            error
-                        ]);
-                    }
-                    
-                   // var data = google.visualization.arrayToDataTable(data);
+                        }    
 
-                    //no data inserted
-                    /*var data = google.visualization.arrayToDataTable([
-                      ['', { role: 'annotation' }],
-                      ['', '']
-                  ]);*/
+                        data.addRow([itemName, rating, error]);
+                    } 
+                    
                     
                     var options = {
                         title : 'Evaluation of recommender',
