@@ -499,7 +499,7 @@ function updateStaticItems(mapId, sceneId, staticItemList, scene1){
                 item.location = locations[index]._id;
                 item.description = staticItemList[index].description;
 
-                item.save();    
+                item.save();
             }
         });   
     }

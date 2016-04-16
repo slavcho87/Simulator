@@ -48,7 +48,7 @@ app.controller("RecommenderSettingsController", ['$scope', '$http','Services', f
             $scope.errorMsgList.push("Fill the form!");
         }else{
             if(!$scope.rec.poolName){
-                $scope.errorMsgList.push("The pool name can not be empty!");
+                $scope.errorMsgList.push("The recommender set name can not be empty!");
                 error = true;
             }
             
@@ -159,7 +159,7 @@ app.controller("RecommenderSettingsController", ['$scope', '$http','Services', f
             $scope.errorMsgList.push("Fill the form!");
         }else{
             if(!$scope.selectEditRecommenderValue.poolName){
-                $scope.errorMsgList.push("The pool name can not be empty!");
+                $scope.errorMsgList.push("The recommender set name can not be empty!");
                 error = true;
             }
             

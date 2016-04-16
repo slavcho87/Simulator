@@ -221,6 +221,30 @@ router.post('/userMove', ensureAuthorized, function(req, res){
     });
 })
 
+router.get('/getUserList', ensureAuthorized, function(req, res){
+    User.find({}, function(err, userList){
+        if(err){
+            res.json({
+                result: "NOK",
+                msg: err
+            });
+        }else{
+            var list = [];
+            for(index in userList){
+                list.push({
+                    name: userList[index].name,
+                    token: userList[index].token
+                });
+            }
+            
+            res.json({
+                result: "OK",
+                list: list
+            });
+        }
+    });
+})
+
 function ensureAuthorized(req, res, next) {
     var bearerToken;
     var bearerHeader = req.headers["authorization"];

@@ -11,7 +11,7 @@ var utf8 = require('utf8');
 
 var configurations = require('./routes/configurations');
 var maps = require('./routes/maps');
-var simulation = require('./routes/simulation');
+var evaluation = require('./routes/evaluation');
 var user = require('./routes/user');
 
 var port = process.env.PORT || baseConfig().port;
@@ -54,7 +54,7 @@ var server = app.listen(port, function () {
 
 app.use('/settings', ensureAuthorized, configurations);
 app.use('/maps', ensureAuthorized, maps);
-app.use('/simulation', simulation);
+app.use('/evaluation', evaluation);
 app.use('/user', user);
 
 function ensureAuthorized(req, res, next) {

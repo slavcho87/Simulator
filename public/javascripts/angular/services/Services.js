@@ -145,6 +145,15 @@ app.service('Services', ['$http', '$localStorage', function($http, $localStorage
         generateRandomWay: function(data, success, error){
             $http.post('/maps/generateRandomWay', data).success(success).error(error);
         },
+        loadMapsAndScenesFromRecommenderId:  function(data, success, error){
+            $http.get('/evaluation/loadMapsAndScenesFormRecommenderId/'+data).success(success).error(error);
+        },
+        getRatingData: function(data, success, error){
+            $http.post('/evaluation/getRatingData', data).success(success).error(error);
+        },
+        getUserList: function(success, error){
+            $http.get('/user/getUserList').success(success).error(error);
+        },
         logout: function() {
             changeUser({});
             delete $localStorage.token;

@@ -142,7 +142,7 @@ public class UserBasedStrategy implements Strategy {
 			indice++;
 		}
 		
-		float forecast = 0;
+		float forecast = (float) Double.NaN;
 		try {
 			DataModel model = new GenericDataModel(preferences);
 			UserSimilarity similarity = new PearsonCorrelationSimilarity(model);
@@ -152,7 +152,9 @@ public class UserBasedStrategy implements Strategy {
 			String itemId = (String) data.get("itemId"); 
 			Object dataToken = data.get("userId");
 			Integer usetID = userIdMap.get(dataToken);
-			forecast = recommender.estimatePreference(usetID, itemId.hashCode());
+			if(usetID != null){
+				forecast = recommender.estimatePreference(usetID, itemId.hashCode());
+			}
 		} catch (TasteException e) {
 			e.printStackTrace();
 		} catch (Exception e1){
