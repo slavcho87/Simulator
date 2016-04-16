@@ -60,14 +60,16 @@ public class UserBasedStrategy implements Strategy {
 			if(!userIdMap.isEmpty()){
 				Object dataToken = data.get("token");
 				Integer userIdMapObj = userIdMap.get(dataToken); //recommender.estimatePreference(usetID, itemID)
-				List<RecommendedItem> recommendations = recommender.recommend(userIdMapObj, recommenderConfig.getItemsToRecommend());
-				for(RecommendedItem recItem: recommendations){
-					Item item = findItemID(itemList, recItem.getItemID());
-					if(item!=null){
-						item.setRating(recItem.getValue());
-						recommendedItemIdList.add(item);
+				if(userIdMapObj != null){
+					List<RecommendedItem> recommendations = recommender.recommend(userIdMapObj, recommenderConfig.getItemsToRecommend());
+					for(RecommendedItem recItem: recommendations){
+						Item item = findItemID(itemList, recItem.getItemID());
+						if(item!=null){
+							item.setRating(recItem.getValue());
+							recommendedItemIdList.add(item);
+						}
 					}
-				}	
+				}
 			}
 			
 		} catch (TasteException e) {

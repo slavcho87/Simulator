@@ -143,7 +143,7 @@ public class Recommender{
 		int totalRating = 0;
 		int numElements = 0;
 		DBCollection coll = db.getCollection("ratings");
-		BasicDBObject query = new BasicDBObject("itemId", new BasicDBObject("$eq", itemId));
+		BasicDBObject query = new BasicDBObject("itemId", new BasicDBObject("$eq", new ObjectId(itemId)));
 		DBCursor cursor = coll.find(query);
 		
 		while(cursor.hasNext()){
@@ -167,15 +167,16 @@ public class Recommender{
 	private List<Ratings> getRatings(List<Item> itemList) {
 		List<Ratings> ratingList = new ArrayList<Ratings>();
 		DBCollection coll = db.getCollection("ratings");
-
+		
 		for(int index=0; index<itemList.size(); index++){
-			BasicDBObject query = new BasicDBObject("itemId", new BasicDBObject("$eq", itemList.get(index).getId()));
+			BasicDBObject query = new BasicDBObject("itemId", new BasicDBObject("$eq", new ObjectId(itemList.get(index).getId())));
+			
 			DBCursor cursor = coll.find(query);
 			while(cursor.hasNext()){
 				DBObject obj = cursor.next();
 				Ratings rating = new Ratings();
 				rating.setUserToken((String) obj.get("userId"));
-				rating.setItemId((String) obj.get("itemId"));
+				rating.setItemId(obj.get("itemId").toString());
 				rating.setRating((Integer) obj.get("value"));
 				ratingList.add(rating);
 			}

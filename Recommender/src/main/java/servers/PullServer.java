@@ -77,7 +77,7 @@ public class PullServer implements Runnable{
 		
 		socket.on("get value forecast", new Emitter.Listener() {
             public void call(Object... args) {
-            	JSONObject data = (JSONObject) args[0];System.out.println("-->");
+            	JSONObject data = (JSONObject) args[0];
                 strategy = StrategyFactory.createStrategy(StrategyType.fromString(data.getString("strategyType")));
                 recommender.setStrategy(strategy);
             	

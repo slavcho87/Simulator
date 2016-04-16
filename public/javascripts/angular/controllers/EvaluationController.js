@@ -131,7 +131,7 @@ app.controller("EvaluationController", ['$scope','Services', function ($scope, S
                     ]
                     
                     for(index in res.itemList[index]){
-                        var error = "NaN";
+                        var error = '';
                         if(res.itemList[index].valueForecast){
                             error = res.itemList[index].value - res.itemList[index].valueForecast;
                         }
@@ -143,8 +143,14 @@ app.controller("EvaluationController", ['$scope','Services', function ($scope, S
                         ]);
                     }
                     
-                    var data = google.visualization.arrayToDataTable(data);
+                   // var data = google.visualization.arrayToDataTable(data);
 
+                    //no data inserted
+                    /*var data = google.visualization.arrayToDataTable([
+                      ['', { role: 'annotation' }],
+                      ['', '']
+                  ]);*/
+                    
                     var options = {
                         title : 'Evaluation of recommender',
                         vAxis: {title: 'Rating'},
