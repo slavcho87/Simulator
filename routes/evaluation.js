@@ -39,8 +39,24 @@ router.get('/loadMapsAndScenesFormRecommenderId/:recommenderId', function(req, r
     });
 })
 
+function getRating(itemId, userId){
+    Rating.findOne({itemId: itemId, userId: userId})
+    .populate({
+        path: 'itemId'
+    }).exec(function(err, itemList){
+        if(!err){
+            return itemList;
+        }
+    });
+}
+
 router.post('/getRatingData', function(req, res){
-    Rating.find({itemId: req.body.itemId, userId: req.body.user})
+    var itemIdList = [];
+    for(index in req.body.itemList){
+        itemIdList.push(req.body.itemList[index]._id);
+    }
+    
+    Rating.find({itemId: {$in: itemIdList}, userId: req.body.user})
     .populate({
         path: 'itemId'
     }).exec(function(err, itemList){
@@ -49,7 +65,7 @@ router.post('/getRatingData', function(req, res){
                 result: "NOK",
                 msg: err
             });
-        }else{
+        }else{console.log("no error");
             res.json({
                 result: "OK",
                 itemList: itemList

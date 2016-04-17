@@ -14,7 +14,8 @@ app.controller("EvaluationController", ['$scope','Services', function ($scope, S
     $scope.itemTypeList = [];
     $scope.itemListAllData = [];
     $scope.dataCopy = angular.copy($scope.data);
-    $scope.userList = []
+    $scope.userList = [];
+    $scope.viewGrafics = false;
     
     $scope.loadData = function(){
         Services.getRecommenderList(function(res){
@@ -113,55 +114,76 @@ app.controller("EvaluationController", ['$scope','Services', function ($scope, S
         }
         return false;
     }
-    
+    $scope.num = 0;
     $scope.loadGraphics = function(){
-        for(index in $scope.selectedItems){
+            $scope.viewGrafics = false;
+        
             var data = {
-                itemId: $scope.selectedItems[index]._id,
+                itemList: $scope.selectedItems,
                 user: $scope.selectedUser.token
             }
             
             Services.getRatingData(data, function(res){ 
-                google.charts.load('current', {'packages':['corechart']});
-                google.charts.setOnLoadCallback(drawVisualization);
+                if(res.result == "NOK"){
+                    $scope.errorMsgList.push(res.msg);
+                }else{
+                    if(res.itemList.length==0){
+                        $scope.errorMsgList.push("There is no data");        
+                    }else{
+                        $scope.viewGrafics = true;
+                        
+                        //if($scope.num == 0){
+                            //google.charts.load('current', {'packages':['corechart']});
+                            google.charts.setOnLoadCallback(drawVisualization);
+                        //}else{
+                          ///      google.charts.setOnLoadCallback(drawVisualization);
+                              //drawVisualization();
+                        //}             
+                    
+                        //$scope.num = $scope.num + 1;
+                        
+                        function drawVisualization() {    
+                            var data = new google.visualization.DataTable();
+                            data.addColumn('string', 'Item name');
+                            data.addColumn('number', 'User rating');
+                            data.addColumn('number', 'Error');
+
+                            for(index in res.itemList){
+                                var itemName = res.itemList[index].itemId.itemName;
+                                var rating = res.itemList[index].value;
+
+                                var error = 0;
+                                if(res.itemList[index].valueForecast){
+                                    error = res.itemList[index].value - res.itemList[index].valueForecast;
+                                }
+
+                                data.addRow([itemName, rating, error]);
+                            } 
+                        
+                            var options = {
+                                title : 'Evaluation of recommender '+$scope.selectedRecommender.poolName+' for user '+$scope.selectedUser.name,
+                                vAxis: {title: 'Rating'},
+                                hAxis: {title: 'Item', direction:-1, slantedText:true, slantedTextAngle:30 },
+                                seriesType: 'bars',
+                                series: {2: {type: 'line'}},
+                                width: 1000,
+                                height: 500
+                            };
+
+                            var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+                            chart.draw(data, options);
+                        }
+                    }
+                }
                 
                 
-                function drawVisualization() {    
-                    var data = new google.visualization.DataTable();
-                    data.addColumn('string', 'Item name');
-                    data.addColumn('number', 'User rating');
-                    data.addColumn('number', 'Error');
-
-                    for(indexi in res.itemList){
-                        var itemName = res.itemList[index].itemId.itemName;
-                        var rating = res.itemList[index].value;
-
-                        var error = 0;
-                        if(res.itemList[index].valueForecast){
-                            error = res.itemList[index].value - res.itemList[index].valueForecast;
-                        }    
-
-                        data.addRow([itemName, rating, error]);
-                    } 
-                    
-                    
-                    var options = {
-                        title : 'Evaluation of recommender',
-                        vAxis: {title: 'Rating'},
-                        hAxis: {title: 'Item'},
-                        seriesType: 'bars',
-                        series: {1: {type: 'line'}}
-                    };
-
-                    var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
-                    chart.draw(data, options);
-                              
-                }                
+                
+                
+                                
                 
             }, function(err){
                 $scope.errorMsgList.push(err);
             });
-        }
     }
     
    /*

@@ -104,8 +104,11 @@
                 </div>
             </div>  
             
+            <script type="application/javascript">
+                google.charts.load('current', {'packages':['corechart']});
+            </script>
             
-            <div class="panel-body">
+            <div class="panel-body" ng-show="viewGrafics">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Graphics</h3>                        
@@ -113,7 +116,7 @@
 
                     <div class="panel-body"> 
                          
-                       <div id="chart_div" style="width: 900px; height: 500px"></div>
+                       <div id="chart_div"></div>
                     </div>
                 </div>
             </div>  
