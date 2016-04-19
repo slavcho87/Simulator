@@ -215,23 +215,40 @@ router.get('/recommenderTypes', function(req, res){
 })
 
 router.post('/setRating', function(req, res){
-    var rating = new Rating();    
-    rating.userId=req.token;
-    rating.itemId=req.body.itemId; 
-    rating.value=req.body.rating;
-    rating.valueForecast = req.body.valueForecast; 
-    rating.recommenderId = req.body.recommenderId;
-    
-    rating.save(function(err){
+    Rating.find({itemId:req.body.itemId, userId: req.token}, function(err, list){
         if(err){
             res.json({
                 result: "NOK",
                 msg: err
             });
         }else{
-            res.json({
-                result: "OK"
-            });
+            if(list.length==0){
+                var rating = new Rating();    
+                rating.userId=req.token;
+                rating.itemId=req.body.itemId; 
+                rating.value=req.body.rating;
+                rating.valueForecast = req.body.valueForecast; 
+                rating.recommenderId = req.body.recommenderId;
+
+                rating.save(function(err){
+                    if(err){
+                        res.json({
+                            result: "NOK",
+                            msg: err
+                        });
+                    }else{
+                        res.json({
+                            result: "OK",
+                            msg: "Ratings assigned successfully!"
+                        });
+                    }
+                });
+            }else{
+                res.json({
+                    result: "NOK",
+                    msg: "You have already voted in this item!"
+                });
+            }    
         }
     });
 })

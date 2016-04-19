@@ -1,6 +1,6 @@
 var app = angular.module("app");
 
-app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Services', function ($scope, $http, $localStorage, Services) {
+app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Services', 'DataFactory', function ($scope, $http, $localStorage, Services, DataFactory) {
     $scope.errorMsgList = [];
     $scope.msgList = [];
     $scope.step=1;
@@ -38,6 +38,19 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
     $scope.currentPage = 0;
     $scope.pageSize = 10;
     $scope.importTrajectorySelected;
+    
+    $scope.deleteSelectedStaticItems = function(){ 
+        $scope.staticItemSelected.splice(0,$scope.staticItemSelected.length);
+    }
+    
+    $scope.deleteSelectedDynamicItems = function(){
+        $scope.dynamicItemSelected.splice(0,$scope.dynamicItemSelected.length);
+    }
+    
+    $scope.editScene = function(scene){
+        DataFactory.data.scene = scene.allData;
+        window.location = '#/map/editScene';
+    }
     
     $scope.addItemType=function(){
         for(index in $scope.staticItemSelected){
@@ -634,6 +647,10 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
         $scope.previewDynamicItemRows = [];
         $scope.previewDynamicItemColumnSplit = [];        
         $scope.previewDynamicItemRowsSplit = [];
+        $scope.dataPreviewStaticItemName = "";
+        $scope.dataPreviewStaticItemLong = "";
+        $scope.dataPreviewStaticItemLat = "";
+        $scope.dataPreviewStaticItemDesc = "";
         
         var reader = new FileReader();
         
@@ -737,6 +754,9 @@ app.controller("NewMapController", ['$scope', '$http', '$localStorage', 'Service
         $scope.previewDynamicItemRows = [];
         $scope.previewDynamicItemColumnSplit = [];        
         $scope.previewDynamicItemRowsSplit = [];
+        $scope.dataPreviewDynamicItemItemName = "";
+        $scope.dataPreviewDynamicItemItemSpeed = "";
+        $scope.dataPreviewDynamicItemDescription = "";
         
         var reader = new FileReader();
         

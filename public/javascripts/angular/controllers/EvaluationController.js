@@ -128,37 +128,31 @@ app.controller("EvaluationController", ['$scope','Services', function ($scope, S
                     $scope.errorMsgList.push(res.msg);
                 }else{
                     if(res.itemList.length==0){
-                        $scope.errorMsgList.push("There is no data");        
+                        $scope.errorMsgList.push("There is no data");
                     }else{
                         $scope.viewGrafics = true;
                         
-                        //if($scope.num == 0){
-                            //google.charts.load('current', {'packages':['corechart']});
-                            google.charts.setOnLoadCallback(drawVisualization);
-                        //}else{
-                          ///      google.charts.setOnLoadCallback(drawVisualization);
-                              //drawVisualization();
-                        //}             
-                    
-                        //$scope.num = $scope.num + 1;
+                        google.charts.setOnLoadCallback(drawVisualization);
                         
                         function drawVisualization() {    
                             var data = new google.visualization.DataTable();
                             data.addColumn('string', 'Item name');
                             data.addColumn('number', 'User rating');
+                            data.addColumn('number', 'Forecast');
                             data.addColumn('number', 'Error');
 
                             for(index in res.itemList){
                                 var itemName = res.itemList[index].itemId.itemName;
                                 var rating = res.itemList[index].value;
+                                var valueForecast = parseFloat(res.itemList[index].valueForecast);
 
                                 var error = 0;
                                 if(res.itemList[index].valueForecast){
                                     error = res.itemList[index].value - res.itemList[index].valueForecast;
                                 }
 
-                                data.addRow([itemName, rating, error]);
-                            } 
+                                data.addRow([itemName, rating, valueForecast, error]);
+                            }
                         
                             var options = {
                                 title : 'Evaluation of recommender '+$scope.selectedRecommender.poolName+' for user '+$scope.selectedUser.name,
@@ -167,7 +161,8 @@ app.controller("EvaluationController", ['$scope','Services', function ($scope, S
                                 seriesType: 'bars',
                                 series: {2: {type: 'line'}},
                                 width: 1000,
-                                height: 500
+                                height: 500,
+                                colors: ['blue','green', 'red'],
                             };
 
                             var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));

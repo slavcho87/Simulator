@@ -65,7 +65,7 @@ router.post('/getRatingData', function(req, res){
                 result: "NOK",
                 msg: err
             });
-        }else{console.log("no error");
+        }else{
             res.json({
                 result: "OK",
                 itemList: itemList

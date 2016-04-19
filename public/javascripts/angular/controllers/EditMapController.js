@@ -38,6 +38,14 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
     $scope.pageSize = 10;
     $scope.importTrajectorySelected;
     
+    $scope.deleteSelectedStaticItems = function(){ 
+        $scope.staticItemSelected.splice(0,$scope.staticItemSelected.length);
+    }
+    
+    $scope.deleteSelectedDynamicItems = function(){
+        $scope.dynamicItemSelected.splice(0,$scope.dynamicItemSelected.length);
+    }
+
     $scope.addItemType=function(){
         for(index in $scope.staticItemSelected){
             $scope.staticItemSelected[index].type = JSON.parse($scope.newStaticItem.type);
@@ -405,7 +413,6 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
                         route: item.route
                     });
                 }
-                console.log($scope.dynamicItemListInScene);
             }, function(err){
                 $scope.errorMsgList.push(err);
             });            
@@ -589,6 +596,10 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
         $scope.previewDynamicItemRows = [];
         $scope.previewDynamicItemColumnSplit = [];        
         $scope.previewDynamicItemRowsSplit = [];
+        $scope.dataPreviewStaticItemName = "";
+        $scope.dataPreviewStaticItemLong = "";
+        $scope.dataPreviewStaticItemLat = "";
+        $scope.dataPreviewStaticItemDesc = "";
         
         var reader = new FileReader();
         
@@ -681,6 +692,9 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
         $scope.previewDynamicItemRows = [];
         $scope.previewDynamicItemColumnSplit = [];        
         $scope.previewDynamicItemRowsSplit = [];
+        $scope.dataPreviewDynamicItemItemName = "";
+        $scope.dataPreviewDynamicItemItemSpeed = "";
+        $scope.dataPreviewDynamicItemDescription = "";
         
         var reader = new FileReader();
         

@@ -665,7 +665,7 @@ router.post('/generateRandomWay', function(req, res){
             
             itemList.push({      
                 speed: speed,
-                route: route   
+                route: route
             });
         }
         

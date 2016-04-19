@@ -8,7 +8,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <label class="navbar-brand" >Simulator</label>
+                <label class="navbar-brand" >RecSim</label>
             </div>
 
             <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -383,6 +383,7 @@
                                                         <button type="button" class="btn btn-success fa fa-check" ng-click="checkAll()"></button>
                                                         <button type="button" class="btn btn-success fa fa-times" ng-click="uncheckAll()"></button>
                                                         <button type="button" class="btn btn-success fa fa-tags" data-toggle="modal" data-target="#setStaticItemTypeModal" ng-show="staticItemSelected.length>0"></button>
+                                                        <button type="button" class="btn btn-danger fa fa-trash-o" data-toggle="modal" data-target="#deleteSelectedStaticItemsModal" ng-show="staticItemSelected.length>0"></button>
                                                     </th>
                                                     <th>Item name</th>
                                                     <th>Item type</th>
@@ -418,7 +419,7 @@
                                     <nav align="center">
                                         <ul class="pagination">
                                             <li ng-disabled="currentPageStaticItems == 0">
-                                                <a href="#/map/editScene" 
+                                                <a href="#/map/editMap" 
                                                    ng-click="previousStaticItems()"
                                                    aria-label="Previous">
                                                    <span aria-hidden="true">&laquo;</span>
@@ -426,11 +427,11 @@
                                             </li>
 
                                             <li ng-repeat="pag in pagesStaticItems()" ng-class="{active:pag==currentPageStaticItems}">
-                                                <a href="#/map/editScene" ng-click="setCurrentPageStaticItems(pag)">{{pag+1}}</a>
+                                                <a href="#/map/editMap" ng-click="setCurrentPageStaticItems(pag)">{{pag+1}}</a>
                                             </li>
 
                                             <li>
-                                                <a href="#/map/editScene"    
+                                                <a href="#/map/editMap"    
                                                   ng-click="nextStaticItems()"
                                                   aria-label="Next">  
                                                   <span aria-hidden="true">&raquo;</span>
@@ -543,7 +544,7 @@
                                             <nav align="center">
                                                 <ul class="pagination">
                                                     <li ng-disabled="currentPageDynaicItemsMan == 0">
-                                                        <a href="#/map/editScene" 
+                                                        <a href="#/map/editMap" 
                                                            ng-click="previousDynaicItemsMan()"
                                                            aria-label="Previous">
                                                            <span aria-hidden="true">&laquo;</span>
@@ -551,11 +552,11 @@
                                                     </li>
 
                                                     <li ng-repeat="pag in pagesDynaicItemsMan()" ng-class="{active:pag==currentPageDynaicItemsMan}">
-                                                        <a href="#/map/editScene" ng-click="setCurrentPageDynaicItemsMan(pag)">{{pag+1}}</a>
+                                                        <a href="#/map/editMap" ng-click="setCurrentPageDynaicItemsMan(pag)">{{pag+1}}</a>
                                                     </li>
 
                                                     <li>
-                                                        <a href="#/map/editScene"    
+                                                        <a href="#/map/editMap"    
                                                           ng-click="nextDynaicItemsMan()"
                                                           aria-label="Next">  
                                                           <span aria-hidden="true">&raquo;</span>
@@ -668,6 +669,7 @@
                                                         <button type="button" class="btn btn-success fa fa-times" ng-click="uncheckAllDynamicItem()"></button>
                                                         <button type="button" class="btn btn-success fa fa-tags" data-toggle="modal" data-target="#setItemTypeModal" ng-show="dynamicItemSelected.length>0"></button>
                                                         <button type="button" class="btn btn-success fa fa-road" data-toggle="modal" data-target="#generateTrajectoryModal" ng-show="dynamicItemSelected.length>0"></button>
+                                                        <button type="button" class="btn btn-danger fa fa-trash-o" data-toggle="modal" data-target="#deleteSelectedDynamicItemsModal" ng-show="dynamicItemSelected.length>0"></button>
                                                     </th>
                                                     <th>Item name</th>
                                                     <th>Item type</th>
@@ -684,7 +686,7 @@
                                                     <td><input type="checkbox" checklist-model="dynamicItemSelected" checklist-value="dynamicItem"></td>
                                                     <td>{{dynamicItem.name}}</td>
                                                     <td>    
-                                                        <a href="#/map/editScene"
+                                                        <a href="#/map/editMap"
                                                            editable-select="dynamicItem.type" 
                                                            e-ng-options="item as item.name for item in dynamicItemList">
                                                             {{dynamicItem.type.name || "empty"}}
@@ -708,7 +710,7 @@
                                         <nav align="center">
                                                 <ul class="pagination">
                                                     <li ng-disabled="currentPageDynaicItems == 0">
-                                                        <a href="#/map/editScene" 
+                                                        <a href="#/map/editMap" 
                                                            ng-click="previousDynaicItems()"
                                                            aria-label="Previous">
                                                            <span aria-hidden="true">&laquo;</span>
@@ -716,11 +718,11 @@
                                                     </li>
 
                                                     <li ng-repeat="pag in pagesDynaicItems()" ng-class="{active:pag==currentPageDynaicItems}">
-                                                        <a href="#/map/editScene" ng-click="setCurrentPageDynaicItems(pag)">{{pag+1}}</a>
+                                                        <a href="#/map/editMap" ng-click="setCurrentPageDynaicItems(pag)">{{pag+1}}</a>
                                                     </li>
 
                                                     <li>
-                                                        <a href="#/map/editScene"    
+                                                        <a href="#/map/editMap"    
                                                           ng-click="nextDynaicItems()"
                                                           aria-label="Next">  
                                                           <span aria-hidden="true">&raquo;</span>
@@ -1322,6 +1324,60 @@
               <div class="modal-footer">  
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="addItemType()">Save item type</button> 
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="modal fade" role="dialog" id="deleteSelectedStaticItemsModal">
+          <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Confirmation</h4>
+              </div>
+                
+              <div class="modal-body">  
+                  <div class="row">      
+                      <div class="col-xs-6">
+                          <label>Are you sure you want to delete the selected items?</label>
+                      </div>                        
+                  </div>
+              </div>
+        
+              <div class="modal-footer">  
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deleteSelectedStaticItems()">Delete</button> 
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="modal fade" role="dialog" id="deleteSelectedDynamicItemsModal">
+          <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Confirmation</h4>
+              </div>
+                
+              <div class="modal-body">  
+                  <div class="row">      
+                      <div class="col-xs-6">
+                          <label>Are you sure you want to delete the selected items?</label>
+                      </div>                        
+                  </div>
+              </div>
+        
+              <div class="modal-footer">  
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deleteSelectedDynamicItems()">Delete</button> 
               </div>
             </div>
 

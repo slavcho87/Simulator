@@ -22,6 +22,7 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
     $scope.percentage = "0%";
     $scope.percentageSum = 0;
     $scope.userMovement = "simuledMovement";
+    $scope.msgList = [];
     
     $scope.recomend = function(){
         $scope.recommendedItemList = [];
@@ -94,6 +95,8 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
         Services.setRating(data, function(res){
             if(res.result == "NOK"){
                 $scope.errorMsgList.push(res.msg);
+            }else{
+                $scope.msgList.push(res.msg);
             }
         }, function(err){
             $scope.errorMsgList.push(err);
@@ -104,6 +107,8 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
         Services.setRating(data, function(res){
             if(res.result == "NOK"){
                 $scope.errorMsgList.push(res.msg);
+            }else{
+                $scope.msgList.push(res.msg);
             }
         }, function(err){
             $scope.errorMsgList.push(err);
@@ -447,6 +452,19 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
         Services.userMove(data, function(err){
             $scope.errorMsgList.push();
         });
+    }
+    
+    /*
+    * Hide message
+    */    
+    $scope.msgSuccessHide = function(msg){
+        var msgIndex = $scope.msgList.indexOf(msg);
+        
+        if(msgIndex>=0){
+            $scope.msgList.splice(msgIndex, 1);
+        }else{
+            $scope.msgList.push(ERROR_HAS_OCCURRED);
+        }
     }
     
     /*
