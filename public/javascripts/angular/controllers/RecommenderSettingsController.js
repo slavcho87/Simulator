@@ -90,12 +90,13 @@ app.controller("RecommenderSettingsController", ['$scope', '$http','Services', f
                         $scope.msgList.push(res.msg);
 
                         //insert new recommender into the recommender list
-                        $scope.recommenderList.push({    
+                        $scope.recommenderList.push({
+                            _id: res._id,
                             poolName: $scope.rec.poolName,
                             recommenderType: $scope.rec.type,
                             maximuDistanteToGo: $scope.rec.maxDistanceToGo,
                             visibilityRadius: $scope.rec.visibilityRadius,
-                            itemsToRecommend: $scope.rec.numItemToRec,
+                            itemsToRecommend: $scope.rec.numItemToRecs,
                             minimumScore: $scope.rec.minScoreForRec,
                             strategyType: $scope.rec.strategyType
                         });

@@ -20,11 +20,11 @@ router.post('/recommenderSave', function(req, res, next){
                 recommederModel.recommenderType=req.body.type;
                 recommederModel.maximuDistanteToGo=req.body.maxDistanceToGo;
                 recommederModel.visibilityRadius=req.body.visibilityRadius;
-                recommederModel.itemsToRecommend=req.body.numItemToRec;   
+                recommederModel.itemsToRecommend=req.body.numItemToRecs;
                 recommederModel.minimumScore=req.body.minScoreForRec;
                 recommederModel.strategyType=req.body.strategyType;
 
-                recommederModel.save(function(err){
+                recommederModel.save(function(err, recommender){
                     if(err){
                         res.json({
                             result: "NOK",
@@ -33,7 +33,8 @@ router.post('/recommenderSave', function(req, res, next){
                     }else{
                         res.json({
                             result: "OK",
-                            msg: "Recommender saved successfully!"
+                            msg: "Recommender saved successfully!",
+                            _id: recommender._id
                         });
                     }
                 });             
