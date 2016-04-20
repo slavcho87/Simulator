@@ -6,7 +6,12 @@ Recommender/target
 RemoteSystemsTempFiles
 .recommenders
 Servers
-aplications
+aplications/data
+aplications/maven
+aplications/mongodb
+aplications/mongodb32bits
+aplications/nodejs
+aplications/nodejs32bits
 docs/memoria-TFG/memoria-TFG-Slavcho-Ivanov.aux
 docs/memoria-TFG/memoria-TFG-Slavcho-Ivanov.bbl
 docs/memoria-TFG/memoria-TFG-Slavcho-Ivanov.blg
