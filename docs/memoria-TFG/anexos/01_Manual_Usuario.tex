@@ -314,7 +314,15 @@ Este paso consiste en definir cuales son los objetos estáticos y sus posiciones
 
 \subsubsection{Paso 3.1: importar los objetos estáticos}
 
-Para importa los objetos estáticos seleccionamos la opciones load from file y nos aparecerá un formulario donde podemos elegir cual es el fichero que queremos importar. Una vez importados los objetos nos aparecerá un table con todos los objetos importados.
+Para importa los objetos estáticos seleccionamos la opciones load from file y nos aparecerá un formulario donde podemos elegir cual es el fichero que queremos importar. Antes de que se carguen los datos se nos previsualiza el contenido del fichero que queremos cargar:
+
+\begin{figure}[H]
+	\centering\includegraphics[scale=0.35]{imagenes/capitulo9/crear-escena-3-1.JPG}
+	\caption{Paso 3.1: Previsualizar los objetos estáticos a importar}
+	\label{img:paso3-1-1}
+\end{figure}
+
+En esta ventana tenemos que vincular los atributos del fichero a los atributos de nuestro sistema. Para cada atributo de nuestro sistema tenemos un select y en este select salen los atributos del fichero. Tenemos que seleccionar que atributo del fichero a que atributo de nuestro sistema queremos vincular. Por ultimo tenemos que elegir que tipo de objeto estático queremos asignar a los datos que estamos importando. Una vez importados los objetos nos aparecerá un table con todos los objetos importados.
 
 \begin{figure}[H]
 	\centering\includegraphics[scale=0.35]{imagenes/capitulo9/crear-escena-3.JPG}
@@ -322,11 +330,7 @@ Para importa los objetos estáticos seleccionamos la opciones load from file y n
 	\label{img:paso3-1}
 \end{figure}
 
-Observamos que los objetos que acabamos de importar no tienen ningún tipo definido. Esto es debido ya que no sabemos de antelación cuales son los tipos de objetos estáticos ya que estos se configuran desde el simulador. Por esto el simulador nos permite dos maneras de definir cuales son los tipos de los objetos importados.
-
-La primera manera consiste en pulsar directamente sobre el tipo del item que queremos modificar y nos aparece un select con todos los tipos disponibles.
-
-El inconveniente que genera esta manera es que si tenemos muchos objetos es demasiado lento y laborioso definir muchos items. Por esto el simulador nos permite seleccionar una lista de items y asignarles un tipo estático.
+Una vez importados los objetos vemos que disponemos una serie de opciones que nos permiten gestionar los objetos importados. Podemos seleccionar un subconjunto y todos los objetos y cambiarles el tipo o borrarles. Esto se hace con las opciones que tenemos en la cabecera de la tabla.
 
 \subsubsection{Paso 3.2: definir los objetos estáticos manualmente}
 
@@ -344,13 +348,15 @@ El últimos paso consiste en definir los objetos dinámicos y sus rutas. Dispone
 
 \subsubsection{Paso 4.1: importar los objetos dinámicos}
 
-Para importarlos objetos dinámicos desde un fichero tenemos que seleccionar la opción load from file y nos aparecerá un formulario que nos permite seleccionar el fichero a importar. Una vez importados los objetos nos aparecerá una tabla parecida que la tabla del paso 3.1 que nos permite asignar los tipos de objetos dinámicos a cada item.
+Para importarlos objetos dinámicos desde un fichero tenemos que seleccionar la opción load from file y nos aparecerá un formulario que nos permite seleccionar el fichero a importar. Antes de cargar los objetos dinámicos podemos previsualizar los datos y vincular los atributos del fichero a los atributos del sistema. Esto se realiza mediante los selects que observamos en la siguiente pantalla:
 
 \begin{figure}[H]
 	\centering\includegraphics[scale=0.35]{imagenes/capitulo9/crear-escena-8.JPG}
 	\caption{Paso 4.1: importar los objetos dinámicos}
 	\label{img:paso4-1}
 \end{figure}
+
+Una vez que hayamos importado los ficheros vemos una tabla parecida que tabla del paso 3.1. La diferencia es que aquí disponemos de más opciones. Entre estas opciones son las de generar las rutas a un subconjunto a todos los datos, cambiar el tipo de objeto dinámico y borrarlos objetos seleccionados.
 
 \subsubsection{Paso 4.2: definir los objetos dinámicos manualmente}
 
@@ -443,3 +449,16 @@ Para realizar las votaciones disponemos de los siguientes opciones:
 	\item opción 2: una vez que hayamos obtenido una lista con items recomendados disponemos de un select donde podemos realizar la votación
 \end{itemize}
 
+\newpage
+
+\section{Evaluación de un recomendador}
+
+Para realizar la evaluación de un recomendador vamos en el menú Evaluations:
+
+\begin{figure}[H]
+	\centering\includegraphics[scale=0.35]{imagenes/capitulo12/evaluacion.png}
+	\caption{Evaluación de un recomendador}
+	\label{img:evaluacion}
+\end{figure}
+
+Lo primero que tenemos que hacer es seleccionar el tipo de recomendador que queremos evaluar. Una vez que hayamos seleccionado el tipo de recomendador nos aparecen los mapas y escenas donde se utiliza este. A continuación tenemos que seleccionar el usuario que queremos evaluar y escoger una lista de items. Al final pulsamos el botón Load Graphics y se muestra un gráfico con el item, la valoración que ha dato el usuario, el valor estimado en este momento y el error. Si no disponemos de datos de algún item este no saldrá en el gráfico. Si no disponemos de ningún dato se nos indicara con un mensaje.
