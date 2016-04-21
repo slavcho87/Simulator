@@ -270,4 +270,14 @@ Con este método conseguimos calcular cual es la siguiente posición geográfica
 
 \section{Explotación del simulador}
 
+Un usuario nuevo entra en el simulador y visita y valora una serie de items como por ejemplo restaurantes. Al hacer click sobre el item se muestra información relevante del item. El usuario valorará el item en función de estos atributos u otros factores que el considere importantes. A partir de estas valoraciones se evalúa que otros items se le recomiendan al usuario por el recomendador. 
 
+A continuación vamos a ver si las recomendaciones ofrecidas tienen sentido, es decir, el simulador va calculando los errores. Para cuantificar el error se ha utilizado la métrica Medium Absolute Error (MAE). La MAE consiste en restar la valoración del usuario del valor estimado del recomendador. Hacemos pruebas con varios usuarios y sacamos medias de su satisfacción con el sistema de recomendación.
+
+\newpage
+
+\begin{figure}[H]
+	\centering\includegraphics[scale=0.35]{imagenes/capitulo12/evaluacion.png}
+	\caption{Evaluación de un recomendador}
+	\label{evaluacionRecomendador}
+\end{figure}
