@@ -211,8 +211,18 @@ io.on('connection', function(socket){
     socket.on('set value forecast', function(data){
         socket.broadcast.emit('set value forecast', data);
     });
+
+    //Evento que se ejecuta para obtener la lista de recomendadores push
+    socket.on('get strategies push', function(data){
+        socket.broadcast.emit('get strategies push', data); //este evento lo tiene el recomendador
+    });
     
-     socket.on('error', function(err) {
+    //Evento que se ejecuta cuando el recomendador push devuelve la lista de recomendadores
+    socket.on('get strategies push result', function(data){
+        socket.broadcast.emit('get strategies push result', data); //este evento lo tiene el navegador
+    });
+
+    socket.on('error', function(err) {
         //here i change options
         console.log('Error!', err);
     });

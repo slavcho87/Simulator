@@ -15,6 +15,20 @@
             $scope.strategyList = stategyTypeList;    
         });
     });
+    
+    socket.on('get strategies push result', function(data){
+        var stategyTypeList = [];
+        for(index in data.strategies){
+            stategyTypeList.push(data.strategies[index].type);
+        }
+        
+        var appElement = document.querySelector('[ng-app=app]');
+        var $scope = angular.element(appElement).scope();
+        $scope = $scope.$$childHead;
+        $scope.$apply(function(){
+            $scope.strategyList = stategyTypeList;    
+        });
+    });
 </script>
 
 <div ng-init="loadData()">    
@@ -82,7 +96,7 @@
 
                             <div class="col-sm-4">
                                 <label>Recommender type</label>
-                                <select ng-model="rec.type" class="form-control">
+                                <select ng-model="rec.type" ng-change="getStrategiesFromRecomender()" class="form-control">
                                     <option value="push">Push</option>
                                     <option value="pull">Pull</option>
                                 </select>

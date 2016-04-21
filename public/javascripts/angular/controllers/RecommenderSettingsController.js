@@ -125,7 +125,16 @@ app.controller("RecommenderSettingsController", ['$scope', '$http','Services', f
             $scope.errorMsgList.push(err);
         });
         
-        socket.emit('getStrategies', "Esto es una prueba");
+        //socket.emit('getStrategies', "Esto es una prueba");
+    }
+    
+    $scope.getStrategiesFromRecomender = function(){
+         $scope.strategyList = [];
+        if($scope.rec.type == "pull"){
+            socket.emit('getStrategies', "Esto es una prueba");    
+        }else{
+            socket.emit('get strategies push', "Esto es una prueba");
+        }
     }
     
     $scope.selectDeleteRecommender = function(recommender){
