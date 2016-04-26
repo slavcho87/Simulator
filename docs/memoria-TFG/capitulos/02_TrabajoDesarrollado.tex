@@ -5,20 +5,23 @@ En este capítulo se explican las funcionalidades básicas del simulador desarro
 
 \section{Resumen del simulador}
 
+El simulador RecSim permite representar escenarios adaptados a las necesidades de simulación existentes. Un escenario se compone de un mapa y de un conjunto de objetos, y puede definirse sobre cualquier mapa real existente en OpenStreetMap: el usuario puede utilizar un buscador para ver un mapa y luego seleccionar dentro de dicho mapa el área geográfica de interés. Además, se pueden definir tipos de objetos estáticos (por ejemplo, restaurantes, hoteles, cines, etc.) y tipos de objetos dinámicos o móviles (por ejemplo, taxis, buses,ambulancias, etc.), asociándoles un nombre de tipo y un icono que se utilizará para representar instancias de dicho tipo de objeto en un mapa. Luego pueden colocarse en un escenario objetos estáticos y dinámicos de los tipos deseados: los objetos estáticos se colocan en la posición deseada sobre el mapa y a los objetos dinámicos se les asigna una determinada trayectoria o un comportamiento de movimientos aleatorios. Alternativamente, pueden importarse datos acerca de objetos estáticos o dinámicos definidos en ficheros externos. Sobre el mapa se representa también un usuario móvil, que puede desplazarse utilizando el teclado (sin necesidad de que el usuario real cambie físicamente de lugar) o bien desplazarse físicamente (en cuyo caso las coordenadas se obtienen de un receptor GPS ligado al equipo).
 
-Se trata de un sistema de colaboración abierta distribuida que permite configurar distintos escenarios con objetos móviles y estáticos sobre mapas de ciudades reales obtenidos a partir del servicio de mapas de OpenStreetMap. 
+Un aspecto clave es que podemos simular esos escenarios móviles y al mismo tiempo poner en funcionamiento sistemas de recomendación que proporcionan recomendaciones al usuario. El usuario puede valorar ítems, de forma que el sistema de recomendación puede ir aprendiendo los gustos del usuario y aumentando la información del conjunto de datos de valoraciones disponible. Es posible exportar resultados referentes a los errores cometidos por el sistema de recomendación al valorar ítems y generar gráficas sencillas desde el mismo simulador
 
-El simulador de escenarios está basado en el simulador Mavsim desarrollado por el Grupo de Sistemas de Información Distribuidos de la Universidad de Zaragoza utilizado para la simulación de VANETs en el cual hay muchos vehículos distribuidos en una amplia zona geográfica.
+Como ejemplo, en la Figura \ref{simulacionEnAccion} se muestra una captura de pantalla donde se puede ver un fragmento del mapa de Zaragoza con un usuario móvil y varios tipos de ítems de potencial interés: hoteles, restaurantes, hospitales, y coches. En la Figura \ref{evaluacionEnAccion} se muestra un ejemplo de gráfica que ilustra los errores cometidos por el sistema de recomendación al estimar la valoración de varios ítems.
 
-\begin{figure}[H]
-\centering\includegraphics[scale=0.35]{imagenes/resumen-simulador.jpg}
-\caption{Simulación en Actur, Zaragoza con un solo usuario}
-\label{c2_trama}
+\begin{figure}[h]
+\centering
+\subfloat[Captua del simulador en acción]{
+	\label{simulacionEnAccion}
+	\includegraphics[width=0.55\textwidth]{imagenes/resumen-simulador.jpg}}
+\subfloat[Errores cometidos por el sistema de recomendación]{
+	\label{evaluacionEnAccion}
+	\includegraphics[width=0.35\textwidth]{imagenes/capitulo12/evaluacion.png}}
+\caption{Simulador RecSim}
+\label{recSim}
 \end{figure}
-
-Puede ser usado a través de cualquier dispositivo (PC, tablet, móvil etc.) con conexión a Internet y un navegador web. Permite a los usuarios crear sus propios mapas y escenarios. Durante la creación de una escena el usuario elige cual es la cuidad donde se realiza la simulación, el recomendador a utilizar, si el mapa es colaborativo o no, introducir los objetos estáticos y configurar cuales son los objetos móviles y sus rutas. 
-
-Para realizar una simulación el usuario tiene que buscar y seleccionar el mapa y escenario donde moverse tanto para obtener recomendaciones como para realizar votaciones sobre los distintos objetos de este entorno.
 
 \section{Análisis de requisitos}
 
@@ -118,27 +121,31 @@ El la figura \ref{arquitecturaComponentes} observamos que el navegador web se co
 El sistema bidireccional dirigido por eventos es utilizado  durante la simulación por una parte para reflejar los eventos generados por un usuario al resto de usuarios, y por otra para integrar el navegador, el servidor Node.js y el recomendador. De esta manera conseguimos compartir información entre los distintos componentes sin que estos los hayan solicitado evitando muchas peticiones innecesarias.
 
 \begin{figure}[H]
-\centering\includegraphics[scale=0.6]{imagenes/arquitectura-componentes.png}
+\centering\includegraphics[scale=0.4]{imagenes/arquitectura-componentes.png}
 \caption{Arquitectura de componentes del sistema}
 \label{arquitecturaComponentes}
 \end{figure}
 
+\newpage
+
 \subsection{Arquitectura del front-end}
 
-Para el desarrollo del front-end se han utilizado los frameworks Angular.js\footnote{framework que nos permite desarrollar aplicaciones de una sola página} y bootstrap\footnote{framework que nos ofrece un sistema de componentes reutilizables y adaptables a la pantalla del dispositivo}. Se ha decidido utilizar estas tecnologías porque nos ofrece varias ventajas: ahorro de recursos\footnote{angular.js va transmitiendo las vistas de la interfaz gráfica y las cachea al lado del cliente para ser reutilizadas posteriormente. Vuelve a solicitar una vista si y solo si esta ha sufrido algún cambio en el servidor}, mejora de la productividad y la posibilidad de realizar una simulación sobre dispositivos móviles\footnote{esto nos da la oportunidad de utilizar la posición geográfica del usuario para obtener recomendaciones en el entorno de una cuidad real. De está manera obtenemos datos reales y muchas más precisión a la hora de evaluar los algoritmos de recomendaciones} con el mismo código fuente.
+Para el desarrollo del front-end se han utilizado los frameworks Angular.js y bootstrap. Se ha decidido utilizar estas tecnologías porque nos ofrece varias ventajas: ahorro de recursos, mejora de la productividad y la posibilidad de realizar una simulación sobre dispositivos móviles con el mismo código fuente.
 
 La arquitectura del front-end está basada en el patrón Modelo-Vista-Controllador de tal forma que para cada vista existe un controlador que contiene la lógica de negocio de esta. El controlador también es el encargado de establecer comunicación con el back end. Esta comunicación se realiza entre los llamados Servicios\footnote{es pequeña fabrica de funciones y objetos inyectada en los controladores} de Angular.js y la REST API del back end. Los Servicios de Angular.js son muy necesarios y útiles ya que nos permiten crear un envoltorio sobre la REST API que nos ofrece el back end y de esta forma centralizar las llamas a la API.
 
 \begin{figure}[H]
-\centering\includegraphics[scale=0.7]{imagenes/arquitectura-front-end.png}
+\centering\includegraphics[scale=0.5]{imagenes/arquitectura-front-end.png}
 \caption{Arquitectura del front-end}
 \label{arquitecturaFrontEnd}
 \end{figure}
 
 \subsection{Arquitectura del back-end}
 
-
 Para el desarrollo del back-end se han utilizado Node.js\footnote{javascript al lado del servidor}, Express\footnote{modulo de Node.js que nos ofrece la posibilidad de desarrollar una REST API}, socket.io\footnote{sistema bidireccional dirigido por eventos} y mongoose \footnote{modelado de objetos sobre mongoDB}. Se ha decidido utilizar estas tecnología por que nos ofrecen las siguientes ventajas: mejora la productividad a la hora de desarrollar el back-end, nos permite desarrollar un back-end ligero que consuma pocos recursos y el modulo sockets.io nos ofrece la posibilidad de desarrollar un sistema bidireccional dirigido por eventos.
+
+
+\newpage
 
 La arquitectura del back-end se basa en la filosofía de desarrollo de aplicaciones con Node.js y Express y consiste de la siguiente estructura de directorios:
 
@@ -197,7 +204,7 @@ Aunque sea un recomendador de ejemplo este está pensado para se expandido, tant
 Durante el arranque el servidor del recomendador lanza un hilo por cada tipo de recomendador. En nuestro caso solo lanza un hilo que se corresponde al servidor de tipo pull. Este hilo es el que contiene los eventos que invoca el simulador de escenarios. En la figura \ref{diagramaEventos} observamos que tenemos solo dos eventos: uno para recuperar los tipos de implementaciones\footnote{en nuestro caso es User based recommender pero existen otros tipos como Item based recommender} y otro para realizar las recomendaciones.
 
 \begin{figure}[H]
-\centering\includegraphics[scale=0.6]{imagenes/diagrama-de-eventos.png}
+\centering\includegraphics[scale=0.5]{imagenes/diagrama-de-eventos.png}
 \caption{Diagrama de eventos}
 \label{diagramaEventos}
 \end{figure}
@@ -205,12 +212,12 @@ Durante el arranque el servidor del recomendador lanza un hilo por cada tipo de 
 El evento recommend es el que se dispara cuando uno de los usuarios solicita una recomendación. Para que se puedan utilizar distintos tipos de implementaciones del recomendador de tipo pull se ha implementado un patrón de diseño de tipo Strategy. Este patrón de diseños nos permite cambiar de estrategia de recomendación en tiempo de ejecución:
 
 \begin{figure}[H]
-\includegraphics[scale=0.5]{imagenes/uml.png}
+\includegraphics[scale=0.65]{imagenes/uml.png}
 \caption{Diagrama uml del patrón de diseño de tipo Strategy}
 \label{diagramaUMLStrategy}
 \end{figure}
 
-\subsection{Autentificación Basada en Token}
+\subsection{Autentificación basada en token}
 
 La autentificación es una de las partes más importantes de un sistema. En este desarrollo se ha optado por una autentificación basada en token. En la autentificación basada en token, las cookies y las sesiones no se utilizan. Se emplea un token para autentificar al usuario en cada petición que se hace al servidor. El flujo de control es el siguiente:
 \begin{enumerate}[1.]
@@ -268,16 +275,16 @@ La navegación por estima es una técnica que se aplica en el cliente. Consiste 
 
 Con este método conseguimos calcular cual es la siguiente posición geográfica donde tenemos que colocar un objeto móvil al acabo de un tiempo (el tiempo de refresco de la pantalla). Como ventaja conseguimos disminuir el error en el cálculo de las posiciones de los objetos móviles. Así obtenemos movimientos muy precisos incluso en grafos de movimientos con nodos muy cercanos.
 
-\section{Explotación del simulador}
+%\section{Explotación del simulador}
 
-Un usuario nuevo entra en el simulador y visita y valora una serie de items como por ejemplo restaurantes. Al hacer click sobre el item se muestra información relevante del item. El usuario valorará el item en función de estos atributos u otros factores que el considere importantes. A partir de estas valoraciones se evalúa que otros items se le recomiendan al usuario por el recomendador. 
+%Un usuario nuevo entra en el simulador y visita y valora una serie de items como por ejemplo restaurantes. Al hacer click sobre el item se muestra información relevante del item. El usuario valorará el item en función de estos atributos u otros factores que el considere importantes. A partir de estas valoraciones se evalúa que otros items se le recomiendan al usuario por el recomendador. 
 
-A continuación vamos a ver si las recomendaciones ofrecidas tienen sentido, es decir, el simulador va calculando los errores. Para cuantificar el error se ha utilizado la métrica Medium Absolute Error (MAE). La MAE consiste en restar la valoración del usuario del valor estimado del recomendador. Hacemos pruebas con varios usuarios y sacamos medias de su satisfacción con el sistema de recomendación.
+%A continuación vamos a ver si las recomendaciones ofrecidas tienen sentido, es decir, el simulador va calculando los errores. Para cuantificar el error se ha utilizado la métrica Medium Absolute Error (MAE). La MAE consiste en restar la valoración del usuario del valor estimado del recomendador. Hacemos pruebas con varios usuarios y sacamos medias de su satisfacción con el sistema de recomendación.
 
-\newpage
+%\newpage
 
-\begin{figure}[H]
-	\centering\includegraphics[scale=0.35]{imagenes/capitulo12/evaluacion.png}
-	\caption{Evaluación de un recomendador}
-	\label{evaluacionRecomendador}
-\end{figure}
+%\begin{figure}[H]
+%	\centering\includegraphics[scale=0.35]{imagenes/capitulo12/evaluacion.png}
+%	\caption{Evaluación de un recomendador}
+%	\label{evaluacionRecomendador}
+%\end{figure}

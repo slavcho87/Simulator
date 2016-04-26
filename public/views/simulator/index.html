@@ -356,6 +356,7 @@
                             donde hay que moverse*/
                             function getNewPos(pos, d, brng){
                                 var R = 6378000;//radio de la tierra
+                                
                                 var φ1 = toRad(pos[0]);
                                 var λ1 = toRad(pos[1]);
                                 
@@ -363,7 +364,14 @@
                                 var λ2 = λ1 + Math.atan2(Math.sin(toRad(brng))*Math.sin(d/R)*Math.cos(φ1),
                                                          Math.cos(d/R)-Math.sin(φ1)*Math.sin(φ2));
                                 
-                                var newPos = [toGrad(φ2), toGrad(λ2)];
+                               // if(brng==90){
+                               //     var newPos = [pos[0], toGrad(λ2)];
+                               // }else if(brng==270){
+                               //     var newPos = [pos[0], toGrad(λ2)];
+                               // }else{
+                                    var newPos = [toGrad(φ2), toGrad(λ2)]
+                                }//var newPos = [toGrad(φ2), toGrad(λ2)];
+                                
                                 return newPos;
                             }
                             

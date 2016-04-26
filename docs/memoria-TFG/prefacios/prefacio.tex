@@ -14,9 +14,7 @@ Los sistemas de recomendación proporcionan sugerencias acerca de elementos que 
 
 El objetivo de este Trabajo Fin de Grado es desarrollar un simulador de escenarios con usuarios móviles que recolecte y proporciones conjuntos de datos dinámicos para la evaluación de algoritmos de recomendaciones. 
 
-El sistema desarrollado utiliza técnicas de crowdsourcing, también conocido como colaboración abierta distribuida, y consiste en delegar tareas a un grupo de personas o comunidad a través de una convocatoria abierta.
-
-La arquitectura del sistema consta de un navegador web, un servidor web Node.js, un servidor de recomendaciones y una base de datos mongoDB. Se trata de una aplicación de una sola página desarrollada con Angular.js y Node.js que nos permite configurar distintos escenarios con conjuntos de datos reales obtenidos a partir del servicio de mapas de OpenStreetMap.
+La arquitectura del sistema consta de un navegador web, un servidor web Node.js, un servidor de recomendaciones y una base de datos mongoDB. Se trata de una aplicación web de una sola página desarrollada con Angular.js y Node.js que nos permite configurar distintos escenarios con conjuntos de datos reales obtenidos a partir del servicio de mapas de OpenStreetMap.
 
 La integración entre los distintos componentes del sistemas está realizada de dos maneras. La primera es una REST API y el intercambio de mensajería JSON para realizar operaciones de tipo CRUD para las distintas configuraciones del simulador y la segunda es un sistema bidireccional dirigido por eventos utilizado durante las simulaciones para compartir información entre los distintos componentes del sistema sin que estos la hayan solicitado evitando mucha peticiones innecesarias y consiguiendo que las simulaciones funcionen en tiempo real.
 
