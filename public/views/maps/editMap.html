@@ -406,7 +406,7 @@
                                                         </a>
                                                     </td>
                                                     <td><img src="{{staticItemElement.type.icon}}" height="16" width="16"/></td>
-                                                    <td>{{staticItemElement.description}}</td>
+                                                    <td>{{getDescriptionString(staticItemElement.description)}}</td>
                                                     <td>
                                                         <button class="btn btn-danger fa fa-trash-o" 
                                                                 data-toggle="modal" data-target="#deleteStaticItemModal"
@@ -1096,11 +1096,12 @@
                       </div>
                       
                       <div class="col-sm-6">
-                          <label>Description</label>
-                          <select class="form-control" ng-model="dataPreviewStaticItemDesc">
-                                <option ng-repeat="column in previewDynamicItemColumnSplit" 
-                                                value="{{column}}">{{column}}</option>
-                          </select>
+                        <label>Characteristics</label>
+                        <select class="form-control" multiple ng-multiple="true" 
+                                        ng-model="dataPreviewStaticItemDesc"
+                                        ng-options="column for column in previewDynamicItemColumnSplit">
+                          
+                        </select>
                       </div>
                       
                       <div class="col-sm-6">

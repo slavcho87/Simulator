@@ -206,8 +206,10 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
                         
                         if(!value.description){
                             value.description = "";
+                        }else{
+                            value.description = $scope.getDescriptionString(value.description);
                         }
-
+                        
                         var id='\''+value._id+'\'';
                         var overlay = new ol.Overlay({
                             position: ol.proj.transform(location, 'EPSG:4326', 'EPSG:3857'),
@@ -476,5 +478,15 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
     
     $scope.exit = function(){
         Services.logout();
+    }
+    
+    $scope.getDescriptionString = function(description){
+        var descriptionJSON = JSON.parse(description);
+        var result = "";
+        for(index in descriptionJSON){
+            var data = descriptionJSON[index];
+            result = result.concat(data.name, ": ", data.data, "<br/>");
+        }
+        return result;
     }
 }]);

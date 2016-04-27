@@ -507,18 +507,28 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
     $scope.importStaticData = function(){
         var itemNameIndex = $scope.previewDynamicItemColumnSplit.indexOf($scope.dataPreviewStaticItemName);
         var longIndex = $scope.previewDynamicItemColumnSplit.indexOf($scope.dataPreviewStaticItemLong);
-        var latIndex = $scope.previewDynamicItemColumnSplit.indexOf($scope.dataPreviewStaticItemLat);
-        var descIndex = $scope.previewDynamicItemColumnSplit.indexOf($scope.dataPreviewStaticItemDesc);        
+        var latIndex = $scope.previewDynamicItemColumnSplit.indexOf($scope.dataPreviewStaticItemLat);       
         $scope.newStaticItem.type = JSON.parse($scope.newStaticItem.type);
         
         for(index in $scope.previewDynamicItemRowsSplit){
             var rows = $scope.previewDynamicItemRowsSplit[index];
             
+            var description = [];
+            for(indice in $scope.dataPreviewStaticItemDesc){
+                var indiceColumna = $scope.previewDynamicItemColumnSplit.indexOf($scope.dataPreviewStaticItemDesc[indice]);
+                description.push({
+                    name: $scope.dataPreviewStaticItemDesc[indice],
+                    data: rows[indiceColumna]    
+                });
+            }
+            
+            description = JSON.stringify(description);
+            
             $scope.staticItemListInScene.push({
                 name: rows[itemNameIndex], 
                 longitude: rows[longIndex],
                 latitude: rows[latIndex],
-                description: rows[descIndex],
+                description: description,
                 type: $scope.newStaticItem.type
             });
         }
@@ -760,5 +770,15 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
     
     $scope.exit = function(){
         Services.logout();
+    }
+    
+    $scope.getDescriptionString = function(description){
+        var descriptionJSON = JSON.parse(description);
+        var result = "";
+        for(index in descriptionJSON){
+            var data = descriptionJSON[index];
+            result = result.concat(data.name, ": ", data.data, "; ");
+        }
+        return result;
     }
 }]);
