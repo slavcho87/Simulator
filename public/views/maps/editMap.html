@@ -1,4 +1,4 @@
- <div ng-init="loadData()">    
+ <div ng-init="loadData()">
     <div id="wrapper">
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="navbar-header">
@@ -1063,12 +1063,21 @@
               <div class="modal-body">  
                   <div class="row">      
                       <div class="col-sm-6">
-                          <label>Delimiter</label>
+                          <label>Delimiter</label>                              
                           <select class="form-control" ng-model="dataPreviewDynamicItemDelimiter" ng-change="setDelimiter()">
                             <option value="tab">Tab</option>
                             <option value="comma">Comma</option>
                             <option value="space">Space</option>
                           </select>
+                      </div>
+                      
+                      <div class="col-sm-6">
+                            <label>Identifier</label>
+                            <select class="form-control" ng-model="staticItemId">
+                                <option value="generate">Automatically generate</option>
+                                <option ng-repeat="column in previewDynamicItemColumnSplit" 
+                                                value="{{column}}">{{column}}</option>
+                            </select>
                       </div>
                       
                       <div class="col-sm-6">
@@ -1096,20 +1105,20 @@
                       </div>
                       
                       <div class="col-sm-6">
-                        <label>Characteristics</label>
-                        <select class="form-control" multiple ng-multiple="true" 
-                                        ng-model="dataPreviewStaticItemDesc"
-                                        ng-options="column for column in previewDynamicItemColumnSplit">
-                          
-                        </select>
-                      </div>
-                      
-                      <div class="col-sm-6">
                           <label>Static item type</label>
                           <select class="form-control" ng-model="newStaticItem.type">
                             <option ng-repeat="staticItem in staticItemList" value="{{staticItem}}">
                                {{staticItem.name}}
                             </option>
+                        </select>
+                      </div>
+                      
+                      <div class="col-sm-6">
+                        <label>Characteristics</label>
+                        <select class="form-control" multiple ng-multiple="true" 
+                                        ng-model="dataPreviewStaticItemDesc"
+                                        ng-options="column for column in previewDynamicItemColumnSplit">
+                          
                         </select>
                       </div>
                       

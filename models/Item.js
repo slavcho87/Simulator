@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
  
 var ItemSchema   = new Schema({
+    fileId: String,
     itemName: String,
     sceneId: String,
     mapId: String,

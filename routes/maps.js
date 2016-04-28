@@ -8,6 +8,7 @@ var Location = require('../models/Location');
 var Route = require('../models/Route');
 var Item = require('../models/Item');
 var Move = require('../models/Move');
+var mongoose = require('mongoose');
 var router = express.Router();
 
 /*
@@ -109,6 +110,13 @@ router.post('/saveScene', function(req, resp){
                 Location.create(locationsToSave, function(err, locations){
                     for(index=0; index<locations.length; index++){
                         var item = new Item();
+                        
+                        if(staticItemList[index].fileId){
+                            item.fileId = staticItemList[index].fileId;
+                        }else{
+                            item.fileId = "";
+                        }
+                        
                         item.itemName = staticItemList[index].name;
                         item.sceneId = scene1._id;
                         item.mapId = scene1.mapId;
@@ -195,10 +203,19 @@ router.delete('/deleteScene/:sceneID', function(req, res){
                 msg: err
             });
        }else{
-            res.json({
-                result: "OK",
-                msg: "Scene deleted successfully!"
-            });
+           Item.remove({sceneId: scene._id, mapId: scene.mapId}, function(err, item){
+               if(err){
+                    res.json({
+                        result: "NOK",
+                        msg: err
+                    });   
+               }else{
+                    res.json({
+                        result: "OK",
+                        msg: "Scene deleted successfully!"
+                    });     
+               }
+           });
        }
    });
 })
@@ -492,6 +509,13 @@ function updateStaticItems(mapId, sceneId, staticItemList, scene1){
         Location.create(locationsToSave, function(err, locations){        
             for(index=0; index<locations.length; index++){
                 var item = new Item();
+                
+                if(staticItemList[index].fileId){
+                    item.fileId = staticItemList[index].fileId;
+                }else{
+                    item.fileId = "";
+                }
+                
                 item.itemName = staticItemList[index].name;
                 item.sceneId = scene1._id;
                 item.mapId = scene1.mapId;

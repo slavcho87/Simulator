@@ -638,13 +638,20 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
             
             description = JSON.stringify(description);
             
-            $scope.staticItemListInScene.push({
-                name: rows[itemNameIndex], 
-                longitude: rows[longIndex],
-                latitude: rows[latIndex],
-                description: description,
-                type: $scope.newStaticItem.type
-            });
+            var staticItemData = {
+                    name: rows[itemNameIndex], 
+                    longitude: rows[longIndex],
+                    latitude: rows[latIndex],
+                    description: description,
+                    type: $scope.newStaticItem.type
+            };
+            
+            if($scope.staticItemId != "generate"){
+                var itemIdIndex = $scope.previewDynamicItemColumnSplit.indexOf($scope.staticItemId);
+                staticItemData.fileId = rows[itemIdIndex]; 
+            }
+            
+            $scope.staticItemListInScene.push(staticItemData);
         }
     }
     
