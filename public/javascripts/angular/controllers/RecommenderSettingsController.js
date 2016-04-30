@@ -124,12 +124,10 @@ app.controller("RecommenderSettingsController", ['$scope', '$http','Services', f
         }, function(err){
             $scope.errorMsgList.push(err);
         });
-        
-        //socket.emit('getStrategies', "Esto es una prueba");
     }
     
     $scope.getStrategiesFromRecomender = function(){
-         $scope.strategyList = [];
+        $scope.strategyList = [];
         if($scope.rec.type == "pull"){
             socket.emit('getStrategies', "Esto es una prueba");    
         }else{
@@ -168,7 +166,7 @@ app.controller("RecommenderSettingsController", ['$scope', '$http','Services', f
         if(!$scope.selectEditRecommenderValue){
             $scope.errorMsgList.push("Fill the form!");
         }else{
-            if(!$scope.selectEditRecommenderValue.poolName){
+            if(!$scope.selectEditRecommenderValue.poolName){ 
                 $scope.errorMsgList.push("The recommender set name can not be empty!");
                 error = true;
             }
@@ -198,19 +196,20 @@ app.controller("RecommenderSettingsController", ['$scope', '$http','Services', f
                 error = true;
             }
             
-            if(!$scope.selectEditRecommenderValue.minimumScore){
+            /*if(!$scope.selectEditRecommenderValue.minimumScore){
                 $scope.errorMsgList.push("The minimum score for recommending an item can not be empty!");
                 error = true;
-            }
-        
-            if(!error){
-                Services.updateRecommender($scope.selectEditRecommenderValue, function(res){
+            }*/
+            console.log("variable error: "+error);
+            console.log($scope.selectEditRecommenderValue);
+            if(!error){ 
+                Services.updateRecommender($scope.selectEditRecommenderValue, function(res){ 
                     if(res.result == "NOK"){
                         $scope.errorMsgList.push(res.msg);
                     }else{
                         $scope.msgList.push(res.msg);
                     }
-                }, function(err){
+                }, function(err){console.log("error");
                     $scope.errorMsgList.push(err);
                 });    
             }

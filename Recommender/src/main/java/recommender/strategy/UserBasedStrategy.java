@@ -6,7 +6,6 @@ import recommender.models.Ratings;
 import recommender.models.RecommenderConfig;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,15 +20,22 @@ import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.recommender.UserBasedRecommender;
 import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 import org.apache.mahout.cf.taste.impl.common.FastByIDMap;
-import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
 import org.apache.mahout.cf.taste.impl.model.GenericDataModel;
 import org.apache.mahout.cf.taste.impl.model.GenericUserPreferenceArray;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class UserBasedStrategy implements Strategy {
+	private final static String TRAINING_DATA_FILE = "data/rating_final.csv";
+	
 	public List<Item> recommend(JSONObject data, List<Item> itemList, List<Ratings> ratingList, RecommenderConfig recommenderConfig) {		
 		List<Item> recommendedItemIdList = new ArrayList<Item>();
 		int indice = 0;
-		FastByIDMap<PreferenceArray> preferences = new FastByIDMap<PreferenceArray>();
+		List<Ratings> trainingDataList = getTrainingData();
+		ratingList.addAll(trainingDataList);
+		FastByIDMap<PreferenceArray> preferences = new FastByIDMap<PreferenceArray>(); // = getTrainingData();
 		
 		//prepare users preferences
 		Map<String, Integer> userIdMap = new HashMap<String, Integer>();
@@ -59,7 +65,7 @@ public class UserBasedStrategy implements Strategy {
 			
 			if(!userIdMap.isEmpty()){
 				Object dataToken = data.get("token");
-				Integer userIdMapObj = userIdMap.get(dataToken); //recommender.estimatePreference(usetID, itemID)
+				Integer userIdMapObj = userIdMap.get(dataToken); 
 				if(userIdMapObj != null){
 					List<RecommendedItem> recommendations = recommender.recommend(userIdMapObj, recommenderConfig.getItemsToRecommend());
 					for(RecommendedItem recItem: recommendations){
@@ -81,6 +87,40 @@ public class UserBasedStrategy implements Strategy {
 		return recommendedItemIdList;
 	}
 	
+	private List<Ratings> getTrainingData() {
+		String csvFile = TRAINING_DATA_FILE;
+		BufferedReader br = null;
+		String line = "";
+		String cvsSplitBy = ",";
+		List<Ratings> ratingListAndUser = new ArrayList<Ratings>();
+		
+		try {
+			br = new BufferedReader(new FileReader(csvFile));
+			br.readLine();
+			while ((line = br.readLine()) != null) {
+			    String[] ratingList = line.split(cvsSplitBy);
+			    Ratings ratigns = new Ratings();
+			    ratigns.setUserToken(ratingList[0]);
+			    ratigns.setItemId(ratingList[1]); 
+			    ratigns.setRating(Integer.parseInt(ratingList[2]));
+			    ratingListAndUser.add(ratigns);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return ratingListAndUser;
+	}
+
 	/**
 	 * 
 	 * @param itemList
@@ -122,6 +162,9 @@ public class UserBasedStrategy implements Strategy {
 
 	public float itemForecas(JSONObject data, List<Item> itemList, List<Ratings> ratingList, RecommenderConfig recommenderConfig) {
 		int indice = 0;
+		List<Ratings> trainingDataList = getTrainingData();
+		ratingList.addAll(trainingDataList);
+		
 		FastByIDMap<PreferenceArray> preferences = new FastByIDMap<PreferenceArray>();
 		
 		//prepare users preferences

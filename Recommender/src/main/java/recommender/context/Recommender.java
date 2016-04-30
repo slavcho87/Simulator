@@ -176,7 +176,7 @@ public class Recommender{
 				DBObject obj = cursor.next();
 				Ratings rating = new Ratings();
 				rating.setUserToken((String) obj.get("userId"));
-				rating.setItemId(obj.get("itemId").toString());
+				rating.setItemId(assignItemId(obj.get("itemId").toString()));
 				rating.setRating((Integer) obj.get("value"));
 				ratingList.add(rating);
 			}
@@ -185,6 +185,19 @@ public class Recommender{
 		return ratingList;
 	}
 
+	private String assignItemId(String itemId){
+		DBCollection coll = db.getCollection("items");
+		BasicDBObject query = new BasicDBObject("_id", new BasicDBObject("$eq", new ObjectId(itemId)));
+		DBObject bdObject = coll.findOne(query);
+		
+		String id = (String) bdObject.get("fileId");
+		if(id==null || id.isEmpty()){
+			id = itemId;
+		}
+		
+		return id;
+	}
+	
 	/**
 	 * 
 	 * @param id
@@ -236,9 +249,13 @@ public class Recommender{
 	        	 item.setId(id.toString());
 	        	 item.setItemName((String) obj.get("itemName"));
 	        	 
-	        	 ObjectId locationId = (ObjectId) obj.get("location");
-	        	 if(locationId!=null){
-	        		 item.setLocation(getLocation(locationId));
+	        	 try{
+	        		 ObjectId locationId = (ObjectId) obj.get("location");
+		        	 if(locationId!=null){
+		        		 item.setLocation(getLocation(locationId));
+		        	 }
+	        	 }catch(Exception e){
+	        		 System.out.println(e);
 	        	 }
 	        	 
 	        	 itemList.add(item);

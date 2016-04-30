@@ -169,11 +169,18 @@ io.on('connection', function(socket){
         var itemList = new Array();
         
         for(index in data.itemList){
+            var itemName = data.itemList[index].itemName;
+            if(!itemName){
+                itemName = "";
+            }
+            
+            itemName = utf8.encode(itemName);
+            
             itemList[index] = {
                 id: data.itemList[index].id,
                 location: data.itemList[index].location,
                 rating: data.itemList[index].rating,
-                itemName: utf8.encode(data.itemList[index].itemName)
+                itemName: itemName
             };   
         }
         
@@ -181,9 +188,9 @@ io.on('connection', function(socket){
             itemList: itemList,
             userList: data.userList
         };
-        
+    
         socket.broadcast.emit('recommended items client', sendData); //este evento lo tiene el navegador
-    }); 
+    });
     
     //este evento lo invoca el recomendador para recuperar las posiciones de los items dinamicos
     socket.on('get dynamic item positions', function(data){

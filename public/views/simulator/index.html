@@ -231,7 +231,7 @@
                                 }
                             });
                             
-                            socket.on('recommended items client', function(data){ console.log(data);
+                            socket.on('recommended items client', function(data){
                                 var appElement = document.querySelector('[ng-app=app]');
                                 var $scope = angular.element(appElement).scope();
                                 $scope = $scope.$$childHead;
