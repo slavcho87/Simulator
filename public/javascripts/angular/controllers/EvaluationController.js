@@ -16,6 +16,9 @@ app.controller("EvaluationController", ['$scope','Services', function ($scope, S
     $scope.dataCopy = angular.copy($scope.data);
     $scope.userList = [];
     $scope.viewGrafics = false;
+    $scope.exportData = [];
+    $scope.separator = ",";
+    $scope.decimalSeparator = ".";
     
     $scope.loadData = function(){
         Services.getRecommenderList(function(res){
@@ -152,6 +155,12 @@ app.controller("EvaluationController", ['$scope','Services', function ($scope, S
                                 }
 
                                 data.addRow([itemName, rating, valueForecast, error]);
+                                $scope.exportData.push({
+                                    itemName: itemName,
+                                    rating: rating,
+                                    valueForecast: valueForecast,
+                                    error: error
+                                });
                             }
                         
                             var options = {
@@ -170,16 +179,16 @@ app.controller("EvaluationController", ['$scope','Services', function ($scope, S
                         }
                     }
                 }
-                
-                
-                
-                
-                                
-                
             }, function(err){
                 $scope.errorMsgList.push(err);
             });
     }
+    
+    $scope.getHeader = function () {
+        return ["item name", "rating", "value forecast", "error"]
+    };
+    
+
     
    /*
     * Hide error message

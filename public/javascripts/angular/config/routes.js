@@ -1,4 +1,4 @@
-var app = angular.module("app", ['ngRoute', 'ngStorage', 'checklist-model', 'xeditable']);
+var app = angular.module("app", ['ngRoute', 'ngStorage', 'checklist-model', 'xeditable', 'ngSanitize', 'ngCsv']);
 
 app.config(['$routeProvider', '$httpProvider' ,function($routeProvider, $httpProvider) {	 		   
 	$routeProvider.when('/', {

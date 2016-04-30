@@ -113,6 +113,7 @@
                     <div class="panel-body"> 
                          
                        <div id="chart_div"></div>
+                       <button type="button" class="btn btn-primary" ng-csv="exportData" csv-header="getHeader()" filename="data.csv" field-separator="{{separator}}" decimal-separator="{{decimalSeparator}}">Download CSV</button>
                     </div>
                 </div>
             </div>  
