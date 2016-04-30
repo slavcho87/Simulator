@@ -285,11 +285,14 @@ public class Recommender{
 	        	 item.setId(id.toString());
 	        	 item.setItemName((String) obj.get("itemName"));
 	        	 
-	        	 ObjectId locationId = (ObjectId) obj.get("location");
-	        	 if(locationId!=null){
-	        		 item.setLocation(getLocation(locationId));
+	        	 try{
+		        	 ObjectId locationId = (ObjectId) obj.get("location");
+		        	 if(locationId!=null){
+		        		 item.setLocation(getLocation(locationId));
+		        	 }
+	        	 }catch(Exception e){
+	        		 System.out.println(e);
 	        	 }
-	        	 
 	        	 itemList.add(item);
 	        }
 		}catch(Exception e){
