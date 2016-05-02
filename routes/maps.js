@@ -378,7 +378,7 @@ router.delete('/deleteMap/:id', function(req, res){
 
 function deleteRouteById(id){
     Route.findOne({_id: id}, function(err, route){
-        console.log(route);
+        
         if(!err){
             route.remove();
         }

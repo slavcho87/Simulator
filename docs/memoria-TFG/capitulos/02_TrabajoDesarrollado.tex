@@ -274,7 +274,9 @@ Como en todas las aplicaciones, el simulador de escenarios cuenta con un sistema
 
 La navegación por estima es una técnica que se aplica en el cliente. Consiste en procesar en cada ciclo el estado de los objetos móviles. Se trata de una técnica analítica utilizada en la náutica para la navegación y situación de los barcos y se tienen en cuenta los siguientes elementos: la situación actual, rumbo y velocidad. Es decir, sabiendo la velocidad, el rumbo de la nave y el tiempo transcurrido se puede estimar la posición de la misma al cabo del tiempo. 
 
-Con este método conseguimos calcular cual es la siguiente posición geográfica donde tenemos que colocar un objeto móvil al acabo de un tiempo (el tiempo de refresco de la pantalla). Como ventaja conseguimos disminuir el error en el cálculo de las posiciones de los objetos móviles. Así obtenemos movimientos muy precisos incluso en grafos de movimientos con nodos muy cercanos.
+Con este método conseguimos calcular cual es la siguiente posición geográfica donde tenemos que colocar un objeto móvil al acabo de un tiempo (el tiempo de refresco de la pantalla). De esta manera conseguimos disminuir el error en el cálculo de las posiciones de los objetos móviles y obtenemos movimientos muy precisos incluso en grafos de movimientos con nodos muy cercanos.
+
+Se podría haber utilizado una técnica mucho más simple como la interpolación pero el inconveniente que esto conlleva es que tenemos que guardar en un buffer todos los estados por que tiene que pasar cada objeto móvil en cada ciclo. Así que a medida que aumenta el número de objetos móviles también aumenta la cantidad de memoria que estamos consumiendo. Esto puede llegar a ser un problema para dispositivos que tienen poca memoria. 
 
 %\section{Explotación del simulador}
 

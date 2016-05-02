@@ -13,7 +13,48 @@ Por esto surge la necesidad de que los sistemas de recomendaciones puedan evalua
 
 \section{Definir un escenario realista}
 
+En este apartado se expone como definir un escenario realista con datos de restaurantes reales de la ciudad San Luis Potosí de México.
 
+\subsection{Paso 1: obtener datos de restaurantes reales}
+
+Lo primero que vamos a hacer es conseguir datos reales de restaurantes reales. Por esto accedemos al repositorio de Center for Machine Learning and Intelligent Systems y descargamos el siguiente archivo comprimido: \href{https://archive.ics.uci.edu/ml/machine-learning-databases/00232/RCdata.zip}{https://archive.ics.uci.edu/ml/machine-learning-databases/00232/RCdata.zip}
+
+Una vez que hayamos descargado y descomprimido el fichero vemos que este contiene varios ficheros csv. A nosotros nos interesan los ficheros geoplaces2.csv y rating\_final.csv. El primero contiene los datos de los restaurantes y es el que vamos a importar al crea un escenario y el segundo contiene datos con valoraciones de diferentes usuarios y el que vamos a usar como datos de entrenamiento para el recomendador de ejemplo desarrollado.
+
+\subsection{Paso 2: crear un mapa nuevo o editar un mapa existente}
+
+Antes de todos tenemos que crear un mapa nuevo o editar uno existente para poder asociarle el escenario que vamos a crear a continuación. Por esto tenemos que usar alguna de las dos opciones:
+\begin{itemize}
+	\item crear un mapa nuevo: opción  Maps $\rightarrow$ new map. Para más información por favor consulte el anexo \ref{sec:crearMapa}.
+	\item editar un mapa existente: opción Maps $\rightarrow$ maps search y en la lista de resultados pulsamos sobre el icono de editar imagen. Para más información por favor consulte el anexo \ref{sec:editarMapasEscenas}.
+\end{itemize} 
+
+En este caso se ha optado por crear un nuevo mapa con el nombre México ya que los datos que hemos descargado son de la ciudad San Luis Potosí de México. En la figura \ref{mapaMexico} podemos ver una captura del resultado de creación del mapa:
+
+\begin{figure}[H]
+	\centering\includegraphics[scale=0.36]{imagenes/crear-mapa-nuevo-mexico.jpg}
+	\caption{Creación de un mapa nuevo en México con datos reales}
+	\label{mapaMexico}
+\end{figure}
+
+\subsection{Paso 3: crear un escenario realista}
+
+La creación de escenarios funciona como un asistente de configuración. A continuación se muestra los pasos que hay que realizar para configurar un escenario realista:
+
+\subsubsection{Paso 3.1: definir el nombre del escenario y elegir el recomendador}
+
+
+\subsubsection{Paso 3.2: definir los limites del escenario}
+
+
+\subsubsection{Paso 3.3: importar los datos de los restaurantes}
+
+
+
+\subsubsection{Paso 3.4: definir los objetos móviles}
+
+
+\section{Realizar una simulación de un escenario realista}
 
 
 \section{Evaluación de un sistema de recomendación}

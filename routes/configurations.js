@@ -206,7 +206,7 @@ router.get('/recommenderTypes', function(req, res){
     var url = "\'"+baseConfig().urlRecommender+"\'";
     
     request(url, function (error, response, body) {    
-        console.log(error);
+        
         if (!error && response.statusCode == 200) {
             console.log(body);
         }
