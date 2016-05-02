@@ -291,7 +291,7 @@
                             function moveUp(){
                                 var pos = overlayList['user'].getPosition();
                                 pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326');
-                                pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 90);
+                                pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 0);
                                 setUserPos(pos);
                                 //$scope.userMove();
                                 var data = {
@@ -305,7 +305,7 @@
                             function moveDown(){
                                 var pos = overlayList['user'].getPosition();
                                 pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326');
-                                pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 270);
+                                pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 180);
                                 setUserPos(pos);
                                 //$scope.userMove();
                                 var data = {
@@ -319,7 +319,7 @@
                             function moveLeft(){
                                 var pos = overlayList['user'].getPosition();
                                 pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326');
-                                pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 180);
+                                pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 270);
                                 setUserPos(pos);
                                 //$scope.userMove();
                                 var data = {
@@ -333,7 +333,7 @@
                             function moveRight(){
                                 var pos = overlayList['user'].getPosition();
                                 pos = ol.proj.transform(pos, 'EPSG:3857', 'EPSG:4326');
-                                pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 0);
+                                pos = getNewPos(pos, distance($("#userSpeed").val(), userMoveRefreshInterval), 90);
                                 setUserPos(pos);
                                 //$scope.userMove();
                                 var data = {
@@ -355,24 +355,9 @@
                             /* Dada la posicion actual, la distancia a recorrer y el rumbo devuelve las coordenadas geograficas del punto
                             donde hay que moverse*/
                             function getNewPos(pos, d, brng){
-                                var R = 6378000;//radio de la tierra
-                                
-                                var φ1 = toRad(pos[0]);
-                                var λ1 = toRad(pos[1]);
-                                
-                                var φ2 = Math.asin(Math.sin(φ1)*Math.cos(d/R)+Math.cos(φ1)*Math.sin(d/R)*Math.cos(toRad(brng)));
-                                var λ2 = λ1 + Math.atan2(Math.sin(toRad(brng))*Math.sin(d/R)*Math.cos(φ1),
-                                                         Math.cos(d/R)-Math.sin(φ1)*Math.sin(φ2));
-                                
-                               // if(brng==90){
-                               //     var newPos = [pos[0], toGrad(λ2)];
-                               // }else if(brng==270){
-                               //     var newPos = [pos[0], toGrad(λ2)];
-                               // }else{
-                                    var newPos = [toGrad(φ2), toGrad(λ2)];
-                                //}//var newPos = [toGrad(φ2), toGrad(λ2)];
-                                
-                                return newPos;
+                                var p1 = LatLon(pos[1], pos[0]);
+                                var p2 = p1.destinationPoint(d, brng);
+                                return [p2.lon, p2.lat];
                             }
                             
                             function setUserPos(newPos){

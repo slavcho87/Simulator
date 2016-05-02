@@ -162,6 +162,13 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
     }
     
     $scope.loadData = function(){
+        var lat = ($scope.scene.latitudeLRC + $scope.scene.latitudeULC)/2;
+        var long = ($scope.scene.longitudeLRC + $scope.scene.longitudeULC)/2;
+        limitMap.getView().setCenter(ol.proj.transform([lat, long], 'EPSG:4326', 'EPSG:3857'));
+        staticItemsMap.getView().setZoom(15);
+        dynamicItemsMap.getView().setCenter(ol.proj.transform([lat, long], 'EPSG:4326', 'EPSG:3857'));
+        dynamicItemsMap.getView().setZoom(15);
+        
         //load recommeders list
         Services.getRecommenderList(function(res){
             angular.forEach(res, function(value, key) {
@@ -171,7 +178,7 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
              $scope.errorMsgList.push(err);
         });
        
-       //load static items types
+        //load static items types
         Services.staticItemList(function(res){
            for(index in res){
                $scope.staticItemList.push(res[index]);   

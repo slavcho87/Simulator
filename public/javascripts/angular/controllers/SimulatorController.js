@@ -366,57 +366,9 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
     
     //Calculo de rumbo entre dos coordenadas geograficas
     function bearing(lon1, lat1, lon2, lat2){
-        var incL = lon2 - lon1;
-    
-        //Resolver rumbos 0 y 180
-        if(incL == 0.0){
-            if(lat1<lat2){
-                return 0.0;
-            }else if(lat1>lat2){
-                return 180.0;
-            }else{
-                return 0.0;
-            }
-        }
-        
-        //Resolver rumbos 90 y 270
-        var incLat = lat2 - lat1;
-        if(incLat == 0.0){
-            if(lon1<lon2){
-                return 90.0;
-            }else if(lon1>lon2){
-                return 270.0;
-            }else{
-                return 0.0;
-            }
-        }
-        
-        var incLonRadians = (lon2 - lon1) * Math.PI / 180.0;
-        var incLatRadians = (lat2 - lat1) * Math.PI / 180.0;
-        var lm = (lat1 + lat2) / 2.0;
-        var lmRadians = lm * Math.PI / 180.0;
-        var coslm = Math.cos(lmRadians);
-        var apRadians = incLonRadians * Math.abs(coslm);
-        var tanR = apRadians / incLatRadians;
-        var rRadians = Math.atan(tanR);
-        var r = rRadians * 180.0 / Math.PI;
-        
-        if(r > 0){
-            if(apRadians < 0){
-                //tercer cuadrante
-                r = 180.0 + r;
-            }
-        }else{
-            if(apRadians > 0){
-                //segundo cuadrante
-                r = 180.0 + r;
-            }else{
-                //cuarto cuadrante
-                r = 360.0 + r;
-            }
-        }
-        
-        return r;
+        var p1 = LatLon(lon1, lat1);
+        var p2 = LatLon(lon2, lat2);
+        return p1.bearingTo(p2);
     }
 
     /*
