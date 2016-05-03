@@ -66,8 +66,8 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
             recommenderId: $scope.recommender._id
         };
         
-         var index = map.getOverlays().getArray().indexOf(overlayList['user']);
-                                
+        var index = map.getOverlays().getArray().indexOf(overlayList['user']);
+                   
         if(index>=0){
             var location = map.getOverlays().getArray()[index].getPosition();
             location = ol.proj.transform(location, 'EPSG:3857', 'EPSG:4326');
@@ -77,10 +77,12 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
                 longitude: location[1]
             };
             
-            data.location = loc; console.log(data);
+            data.location = loc;
             socket.emit('get value forecast', data);
         }else{
-            $scope.errorMsgList.push("The user's location can not be empty!");
+            $scope.$apply(function(){
+                $scope.errorMsgList.push("The user's location can not be empty!");                
+            });
         }
     }
     
@@ -374,7 +376,7 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
     /*
     * Hide error message
     */    
-    $scope.msgHide = function(msg){console.log("");
+    $scope.msgHide = function(msg){console.log("-->");
         var msgIndex = $scope.errorMsgList.indexOf(msg);
         
         if(msgIndex>=0){
@@ -411,7 +413,7 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
     /*
     * Hide message
     */    
-    $scope.msgSuccessHide = function(msg){
+    $scope.msgSuccessHide = function(msg){ console.log("-->");
         var msgIndex = $scope.msgList.indexOf(msg);
         
         if(msgIndex>=0){

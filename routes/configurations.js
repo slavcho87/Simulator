@@ -1,6 +1,7 @@
 var express = require('express');
 var Recommender = require('../models/Recommender');
 var ItemType = require('../models/ItemType');
+var Item = require('../models/Item');
 var Rating = require('../models/Rating');
 var request = require('request');
 var fs = require('fs');
@@ -238,10 +239,14 @@ router.post('/setRating', function(req, res){
                             msg: err
                         });
                     }else{
-                        res.json({
-                            result: "OK",
-                            msg: "Ratings assigned successfully!"
+                        Item.findOne({_id: req.body.itemId}, function(err, item){
+                            res.json({
+                                result: "OK",
+                                msg: "Ratings assigned successfully for "+item.itemName
+                            });
                         });
+                        
+                        
                     }
                 });
             }else{

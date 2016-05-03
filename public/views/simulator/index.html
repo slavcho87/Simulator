@@ -58,15 +58,6 @@
             </div>
             
             <div id="page-wrapper" ng-show="simulationDataLoaded">
-                <div class="alert alert-dismissable alert-danger" ng-repeat="errorMsg in errorMsgList">
-                        <button type="button" 
-                                class="close" 
-                                data-dismiss="alert" 
-                                aria-hidden="true" 
-                                ng-click="msgHide(errorMsg)">&times;</button>
-                        {{errorMsg}}
-                </div>
-
                 <div class="alert alert-dismissable alert-success" ng-repeat="msg in msgList">
                     <button type="button" 
                             class="close" 
@@ -74,6 +65,15 @@
                             aria-hidden="true" 
                             ng-click="msgSuccessHide(msg)">&times;</button>
                     {{msg}}
+                </div>
+                
+                <div class="alert alert-dismissable alert-danger" ng-repeat="errorMsg in errorMsgList">
+                    <button type="button" 
+                            class="close" 
+                            data-dismiss="alert" 
+                            aria-hidden="true" 
+                            ng-click="msgHide(errorMsg)">&times;</button>
+                    {{errorMsg}}
                 </div>
                 
                 <div class="row">    

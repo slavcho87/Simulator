@@ -1,6 +1,6 @@
 \chapter{Explotación}
 
-En este capítulo se expone la explotación del simulador de escenarios como método para la evaluación de sistemas de recomendaciones, se expone el trabajo realizado para permitirlo y el rendimiento obtenido del simulador.
+En este capítulo se expone la explotación del simulador de escenarios como método para la evaluación de sistemas de recomendaciones, el trabajo realizado para permitirlo y el rendimiento obtenido del simulador. Para más información consulte el manual del usuarios disponible en los anexos.
 
 \section{Motivación}
 
@@ -41,23 +41,70 @@ En este caso se ha optado por crear un nuevo mapa con el nombre México ya que l
 
 La creación de escenarios funciona como un asistente de configuración. A continuación se muestra los pasos que hay que realizar para configurar un escenario realista:
 
-\subsubsection{Paso 3.1: definir el nombre del escenario y elegir el recomendador}
+\subsubsection{Paso 1: definir el nombre del escenario y elegir el recomendador}
 
+En el primer paso de la creación de un escenario consiste en poner un nombre del escenario y elegir que recomendador vamos a usar en dicho escenario. En la figura \ref{paso1DefinirNombreYrecomendador} podemos una captura de este paso:
 
-\subsubsection{Paso 3.2: definir los limites del escenario}
+\begin{figure}[H]
+	\centering\includegraphics[scale=0.45]{imagenes/explotacion/1.jpg}
+	\caption{Paso 1: definir un nombre y recomendador para el escenario realista}
+	\label{paso1DefinirNombreYrecomendador}
+\end{figure}
 
+\subsubsection{Paso 2: definir los limites del escenario}
 
-\subsubsection{Paso 3.3: importar los datos de los restaurantes}
+En segundo paso de la creación del escenario realista consiste en definir los limites geográficos del escenario. Por esto lo primero que tenemos que hacer es usar el buscador para buscar la ciudad donde se va a realizar la simulación. Una vez que hayamos encontrado y seleccionado la cuidad definiremos la esquina superior izquierda ya la esquina inferior derecha. En la figura \ref{paso2definirLimitesEscenarioRealista} vemos el resultado:
 
+\begin{figure}[H]
+	\centering\includegraphics[scale=0.45]{imagenes/explotacion/2.jpg}
+	\caption{Paso 2: definir los limites del escenario realista}
+	\label{paso2definirLimitesEscenarioRealista}
+\end{figure}
 
+\subsubsection{Paso 3: importar los datos de los restaurantes}
 
-\subsubsection{Paso 3.4: definir los objetos móviles}
+El siguiente paso consiste definir los restaurantes. El simulador dispone de varias opciones mediante las cuales es posible hacer esto. Nosotros vamos a importar los restaurantes del fichero geoplaces2.csv que hemos descargado previamente. Antes de cargar los datos el contenido del fichero se pre visualiza en la pantalla (figura \ref{paso3definirLosRestaurantes})
 
+\begin{figure}[H]
+	\centering\includegraphics[scale=0.35]{imagenes/explotacion/3.jpg}
+	\caption{Paso 3: definir los restaurantes sobre el escenario}
+	\label{paso3definirLosRestaurantes}
+\end{figure}
 
-\section{Realizar una simulación de un escenario realista}
+\newpage
 
+Una vez importados los datos del fichero vemos que se muestra una lista con los restaurantes importados. Podemos ver esta lista con la figura \ref{paso31definirLosRestaurantes}:
 
-\section{Evaluación de un sistema de recomendación}
+\begin{figure}[H]
+	\centering\includegraphics[scale=0.4]{imagenes/explotacion/4.jpg}
+	\caption{Paso 3: lista de restaurantes definidos sobre el escenario}
+	\label{paso31definirLosRestaurantes}
+\end{figure}
+
+\subsubsection{Paso 4: definir los objetos móviles}
+
+El ultimo paso consiste en definir los objetos móviles. El simulador dispone de varias opciones mediante cuales se pueden definir objetos móviles. En este caso se han generado automáticamente (en la figura \ref{paso4ListaObjetosMoviles} podemos ver el resultado).
+
+\begin{figure}[H]
+	\centering\includegraphics[scale=0.4]{imagenes/explotacion/5.jpg}
+	\caption{Paso 4: lista de objetos móviles}
+	\label{paso4ListaObjetosMoviles}
+\end{figure}
+
+\section{Simulación y evaluación de un sistema de recomendación}
+
+\subsection{Simulación de un escenario realista}
+
+Una vez que hayamos realizado la configuración del escenarios realista vamos a realizar simulaciones con dos usuarios y recoger las valoraciones que han realizado para su posterior evaluación. En la figura \ref{simulacionYEvaluacion} podemos ver una captura de una simulación realizada:
+
+\begin{figure}[H]
+	\centering\includegraphics[scale=0.35]{imagenes/explotacion/6.jpg}
+	\caption{Simulación realizada en San Luis Potosí, México}
+	\label{simulacionYEvaluacion}
+\end{figure}
+
+\subsection{Evaluación de un recomendador}
+
 
 
 
