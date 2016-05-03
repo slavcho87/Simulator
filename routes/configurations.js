@@ -245,8 +245,6 @@ router.post('/setRating', function(req, res){
                                 msg: "Ratings assigned successfully for "+item.itemName
                             });
                         });
-                        
-                        
                     }
                 });
             }else{

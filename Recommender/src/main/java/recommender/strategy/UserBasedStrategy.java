@@ -6,11 +6,12 @@ import recommender.models.Ratings;
 import recommender.models.RecommenderConfig;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.apache.mahout.cf.taste.common.TasteException;
-import org.apache.mahout.cf.taste.impl.neighborhood.ThresholdUserNeighborhood;
+import org.apache.mahout.cf.taste.impl.neighborhood.NearestNUserNeighborhood;
 import org.apache.mahout.cf.taste.impl.recommender.GenericUserBasedRecommender;
 import org.apache.mahout.cf.taste.impl.similarity.PearsonCorrelationSimilarity;
 import org.apache.mahout.cf.taste.model.DataModel;
@@ -48,7 +49,7 @@ public class UserBasedStrategy implements Strategy {
 			PreferenceArray userPreference = new GenericUserPreferenceArray(ratingsByUser.size());
 			for(int index=0; index<ratingsByUser.size(); index++){
 				Ratings rating = ratingsByUser.get(index);
-				userPreference.setUserID(0, Long.valueOf(key.hashCode()));
+				userPreference.setUserID(index, Long.valueOf(key.hashCode()));
 				userPreference.setItemID(index, Long.valueOf(rating.getItemId().hashCode()));
 				userPreference.setValue(index, Long.valueOf(rating.getRating()));
 			}
@@ -60,7 +61,7 @@ public class UserBasedStrategy implements Strategy {
 		try {
 			DataModel model = new GenericDataModel(preferences);
 			UserSimilarity similarity = new PearsonCorrelationSimilarity(model);
-			UserNeighborhood neighborhood =  new ThresholdUserNeighborhood(0.1, similarity, model);
+			UserNeighborhood neighborhood =  new NearestNUserNeighborhood(2, similarity, model);
 			UserBasedRecommender recommender = new GenericUserBasedRecommender(model, neighborhood, similarity);
 			
 			if(!userIdMap.isEmpty()){
@@ -178,7 +179,7 @@ public class UserBasedStrategy implements Strategy {
 			PreferenceArray userPreference = new GenericUserPreferenceArray(ratingsByUser.size());
 			for(int index=0; index<ratingsByUser.size(); index++){
 				Ratings rating = ratingsByUser.get(index);
-				userPreference.setUserID(0, Long.valueOf(key.hashCode()));
+				userPreference.setUserID(index, Long.valueOf(key.hashCode()));
 				userPreference.setItemID(index, Long.valueOf(rating.getItemId().hashCode()));
 				userPreference.setValue(index, Long.valueOf(rating.getRating()));
 			}
@@ -191,14 +192,14 @@ public class UserBasedStrategy implements Strategy {
 		try {
 			DataModel model = new GenericDataModel(preferences);
 			UserSimilarity similarity = new PearsonCorrelationSimilarity(model);
-			UserNeighborhood neighborhood =  new ThresholdUserNeighborhood(0.001, similarity, model);
+			UserNeighborhood neighborhood =  new NearestNUserNeighborhood(2, similarity, model);
 			UserBasedRecommender recommender = new GenericUserBasedRecommender(model, neighborhood, similarity);			
 			
 			String itemId = (String) data.get("itemId"); 
 			Object dataToken = data.get("userId");
 			Integer usetID = userIdMap.get(dataToken);
-			if(usetID != null){
-				forecast = recommender.estimatePreference(usetID, itemId.hashCode());
+			if(usetID != null){				
+				forecast = recommender.estimatePreference(usetID, Long.valueOf(itemId.hashCode()));
 			}
 		} catch (TasteException e) {
 			e.printStackTrace();

@@ -63,7 +63,7 @@ public class Recommender{
 		}
 		
 		//filtramos las lista de items teniendo en cuenta la distancia maxima que está dispuesto a recorrer el usuario
-		List<Item> filterItemList = new ArrayList<Item>();
+		/*List<Item> filterItemList = new ArrayList<Item>();
 		for(Item item: itemList){
 			if(item.getLocation()!=null){
 				double distance = distanceBetween(userLocation, item.getLocation());
@@ -71,12 +71,12 @@ public class Recommender{
 					filterItemList.add(item);
 				}
 			}
-		}
+		}*/
 		
 		//cogemos los datos de las valoraciones de los usuarios
-		List<Ratings> ratingList = getRatings(filterItemList);
+		List<Ratings> ratingList = getRatings(itemList/*filterItemList*/);
 		
-		List<Item> recommendedItems = this.strategy.recommend(data, filterItemList, ratingList, recommenderConfig);
+		List<Item> recommendedItems = this.strategy.recommend(data, itemList/*filterItemList*/, ratingList, recommenderConfig);
 		
 		if(resultTypeShow.equals("nonPersonalizedRecommendation") && recommendedItems.size()==0){
 			recommendedItems = nonPersonalizedRecommendation(itemList);
@@ -337,7 +337,7 @@ public class Recommender{
 		List<Item> itemList = getItemList(mapId, sceneId);
 		
 		//filtramos las lista de items teniendo en cuenta la distancia maxima que está dispuesto a recorrer el usuario
-		List<Item> filterItemList = new ArrayList<Item>();
+		/*List<Item> filterItemList = new ArrayList<Item>();
 		for(Item item: itemList){
 			if(item.getLocation()!=null){
 				double distance = distanceBetween(userLocation, item.getLocation());
@@ -345,10 +345,10 @@ public class Recommender{
 					filterItemList.add(item);
 				}
 			}
-		}
+		}*/
 				
 		//cogemos los datos de las valoraciones de los usuarios
-		List<Ratings> ratingList = getRatings(filterItemList);
+		List<Ratings> ratingList = getRatings(itemList/*filterItemList*/);
 		
 		return strategy.itemForecas(data, itemList, ratingList, recommenderConfig);
 	}
