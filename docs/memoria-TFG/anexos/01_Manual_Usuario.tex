@@ -6,7 +6,7 @@
 
 En el siguiente documento se recoge una descripción del funcionamiento del simulador de escenarios con usuarios móviles para la evaluación de algoritmos de recomendaciones.
 
-\subsection{¿Que es el simulador de escenarios con usuarios móviles?}
+\subsection{¿Qué es el simulador de escenarios con usuarios móviles?}
 
 El simulador de escenarios con usuarios móviles es una herramienta que trata de simular distintos tipos de algoritmos de recomendaciones en el entorno de una ciudad real con el fin de evaluar su correcto funcionamiento.
 
@@ -169,16 +169,16 @@ En este formulario tenemos que introducir los siguientes datos:
 	\item Recommender type: es el tipo de recomendador. Podemos elegir entre pull (el usuario solicita una recomendación) o push (el recomendador realiza recomendaciones sin que el usuario lo haya solicitado)
 	\item Strategy type:: indicar el tipo de implementación que queremos para el recomendador
 	\item Maximum distance to go (meters): es la distancia máxima (en metros) que está dispuesto a recorrer el usuario
-	\item Visibility radius (meters): radio (en metros) de visibilidad del usuario. Los items que están fuera de este radio son invisibles para el usuario 
-	\item Number of items to recommend: número máximo de items que va a recomendar el recomendador cada vez
-	\item Minimum score for recommending an item: puntuación mínima para que un item sea recomendado
+	\item Visibility radius (meters): radio (en metros) de visibilidad del usuario. Los ítems que están fuera de este radio son invisibles para el usuario 
+	\item Number of ítems to recommend: número máximo de ítems que va a recomendar el recomendador cada vez
+	\item Minimum score for recommending an ítem: puntuación mínima para que un ítem sea recomendado
 \end{itemize}
 
 \newpage
 
 \section{Configuración de los objetos estáticos}\label{sec:confObjEstaticos}
 
-Para crear un nuevo tipo de objeto estático primero tenemos que estar autentificados con nuestros usuario. Una vez autentificados vamos en Settings $\rightarrow$ Static item type y vemos la siguiente pantalla:
+Para crear un nuevo tipo de objeto estático primero tenemos que estar autentificados con nuestros usuario. Una vez autentificados vamos en Settings $\rightarrow$ Static ítem type y vemos la siguiente pantalla:
 
 \begin{figure}[H]
 	\centering\includegraphics[scale=0.35]{imagenes/capitulo3/config-objetos-estaticos.jpg}
@@ -197,7 +197,7 @@ Por debajo del formulario de creación nuevos tipos de objetos estáticos aparec
 
 \section{Configuración de los objetos dinámicos}\label{sec:confObjDinamicos}
 
-Para crear un nuevo tipo de objeto dinámicos primero tenemos que estar autentificados con nuestros usuario. Una vez autentificados vamos en Settings $\rightarrow$ Dynamic item type y vemos la siguiente pantalla:
+Para crear un nuevo tipo de objeto dinámicos primero tenemos que estar autentificados con nuestros usuario. Una vez autentificados vamos en Settings $\rightarrow$ Dynamic ítem type y vemos la siguiente pantalla:
 
 \begin{figure}[H]
 	\centering\includegraphics[scale=0.35]{imagenes/capitulo4/config-objetos-dinamicos.jpg}
@@ -276,7 +276,7 @@ Tenemos que rellenar los siguientes datos:
 	\item State: estado del mapa. Podemos elegir entre activa (que el mapa está disponible para realizar simulaciones) y borrador (el mapa todavía no está disponible para realizar simulaciones)
 \end{itemize}
 
-Una vez que hayamos rellenado el formulario pulsamos en el botón Save y el sistema nos informara si el guardado ha salido con éxito o no. Si se ha guardado con éxito por debajo de este formulario aparece el formulario de creaciones de escenas y una lista de las escenas actuales. Lo normales es que la lista de escenas creadas aparezca vacía ya que todavía no hemos creado ninguna escena. Para ver los detalles de como crear una escena consultar el capítulo \ref{sec:crearEscena}.
+Una vez que hayamos rellenado el formulario pulsamos en el botón Save y el sistema nos informará si el guardado ha salido con éxito o no. Si se ha guardado con éxito por debajo de este formulario aparece el formulario de creaciones de escenas y una lista de las escenas actuales. Lo normales es que la lista de escenas creadas aparezca vacía ya que todavía no hemos creado ninguna escena. Para ver los detalles de como crear una escena consultar el capítulo \ref{sec:crearEscena}.
 
 \section{Crear una nueva escena}\label{sec:crearEscena}
 Una vez que hayamos creado el mapa podemos empezar a crear las escenas. La creación de escenas se realiza en 4 pasos que vamos a ver a continuación.
@@ -291,9 +291,9 @@ En el primer paso tenemos que escoge un nombre para la escena que estamos config
 	\label{img:paso1}
 \end{figure}
 
-\subsection{Paso 2: Limites de la escena}
+\subsection{Paso 2: Límites de la escena}
 
-En este paso tenemos que buscar la ciudad donde se va a realizar la simulación y cuales son los limites de la escena.
+En este paso tenemos que buscar la ciudad donde se va a realizar la simulación y cuales son los límites de la escena.
 
 \begin{figure}[H]
 	\centering\includegraphics[scale=0.35]{imagenes/capitulo9/crear-escena-2.JPG}
@@ -303,7 +303,7 @@ En este paso tenemos que buscar la ciudad donde se va a realizar la simulación 
 
 Para buscar la cuidad donde se va a realizar la simulación tenemos poner cual es su nombre en la casilla City y pulsar el botón Go!. Vemos que al lado nos aparece un desplegable con una lista de resultados. Elegimos uno de ellos y vemos que el mapa que aparece al lado se actualiza.
 
-Para definir los limites de la escena tenemos que establece cual es la esquina superior izquierda y la esquina inferior derecha. Para definir la esquina superior izquierda seleccionamos el select button select upper left corner y hacemos click en el mapa para definir donde estará dicha esquina. Veremos que las cajas de texto Upper left corner: latitude y Upper left corner: longitude aparecerán las coordenadas geográficas de dicha esquina (longitud y latitud).
+Para definir los límites de la escena tenemos que establece cual es la esquina superior izquierda y la esquina inferior derecha. Para definir la esquina superior izquierda seleccionamos el select button select upper left corner y hacemos click en el mapa para definir donde estará dicha esquina. Veremos que las cajas de texto Upper left corner: latitude y Upper left corner: longitude aparecerán las coordenadas geográficas de dicha esquina (longitud y latitud).
 
 Para definir la esquina inferior derecha seleccionamos la opción select lower right corner y hacemos click en el mapa para definir donde estará dicha esquina. Cuando hayamos seleccionado la esquina inferior derecha vemos que en las cajas de texto Lower right corner: latitude y Lower right corner: longitude aparecerán las coordenadas geográficas de dicha escena.
 
@@ -334,7 +334,7 @@ Una vez importados los objetos vemos que disponemos una serie de opciones que no
 
 \subsubsection{Paso 3.2: definir los objetos estáticos manualmente}
 
-Para definirlos de forma manual tenemos que seleccionar la opción set manually y nos aparecer un formulario con el tipo de item que queremos definir, el nombre que queremos asignarle. Para definir cuales son sus coordenadas geográficas tenemos que seleccionar la posiciones directamente sobre el mapa. A continuación pulsamos sobre el botón Save Item y nos aparecerá la misma tabla que el en paso 3.1:
+Para definirlos de forma manual tenemos que seleccionar la opción set manually y nos aparecer un formulario con el tipo de ítem que queremos definir, el nombre que queremos asignarle. Para definir cuales son sus coordenadas geográficas tenemos que seleccionar la posiciones directamente sobre el mapa. A continuación pulsamos sobre el botón Save Item y nos aparecerá la misma tabla que el en paso 3.1:
 
 \begin{figure}[H]
 	\centering\includegraphics[scale=0.35]{imagenes/capitulo9/crear-escena-4.JPG}
@@ -368,7 +368,7 @@ Para definir los objetos dinámicos manualmente seleccionamos la opción set man
 	\label{img:paso4-2-1}
 \end{figure}
 
-Una vez que hayamos definido el trayecto pulsamos sobre el botón Save item y nos saldrá la lista con todos los objetos dinámicos en la escena:
+Una vez que hayamos definido el trayecto pulsamos sobre el botón Save ítem y nos saldrá la lista con todos los objetos dinámicos en la escena:
 
 \begin{figure}[H]
 	\centering\includegraphics[scale=0.35]{imagenes/capitulo9/crear-escena-7.JPG}
@@ -388,7 +388,7 @@ Para generar los trayectos de forma aleatoria tenemos que seleccionar la opción
 
 \section{Edición de mapas y escenas}\label{sec:editarMapasEscenas}
 
-Para modificar un mapa o escena primero tenemos que realizar una busque de mapas en Maps $\rightarrow$ maps search y en la lista de resultados pulsamos sobre el icono de editar imagen. Solo podemos editar un mapa si la hayamos creado nosotros. De lo contrario el icono de editar imagen no aparecerá. Una vez que hayamos pulsado el icono de editar imagen entonces veremos la siguiente pantalla:
+Para modificar un mapa o escena primero tenemos que realizar una búsqueda de mapas en Maps $\rightarrow$ maps search y en la lista de resultados pulsamos sobre el icono de editar imagen. Solo podemos editar un mapa si la hayamos creado nosotros. De lo contrario el icono de editar imagen no aparecerá. Una vez que hayamos pulsado el icono de editar imagen entonces veremos la siguiente pantalla:
 
 \begin{figure}[H]
 	\centering\includegraphics[scale=0.35]{imagenes/capitulo10/capitulo10.jpg}
@@ -408,7 +408,7 @@ Para ejecutar una simulación lo primero que tenemos que hacer es realizar la b�
 	\label{img:Simulation}
 \end{figure}
 
-Para iniciar la simulación y que todos los items empiecen a moverse tenemos que pulsar el botón play. Hay que tener en cuenta que existe la posibilidad que de ya haya usuario que estén ejecutando una simulación sobre este escenario. Por esto cuando nos conectemos a la escena veremos que los objetos ya se estén moviendo. En cualquier momento podemos pausar la simulación. Entonces la simulación se pausa en todos los usuarios que están conectados en la escena. En cualquier momento cualquier usuario puede reanudar la simulación. Para salir de la simulación lo único que tenemos que hacer es salir de la pantalla de simulación.
+Para iniciar la simulación y que todos los ítems empiecen a moverse tenemos que pulsar el botón play. Hay que tener en cuenta que existe la posibilidad que de ya haya usuario que estén ejecutando una simulación sobre este escenario. Por esto cuando nos conectemos a la escena veremos que los objetos ya se estén moviendo. En cualquier momento podemos pausar la simulación. Entonces la simulación se pausa en todos los usuarios que están conectados en la escena. En cualquier momento cualquier usuario puede reanudar la simulación. Para salir de la simulación lo único que tenemos que hacer es salir de la pantalla de simulación.
 
 \subsection{Controles del usuario}
 
@@ -420,7 +420,7 @@ Para usar el posicionamiento por GPS tenemos que elegir GPS positioning en el se
 
 \subsubsection{Movimiento simulado}
 
-Para usar el movimiento simulado tenemos que elegir Simulated movement en el select con nombre User movement y a continuación tenemos que elegir donde queremos situarnos en el mapa haciendo click en el mapa. A continuación podemos empezar a movernos por el mapa con los siguientes controles:s
+Para usar el movimiento simulado tenemos que elegir Simulated movement en el select con nombre User movement y a continuación tenemos que elegir donde queremos situarnos en el mapa haciendo click en el mapa. A continuación podemos empezar a movernos por el mapa con los siguientes controles:
 
 \begin{itemize}
 	\item tecla w: movimiento hacia arriba
@@ -435,9 +435,9 @@ Para usar el movimiento simulado tenemos que elegir Simulated movement en el sel
 Para obtener recomendaciones tenemos que seguir los siguientes pasos:
 
 \begin{itemize}
-	\item paso 1: seleccionamos los tipos de items sobre los cuales queremos obtener resultados (items types to recommend)
+	\item paso 1: seleccionamos los tipos de ítems sobre los cuales queremos obtener resultados (ítems types to recommend)
 	\item paso 2: en Result type show elegimos como queremos que se nos muestren los resultados. Por defecto si el recomendador no tiene items que recomendar mostrará una lista vacía.
-	\item paso 3: pulsamos el botón Recommend items para obtener resultados
+	\item paso 3: pulsamos el botón Recommend ítems para obtener resultados
 \end{itemize}
 
 \subsection{Votaciones}
@@ -445,8 +445,8 @@ Para obtener recomendaciones tenemos que seguir los siguientes pasos:
 Para realizar las votaciones disponemos de los siguientes opciones:
 
 \begin{itemize}
-	\item opción 1: pulsamos sobre el item concreto en el mapa y se nos abrirá una select donde podemos votar
-	\item opción 2: una vez que hayamos obtenido una lista con items recomendados disponemos de un select donde podemos realizar la votación
+	\item opción 1: pulsamos sobre el ítem concreto en el mapa y se nos abrirá un desplegable donde podemos votar
+	\item opción 2: una vez que hayamos obtenido una lista con ítems recomendados disponemos de un desplegable donde podemos realizar la votación
 \end{itemize}
 
 \newpage
@@ -461,4 +461,4 @@ Para realizar la evaluación de un recomendador vamos en el menú Evaluations:
 	\label{img:evaluacion}
 \end{figure}
 
-Lo primero que tenemos que hacer es seleccionar el tipo de recomendador que queremos evaluar. Una vez que hayamos seleccionado el tipo de recomendador nos aparecen los mapas y escenas donde se utiliza este. A continuación tenemos que seleccionar el usuario que queremos evaluar y escoger una lista de items. Al final pulsamos el botón Load Graphics y se muestra un gráfico con el item, la valoración que ha dato el usuario, el valor estimado en este momento y el error. Si no disponemos de datos de algún item este no saldrá en el gráfico. Si no disponemos de ningún dato se nos indicara con un mensaje.
+Lo primero que tenemos que hacer es seleccionar el tipo de recomendador que queremos evaluar. Una vez que hayamos seleccionado el tipo de recomendador nos aparecen los mapas y escenas donde se utiliza este. A continuación tenemos que seleccionar el usuario que queremos evaluar y escoger una lista de ítems. Al final pulsamos el botón Load Graphics y se muestra un gráfico con el ítem, la valoración que ha dato el usuario, el valor estimado en este momento y el error. Si no disponemos de datos de algún ítem este no saldrá en el gráfico. Si no disponemos de ningún dato se nos indicara con un mensaje.

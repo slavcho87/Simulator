@@ -110,4 +110,111 @@ Una vez que hayamos realizado la configuración del escenarios realista vamos a 
 
 \section{Rendimiento}
 
+El limite teórico máximo de peticiones HTTP de las aplicaciones desarrolladas con Node.js es igual al número máximo de sockets que se puedan crear en el servidor, es decir, un servidor con un Sistema Operativo Linux puede crear 65535 sockets. Pero hay que tener en cuenta que una parte esta reservada para el Sistema Operativo. Esto nos deja entre 30.000 - 45.000 sockets que podemos usar. Tenemos que comprobar cómo se comporta el simulador y por lo tanto hemos realizado unas prueba de estrés tanto con Linux como con Windows.
 
+\subsection{Rendimientos con Linux}
+
+En este apartado se describe los resultados de las pruebas de estrés realizadas con un Sistema Operativo Linux con las siguientes características:
+
+\begin{itemize}
+	\item Sistema Operativo: Linux v15.10 64 bits
+	\item RAM: 3.3 GB
+	\item CPU: Intel i3 1.8 GHz
+\end{itemize}
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|}\hline
+			Peticiones HTTP & CPU & Memoria & Kbytes/sec & Peticiones/seg & Segundos por petición \\ \hline
+			50.000 & 24.8 & 134MB & 1593,86 & 508,76 & 0,196555 \\ \hline
+			100.000 & 30.2 & 133 MB & 1716,46 & 547,89 & 0,182517 \\ \hline
+			500.000 & 45.4 & 138MB & 1199,38 & 382,84 & 0,261204 \\ \hline
+		\end{tabular}
+		\caption{Pruebas de estrés con 100 usuarios concurrentes}
+		\label{tabla:CienteUsuarios}
+	\end{center}
+\end{table}
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|} 	\hline
+			Peticiones HTTP & CPU & Memoria & Kbytes/sec & Peticiones/seg & Segundos por petición \\ \hline
+			50.000 & 25.9 & 147MB & 1196,85 & 382,04 & 1,308774 \\ \hline
+			100.000 & 40.6 & 160MB & 1286,86 & 410,78 & 1,2172 \\ \hline
+			500.000 & 44.6 & 162 MB & n/d & n/d & n/d \\ \hline
+		\end{tabular}
+		\caption{Pruebas de estrés con 500 usuarios concurrentes}
+		\label{tabla:QuinientosUsuarios}
+	\end{center}
+\end{table}
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|} \hline
+			Peticiones HTTP & CPU & Memoria & Kbytes/sec & Peticiones/seg & Segundos por petición \\ \hline
+			50.000 & 24.3 & 160 MB & 1408,94 & 449,74 & 2,223517 \\ \hline
+			100.000 & 26.3 & 167MB & n/d & n/d & n/d \\ \hline
+			500.000 & n/d & n/d & n/d & n/d & n/d \\ \hline
+		\end{tabular}
+		\caption{Pruebas de estrés con 1000 usuarios concurrentes}
+		\label{tabla:MilUsuarios}
+	\end{center}
+\end{table}
+
+En el caso de la pruebas con 500 usuarios concurrentes nos da dado el error apr socket recv Connection timed out (110) y se han completado 105.195 peticiones HTTP en la prueba con 500.000 peticiones HTTP. En el caso de la prueba con 1000 usuarios concurrentes nos ha dado el mismo fallo que en el caso de los 500 usuarios concurrentes y se han completado 54.599 peticiones HTTP en la prueba con 100.000 peticiones HTTP. 
+
+En el resto de casos las pruebas de carga han sido satisfactorias. Observamos que el peor de los casos se ha obtenido una media de 2,2 segundos por petición HTTP en el caso que tenemos 1000 usuarios concurrentes que han generado 50.000 peticiones HTTP.
+
+\subsection{Rendimientos con Windows}
+
+En este apartado se describe los resultados de las pruebas de estrés realizadas con un Sistema Operativo Windows con las siguientes características:
+
+\begin{itemize}
+	\item Sistema Operativo: Windows 10 Home 64 bits
+	\item RAM: 8 GB
+	\item CPU: Intel i3 1.8 GHz
+\end{itemize}
+
+\begin{lstlisting}[language=bash]
+slavcho@ubuntu:~/testing$ ab -g resultados4.csv -n 50000 -c 100 http://192.168.1.102:81/
+This is ApacheBench, Version 2.3 <$Revision: 1638069 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 192.168.1.102 (be patient)
+Completed 5000 requests
+Completed 10000 requests
+Completed 15000 requests
+apr_socket_recv: Connection timed out (110)
+Total of 19219 requests completed
+slavcho@ubuntu:~/testing$
+\end{lstlisting}
+
+\begin{lstlisting}[language=bash]
+slavcho@ubuntu:~/testing$ ab -g resultados4.csv -n 50000 -c 500 http://192.168.1.102:81/
+This is ApacheBench, Version 2.3 <$Revision: 1638069 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 192.168.1.102 (be patient)
+apr_socket_recv: Connection refused (111)
+Total of 558 requests completed
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=bash]
+slavcho@ubuntu:~/testing$ ab -g resultados4.csv -n 100000 -c 500 http://192.168.1.102:81/
+This is ApacheBench, Version 2.3 <$Revision: 1638069 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 192.168.1.102 (be patient)
+apr_socket_recv: Connection refused (111)
+Total of 524 requests completed
+\end{lstlisting}
+
+En las pruebas realizadas observamos que nos ha dado fallo en todas las pruebas. En el caso de la prueba con 100 usuarios concurrentes 50.000 peticiones HTTP se ha completado 19.219 de las peticiones HTTP. En el caso de la prueba con 500 usuarios concurrentes y 50.000 peticiones HTTP se han completado 558 peticiones HTTP. En el caso de la prueba con 500 usuarios concurrentes y 100.000 peticiones HTTP se han completado 524 peticiones HTTP. 
+
+\subsection{Conclusiones de las pruebas de estrés}
+
+Como conclusión podemos determinar que el Sistema Operativo Linux se comporta bastante mejor que el Windows para esta aplicación. Por lo tanto recomiendo la utilización de un servidor Linux para el simulador de escenarios para aprovechar mejor tanto la aplicación como el hardware.

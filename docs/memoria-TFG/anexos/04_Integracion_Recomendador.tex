@@ -4,7 +4,7 @@ En este capítulo se mostrará como se realiza la integración con un recomendad
 
 \section{Introducción}
 
-Tal y como hemos mencionado anteriormente el simulador y el recomendador están integrados mediante un sistema bidireccional dirigido por eventos y el intercambio de mensaje en JSON. Actualmente está desarrollado un recomendador de ejemplo basado en usuarios de tipo pull mediante la librería Apache Mahout. 
+Tal y como hemos mencionado anteriormente el simulador y el recomendador están integrados mediante un sistema bidireccional dirigido por eventos y el intercambio de mensajes en JSON. Actualmente está desarrollado un recomendador de ejemplo basado en usuarios de tipo pull mediante la librería Apache Mahout. 
 
 La razón por la que se han integrado los dos sistemas mediante un sistema bidireccional dirigido por eventos es que existen recomendadores que realizan recomendaciones sin que el usuario las haya solicitado. En protocolos como el HTTP no podemos enviar respuesta al navegador sin que este haya lanzado un petición previamente mientras que en el sistema bidireccional dirigido por evento si que podemos enviar datos al cliente cuando sea necesario y sin que este los haya solicitado. 
 
@@ -38,15 +38,15 @@ En la implementación actual se ha usado en patrón de diseño de tipo Factory p
 
 Tal y como hemos mencionado anteriormente la estrategia concreta implementa el algoritmo de recomendación concreto. Para implementar un nuevo tipo de algoritmo de recomendación tenemos que crear una clase en el paquete recommender.strategy que implemente la interfaz Strategy del mismo paquete. 
 
-Esta interfaz tiene dos métodos: recommend y itemForecast. El método recommend es el que se invoca cuando el usuario solicita una recomendación y devuelve una lista de items. El método itemForecast realiza una predicción para un item dado un usuario y devuelve un float que se corresponde a la predicción realizada.
+Esta interfaz tiene dos métodos: recommend e itemForecast. El método recommend es el que se invoca cuando el usuario solicita una recomendación y devuelve una lista de ítems. El método itemForecast realiza una predicción para un ítem dado un usuario y devuelve un float que se corresponde a la predicción realizada.
 
 Los parámetros de entrada de ambos métodos son iguales y tienen el mismo significado:
 
 \begin{itemize}
 	\item JSONObject data: contiene todos los datos en formato JSON que enviar el simulador.
-	\item List$<$Item$>$ itemList: contiene un array list con todos los items a recomendar.
-	\item List$<$Ratings$>$ ratingList: contiene un array list con las valoraciones de los usuarios para cada item.
-	\item RecommenderConfig recommenderConfig: contiene los parámetros de configuración del recomendador como numero de items a recomendar etc.
+	\item List$<$Item$>$ itemList: contiene un array list con todos los ítems a recomendar.
+	\item List$<$Ratings$>$ ratingList: contiene un array list con las valoraciones de los usuarios para cada ítem.
+	\item RecommenderConfig recommenderConfig: contiene los parámetros de configuración del recomendador como numero de ítems a recomendar etc.
 \end{itemize}
 
 Todos los datos vienen listos para ser usados por el algoritmo de recomendación que estamos implementando.
@@ -137,14 +137,14 @@ Los eventos importantes del recomendador son:
 \begin{itemize}
 	\item recommend: es el evento que invoca el simulador para solicitar una recomendación.
 	\item getStrategies: es el evento que se invoca para recuperar la lista de estrategias concretas implementadas. No tiene parámetros de entrada.
-	\item get value forecast: es el evento que se invoca para solicitar una predicción para un item
+	\item get value forecast: es el evento que se invoca para solicitar una predicción para un ítem
 \end{itemize}
 
 Los eventos importantes del simulador son:
 \begin{itemize}
-	\item recommended items: es el evento que invoca el recomendador para enviar la lista de items recomendados.
+	\item recommended items: es el evento que invoca el recomendador para enviar la lista de ítems recomendados.
 	\item strategies result: es el evento que invoca el recomendador para enviar la lista de estrategias concretas implementadas.
-	\item set value forecast: es el evento que invoca el recomendador para enviar la predicción para un item.
+	\item set value forecast: es el evento que invoca el recomendador para enviar la predicción para un ítem.
 \end{itemize}
 
 A continuación podemos ver los parámetros de entrada de los eventos importantes para una integración con un recomendador externo:
@@ -159,7 +159,7 @@ A continuación podemos ver los parámetros de entrada de los eventos importante
 		strategyType                          & String                             & tipo de estrategia concreta que queremos usar para la recomendación. Contiene uno de los valores del enumerado StrategyType \\ \hline
 		mapId                                 & String                             & identificador del mapa                                                                                                      \\ \hline
 		sceneId                               & String                             & identificador de la escena                                                                                                  \\ \hline
-		rating                                & number                             & Valoración del usuario sobre item con identificador itemId                                                                  \\ \hline
+		rating                                & number                             & Valoración del usuario sobre ítem con identificador itemId                                                                  \\ \hline
 		itemId                                & String                             & identificador del item                                                                                                      \\ \hline
 		recommenderId                         & String                             & identificador de la configuración del recomendador                                                                          \\ \hline
 	\end{tabular}
@@ -172,10 +172,10 @@ A continuación podemos ver los parámetros de entrada de los eventos importante
 	\begin{tabular}{|l|l|l|}
 		\hline
 		\multicolumn{1}{|c|}{\textbf{Nombre}} & \multicolumn{1}{c|}{\textbf{Tipo}} & \multicolumn{1}{c|}{\textbf{Descripción}}                    \\ \hline
-		itemList                              & Array                              & lista con items que recomendamos al usuario                  \\ \hline
+		itemList                              & Array                              & lista con ítems que recomendamos al usuario                  \\ \hline
 		userList                              & Array                              & lista de tokens de usuarios a los que recomendamos los items \\ \hline
 	\end{tabular}
-	\caption{Evento recommended items del simulador}
+	\caption{Evento recommended ítems del simulador}
 \end{table}
 
 \begin{table}[H]
@@ -189,8 +189,8 @@ A continuación podemos ver los parámetros de entrada de los eventos importante
 		sceneId                               & String                             & identificador de la escena en la que está conectado el usuario                                                                                                                                                                                                                                                                                          \\ \hline
 		token                                 & String                             & token del usuario conectado                                                                                                                                                                                                                                                                                                                             \\ \hline
 		recommender                           & String                             & identificador de la configuración del recomendador que estamos usando                                                                                                                                                                                                                                                                                   \\ \hline
-		itemTypesToRecommend                  & Array                              & contiene una lista con los identificadores de los tipos de items sobre los que el usuario desea recibir recomendaciones                                                                                                                                                                                                                                 \\ \hline
-		resultTypeShow                        & String                             & el tipo de resultado que quiere ver el usuario. Puede contener los siguiente valores: \newline - nonPersonalizedRecommendation: para mostrar recomendaciones no personalizadas en caso que de que el recomendador no tiene items que recomendar \newline - emptyList: para mostrar una lista vacia cuando el recomendador no tiene items que recomendar \\ \hline
+		itemTypesToRecommend                  & Array                              & contiene una lista con los identificadores de los tipos de ítems sobre los que el usuario desea recibir recomendaciones                                                                                                                                                                                                                                 \\ \hline
+		resultTypeShow                        & String                             & el tipo de resultado que quiere ver el usuario. Puede contener los siguiente valores: \newline - nonPersonalizedRecommendation: para mostrar recomendaciones no personalizadas en caso que de que el recomendador no tiene ítems que recomendar \newline - emptyList: para mostrar una lista vacia cuando el recomendador no tiene ítems que recomendar \\ \hline
 		location                              & Object                             & localización actual del usuario. Es un objeto que contiene los siguientes atributos: \newline- longitude: longitud actual \newline - latitude: latitud actual                                                                                                                                                                                           \\ \hline
 	\end{tabular}
 	\caption{Evento recommend del recomendador}
@@ -224,4 +224,4 @@ La variable config contiene datos a cerca de la dirección de la base de datos y
 
 En cuanto a la arquitectura tenemos total liberar para el diseño del recomendador push. Lo único es que tenemos que hacer es crear el evento get strategies push. Este evento no tiene parámetros de entrada y devuelve una lista de enumerados con las implementaciones del recomendador push (ver implementación de la clase StrategyType). Para devolver la lista de recomendaciones tenemos que invocar el evento get strategies push result.
 
-Para enviar las recomendaciones tenemos que usar el evento recommended items del simulador indicando la lista de items que estamos recomendado y la lista de usuarios (tokens) a los que realizamos las recomendaciones.
+Para enviar las recomendaciones tenemos que usar el evento recommended items del simulador indicando la lista de ítems que estamos recomendado y la lista de usuarios (tokens) a los que realizamos las recomendaciones.
