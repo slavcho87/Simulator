@@ -403,7 +403,7 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
                 type: $scope.newStaticItem.type,
                 longitude: $scope.newStaticItem.longitude,
                 latitude: $scope.newStaticItem.latitude,
-                description: $scope.newStaticItem.description
+                description: {name: "text", data: $scope.newStaticItem.description}
             });
             
             $scope.msgList.push("Static item inserted!");
@@ -707,6 +707,7 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
                 longitudeULC: $scope.scene.longitudeULC,
                 latitudeLRC: $scope.scene.latitudeLRC,
                 longitudeLRC: $scope.scene.longitudeLRC,
+                distance: $scope.randomWay.distance,
             }
             
             $scope.loadRandomWay = false;
@@ -757,6 +758,7 @@ app.controller("EditSceneController", ['$scope', '$http', 'Services', 'DataFacto
                 longitudeULC: $scope.scene.longitudeULC,
                 latitudeLRC: $scope.scene.latitudeLRC,
                 longitudeLRC: $scope.scene.longitudeLRC,
+                distance: $scope.randomWay.distance,
             }
             
             $scope.loadRandomWay = false;

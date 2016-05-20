@@ -533,7 +533,7 @@
 
                                     <div ng-hide="setRandomWay()">
                                         <br/>
-                                        <div class="col-xs-3">
+                                        <div class="col-xs-2">
                                             <br/>
                                             <label>Dynamic item type</label>
                                             <select class="form-control" ng-model="newDynamicItem.type">
@@ -543,14 +543,14 @@
                                             </select>
                                         </div>
 
-                                        <div class="col-xs-3">
+                                        <div class="col-xs-2">
                                             <br/>
                                             <label>Number of items</label>
                                              <input ng-model="randomWay.numberDynamicItems" class="form-control"/>
-                                        </div>  
+                                        </div>
 
-                                        <div class="col-xs-3">
-                                            <br/>
+                                        <div class="col-xs-2">
+                                            <br/><br/>
                                             <label>Way type</label>
                                             <select class="form-control" ng-model="randomWay.wayType">
                                                 <option value="motorway">motorway</option>
@@ -563,12 +563,18 @@
                                                 <option value="service">service</option>
                                             </select>                                         
                                         </div>
+                                        
+                                        <div class="col-xs-6">
+                                            <br/><br/>
+                                            <label>Minimum distance to travel (meters)</label>
+                                            <input ng-model="randomWay.distance" class="form-control"/>
+                                        </div>
 
-                                         <div class="col-sm-3">
+                                        <div class="col-sm-12">
                                              <br/><br/>
                                              <button ng-show="loadRandomWay" type="button" class="btn btn-primary btn-block" ng-click="generateRandomWay()">Generate random way</button>
                                         </div>
-                                                                        
+                                        
                                         <div class="col-sm-12">
                                             <div ng-show="!loadRandomWay">
                                                 <img src="/images/loader.gif">
@@ -1095,6 +1101,12 @@
                               <option value="residential">residential</option>
                               <option value="service">service</option>    
                           </select>           
+                      </div>
+                      
+                      <div class="col-xs-6">
+                          <br/><br/>
+                          <label>Minimum distance to travel (meters)</label>
+                          <input ng-model="randomWay.distance" class="form-control"/>
                       </div>
                                             
                       <div class="col-xs-6">              

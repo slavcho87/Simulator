@@ -293,7 +293,7 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
                 type: $scope.newStaticItem.type,
                 longitude: $scope.newStaticItem.longitude,
                 latitude: $scope.newStaticItem.latitude,
-                description: $scope.newStaticItem.description                
+                description: {name: "text", data: $scope.newStaticItem.description}              
             });
             
             $scope.msgList.push("Static item inserted!");
@@ -395,6 +395,7 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
                 longitudeULC: $scope.scene.longitudeULC,
                 latitudeLRC: $scope.scene.latitudeLRC,
                 longitudeLRC: $scope.scene.longitudeLRC,
+                 distance: $scope.randomWay.distance,
             }
             
             $scope.loadRandomWay = false;
@@ -814,6 +815,7 @@ app.controller("EditMapController", ['$scope', '$http', 'Services', 'DataFactory
                 longitudeULC: $scope.scene.longitudeULC,
                 latitudeLRC: $scope.scene.latitudeLRC,
                 longitudeLRC: $scope.scene.longitudeLRC,
+                distance: $scope.randomWay.distance,
             }
             
             $scope.loadRandomWay = false;

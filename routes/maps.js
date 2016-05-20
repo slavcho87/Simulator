@@ -631,66 +631,216 @@ router.post('/generateRandomWay', function(req, res){
         }
         
         var itemList = [];
-        for (index = 0; index < req.body.numberDynamicItems; index++) {
+        var index = 0;
+        while(index < req.body.numberDynamicItems){
             var speed = Math.random() * (50 - 10) + 10;
             var wayIndex;
             var way;
+            var wayList;
             
             switch(req.body.wayType) {
                 case "motorway":
                     wayIndex = Math.round(Math.random()*motorway.length);
-                    way = motorway[wayIndex];                    
+                    way = motorway[wayIndex];
+                    var id = way.getAttribute("id");
+                    wayList = getWay(motorway, way, id, xmlDoc, req.body.distance);
+                    
+                    var route = [];
+                    for(indice in wayList){
+                        var node = wayList[indice];
+
+                        var ref = node.getAttribute("ref");
+                        var lat = xmlDoc.getElementById(ref).getAttribute("lat");
+                        var long = xmlDoc.getElementById(ref).getAttribute("lon");
+
+                        route.push({
+                            long: lat,                             
+                            lat: long
+                        });                
+                    }
+
+                    itemList.push({      
+                        speed: speed,
+                        route: route
+                    });                    
                     break;
                 case "trunk":
                     wayIndex = Math.round(Math.random()*trunk.length); 
                     way = trunk[wayIndex];
+                    var id = way.getAttribute("id");
+                    wayList = getWay(trunk, way, id, xmlDoc, req.body.distance);
+                    
+                    var route = [];
+                    for(indice in wayList){
+                        var node = wayList[indice];
+
+                        var ref = node.getAttribute("ref");
+                        var lat = xmlDoc.getElementById(ref).getAttribute("lat");
+                        var long = xmlDoc.getElementById(ref).getAttribute("lon");
+
+                        route.push({
+                            long: lat,                             
+                            lat: long
+                        });                
+                    }
+
+                    itemList.push({      
+                        speed: speed,
+                        route: route
+                    });
                     break;
                 case "primary":
                     wayIndex = Math.round(Math.random()*primary.length); 
                     way = primary[wayIndex];
+                    var id = way.getAttribute("id");
+                    wayList = getWay(primary, way, id, xmlDoc, req.body.distance);
+                    
+                    var route = [];
+                    for(indice in wayList){
+                        var node = wayList[indice];
+
+                        var ref = node.getAttribute("ref");
+                        var lat = xmlDoc.getElementById(ref).getAttribute("lat");
+                        var long = xmlDoc.getElementById(ref).getAttribute("lon");
+
+                        route.push({
+                            long: lat,                             
+                            lat: long
+                        });                
+                    }
+
+                    itemList.push({      
+                        speed: speed,
+                        route: route
+                    });
                     break;
                 case "secondary":
                     wayIndex = Math.round(Math.random()*secondary.length); 
                     way = secondary[wayIndex];
+                    var id = way.getAttribute("id");
+                    wayList = getWay(secondary, way, id, xmlDoc, req.body.distance);
+                    
+                    var route = [];
+                    for(indice in wayList){
+                        var node = wayList[indice];
+
+                        var ref = node.getAttribute("ref");
+                        var lat = xmlDoc.getElementById(ref).getAttribute("lat");
+                        var long = xmlDoc.getElementById(ref).getAttribute("lon");
+
+                        route.push({
+                            long: lat,                             
+                            lat: long
+                        });                
+                    }
+
+                    itemList.push({      
+                        speed: speed,
+                        route: route
+                    });
                     break;
                 case "tertiary":
                     wayIndex = Math.round(Math.random()*tertiary.length); 
                     way = tertiary[wayIndex];
+                    var id = way.getAttribute("id");
+                    wayList = getWay(tertiary, way, id, xmlDoc, req.body.distance);
+                    
+                    var route = [];
+                    for(indice in wayList){
+                        var node = wayList[indice];
+
+                        var ref = node.getAttribute("ref");
+                        var lat = xmlDoc.getElementById(ref).getAttribute("lat");
+                        var long = xmlDoc.getElementById(ref).getAttribute("lon");
+
+                        route.push({
+                            long: lat,                             
+                            lat: long
+                        });                
+                    }
+
+                    itemList.push({      
+                        speed: speed,
+                        route: route
+                    });
                     break;                    
                 case "unclassified":
                     wayIndex = Math.round(Math.random()*unclassified.length); 
                     way = unclassified[wayIndex];
+                    var id = way.getAttribute("id");
+                    wayList = getWay(unclassified, way, id, xmlDoc, req.body.distance);
+                    
+                    var route = [];
+                    for(indice in wayList){
+                        var node = wayList[indice];
+
+                        var ref = node.getAttribute("ref");
+                        var lat = xmlDoc.getElementById(ref).getAttribute("lat");
+                        var long = xmlDoc.getElementById(ref).getAttribute("lon");
+
+                        route.push({
+                            long: lat,                             
+                            lat: long
+                        });                
+                    }
+
+                    itemList.push({      
+                        speed: speed,
+                        route: route
+                    });
                     break;
                 case "residential":
                     wayIndex = Math.round(Math.random()*residential.length); 
                     way = residential[wayIndex];
+                    var id = way.getAttribute("id");
+                    wayList = getWay(residential, way, id, xmlDoc, req.body.distance);
+                   
+                    var route = [];
+                    for(indice in wayList){
+                        var node = wayList[indice];
+
+                        var ref = node.getAttribute("ref");
+                        var lat = xmlDoc.getElementById(ref).getAttribute("lat");
+                        var long = xmlDoc.getElementById(ref).getAttribute("lon");
+
+                        route.push({
+                            long: lat,                             
+                            lat: long
+                        });                
+                    }
+
+                    itemList.push({      
+                        speed: speed,
+                        route: route
+                    });
                     break;
                 case "service":
                     wayIndex = Math.round(Math.random()*service.length); 
                     way = service[wayIndex];
-                    break;        
-            }
-            
-            var route = [];
-            for(i in way.childNodes){ 
-                var childNode = way.childNodes[i];
-                
-                if(childNode.nodeName == "nd"){
-                    var ref = childNode.getAttribute("ref");
-                    var lat = xmlDoc.getElementById(ref).getAttribute("lat");
-                    var long = xmlDoc.getElementById(ref).getAttribute("lon");
+                    var id = way.getAttribute("id");
+                    wayList = getWay(service, way, id, xmlDoc, req.body.distance);
                     
-                    route.push({
-                        long: lat,                             
-                        lat: long
+                    var route = [];
+                    for(indice in wayList){
+                        var node = wayList[indice];
+
+                        var ref = node.getAttribute("ref");
+                        var lat = xmlDoc.getElementById(ref).getAttribute("lat");
+                        var long = xmlDoc.getElementById(ref).getAttribute("lon");
+
+                        route.push({
+                            long: lat,                             
+                            lat: long
+                        });                
+                    }
+
+                    itemList.push({      
+                        speed: speed,
+                        route: route
                     });
-                }
+                    break;
             }
-            
-            itemList.push({      
-                speed: speed,
-                route: route
-            });
+            index++
         }
         
         res.json({
@@ -699,6 +849,174 @@ router.post('/generateRandomWay', function(req, res){
         }); 
     });
 })
+
+function getNodes(nodes){
+    var list = [];
+    
+    for(i in nodes){
+        var node = nodes[i];
+        
+        if(node.nodeName == "nd"){
+            list.push(node);
+        }
+    }
+    
+    return list;
+}
+
+function waysContainId(wayList, idNode, idWay, xmlDoc){
+    var list = [];
+    var parentList = [];
+    var ndList = xmlDoc.getElementsByTagName("nd");
+    
+    for(index in ndList){
+        var parent = ndList[index].parentNode;
+        if(parent){
+            var id = parent.getAttribute("id");
+            var ref = ndList[index].getAttribute("ref");
+            
+            if(idWay!=id && ref==idNode){
+                parentList.push(parent);
+            }
+        }
+    }
+    
+    for(i in parentList){
+        var actualWay = parentList[i]; 
+        var nodes = getNodes(actualWay.childNodes);
+        
+        var insertInList = false;
+        var nodes = getNodes(actualWay.childNodes);
+        var nodesList = [];
+            
+        for(index in nodes){
+            var ref = nodes[index].getAttribute("ref");
+                
+            if(insertInList){
+                nodesList.push(nodes[index]);
+            }
+                
+            if(ref == idNode){
+                insertInList = true;    
+            }
+        }
+        
+        if(insertInList){
+            list.push(nodesList);
+        }
+    }
+    
+    return list;
+}
+
+function getWay(wayList, way, id, xmlDoc, minDistance, actualDistance){
+    var list = [];
+    var actualDistance = 0;
+    
+    list = getNodes(way.childNodes);
+    
+    for(i in list){
+        if(i<(list.length-1)){
+            var nextIndex = parseInt(i)+1; 
+            var childNode = list[i];
+            var netxChildNode = list[nextIndex];
+
+            var ref = childNode.getAttribute("ref");
+            var lat = xmlDoc.getElementById(ref).getAttribute("lat");
+            var long = xmlDoc.getElementById(ref).getAttribute("lon");
+            
+            var nextRef = netxChildNode.getAttribute("ref");
+            var netxLat = xmlDoc.getElementById(nextRef).getAttribute("lat");
+            var netxLong = xmlDoc.getElementById(nextRef).getAttribute("lon");
+            
+            var distance = distanceBetween(toRad(long), toRad(lat), toRad(netxLong), toRad(netxLat));    
+            actualDistance+=distance;
+        }
+    }
+    
+    var lastNode = list[list.length-1];
+    var lastRef = lastNode.getAttribute("ref");
+    var lastLat = xmlDoc.getElementById(lastRef).getAttribute("lat");
+    var lastLong = xmlDoc.getElementById(lastRef).getAttribute("lon");
+
+    var waysContainIdList = waysContainId(wayList, lastRef, id, xmlDoc);
+    var end = false;
+    while(actualDistance<minDistance && waysContainIdList.length>0 && !end){
+        var childNodeList = getWayWithMaxNodes(waysContainIdList); 
+        
+        if(childNodeList.length>0){
+            for(i in childNodeList){
+                var childNode = childNodeList[parseInt(i)];
+                var ref = childNode.getAttribute("ref");
+                var lat = xmlDoc.getElementById(ref).getAttribute("lat");
+                var long = xmlDoc.getElementById(ref).getAttribute("lon");                         
+
+                var distance = distanceBetween(toRad(long), toRad(lat), toRad(lastLat), toRad(lastLong));  
+                actualDistance+=distance;                           
+
+                list.push(childNode);
+
+                lastNode = list[list.length-1];
+                lastRef = lastNode.getAttribute("ref");
+                lastLat = xmlDoc.getElementById(lastRef).getAttribute("lat");
+                lastLong = xmlDoc.getElementById(lastRef).getAttribute("lon");
+            }
+
+            lastNode = list[list.length-1];
+            lastRef = lastNode.getAttribute("ref");
+            lastLat = xmlDoc.getElementById(lastRef).getAttribute("lat");
+            lastLong = xmlDoc.getElementById(lastRef).getAttribute("lon");
+            var idWay = lastNode.parentNode.getAttribute("id");
+            waysContainIdList = waysContainId(wayList, lastRef, idWay, xmlDoc);    
+        }else{
+            end=true;
+        }
+    }
+    
+    return list;
+}
+    
+function getWayWithMaxNodes(wayList){
+    var way = null;
+    
+    for(index in wayList){
+        if(way==null){
+            way = wayList[index];
+        }else{
+            if(wayList[index].length > way.length){
+                way = wayList[index];
+            }
+        }
+    }
+    
+    return way;
+}
+
+function distanceBetween(lon1, lat1, lon2, lat2){
+    var R = 6357000;
+    var difLat = lat2 - lat1;
+    var difLon = lon2 - lon1;
+    var a = (Math.sin(difLat/2)*Math.sin(difLat/2))+
+        Math.cos(lat1)*Math.cos(lat2)*Math.sin(difLon/2)*Math.sin(difLon/2);
+    var c = 2*Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R*c;
+}
+
+function getLastNode(way){
+    var nodeList = [];
+    for(i in way.childNodes){
+        var childNode = way.childNodes[i];
+
+        if(childNode.nodeName == "nd"){
+            nodeList.push(childNode);
+        }
+    }
+    return nodeList[nodeList.length-1];
+}
+
+function toRad(num) {
+    return num * Math.PI / 180;
+}
 
 router.get('/mapList', function(req, res){
     Map.find({}, function(err, list){
@@ -715,7 +1033,5 @@ router.get('/mapList', function(req, res){
         }
     });
 })
-
-    
 
 module.exports = router;
