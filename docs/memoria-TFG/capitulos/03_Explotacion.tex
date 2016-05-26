@@ -95,24 +95,93 @@ El ultimo paso consiste en definir los objetos móviles. El simulador dispone de
 
 \subsection{Simulación de un escenario realista}
 
-Una vez que hayamos realizado la configuración del escenarios realista vamos a realizar simulaciones con dos usuarios y recoger las valoraciones que han realizado para su posterior evaluación. En la figura \ref{simulacionYEvaluacion} podemos ver una captura de una simulación realizada:
+Una vez que hayamos realizado la configuración del escenario realista vamos a realizar simulaciones con dos usuarios: Slavcho y Juan. Al primero de los usuarios les gustan los restaurantes con precios bajos y dará mejores valoraciones para este tipo de restaurantes. Es decir, cuanto menor es el precio del restaurante mayor será la valoración del usuario. En la figura \ref{simulacionSlavcho} podemos ver una captura de la simulación realizada con el usuario slavcho y las recomendaciones que ha obtenidas.
 
 \begin{figure}[H]
-	\centering\includegraphics[scale=0.35]{imagenes/explotacion/6.jpg}
-	\caption{Simulación realizada en San Luis Potosí, México}
-	\label{simulacionYEvaluacion}
+	\centering\includegraphics[scale=0.35]{imagenes/explotacion/simulacion/simulacion-slavcho.jpg}
+	\caption{Simulación realizada en la ciudad San Luis Potosí con el usuario Slavcho}
+	\label{simulacionSlavcho}
 \end{figure}
+
+\newpage
+
+Al segundo usuario les gustan los restaurantes con precios medios y dará mejores valoraciones para este tipo de restaurantes y peores para el resto. En la figura \ref{simulacionJuan} podemos ver una captura de la simulación realizada con el usuario Juan y las recomendaciones que ha obtenido. 
+
+\begin{figure}[H]
+	\centering\includegraphics[scale=0.35]{imagenes/explotacion/simulacion/simulacion-juan.jpg}
+	\caption{Simulación realizada en la ciudad San Luis Potosí con el usuario Juan}
+	\label{simulacionJuan}
+\end{figure}
+
+Para solucionar el problema de arranque en frio se han introducido previamente las valoraciones de otros dos usuarios: pepe y mario. Al primero de ellos les gustan lo restaurantes con precios bajos y al segundo los restaurantes con precios altos. En las tablas \ref{restPreciosAltos}, \ref{restPreciosMedio} y \ref{restPreciosBajos} podemos observas las valoraciones introducidas por todos los usuarios para restaurantes con precios altos, medios y bajos.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|c|c|c|}
+		\hline
+		\multicolumn{1}{|c|}{\textbf{}} & \textbf{\begin{tabular}[c]{@{}c@{}}Restaurante la \\ Estrella de Dima\end{tabular}} & \multicolumn{1}{l|}{\textbf{\begin{tabular}[c]{@{}l@{}}Restaurante \\ Guerra\end{tabular}}} & \textbf{\begin{tabular}[c]{@{}c@{}}Restaurante \\ la Gran Via\end{tabular}} \\ \hline
+		\textbf{\begin{tabular}[c]{@{}l@{}}pepe \\ (precios altos)\end{tabular}} & 5 & 5 & 5 \\ \hline
+		\textbf{\begin{tabular}[c]{@{}l@{}}mario \\ (precios bajos)\end{tabular}} & 1 & 1 & 1 \\ \hline
+		\textbf{\begin{tabular}[c]{@{}l@{}}slavcho \\ (precios bajos)\end{tabular}} & 1 &  &  \\ \hline
+		\textbf{\begin{tabular}[c]{@{}l@{}}juan \\ (precios medios)\end{tabular}} & 1 & 1 &  \\ \hline
+	\end{tabular}
+	\caption{Valoración de los usuarios para restaurantes con precios altos}
+	\label{restPreciosAltos}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|c|c|c|}
+		\hline
+		\multicolumn{1}{|c|}{\textbf{}} & \textbf{\begin{tabular}[c]{@{}c@{}}Restaurante\\ Alhondiga\end{tabular}} & \multicolumn{1}{l|}{\textbf{\begin{tabular}[c]{@{}l@{}}Restaurante \\ la Chalita\end{tabular}}} & \textbf{\begin{tabular}[c]{@{}c@{}}Restaurante \\ Marisco Sam\end{tabular}} \\ \hline
+		\textbf{\begin{tabular}[c]{@{}l@{}}pepe \\ (precios altos)\end{tabular}} & 1 & 1 & 1 \\ \hline
+		\textbf{\begin{tabular}[c]{@{}l@{}}mario \\ (precios bajos)\end{tabular}} & 3 & 3 & 3 \\ \hline
+		\textbf{\begin{tabular}[c]{@{}l@{}}slavcho \\ (precios bajos)\end{tabular}} & 3 &  &  \\ \hline
+		\textbf{\begin{tabular}[c]{@{}l@{}}juan \\ (precios medios)\end{tabular}} & 5 &  &  \\ \hline
+	\end{tabular}
+	\caption{Valoración de los usuarios para restaurantes con precios medio}
+	\label{restPreciosMedio}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|c|c|c|}
+		\hline
+		\multicolumn{1}{|c|}{\textbf{}} & \textbf{VIPS} & \multicolumn{1}{l|}{\textbf{Gorditas Doa Gloria}} & \textbf{Rockabilly} \\ \hline
+		\textbf{\begin{tabular}[c]{@{}l@{}}pepe \\ (precios altos)\end{tabular}} & 1 & 1 & 1 \\ \hline
+		\textbf{\begin{tabular}[c]{@{}l@{}}mario \\ (precios bajos)\end{tabular}} & 5 & 5 & 5 \\ \hline
+		\textbf{\begin{tabular}[c]{@{}l@{}}slavcho \\ (precios bajos)\end{tabular}} & 5 &  &  \\ \hline
+		\textbf{\begin{tabular}[c]{@{}l@{}}juan \\ (precios medios)\end{tabular}} & 2 & 1 &  \\ \hline
+	\end{tabular}
+		\caption{Valoración de los usuarios para restaurantes con precios bajos}
+		\label{restPreciosBajos}
+\end{table}
 
 \subsection{Evaluación de un recomendador}
 
+Una vez terminada la simulación vamos a proceder a evaluar el sistema de recomendaciones para cada uno de los usuarios. En la figura \ref{evaluarSlavcho} podemos ver un gráfico con los errores cometidos por el sistema de recomendación para el usuario Slavcho y en la figura \ref{evaluarJuan} los errores cometidos por el sistema de recomendación para el usuario Juan. 
 
+En el gráfico \ref{evaluarSlavcho} podemos ver que el sistema de recomendación suele sobre estimar las valoraciones para el usuario Slavcho. A medida que se hayan ido introduciendo valoraciones el recomendador realiza estimaciones cada vez mejores hasta obtener un acierto. Esto también es debido al echo que tenemos datos de un perfil similar, el usuario Mario, al que también le gustan los restaurantes con precios bajos. 
 
+\begin{figure}[H]
+	\centering\includegraphics[scale=0.45]{imagenes/explotacion/simulacion/errores-slavcho.jpg}
+	\caption{Evaluación del sistema de recomendaciones del usuario Slavcho}
+	\label{evaluarSlavcho}
+\end{figure}
+
+En el caso del usuario Juan (figura \ref{evaluarJuan}), al cual le gustan lo restaurantes de precio medio, observamos que el sistema de recomendación sobre estima las valoraciones para los restaurantes de precio medio (Restaurante la Chalita y Restaurante Marisco Sam) y para el resto de tipos de restaurantes se subestima la valoración. En este caso hay que tener en cuanta que no tenemos ningún usuario al que le gusten los precio medios y es normal que hay cierto error en la estimación del valor.
+
+\begin{figure}[H]
+	\centering\includegraphics[scale=0.45]{imagenes/explotacion/simulacion/errores-juan.jpg}
+	\caption{Evaluación del sistema de recomendaciones del usuario Juan}
+	\label{evaluarJuan}
+\end{figure} 
 
 \section{Rendimiento}
 
 El limite teórico máximo de peticiones HTTP de las aplicaciones desarrolladas con Node.js es igual al número máximo de sockets que se puedan crear en el servidor, es decir, un servidor con un Sistema Operativo Linux puede crear 65535 sockets. Pero hay que tener en cuenta que una parte esta reservada para el Sistema Operativo. Esto nos deja entre 30.000 - 45.000 sockets que podemos usar. Tenemos que comprobar cómo se comporta el simulador y por lo tanto hemos realizado unas prueba de estrés tanto con Linux como con Windows.
 
-\subsection{Rendimientos con Linux}
+\subsection{Rendimiento con Linux}
 
 En este apartado se describe los resultados de las pruebas de estrés realizadas con un Sistema Operativo Linux con las siguientes características:
 
@@ -125,7 +194,12 @@ En este apartado se describe los resultados de las pruebas de estrés realizadas
 \begin{table}[H]
 	\begin{center}
 		\begin{tabular}{|c|c|c|c|c|c|}\hline
-			Peticiones HTTP & CPU & Memoria & Kbytes/sec & Peticiones/seg & Segundos por petición \\ \hline
+				\textbf{\begin{tabular}[c]{@{}c@{}}Peticiones\\HTTP\end{tabular}} & 
+				\textbf{\begin{tabular}[c]{@{}c@{}}CPU \%\end{tabular}} & 
+				\textbf{\begin{tabular}[c]{@{}c@{}}Memoria\end{tabular}} & 
+				\textbf{\begin{tabular}[c]{@{}c@{}}KB/seg\end{tabular}} & 
+				\textbf{\begin{tabular}[c]{@{}c@{}}Req/seg\end{tabular}} & 
+				\textbf{\begin{tabular}[c]{@{}c@{}}Segundos\\por petición \end{tabular}} \\ \hline
 			50.000 & 24.8 & 134MB & 1593,86 & 508,76 & 0,196555 \\ \hline
 			100.000 & 30.2 & 133 MB & 1716,46 & 547,89 & 0,182517 \\ \hline
 			500.000 & 45.4 & 138MB & 1199,38 & 382,84 & 0,261204 \\ \hline
@@ -138,7 +212,12 @@ En este apartado se describe los resultados de las pruebas de estrés realizadas
 \begin{table}[H]
 	\begin{center}
 		\begin{tabular}{|c|c|c|c|c|c|} 	\hline
-			Peticiones HTTP & CPU & Memoria & Kbytes/sec & Peticiones/seg & Segundos por petición \\ \hline
+			\textbf{\begin{tabular}[c]{@{}c@{}}Peticiones\\HTTP\end{tabular}} & 
+			\textbf{\begin{tabular}[c]{@{}c@{}}CPU \%\end{tabular}} & 
+			\textbf{\begin{tabular}[c]{@{}c@{}}Memoria\end{tabular}} & 
+			\textbf{\begin{tabular}[c]{@{}c@{}}KB/seg\end{tabular}} & 
+			\textbf{\begin{tabular}[c]{@{}c@{}}Req/seg\end{tabular}} & 
+			\textbf{\begin{tabular}[c]{@{}c@{}}Segundos\\por petición \end{tabular}} \\ \hline
 			50.000 & 25.9 & 147MB & 1196,85 & 382,04 & 1,308774 \\ \hline
 			100.000 & 40.6 & 160MB & 1286,86 & 410,78 & 1,2172 \\ \hline
 			500.000 & 44.6 & 162 MB & n/d & n/d & n/d \\ \hline
@@ -151,7 +230,12 @@ En este apartado se describe los resultados de las pruebas de estrés realizadas
 \begin{table}[H]
 	\begin{center}
 		\begin{tabular}{|c|c|c|c|c|c|} \hline
-			Peticiones HTTP & CPU & Memoria & Kbytes/sec & Peticiones/seg & Segundos por petición \\ \hline
+			\textbf{\begin{tabular}[c]{@{}c@{}}Peticiones\\HTTP\end{tabular}} & 
+			\textbf{\begin{tabular}[c]{@{}c@{}}CPU \%\end{tabular}} & 
+			\textbf{\begin{tabular}[c]{@{}c@{}}Memoria\end{tabular}} & 
+			\textbf{\begin{tabular}[c]{@{}c@{}}KB/seg\end{tabular}} & 
+			\textbf{\begin{tabular}[c]{@{}c@{}}Req/seg\end{tabular}} & 
+			\textbf{\begin{tabular}[c]{@{}c@{}}Segundos\\por petición \end{tabular}} \\ \hline
 			50.000 & 24.3 & 160 MB & 1408,94 & 449,74 & 2,223517 \\ \hline
 			100.000 & 26.3 & 167MB & n/d & n/d & n/d \\ \hline
 			500.000 & n/d & n/d & n/d & n/d & n/d \\ \hline
@@ -165,7 +249,7 @@ En el caso de la pruebas con 500 usuarios concurrentes nos da dado el error apr 
 
 En el resto de casos las pruebas de carga han sido satisfactorias. Observamos que el peor de los casos se ha obtenido una media de 2,2 segundos por petición HTTP en el caso que tenemos 1000 usuarios concurrentes que han generado 50.000 peticiones HTTP.
 
-\subsection{Rendimientos con Windows}
+\subsection{Rendimiento con Windows}
 
 En este apartado se describe los resultados de las pruebas de estrés realizadas con un Sistema Operativo Windows con las siguientes características:
 
