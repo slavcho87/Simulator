@@ -5,6 +5,7 @@ public class Item {
 	private String itemName;
 	private float rating;
 	private Location location;
+	private String fileId;
 	
 	public String getId() {
 		return id;
@@ -37,5 +38,15 @@ public class Item {
 	public void setLocation(Location location) {
 		this.location = location;
 	}
+
+	public String getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
+	}
+	
+	
 	
 }

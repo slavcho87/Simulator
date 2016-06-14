@@ -36,7 +36,7 @@ public class UserBasedStrategy implements Strategy {
 		int indice = 0;
 		List<Ratings> trainingDataList = getTrainingData();
 		ratingList.addAll(trainingDataList);
-		FastByIDMap<PreferenceArray> preferences = new FastByIDMap<PreferenceArray>(); // = getTrainingData();
+		FastByIDMap<PreferenceArray> preferences = new FastByIDMap<PreferenceArray>();
 		
 		//prepare users preferences
 		Map<String, Integer> userIdMap = new HashMap<String, Integer>();
@@ -52,6 +52,7 @@ public class UserBasedStrategy implements Strategy {
 				userPreference.setUserID(index, Long.valueOf(key.hashCode()));
 				userPreference.setItemID(index, Long.valueOf(rating.getItemId().hashCode()));
 				userPreference.setValue(index, Long.valueOf(rating.getRating()));
+				
 			}
 			
 			preferences.put(indice, userPreference);
@@ -130,7 +131,7 @@ public class UserBasedStrategy implements Strategy {
 	 */
 	private Item findItemID(List<Item> itemList, Long itemID){
 		for(Item item: itemList){
-			if(Long.valueOf(item.getId().hashCode()).equals(itemID)){
+			if(Long.valueOf(item.getId().hashCode()).equals(itemID) || Long.valueOf(item.getFileId().hashCode()).equals(itemID)){
 				return item;
 			}
 		}
