@@ -666,7 +666,7 @@
                             
                             function setRating(itemId){
                                 var rating = $('#'+itemId).val();
-                                if(rating>0){
+                                if(rating>-1){
                                     $scope.setRating(itemId, rating);    
                                 }
                             }
@@ -710,6 +710,7 @@
                                     <td>{{item.rating}}</td>
                                     <td>
                                         <select ng-change="setRatingWithForecas(item.id, rating, {{item.rating}})" ng-model="rating">
+                                            <option value="0">0</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>

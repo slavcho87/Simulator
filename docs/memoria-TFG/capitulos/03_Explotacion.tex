@@ -95,7 +95,9 @@ El ultimo paso consiste en definir los objetos móviles. El simulador dispone de
 
 \subsection{Simulación de un escenario realista}
 
-Una vez que hayamos realizado la configuración del escenario realista vamos a realizar simulaciones con dos usuarios: Slavcho y Juan. Al primero de los usuarios les gustan los restaurantes con precios bajos y dará mejores valoraciones para este tipo de restaurantes. Es decir, cuanto menor es el precio del restaurante mayor será la valoración del usuario. En la figura \ref{simulacionSlavcho} podemos ver una captura de la simulación realizada con el usuario slavcho y las recomendaciones que ha obtenidas.
+Una vez que hayamos realizado la configuración del escenario realista vamos a realizar simulaciones con dos usuarios: Slavcho y Juan. En esta simulación estos usuarios darán un 0 para los restaurantes que no les gustan, un 1 para los que les gustan regular y 2 para los que les gustan mucho. 
+
+Al primero de los usuarios le gustan los restaurantes con precios bajos y dará un 2 (me gusta mucho) a este tipo de restaurantes, un 1 (me gusta regular) para los restaurantes de precios medios y un 0 (no me gusta) para los restaurantes de precios altos. En la figura \ref{simulacionSlavcho} podemos ver una captura de la simulación realizada con el usuario Slavcho y las recomendaciones que ha obtenido. 
 
 \begin{figure}[H]
 	\centering\includegraphics[scale=0.35]{imagenes/explotacion/simulacion/simulacion-slavcho.jpg}
@@ -105,7 +107,7 @@ Una vez que hayamos realizado la configuración del escenario realista vamos a r
 
 \newpage
 
-Al segundo usuario les gustan los restaurantes con precios medios y dará mejores valoraciones para este tipo de restaurantes y peores para el resto. En la figura \ref{simulacionJuan} podemos ver una captura de la simulación realizada con el usuario Juan y las recomendaciones que ha obtenido. 
+Al segundo usuario le gustan los restaurantes con precios medios y dará un 2 (me gusta mucho) a este tipo de restaurantes, un 1 (me gusta regular) para los restaurantes de precios bajos y un 0 (no me gusta) a los restaurantes de precios altos. En la figura \ref{simulacionJuan} podemos ver una captura de la simulación realizada con el usuario Juan y las recomendaciones que ha obtenido. 
 
 \begin{figure}[H]
 	\centering\includegraphics[scale=0.35]{imagenes/explotacion/simulacion/simulacion-juan.jpg}
@@ -113,17 +115,17 @@ Al segundo usuario les gustan los restaurantes con precios medios y dará mejore
 	\label{simulacionJuan}
 \end{figure}
 
-Para solucionar el problema de arranque en frio se han introducido previamente las valoraciones de otros dos usuarios: pepe y mario. Al primero de ellos les gustan lo restaurantes con precios bajos y al segundo los restaurantes con precios altos. En las tablas \ref{restPreciosAltos}, \ref{restPreciosMedio} y \ref{restPreciosBajos} podemos observas las valoraciones introducidas por todos los usuarios para restaurantes con precios altos, medios y bajos.
+Para solucionar el problema con el arranque en frio usaremos un fichero con datos de entrenamiento (fichero rating\_final.csv descargado en el primer paso durante la obtención de datos reales) e introduciremos los datos de otros dos usuarios pepe y mario. Al primero de ellos les gustan lo restaurantes con precios bajos y al segundo los restaurantes con precios altos. En las tablas \ref{restPreciosAltos}, \ref{restPreciosMedio} y \ref{restPreciosBajos} podemos observas las valoraciones introducidas por todos los usuarios para restaurantes con precios altos, medios y bajos.
 
 \begin{table}[H]
 	\centering
 	\begin{tabular}{|l|c|c|c|}
 		\hline
 		\multicolumn{1}{|c|}{\textbf{}} & \textbf{\begin{tabular}[c]{@{}c@{}}Restaurante la \\ Estrella de Dima\end{tabular}} & \multicolumn{1}{l|}{\textbf{\begin{tabular}[c]{@{}l@{}}Restaurante \\ Guerra\end{tabular}}} & \textbf{\begin{tabular}[c]{@{}c@{}}Restaurante \\ la Gran Via\end{tabular}} \\ \hline
-		\textbf{\begin{tabular}[c]{@{}l@{}}pepe \\ (precios altos)\end{tabular}} & 5 & 5 & 5 \\ \hline
-		\textbf{\begin{tabular}[c]{@{}l@{}}mario \\ (precios bajos)\end{tabular}} & 1 & 1 & 1 \\ \hline
-		\textbf{\begin{tabular}[c]{@{}l@{}}slavcho \\ (precios bajos)\end{tabular}} & 1 &  &  \\ \hline
-		\textbf{\begin{tabular}[c]{@{}l@{}}juan \\ (precios medios)\end{tabular}} & 1 & 1 &  \\ \hline
+		\textbf{\begin{tabular}[c]{@{}l@{}}pepe \\ (precios altos)\end{tabular}} & 2 & 2 & 2 \\ \hline
+		\textbf{\begin{tabular}[c]{@{}l@{}}mario \\ (precios bajos)\end{tabular}} & 0 & 0 & 0 \\ \hline
+		\textbf{\begin{tabular}[c]{@{}l@{}}slavcho \\ (precios bajos)\end{tabular}} & 0 &  &  \\ \hline
+		\textbf{\begin{tabular}[c]{@{}l@{}}juan \\ (precios medios)\end{tabular}} & 0 & 0 &  \\ \hline
 	\end{tabular}
 	\caption{Valoración de los usuarios para restaurantes con precios altos}
 	\label{restPreciosAltos}
@@ -134,10 +136,10 @@ Para solucionar el problema de arranque en frio se han introducido previamente l
 	\begin{tabular}{|l|c|c|c|}
 		\hline
 		\multicolumn{1}{|c|}{\textbf{}} & \textbf{\begin{tabular}[c]{@{}c@{}}Restaurante\\ Alhondiga\end{tabular}} & \multicolumn{1}{l|}{\textbf{\begin{tabular}[c]{@{}l@{}}Restaurante \\ la Chalita\end{tabular}}} & \textbf{\begin{tabular}[c]{@{}c@{}}Restaurante \\ Marisco Sam\end{tabular}} \\ \hline
-		\textbf{\begin{tabular}[c]{@{}l@{}}pepe \\ (precios altos)\end{tabular}} & 1 & 1 & 1 \\ \hline
-		\textbf{\begin{tabular}[c]{@{}l@{}}mario \\ (precios bajos)\end{tabular}} & 3 & 3 & 3 \\ \hline
-		\textbf{\begin{tabular}[c]{@{}l@{}}slavcho \\ (precios bajos)\end{tabular}} & 3 &  &  \\ \hline
-		\textbf{\begin{tabular}[c]{@{}l@{}}juan \\ (precios medios)\end{tabular}} & 5 &  &  \\ \hline
+		\textbf{\begin{tabular}[c]{@{}l@{}}pepe \\ (precios altos)\end{tabular}} & 0 & 0 & 0 \\ \hline
+		\textbf{\begin{tabular}[c]{@{}l@{}}mario \\ (precios bajos)\end{tabular}} & 1 & 1 & 1 \\ \hline
+		\textbf{\begin{tabular}[c]{@{}l@{}}slavcho \\ (precios bajos)\end{tabular}} & 1 &  &  \\ \hline
+		\textbf{\begin{tabular}[c]{@{}l@{}}juan \\ (precios medios)\end{tabular}} & 2 &  &  \\ \hline
 	\end{tabular}
 	\caption{Valoración de los usuarios para restaurantes con precios medio}
 	\label{restPreciosMedio}
@@ -148,10 +150,10 @@ Para solucionar el problema de arranque en frio se han introducido previamente l
 	\begin{tabular}{|l|c|c|c|}
 		\hline
 		\multicolumn{1}{|c|}{\textbf{}} & \textbf{VIPS} & \multicolumn{1}{l|}{\textbf{Gorditas Doa Gloria}} & \textbf{Rockabilly} \\ \hline
-		\textbf{\begin{tabular}[c]{@{}l@{}}pepe \\ (precios altos)\end{tabular}} & 1 & 1 & 1 \\ \hline
-		\textbf{\begin{tabular}[c]{@{}l@{}}mario \\ (precios bajos)\end{tabular}} & 5 & 5 & 5 \\ \hline
-		\textbf{\begin{tabular}[c]{@{}l@{}}slavcho \\ (precios bajos)\end{tabular}} & 5 &  &  \\ \hline
-		\textbf{\begin{tabular}[c]{@{}l@{}}juan \\ (precios medios)\end{tabular}} & 2 & 1 &  \\ \hline
+		\textbf{\begin{tabular}[c]{@{}l@{}}pepe \\ (precios altos)\end{tabular}} & 0 & 0 & 0 \\ \hline
+		\textbf{\begin{tabular}[c]{@{}l@{}}mario \\ (precios bajos)\end{tabular}} & 2 & 2 & 2 \\ \hline
+		\textbf{\begin{tabular}[c]{@{}l@{}}slavcho \\ (precios bajos)\end{tabular}} & 2 &  &  \\ \hline
+		\textbf{\begin{tabular}[c]{@{}l@{}}juan \\ (precios medios)\end{tabular}} & 1 & 1 &  \\ \hline
 	\end{tabular}
 		\caption{Valoración de los usuarios para restaurantes con precios bajos}
 		\label{restPreciosBajos}
@@ -159,20 +161,22 @@ Para solucionar el problema de arranque en frio se han introducido previamente l
 
 \subsection{Evaluación de un recomendador}
 
-Una vez terminada la simulación vamos a proceder a evaluar el sistema de recomendaciones para cada uno de los usuarios. En la figura \ref{evaluarSlavcho} podemos ver un gráfico con los errores cometidos por el sistema de recomendación para el usuario Slavcho y en la figura \ref{evaluarJuan} los errores cometidos por el sistema de recomendación para el usuario Juan. 
+Una vez terminada la simulación vamos a proceder a evaluar el sistema de recomendaciones para cada uno de los usuarios. En los gráficos \ref{evaluarSlavcho} y \ref{evaluarJuan} podemos ver los errores cometidos por el sistema de recomendación para ambos usuarios. Observamos que el usuario Slavcho tiene 4 aciertos, 2 errores y 3 con predicción no disponible y el usuario Juan tiene 1 acierto, 5 errores y 5 con predicción no disponible.
 
-En el gráfico \ref{evaluarSlavcho} podemos ver que el sistema de recomendación suele sobre estimar las valoraciones para el usuario Slavcho. A medida que se hayan ido introduciendo valoraciones el recomendador realiza estimaciones cada vez mejores hasta obtener un acierto. Esto también es debido al echo que tenemos datos de un perfil similar, el usuario Mario, al que también le gustan los restaurantes con precios bajos. 
+En el caso del usuario Slavcho observamos que el sistema de recomendación ha realizado muchos más aciertos que en en el caso del usuario Juan. Esto es debido ya que disponemos de un perfil similar al que tambien le gustan los precio bajo (el usuario Mario). En el caso del usuario Juan vemos que tenemos solamente un acierto y 5 fallos. Esto puede ser consecuencia de la falta de perfiles similares ya que estamos evaluando un sistema basado en usuarios.
+
+En ambos casos los restaurantes con predicción no disponible son consecuencia de la falta de datos mientras sean usuarios completamente nuevos, es decir, todavía no han realizado ninguna valoración. Lo que observamos es que en el caso del usuario Slavcho el numero de predicciones no disponible es inferior que en el caso del usuario Juan. Podemos deducir que esto es consecuencia de la existencia de un perfil simular.
+
+Como conclusión podemos determinar que el sistema de recomendación basado en usuarios de la librería Apache Mahout daría una gran cantidad de aciertos siempre y cuando tengamos al menos un perfil simular en el sistema. Si no se satisface esta condición tanto la cantidad de errores como el numero de casos donde no se puede estimar un valor para un item serian grandes debido a la inexistencia de un perfil en quien basarse.
 
 \begin{figure}[H]
-	\centering\includegraphics[scale=0.45]{imagenes/explotacion/simulacion/errores-slavcho.jpg}
+	\centering\includegraphics[scale=0.4]{imagenes/explotacion/simulacion/errores-slavcho.jpg}
 	\caption{Evaluación del sistema de recomendaciones del usuario Slavcho}
 	\label{evaluarSlavcho}
 \end{figure}
 
-En el caso del usuario Juan (figura \ref{evaluarJuan}), al cual le gustan lo restaurantes de precio medio, observamos que el sistema de recomendación sobre estima las valoraciones para los restaurantes de precio medio (Restaurante la Chalita y Restaurante Marisco Sam) y para el resto de tipos de restaurantes se subestima la valoración. En este caso hay que tener en cuanta que no tenemos ningún usuario al que le gusten los precio medios y es normal que hay cierto error en la estimación del valor.
-
 \begin{figure}[H]
-	\centering\includegraphics[scale=0.45]{imagenes/explotacion/simulacion/errores-juan.jpg}
+	\centering\includegraphics[scale=0.4]{imagenes/explotacion/simulacion/errores-juan.jpg}
 	\caption{Evaluación del sistema de recomendaciones del usuario Juan}
 	\label{evaluarJuan}
 \end{figure} 

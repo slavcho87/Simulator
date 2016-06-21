@@ -144,20 +144,20 @@ app.controller("EvaluationController", ['$scope','Services', function ($scope, S
                             data.addColumn('number', 'Forecast');
                             data.addColumn('number', 'Error');
                             data.addColumn({type: 'string', role: 'tooltip'});
-
-                            for(index in res.itemList){
+                            
+                            for(index in res.itemList.reverse()){
                                 var itemName = res.itemList[index].itemId.itemName;
                                 var rating = res.itemList[index].value;
                                 var valueForecast = parseFloat(res.itemList[index].valueForecast);
 
                                 var error = 0;
                                 if(res.itemList[index].valueForecast){
-                                    error = res.itemList[index].value - res.itemList[index].valueForecast;
+                                    error = Math.abs(res.itemList[index].value - res.itemList[index].valueForecast);
                                     data.addRow([itemName, rating, valueForecast, error, "Error: "+error]);
                                 }else{
                                     data.addRow([itemName, rating, valueForecast, error, "It could not estimate the value!"]);
                                 }
-
+                                
                                 $scope.exportData.push({
                                     itemName: itemName,
                                     rating: rating,

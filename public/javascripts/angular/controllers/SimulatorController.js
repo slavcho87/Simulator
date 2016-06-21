@@ -217,7 +217,7 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
                             position: ol.proj.transform(location, 'EPSG:4326', 'EPSG:3857'),
                             element: $('<img src="'+value.itemType.icon+'" class="img-circle">')
                             .css({marginTop: '-50%', marginLeft: '-50%', width: '32px', height: '32px', cursor: 'pointer'})
-                            .tooltip({title: '<label style=\"text-align: left\">Name: </labe><label>'+value.itemName+'</label><br/><label>Description: </label><label>'+value.description+'</label><br/><label>Rating: </label><select style=\"background-color: black\" id='+id+' onchange="setRating('+id+')"><option value="0"></option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>', trigger: 'click', html: true})
+                            .tooltip({title: '<label style=\"text-align: left\">Name: </labe><label>'+value.itemName+'</label><br/><label>Description: </label><label>'+value.description+'</label><br/><label>Rating: </label><select style=\"background-color: black\" id='+id+' onchange="setRating('+id+')"><option value="-1"></option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>', trigger: 'click', html: true})
                         });
 
                         map.addOverlay(overlay);
@@ -335,7 +335,7 @@ app.controller("SimulatorController", ['$scope', '$timeout', '$http', '$localSto
                 position: ol.proj.transform(location, 'EPSG:4326', 'EPSG:3857'),
                 element: $('<img src="'+value.itemType.icon+'">')
                 .css({marginTop: '-50%', marginLeft: '-50%', width: '16px', height: '16px', cursor: 'pointer'})
-                .tooltip({title: '<label style=\"text-align: left\">Name: </labe><label>'+value.itemName+'</label><br/><label>Description: </label><label>'+value.description+'</label><br/><label>Rating: </label><select style=\"background-color: black\" id='+id+' onchange="setRating('+id+')"><option value="0"></option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>', trigger: 'click', html: true})
+                .tooltip({title: '<label style=\"text-align: left\">Name: </labe><label>'+value.itemName+'</label><br/><label>Description: </label><label>'+value.description+'</label><br/><label>Rating: </label><select style=\"background-color: black\" id='+id+' onchange="setRating('+id+')"><option value="-1"></option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>', trigger: 'click', html: true})
             });
                             
             map.addOverlay(overlay);
