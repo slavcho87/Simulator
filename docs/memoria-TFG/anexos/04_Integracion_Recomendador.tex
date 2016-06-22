@@ -222,6 +222,6 @@ public Server() throws URISyntaxException, InterruptedException, IOException{
 
 La variable config contiene datos a cerca de la dirección de la base de datos y la dirección del simulador. La variable socket es el sistema bidireccional dirigido por eventos. 
 
-En cuanto a la arquitectura tenemos total liberar para el diseño del recomendador push. Lo único es que tenemos que hacer es crear el evento get strategies push. Este evento no tiene parámetros de entrada y devuelve una lista de enumerados con las implementaciones del recomendador push (ver implementación de la clase StrategyType). Para devolver la lista de recomendaciones tenemos que invocar el evento get strategies push result.
+En cuanto a la arquitectura tenemos total libertad para el diseño del recomendador push. Lo único es que tenemos que hacer es crear el evento get strategies push. Este evento no tiene parámetros de entrada y devuelve una lista de enumerados con las implementaciones del recomendador push (ver implementación de la clase StrategyType). Para devolver la lista de recomendaciones tenemos que invocar el evento get strategies push result.
 
 Para enviar las recomendaciones tenemos que usar el evento recommended items del simulador indicando la lista de ítems que estamos recomendado y la lista de usuarios (tokens) a los que realizamos las recomendaciones.
